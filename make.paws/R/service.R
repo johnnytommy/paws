@@ -1,4 +1,4 @@
-#' @include templates.R
+#' @include templates.R utils.R
 NULL
 
 service_file_template <- template(
@@ -42,10 +42,9 @@ service_file_template <- template(
     target_prefix = ${target_prefix}
   )
 
-  .${service}$handlers <- new_handlers(${protocol}, ${signer})
-
   .${service}$service <- function(config = list()) {
-    new_service(.${service}$metadata, .${service}$handlers, config)
+    handlers <- new_handlers(${protocol}, ${signer})
+    new_service(.${service}$metadata, handlers, config)
   }
   `
 )
@@ -135,8 +134,8 @@ service_example <- function(api) {
   example <- make_doc_examples(get_example(api), api)
   example <- gsub("^#' ", "", example) # Delete extra leading Roxygen comment.
   example <- gsub("#' #\\n", "", example) # Delete empty comment.
-  find <- "donttest\\{"
-  replace <- sprintf("donttest\\{svc <- %s()\n#' ", service)
+  find <- "dontrun\\{\n"
+  replace <- sprintf("dontrun\\{\n#' svc <- %s()\n", service)
   gsub(find, replace, example) # Add service client object to the example.
 }
 
@@ -161,7 +160,11 @@ get_example <- function(api) {
 
 # Returns a list of the API's operations with links to their docs.
 service_operations <- function(api) {
-  rows <- lapply(api$operations, function(op) {
+  api_operations <- api$operations
+  custom_operations <- get_custom_operations(api)
+  operations <- c(api_operations, custom_operations)
+  operations <- operations[sort(names(operations))]
+  rows <- lapply(operations, function(op) {
     op_name <- get_operation_name(op)
     doc_name <- paste0(package_name(api), "_", op_name)
     data.frame(
@@ -172,6 +175,15 @@ service_operations <- function(api) {
   table <- gsub(" +", " ", tabular(do.call(rbind, rows)))
   table <- comment(table, "#'")
   paste("@section Operations:", table, sep = "\n")
+}
+
+# Returns a list of a package's custom operations and their documentation.
+get_custom_operations <- function(api) {
+  package <- package_name(api)
+  from <- system_file(sprintf("src/custom/%s.R", package), package = methods::getPackageName())
+  text <- readLines(from)
+  operations <- parse_operations(text)
+  return(operations)
 }
 
 # Returns the standardized protocol name used by an API.

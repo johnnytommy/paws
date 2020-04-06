@@ -11,13 +11,13 @@ iam_remove_user_from_group(GroupName, UserName)
 
 This parameter allows (through its \href{http://wikipedia.org/wiki/regex}{regex pattern}) a string of characters
 consisting of upper and lowercase alphanumeric characters with no
-spaces. You can also include any of the following characters: \_+=,.@-}
+spaces. You can also include any of the following characters: \\_+=,.@-}
 
 \item{UserName}{[required] The name of the user to remove.
 
 This parameter allows (through its \href{http://wikipedia.org/wiki/regex}{regex pattern}) a string of characters
 consisting of upper and lowercase alphanumeric characters with no
-spaces. You can also include any of the following characters: \_+=,.@-}
+spaces. You can also include any of the following characters: \\_+=,.@-}
 }
 \description{
 Removes the specified user from the specified group.
@@ -31,12 +31,14 @@ Removes the specified user from the specified group.
 }
 
 \examples{
+\dontrun{
 # The following command removes the user named Bob from the IAM group
 # named Admins.
-\donttest{svc$remove_user_from_group(
+svc$remove_user_from_group(
   GroupName = "Admins",
   UserName = "Bob"
-)}
+)
+}
 
 }
 \keyword{internal}

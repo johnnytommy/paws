@@ -17,26 +17,25 @@ Amazon S3 buckets and optional AWS Lambda functions written in the
 Python language.}
 
 \item{Description}{An optional description of this specific cluster, for example
-\code{Environmental Data Cluster-01}.}
+\verb{Environmental Data Cluster-01}.}
 
 \item{AddressId}{[required] The ID for the address that you want the cluster shipped to.}
 
 \item{KmsKeyARN}{The \code{KmsKeyARN} value that you want to associate with this cluster.
 \code{KmsKeyARN} values are created by using the
-\href{http://docs.aws.amazon.com/kms/latest/APIReference/API_CreateKey.html}{CreateKey}
+\href{https://docs.aws.amazon.com/kms/latest/APIReference/API_CreateKey.html}{CreateKey}
 API action in AWS Key Management Service (AWS KMS).}
 
 \item{RoleARN}{[required] The \code{RoleARN} that you want to associate with this cluster. \code{RoleArn}
 values are created by using the
-\href{http://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateRole.html}{CreateRole}
+\href{https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateRole.html}{CreateRole}
 API action in AWS Identity and Access Management (IAM).}
 
-\item{SnowballType}{The type of AWS Snowball device to use for this cluster. The only
-supported device types for cluster jobs are \code{EDGE}, \code{EDGE_C}, and
-\code{EDGE_CG}.}
+\item{SnowballType}{The type of AWS Snowball device to use for this cluster. Currently, the
+only supported device type for cluster jobs is \code{EDGE}.}
 
-\item{ShippingOption}{[required] The shipping speed for each node in this cluster. This speed doesn't
-dictate how soon you'll get each Snowball Edge device, rather it
+\item{ShippingOption}{[required] The shipping speed for each node in this cluster. This speed doesn\'t
+dictate how soon you\'ll get each Snowball Edge device, rather it
 represents how quickly each device moves to its destination while in
 transit. Regional shipping speeds are as follows:
 \itemize{
@@ -46,7 +45,7 @@ devices shipped express are delivered in about a day.
 Typically, Snowball Edges shipped express are delivered in about a
 day. In addition, most countries in the EU have access to standard
 shipping, which typically takes less than a week, one way.
-\item In India, devices are delivered in one to seven days.
+\item In India, Snowball Edges are delivered in one to seven days.
 \item In the US, you have access to one-day shipping and two-day shipping.
 }}
 
@@ -110,10 +109,11 @@ The cluster does not ship until these five node jobs have been created.
 }
 
 \examples{
+\dontrun{
 # Creates an empty cluster. Each cluster supports five nodes. You use the
 # CreateJob action separately to create the jobs for each of these nodes.
 # The cluster does not ship until these five node jobs have been created.
-\donttest{svc$create_cluster(
+svc$create_cluster(
   AddressId = "ADID1234ab12-3eec-4eb3-9be6-9374c10eb51b",
   Description = "MyCluster",
   JobType = "LOCAL_USE",
@@ -138,7 +138,8 @@ The cluster does not ship until these five node jobs have been created.
   RoleARN = "arn:aws:iam::123456789012:role/snowball-import-S3-role",
   ShippingOption = "SECOND_DAY",
   SnowballType = "EDGE"
-)}
+)
+}
 
 }
 \keyword{internal}

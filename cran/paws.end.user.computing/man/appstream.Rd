@@ -20,6 +20,10 @@ without rewriting applications. AppStream 2.0 manages the AWS resources
 that are required to host and run your applications, scales
 automatically, and provides access to your users on demand.
 
+You can call the AppStream 2.0 API operations by using an interface VPC
+endpoint (interface endpoint). For more information, see \href{https://docs.aws.amazon.com/appstream2/latest/developerguide/access-api-cli-through-interface-vpc-endpoint.html}{Access AppStream 2.0 API Operations and CLI Commands Through an Interface VPC Endpoint}
+in the \emph{Amazon AppStream 2.0 Administration Guide}.
+
 To learn more about AppStream 2.0, see the following resources:
 \itemize{
 \item \href{http://aws.amazon.com/appstream2}{Amazon AppStream 2.0 product page}
@@ -75,8 +79,8 @@ To learn more about AppStream 2.0, see the following resources:
 \link[=appstream_describe_sessions]{describe_sessions} \tab Retrieves a list that describes the streaming sessions for a specified stack and fleet \cr
 \link[=appstream_describe_stacks]{describe_stacks} \tab Retrieves a list that describes one or more specified stacks, if the stack names are provided \cr
 \link[=appstream_describe_usage_report_subscriptions]{describe_usage_report_subscriptions} \tab Retrieves a list that describes one or more usage report subscriptions \cr
-\link[=appstream_describe_user_stack_associations]{describe_user_stack_associations} \tab Retrieves a list that describes the UserStackAssociation objects \cr
 \link[=appstream_describe_users]{describe_users} \tab Retrieves a list that describes one or more specified users in the user pool \cr
+\link[=appstream_describe_user_stack_associations]{describe_user_stack_associations} \tab Retrieves a list that describes the UserStackAssociation objects \cr
 \link[=appstream_disable_user]{disable_user} \tab Disables the specified user in the user pool \cr
 \link[=appstream_disassociate_fleet]{disassociate_fleet} \tab Disassociates the specified fleet from the specified stack \cr
 \link[=appstream_enable_user]{enable_user} \tab Enables a user in the user pool \cr
@@ -98,9 +102,11 @@ To learn more about AppStream 2.0, see the following resources:
 }
 
 \examples{
-\donttest{svc <- appstream()
+\dontrun{
+svc <- appstream()
 svc$associate_fleet(
   Foo = 123
-)}
+)
+}
 
 }

@@ -23,11 +23,13 @@ NULL
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This operation cancels a cluster job. You can only cancel a cluster job
 #' # while it's in the AwaitingQuorum status.
-#' \donttest{svc$cancel_cluster(
+#' svc$cancel_cluster(
 #'   ClusterId = "CID123e4567-e89b-12d3-a456-426655440000"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -70,11 +72,13 @@ snowball_cancel_cluster <- function(ClusterId) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This operation cancels a job. You can only cancel a job before its
 #' # JobState value changes to PreparingAppliance.
-#' \donttest{svc$cancel_job(
+#' svc$cancel_job(
 #'   JobId = "JID123e4567-e89b-12d3-a456-426655440000"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -131,11 +135,12 @@ snowball_cancel_job <- function(JobId) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This operation creates an address for a job. Addresses are validated at
 #' # the time of creation. The address you provide must be located within the
 #' # serviceable area of your region. If the address is invalid or
 #' # unsupported, then an exception is thrown.
-#' \donttest{svc$create_address(
+#' svc$create_address(
 #'   Address = list(
 #'     City = "Seattle",
 #'     Company = "My Company's Name",
@@ -146,7 +151,8 @@ snowball_cancel_job <- function(JobId) {
 #'     StateOrProvince = "WA",
 #'     Street1 = "123 Main Street"
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -189,15 +195,14 @@ snowball_create_address <- function(Address) {
 #' @param AddressId &#91;required&#93; The ID for the address that you want the cluster shipped to.
 #' @param KmsKeyARN The `KmsKeyARN` value that you want to associate with this cluster.
 #' `KmsKeyARN` values are created by using the
-#' [CreateKey](http://docs.aws.amazon.com/kms/latest/APIReference/API_CreateKey.html)
+#' [CreateKey](https://docs.aws.amazon.com/kms/latest/APIReference/API_CreateKey.html)
 #' API action in AWS Key Management Service (AWS KMS).
 #' @param RoleARN &#91;required&#93; The `RoleARN` that you want to associate with this cluster. `RoleArn`
 #' values are created by using the
-#' [CreateRole](http://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateRole.html)
+#' [CreateRole](https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateRole.html)
 #' API action in AWS Identity and Access Management (IAM).
-#' @param SnowballType The type of AWS Snowball device to use for this cluster. The only
-#' supported device types for cluster jobs are `EDGE`, `EDGE_C`, and
-#' `EDGE_CG`.
+#' @param SnowballType The type of AWS Snowball device to use for this cluster. Currently, the
+#' only supported device type for cluster jobs is `EDGE`.
 #' @param ShippingOption &#91;required&#93; The shipping speed for each node in this cluster. This speed doesn\'t
 #' dictate how soon you\'ll get each Snowball Edge device, rather it
 #' represents how quickly each device moves to its destination while in
@@ -211,7 +216,7 @@ snowball_create_address <- function(Address) {
 #'     day. In addition, most countries in the EU have access to standard
 #'     shipping, which typically takes less than a week, one way.
 #' 
-#' -   In India, devices are delivered in one to seven days.
+#' -   In India, Snowball Edges are delivered in one to seven days.
 #' 
 #' -   In the US, you have access to one-day shipping and two-day shipping.
 #' @param Notification The Amazon Simple Notification Service (Amazon SNS) notification
@@ -268,10 +273,11 @@ snowball_create_address <- function(Address) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # Creates an empty cluster. Each cluster supports five nodes. You use the
 #' # CreateJob action separately to create the jobs for each of these nodes.
 #' # The cluster does not ship until these five node jobs have been created.
-#' \donttest{svc$create_cluster(
+#' svc$create_cluster(
 #'   AddressId = "ADID1234ab12-3eec-4eb3-9be6-9374c10eb51b",
 #'   Description = "MyCluster",
 #'   JobType = "LOCAL_USE",
@@ -296,7 +302,8 @@ snowball_create_address <- function(Address) {
 #'   RoleARN = "arn:aws:iam::123456789012:role/snowball-import-S3-role",
 #'   ShippingOption = "SECOND_DAY",
 #'   SnowballType = "EDGE"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -350,11 +357,11 @@ snowball_create_cluster <- function(JobType, Resources, Description = NULL, Addr
 #' @param AddressId The ID for the address that you want the Snowball shipped to.
 #' @param KmsKeyARN The `KmsKeyARN` that you want to associate with this job. `KmsKeyARN`s
 #' are created using the
-#' [CreateKey](http://docs.aws.amazon.com/kms/latest/APIReference/API_CreateKey.html)
+#' [CreateKey](https://docs.aws.amazon.com/kms/latest/APIReference/API_CreateKey.html)
 #' AWS Key Management Service (KMS) API action.
 #' @param RoleARN The `RoleARN` that you want to associate with this job. `RoleArn`s are
 #' created using the
-#' [CreateRole](http://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateRole.html)
+#' [CreateRole](https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateRole.html)
 #' AWS Identity and Access Management (IAM) API action.
 #' @param SnowballCapacityPreference If your job is being created in one of the US regions, you have the
 #' option of specifying what size Snowball you\'d like for this job. In all
@@ -380,8 +387,8 @@ snowball_create_cluster <- function(JobType, Resources, Description = NULL, Addr
 #' @param ClusterId The ID of a cluster. If you\'re creating a job for a node in a cluster,
 #' you need to provide only this `clusterId` value. The other job
 #' attributes are inherited from the cluster.
-#' @param SnowballType The type of AWS Snowball device to use for this job. The only supported
-#' device types for cluster jobs are `EDGE`, `EDGE_C`, and `EDGE_CG`.
+#' @param SnowballType The type of AWS Snowball device to use for this job. Currently, the only
+#' supported device type for cluster jobs is `EDGE`.
 #' @param ForwardingAddressId The forwarding address ID for a job. This field is not supported in most
 #' regions.
 #'
@@ -436,13 +443,14 @@ snowball_create_cluster <- function(JobType, Resources, Description = NULL, Addr
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # Creates a job to import or export data between Amazon S3 and your
 #' # on-premises data center. Your AWS account must have the right trust
 #' # policies and permissions in place to create a job for Snowball. If
 #' # you're creating a job for a node in a cluster, you only need to provide
 #' # the clusterId value; the other job attributes are inherited from the
 #' # cluster.
-#' \donttest{svc$create_job(
+#' svc$create_job(
 #'   AddressId = "ADID1234ab12-3eec-4eb3-9be6-9374c10eb51b",
 #'   Description = "My Job",
 #'   JobType = "IMPORT",
@@ -468,7 +476,8 @@ snowball_create_cluster <- function(JobType, Resources, Description = NULL, Addr
 #'   ShippingOption = "SECOND_DAY",
 #'   SnowballCapacityPreference = "T80",
 #'   SnowballType = "STANDARD"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -509,10 +518,12 @@ snowball_create_job <- function(JobType = NULL, Resources = NULL, Description = 
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This operation describes an address for a job.
-#' \donttest{svc$describe_address(
+#' svc$describe_address(
 #'   AddressId = "ADID1234ab12-3eec-4eb3-9be6-9374c10eb51b"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -558,11 +569,13 @@ snowball_describe_address <- function(AddressId) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This operation describes all the addresses that you've created for AWS
 #' # Snowball. Calling this API in one of the US regions will return
 #' # addresses from the list of all addresses associated with this account in
 #' # all US regions.
-#' \donttest{svc$describe_addresses()}
+#' svc$describe_addresses()
+#' }
 #'
 #' @keywords internal
 #'
@@ -603,11 +616,13 @@ snowball_describe_addresses <- function(MaxResults = NULL, NextToken = NULL) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # Returns information about a specific cluster including shipping
 #' # information, cluster status, and other important metadata.
-#' \donttest{svc$describe_cluster(
+#' svc$describe_cluster(
 #'   ClusterId = "CID123e4567-e89b-12d3-a456-426655440000"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -649,10 +664,12 @@ snowball_describe_cluster <- function(ClusterId) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This operation describes a job you've created for AWS Snowball.
-#' \donttest{svc$describe_job(
+#' svc$describe_job(
 #'   JobId = "JID123e4567-e89b-12d3-a456-426655440000"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -711,6 +728,7 @@ snowball_describe_job <- function(JobId) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # Returns a link to an Amazon S3 presigned URL for the manifest file
 #' # associated with the specified JobId value. You can access the manifest
 #' # file for up to 60 minutes after this request has been made. To access
@@ -731,9 +749,10 @@ snowball_describe_job <- function(JobId) {
 #' # 
 #' # The credentials of a given job, including its
 #' # manifest file and unlock code, expire 90 days after the job is created.
-#' \donttest{svc$get_job_manifest(
+#' svc$get_job_manifest(
 #'   JobId = "JID123e4567-e89b-12d3-a456-426655440000"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -785,6 +804,7 @@ snowball_get_job_manifest <- function(JobId) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # Returns the UnlockCode code value for the specified job. A particular
 #' # UnlockCode value can be accessed for up to 90 days after the associated
 #' # job has been created.
@@ -799,9 +819,10 @@ snowball_get_job_manifest <- function(JobId) {
 #' # of the UnlockCode in the same location as the manifest file for that
 #' # job. Saving these separately helps prevent unauthorized parties from
 #' # gaining access to the Snowball associated with that job.
-#' \donttest{svc$get_job_unlock_code(
+#' svc$get_job_unlock_code(
 #'   JobId = "JID123e4567-e89b-12d3-a456-426655440000"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -842,13 +863,15 @@ snowball_get_job_unlock_code <- function(JobId) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # Returns information about the Snowball service limit for your account,
 #' # and also the number of Snowballs your account has in use.
 #' # 
 #' # The default
 #' # service limit for the number of Snowballs that you can have at one time
 #' # is 1. If you want to increase your service limit, contact AWS Support.
-#' \donttest{svc$get_snowball_usage()}
+#' svc$get_snowball_usage()
+#' }
 #'
 #' @keywords internal
 #'
@@ -869,6 +892,45 @@ snowball_get_snowball_usage <- function() {
   return(response)
 }
 .snowball$operations$get_snowball_usage <- snowball_get_snowball_usage
+
+#' Returns an Amazon S3 presigned URL for an update file associated with a
+#' specified JobId
+#'
+#' Returns an Amazon S3 presigned URL for an update file associated with a
+#' specified `JobId`.
+#'
+#' @usage
+#' snowball_get_software_updates(JobId)
+#'
+#' @param JobId &#91;required&#93; The ID for a job that you want to get the software update file for, for
+#' example `JID123e4567-e89b-12d3-a456-426655440000`.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$get_software_updates(
+#'   JobId = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname snowball_get_software_updates
+snowball_get_software_updates <- function(JobId) {
+  op <- new_operation(
+    name = "GetSoftwareUpdates",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .snowball$get_software_updates_input(JobId = JobId)
+  output <- .snowball$get_software_updates_output()
+  config <- get_config()
+  svc <- .snowball$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.snowball$operations$get_software_updates <- snowball_get_software_updates
 
 #' Returns an array of JobListEntry objects of the specified length
 #'
@@ -896,12 +958,14 @@ snowball_get_snowball_usage <- function() {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # Returns an array of JobListEntry objects of the specified length. Each
 #' # JobListEntry object is for a job in the specified cluster and contains a
 #' # job's state, a job's ID, and other information.
-#' \donttest{svc$list_cluster_jobs(
+#' svc$list_cluster_jobs(
 #'   ClusterId = "CID123e4567-e89b-12d3-a456-426655440000"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -946,10 +1010,12 @@ snowball_list_cluster_jobs <- function(ClusterId, MaxResults = NULL, NextToken =
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # Returns an array of ClusterListEntry objects of the specified length.
 #' # Each ClusterListEntry object contains a cluster's state, a cluster's ID,
 #' # and other important status information.
-#' \donttest{svc$list_clusters()}
+#' svc$list_clusters()
+#' }
 #'
 #' @keywords internal
 #'
@@ -973,20 +1039,20 @@ snowball_list_clusters <- function(MaxResults = NULL, NextToken = NULL) {
 
 #' This action returns a list of the different Amazon EC2 Amazon Machine
 #' Images (AMIs) that are owned by your AWS account that would be supported
-#' for use on EDGE, EDGE_C, and EDGE_CG devices
+#' for use on a Snowball Edge device
 #'
 #' This action returns a list of the different Amazon EC2 Amazon Machine
 #' Images (AMIs) that are owned by your AWS account that would be supported
-#' for use on `EDGE`, `EDGE_C`, and `EDGE_CG` devices. For more information
-#' on compatible AMIs, see [Using Amazon EC2 Compute
-#' Instances](http://docs.aws.amazon.com/snowball/latest/developer-guide/using-ec2.html)
-#' in the *AWS Snowball Developer Guide*.
+#' for use on a Snowball Edge device. Currently, supported AMIs are based
+#' on the CentOS 7 (x86\\_64) - with Updates HVM, Ubuntu Server 14.04 LTS
+#' (HVM), and Ubuntu 16.04 LTS - Xenial (HVM) images, available on the AWS
+#' Marketplace.
 #'
 #' @usage
 #' snowball_list_compatible_images(MaxResults, NextToken)
 #'
 #' @param MaxResults The maximum number of results for the list of compatible images.
-#' Currently, each supported device can store 10 AMIs.
+#' Currently, a Snowball Edge device can store 10 AMIs.
 #' @param NextToken HTTP requests are stateless. To identify what object comes \"next\" in
 #' the list of compatible images, you can specify a value for `NextToken`
 #' as the starting point for your list of returned images.
@@ -1045,12 +1111,14 @@ snowball_list_compatible_images <- function(MaxResults = NULL, NextToken = NULL)
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # Returns an array of JobListEntry objects of the specified length. Each
 #' # JobListEntry object contains a job's state, a job's ID, and a value that
 #' # indicates whether the job is a job part, in the case of export jobs.
 #' # Calling this API action in one of the US regions will return jobs from
 #' # the list of all jobs associated with this account in all US regions.
-#' \donttest{svc$list_jobs()}
+#' svc$list_jobs()
+#' }
 #'
 #' @keywords internal
 #'
@@ -1088,7 +1156,7 @@ snowball_list_jobs <- function(MaxResults = NULL, NextToken = NULL) {
 #' `CID123e4567-e89b-12d3-a456-426655440000`.
 #' @param RoleARN The new role Amazon Resource Name (ARN) that you want to associate with
 #' this cluster. To create a role ARN, use the
-#' [CreateRole](http://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateRole.html)
+#' [CreateRole](https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateRole.html)
 #' API action in AWS Identity and Access Management (IAM).
 #' @param Description The updated description of this cluster.
 #' @param Resources The updated arrays of JobResource objects that can include updated
@@ -1147,14 +1215,16 @@ snowball_list_jobs <- function(MaxResults = NULL, NextToken = NULL) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This action allows you to update certain parameters for a cluster. Once
 #' # the cluster changes to a different state, usually within 60 minutes of
 #' # it being created, this action is no longer available.
-#' \donttest{svc$update_cluster(
+#' svc$update_cluster(
 #'   AddressId = "ADID1234ab12-3eec-4eb3-9be6-9374c10eb51b",
 #'   ClusterId = "CID123e4567-e89b-12d3-a456-426655440000",
 #'   Description = "Updated the address to send this to image processing - RJ"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1193,7 +1263,7 @@ snowball_update_cluster <- function(ClusterId, RoleARN = NULL, Description = NUL
 #' `JID123e4567-e89b-12d3-a456-426655440000`.
 #' @param RoleARN The new role Amazon Resource Name (ARN) that you want to associate with
 #' this job. To create a role ARN, use the
-#' [CreateRole](http://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateRole.html)AWS
+#' [CreateRole](https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateRole.html)AWS
 #' Identity and Access Management (IAM) API action.
 #' @param Notification The new or updated Notification object.
 #' @param Resources The updated `JobResource` object, or the updated JobResource object.
@@ -1253,16 +1323,18 @@ snowball_update_cluster <- function(ClusterId, RoleARN = NULL, Description = NUL
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This action allows you to update certain parameters for a job. Once the
 #' # job changes to a different job state, usually within 60 minutes of the
 #' # job being created, this action is no longer available.
-#' \donttest{svc$update_job(
+#' svc$update_job(
 #'   AddressId = "ADID1234ab12-3eec-4eb3-9be6-9374c10eb51b",
 #'   Description = "Upgraded to Edge, shipped to Finance Dept, and requested faster shipping sp...",
 #'   JobId = "JID123e4567-e89b-12d3-a456-426655440000",
 #'   ShippingOption = "NEXT_DAY",
 #'   SnowballCapacityPreference = "T100"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'

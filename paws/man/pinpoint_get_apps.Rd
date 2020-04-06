@@ -2,19 +2,22 @@
 % Please edit documentation in R/pinpoint_operations.R
 \name{pinpoint_get_apps}
 \alias{pinpoint_get_apps}
-\title{Retrieves information about all of your applications}
+\title{Retrieves information about all the applications that are associated
+with your Amazon Pinpoint account}
 \usage{
 pinpoint_get_apps(PageSize, Token)
 }
 \arguments{
-\item{PageSize}{The maximum number of items to include on each page in a paginated
-response.}
+\item{PageSize}{The maximum number of items to include in each page of a paginated
+response. This parameter is currently not supported for application,
+campaign, and journey metrics.}
 
 \item{Token}{The NextToken string that specifies which page of results to return in a
 paginated response.}
 }
 \description{
-Retrieves information about all of your applications.
+Retrieves information about all the applications that are associated
+with your Amazon Pinpoint account.
 }
 \section{Request syntax}{
 \preformatted{svc$get_apps(

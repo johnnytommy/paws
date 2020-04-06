@@ -19,7 +19,8 @@ Deletes the bandwidth rate limits of a gateway. You can delete either
 the upload and download bandwidth rate limit, or you can delete both. If
 you delete only one of the limits, the other limit remains unchanged. To
 specify which gateway to work with, use the Amazon Resource Name (ARN)
-of the gateway in your request.
+of the gateway in your request. This operation is supported for the
+stored volume, cached volume and tape gateway types.
 }
 \section{Request syntax}{
 \preformatted{svc$delete_bandwidth_rate_limit(
@@ -30,12 +31,14 @@ of the gateway in your request.
 }
 
 \examples{
+\dontrun{
 # Deletes the bandwidth rate limits of a gateway; either the upload or
 # download limit, or both.
-\donttest{svc$delete_bandwidth_rate_limit(
+svc$delete_bandwidth_rate_limit(
   BandwidthType = "All",
   GatewayARN = "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
-)}
+)
+}
 
 }
 \keyword{internal}

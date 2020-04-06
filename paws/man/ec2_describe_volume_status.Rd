@@ -17,19 +17,19 @@ ec2_describe_volume_status(Filters, MaxResults, NextToken, VolumeIds,
 \item \code{availability-zone} - The Availability Zone of the instance.
 \item \code{event.description} - A description of the event.
 \item \code{event.event-id} - The event ID.
-\item \code{event.event-type} - The event type (for \code{io-enabled}: \code{passed} \|
-\code{failed}; for \code{io-performance}: \code{io-performance:degraded} \|
-\code{io-performance:severely-degraded} \| \code{io-performance:stalled}).
+\item \code{event.event-type} - The event type (for \code{io-enabled}: \code{passed} \\|
+\code{failed}; for \code{io-performance}: \code{io-performance:degraded} \\|
+\code{io-performance:severely-degraded} \\| \code{io-performance:stalled}).
 \item \code{event.not-after} - The latest end time for the event.
 \item \code{event.not-before} - The earliest start time for the event.
 \item \code{volume-status.details-name} - The cause for \code{volume-status.status}
-(\code{io-enabled} \| \code{io-performance}).
+(\code{io-enabled} \\| \code{io-performance}).
 \item \code{volume-status.details-status} - The status of
-\code{volume-status.details-name} (for \code{io-enabled}: \code{passed} \|
-\code{failed}; for \code{io-performance}: \code{normal} \| \code{degraded} \|
-\code{severely-degraded} \| \code{stalled}).
-\item \code{volume-status.status} - The status of the volume (\code{ok} \|
-\code{impaired} \| \code{warning} \| \code{insufficient-data}).
+\code{volume-status.details-name} (for \code{io-enabled}: \code{passed} \\|
+\code{failed}; for \code{io-performance}: \code{normal} \\| \code{degraded} \\|
+\code{severely-degraded} \\| \code{stalled}).
+\item \code{volume-status.status} - The status of the volume (\code{ok} \\|
+\code{impaired} \\| \code{warning} \\| \code{insufficient-data}).
 }}
 
 \item{MaxResults}{The maximum number of volume results returned by \code{DescribeVolumeStatus}
@@ -60,8 +60,8 @@ Otherwise, it is \code{UnauthorizedOperation}.}
 Describes the status of the specified volumes. Volume status provides
 the result of the checks performed on your volumes to determine events
 that can impair the performance of your volumes. The performance of a
-volume can be affected if an issue occurs on the volume's underlying
-host. If the volume's underlying host experiences a power outage or
+volume can be affected if an issue occurs on the volume\'s underlying
+host. If the volume\'s underlying host experiences a power outage or
 system issue, after the system is restored, there could be data
 inconsistencies on the volume. Volume events notify you if this occurs.
 Volume actions notify you if any action needs to be taken in response to
@@ -119,17 +119,18 @@ I/O.)
 }
 
 \examples{
+\dontrun{
 # This example describes the status for the volume
-# ``vol-1234567890abcdef0``.
-\donttest{svc$describe_volume_status(
+# `vol-1234567890abcdef0`.
+svc$describe_volume_status(
   VolumeIds = list(
     "vol-1234567890abcdef0"
   )
-)}
+)
 
 # This example describes the status for all volumes that are impaired. In
 # this example output, there are no impaired volumes.
-\donttest{svc$describe_volume_status(
+svc$describe_volume_status(
   Filters = list(
     list(
       Name = "volume-status.status",
@@ -138,7 +139,8 @@ I/O.)
       )
     )
   )
-)}
+)
+}
 
 }
 \keyword{internal}

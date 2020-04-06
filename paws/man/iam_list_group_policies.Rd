@@ -12,7 +12,7 @@ iam_list_group_policies(GroupName, Marker, MaxItems)
 
 This parameter allows (through its \href{http://wikipedia.org/wiki/regex}{regex pattern}) a string of characters
 consisting of upper and lowercase alphanumeric characters with no
-spaces. You can also include any of the following characters: \_+=,.@-}
+spaces. You can also include any of the following characters: \\_+=,.@-}
 
 \item{Marker}{Use this parameter only when paginating results and only after you
 receive a response indicating that the results are truncated. Set it to
@@ -54,11 +54,13 @@ group, the operation returns an empty list.
 }
 
 \examples{
+\dontrun{
 # The following command lists the names of in-line policies that are
 # embedded in the IAM group named Admins.
-\donttest{svc$list_group_policies(
+svc$list_group_policies(
   GroupName = "Admins"
-)}
+)
+}
 
 }
 \keyword{internal}

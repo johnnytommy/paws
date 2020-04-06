@@ -32,10 +32,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- mediastore()
+#' \dontrun{
+#' svc <- mediastore()
 #' svc$create_container(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -82,8 +84,7 @@ mediastore <- function(config = list()) {
   target_prefix = "MediaStore_20170901"
 )
 
-.mediastore$handlers <- new_handlers("jsonrpc", "v4")
-
 .mediastore$service <- function(config = list()) {
-  new_service(.mediastore$metadata, .mediastore$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.mediastore$metadata, handlers, config)
 }

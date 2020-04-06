@@ -8,7 +8,7 @@ inspector_list_assessment_targets(filter, nextToken, maxResults)
 }
 \arguments{
 \item{filter}{You can use this parameter to specify a subset of data to be included in
-the action's response.
+the action\'s response.
 
 For a record to match a filter, all specified filter attributes must
 match. When multiple values are specified for a filter attribute, any of
@@ -39,10 +39,12 @@ more information about assessment targets, see \href{https://docs.aws.amazon.com
 }
 
 \examples{
+\dontrun{
 # Lists the ARNs of the assessment targets within this AWS account.
-\donttest{svc$list_assessment_targets(
+svc$list_assessment_targets(
   maxResults = 123L
-)}
+)
+}
 
 }
 \keyword{internal}

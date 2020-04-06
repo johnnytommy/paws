@@ -8,8 +8,9 @@ ecs_untag_resource(resourceArn, tagKeys)
 }
 \arguments{
 \item{resourceArn}{[required] The Amazon Resource Name (ARN) of the resource from which to delete
-tags. Currently, the supported resources are Amazon ECS tasks, services,
-task definitions, clusters, and container instances.}
+tags. Currently, the supported resources are Amazon ECS capacity
+providers, tasks, services, task definitions, clusters, and container
+instances.}
 
 \item{tagKeys}{[required] The keys of the tags to be removed.}
 }
@@ -27,13 +28,15 @@ Deletes specified tags from a resource.
 }
 
 \examples{
+\dontrun{
 # This example deletes the 'team' tag from the 'dev' cluster.
-\donttest{svc$untag_resource(
+svc$untag_resource(
   resourceArn = "arn:aws:ecs:region:aws_account_id:cluster/dev",
   tagKeys = list(
     "team"
   )
-)}
+)
+}
 
 }
 \keyword{internal}

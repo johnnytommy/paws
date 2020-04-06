@@ -9,9 +9,10 @@ gamelift_update_fleet_attributes(FleetId, Name, Description,
   MetricGroups)
 }
 \arguments{
-\item{FleetId}{[required] Unique identifier for a fleet to update attribute metadata for.}
+\item{FleetId}{[required] A unique identifier for a fleet to update attribute metadata for. You
+can use either the fleet ID or ARN value.}
 
-\item{Name}{Descriptive label that is associated with a fleet. Fleet names do not
+\item{Name}{A descriptive label that is associated with a fleet. Fleet names do not
 need to be unique.}
 
 \item{Description}{Human-readable description of a fleet.}
@@ -20,9 +21,9 @@ need to be unique.}
 this fleet. Instances that already exist are not affected. You can set
 protection for individual instances using UpdateGameSession.
 \itemize{
-\item \strong{NoProtection} \-- The game session can be terminated during a
+\item \strong{NoProtection} \\-- The game session can be terminated during a
 scale-down event.
-\item \strong{FullProtection} \-- If the game session is in an \code{ACTIVE} status,
+\item \strong{FullProtection} \\-- If the game session is in an \code{ACTIVE} status,
 it cannot be terminated during a scale-down event.
 }}
 
@@ -51,22 +52,19 @@ returned.
 \item CreateFleet
 \item ListFleets
 \item DeleteFleet
-\item Describe fleets:
 \item DescribeFleetAttributes
-\item DescribeFleetCapacity
-\item DescribeFleetPortSettings
-\item DescribeFleetUtilization
-\item DescribeRuntimeConfiguration
-\item DescribeEC2InstanceLimits
-\item DescribeFleetEvents
 \item Update fleets:
+\itemize{
 \item UpdateFleetAttributes
 \item UpdateFleetCapacity
 \item UpdateFleetPortSettings
 \item UpdateRuntimeConfiguration
+}
 \item Manage fleet actions:
+\itemize{
 \item StartFleetActions
 \item StopFleetActions
+}
 }
 }
 \section{Request syntax}{

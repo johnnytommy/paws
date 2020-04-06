@@ -19,18 +19,18 @@ pagination token in the next request.}
 is 10.}
 
 \item{nameContains}{Substring to match in slot type names. A slot type will be returned if
-any part of its name matches the substring. For example, "xyz" matches
-both "xyzabc" and "abcxyz."}
+any part of its name matches the substring. For example, \"xyz\" matches
+both \"xyzabc\" and \"abcxyz.\"}
 }
 \description{
 Returns slot type information as follows:
 }
 \details{
 \itemize{
-\item If you specify the \code{nameContains} field, returns the \code{$LATEST}
+\item If you specify the \code{nameContains} field, returns the \verb{$LATEST}
 version of all slot types that contain the specified string.
-\item If you don't specify the \code{nameContains} field, returns information
-about the \code{$LATEST} version of all slot types.
+\item If you don\'t specify the \code{nameContains} field, returns information
+about the \verb{$LATEST} version of all slot types.
 }
 
 The operation requires permission for the \code{lex:GetSlotTypes} action.
@@ -45,12 +45,14 @@ The operation requires permission for the \code{lex:GetSlotTypes} action.
 }
 
 \examples{
+\dontrun{
 # This example shows how to get a list of all of the slot types in your
 # account.
-\donttest{svc$get_slot_types(
+svc$get_slot_types(
   maxResults = 10L,
   nextToken = ""
-)}
+)
+}
 
 }
 \keyword{internal}

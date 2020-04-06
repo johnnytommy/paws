@@ -16,7 +16,7 @@ Otherwise, it is \code{UnauthorizedOperation}.}
 }
 \description{
 Deletes the specified route table. You must disassociate the route table
-from any subnets before you can delete it. You can't delete the main
+from any subnets before you can delete it. You can\'t delete the main
 route table.
 }
 \section{Request syntax}{
@@ -28,10 +28,12 @@ route table.
 }
 
 \examples{
+\dontrun{
 # This example deletes the specified route table.
-\donttest{svc$delete_route_table(
+svc$delete_route_table(
   RouteTableId = "rtb-22574640"
-)}
+)
+}
 
 }
 \keyword{internal}

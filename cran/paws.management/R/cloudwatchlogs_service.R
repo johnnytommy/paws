@@ -62,10 +62,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- cloudwatchlogs()
+#' \dontrun{
+#' svc <- cloudwatchlogs()
 #' svc$associate_kms_key(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -133,8 +135,7 @@ cloudwatchlogs <- function(config = list()) {
   target_prefix = "Logs_20140328"
 )
 
-.cloudwatchlogs$handlers <- new_handlers("jsonrpc", "v4")
-
 .cloudwatchlogs$service <- function(config = list()) {
-  new_service(.cloudwatchlogs$metadata, .cloudwatchlogs$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.cloudwatchlogs$metadata, handlers, config)
 }

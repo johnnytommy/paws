@@ -33,7 +33,7 @@ environment has last been used.}
 
 \item{ownerArn}{The Amazon Resource Name (ARN) of the environment owner. This ARN can be
 the ARN of any AWS IAM principal. If this value is not specified, the
-ARN defaults to this environment's creator.}
+ARN defaults to this environment\'s creator.}
 }
 \description{
 Creates an AWS Cloud9 development environment, launches an Amazon
@@ -54,15 +54,17 @@ instance to the environment.
 }
 
 \examples{
+\dontrun{
 # 
-\donttest{svc$create_environment_ec2(
+svc$create_environment_ec2(
   name = "my-demo-environment",
   automaticStopTimeMinutes = 60L,
   description = "This is my demonstration environment.",
   instanceType = "t2.micro",
   ownerArn = "arn:aws:iam::123456789012:user/MyDemoUser",
   subnetId = "subnet-1fab8aEX"
-)}
+)
+}
 
 }
 \keyword{internal}

@@ -31,7 +31,8 @@ The secret key must be between 12 and 16 bytes when encoded in UTF-8.}
 \description{
 Updates the Challenge-Handshake Authentication Protocol (CHAP)
 credentials for a specified iSCSI target. By default, a gateway does not
-have CHAP enabled; however, for added security, you might use it.
+have CHAP enabled; however, for added security, you might use it. This
+operation is supported in the volume and tape gateway types.
 }
 \details{
 When you update CHAP credentials, all existing connections on the target
@@ -48,14 +49,16 @@ are closed and initiators must reconnect with the new credentials.
 }
 
 \examples{
+\dontrun{
 # Updates the Challenge-Handshake Authentication Protocol (CHAP)
 # credentials for a specified iSCSI target.
-\donttest{svc$update_chap_credentials(
+svc$update_chap_credentials(
   InitiatorName = "iqn.1991-05.com.microsoft:computername.domain.example.com",
   SecretToAuthenticateInitiator = "111111111111",
   SecretToAuthenticateTarget = "222222222222",
   TargetARN = "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/target/iqn..."
-)}
+)
+}
 
 }
 \keyword{internal}

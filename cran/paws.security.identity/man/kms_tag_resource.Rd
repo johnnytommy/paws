@@ -13,9 +13,9 @@ Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
 
 For example:
 \itemize{
-\item Key ID: \code{1234abcd-12ab-34cd-56ef-1234567890ab}
+\item Key ID: \verb{1234abcd-12ab-34cd-56ef-1234567890ab}
 \item Key ARN:
-\code{arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab}
+\verb{arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab}
 }
 
 To get the key ID and key ARN for a CMK, use ListKeys or DescribeKey.}
@@ -37,8 +37,8 @@ For information about the rules that apply to tag keys and tag values,
 see \href{https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/allocation-tag-restrictions.html}{User-Defined Tag Restrictions}
 in the \emph{AWS Billing and Cost Management User Guide}.
 
-The result of this operation varies with the key state of the CMK. For
-details, see \href{https://docs.aws.amazon.com/kms/latest/developerguide/key-state.html}{How Key State Affects Use of a Customer Master Key}
+The CMK that you use for this operation must be in a compatible key
+state. For details, see \href{https://docs.aws.amazon.com/kms/latest/developerguide/key-state.html}{How Key State Affects Use of a Customer Master Key}
 in the \emph{AWS Key Management Service Developer Guide}.
 }
 \section{Request syntax}{
@@ -55,8 +55,9 @@ in the \emph{AWS Key Management Service Developer Guide}.
 }
 
 \examples{
+\dontrun{
 # The following example tags a CMK.
-\donttest{svc$tag_resource(
+svc$tag_resource(
   KeyId = "1234abcd-12ab-34cd-56ef-1234567890ab",
   Tags = list(
     list(
@@ -64,7 +65,8 @@ in the \emph{AWS Key Management Service Developer Guide}.
       TagValue = "Test"
     )
   )
-)}
+)
+}
 
 }
 \keyword{internal}

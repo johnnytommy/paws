@@ -28,11 +28,13 @@ NULL
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example cancels a job with the specified job ID.
-#' \donttest{svc$cancel_job(
+#' svc$cancel_job(
 #'   jobId = "1d828f65-7a4d-42e8-996d-3b900ed59dc4",
 #'   reason = "Cancelling job."
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -141,6 +143,7 @@ batch_cancel_job <- function(jobId, reason) {
 #'   state = "ENABLED"|"DISABLED",
 #'   computeResources = list(
 #'     type = "EC2"|"SPOT",
+#'     allocationStrategy = "BEST_FIT"|"BEST_FIT_PROGRESSIVE"|"SPOT_CAPACITY_OPTIMIZED",
 #'     minvCpus = 123,
 #'     maxvCpus = 123,
 #'     desiredvCpus = 123,
@@ -173,10 +176,11 @@ batch_cancel_job <- function(jobId, reason) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example creates a managed compute environment with specific C4
 #' # instance types that are launched on demand. The compute environment is
 #' # called C4OnDemand.
-#' \donttest{svc$create_compute_environment(
+#' svc$create_compute_environment(
 #'   type = "MANAGED",
 #'   computeEnvironmentName = "C4OnDemand",
 #'   computeResources = list(
@@ -207,13 +211,13 @@ batch_cancel_job <- function(jobId, reason) {
 #'   ),
 #'   serviceRole = "arn:aws:iam::012345678910:role/AWSBatchServiceRole",
 #'   state = "ENABLED"
-#' )}
+#' )
 #' 
 #' # This example creates a managed compute environment with the M4 instance
 #' # type that is launched when the Spot bid price is at or below 20% of the
 #' # On-Demand price for the instance type. The compute environment is called
 #' # M4Spot.
-#' \donttest{svc$create_compute_environment(
+#' svc$create_compute_environment(
 #'   type = "MANAGED",
 #'   computeEnvironmentName = "M4Spot",
 #'   computeResources = list(
@@ -242,7 +246,8 @@ batch_cancel_job <- function(jobId, reason) {
 #'   ),
 #'   serviceRole = "arn:aws:iam::012345678910:role/AWSBatchServiceRole",
 #'   state = "ENABLED"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -312,9 +317,10 @@ batch_create_compute_environment <- function(computeEnvironmentName, type, state
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example creates a job queue called LowPriority that uses the M4Spot
 #' # compute environment.
-#' \donttest{svc$create_job_queue(
+#' svc$create_job_queue(
 #'   computeEnvironmentOrder = list(
 #'     list(
 #'       computeEnvironment = "M4Spot",
@@ -324,12 +330,12 @@ batch_create_compute_environment <- function(computeEnvironmentName, type, state
 #'   jobQueueName = "LowPriority",
 #'   priority = 1L,
 #'   state = "ENABLED"
-#' )}
+#' )
 #' 
 #' # This example creates a job queue called HighPriority that uses the
 #' # C4OnDemand compute environment with an order of 1 and the M4Spot compute
 #' # environment with an order of 2.
-#' \donttest{svc$create_job_queue(
+#' svc$create_job_queue(
 #'   computeEnvironmentOrder = list(
 #'     list(
 #'       computeEnvironment = "C4OnDemand",
@@ -343,7 +349,8 @@ batch_create_compute_environment <- function(computeEnvironmentName, type, state
 #'   jobQueueName = "HighPriority",
 #'   priority = 10L,
 #'   state = "ENABLED"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -388,10 +395,12 @@ batch_create_job_queue <- function(jobQueueName, state = NULL, priority, compute
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example deletes the P2OnDemand compute environment.
-#' \donttest{svc$delete_compute_environment(
+#' svc$delete_compute_environment(
 #'   computeEnvironment = "P2OnDemand"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -436,10 +445,12 @@ batch_delete_compute_environment <- function(computeEnvironment) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example deletes the GPGPU job queue.
-#' \donttest{svc$delete_job_queue(
+#' svc$delete_job_queue(
 #'   jobQueue = "GPGPU"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -479,10 +490,12 @@ batch_delete_job_queue <- function(jobQueue) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example deregisters a job definition called sleep10.
-#' \donttest{svc$deregister_job_definition(
+#' svc$deregister_job_definition(
 #'   jobDefinition = "sleep10"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -549,12 +562,14 @@ batch_deregister_job_definition <- function(jobDefinition) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example describes the P2OnDemand compute environment.
-#' \donttest{svc$describe_compute_environments(
+#' svc$describe_compute_environments(
 #'   computeEnvironments = list(
 #'     "P2OnDemand"
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -621,10 +636,12 @@ batch_describe_compute_environments <- function(computeEnvironments = NULL, maxR
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example describes all of your active job definitions.
-#' \donttest{svc$describe_job_definitions(
+#' svc$describe_job_definitions(
 #'   status = "ACTIVE"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -685,12 +702,14 @@ batch_describe_job_definitions <- function(jobDefinitions = NULL, maxResults = N
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example describes the HighPriority job queue.
-#' \donttest{svc$describe_job_queues(
+#' svc$describe_job_queues(
 #'   jobQueues = list(
 #'     "HighPriority"
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -731,12 +750,14 @@ batch_describe_job_queues <- function(jobQueues = NULL, maxResults = NULL, nextT
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example describes a job with the specified job ID.
-#' \donttest{svc$describe_jobs(
+#' svc$describe_jobs(
 #'   jobs = list(
 #'     "24fa2d7a-64c4-49d2-8b47-f8da4fbde8e9"
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -817,17 +838,19 @@ batch_describe_jobs <- function(jobs) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example lists the running jobs in the HighPriority job queue.
-#' \donttest{svc$list_jobs(
+#' svc$list_jobs(
 #'   jobQueue = "HighPriority"
-#' )}
+#' )
 #' 
 #' # This example lists jobs in the HighPriority job queue that are in the
 #' # SUBMITTED job status.
-#' \donttest{svc$list_jobs(
+#' svc$list_jobs(
 #'   jobQueue = "HighPriority",
 #'   jobStatus = "SUBMITTED"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -941,6 +964,17 @@ batch_list_jobs <- function(jobQueue = NULL, arrayJobId = NULL, multiNodeJobId =
 #'         value = "string",
 #'         type = "GPU"
 #'       )
+#'     ),
+#'     linuxParameters = list(
+#'       devices = list(
+#'         list(
+#'           hostPath = "string",
+#'           containerPath = "string",
+#'           permissions = list(
+#'             "READ"|"WRITE"|"MKNOD"
+#'           )
+#'         )
+#'       )
 #'     )
 #'   ),
 #'   nodeProperties = list(
@@ -994,6 +1028,17 @@ batch_list_jobs <- function(jobQueue = NULL, arrayJobId = NULL, multiNodeJobId =
 #'               value = "string",
 #'               type = "GPU"
 #'             )
+#'           ),
+#'           linuxParameters = list(
+#'             devices = list(
+#'               list(
+#'                 hostPath = "string",
+#'                 containerPath = "string",
+#'                 permissions = list(
+#'                   "READ"|"WRITE"|"MKNOD"
+#'                 )
+#'               )
+#'             )
 #'           )
 #'         )
 #'       )
@@ -1009,8 +1054,9 @@ batch_list_jobs <- function(jobQueue = NULL, arrayJobId = NULL, multiNodeJobId =
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example registers a job definition for a simple container job.
-#' \donttest{svc$register_job_definition(
+#' svc$register_job_definition(
 #'   type = "container",
 #'   containerProperties = list(
 #'     command = list(
@@ -1022,7 +1068,8 @@ batch_list_jobs <- function(jobQueue = NULL, arrayJobId = NULL, multiNodeJobId =
 #'     vcpus = 1L
 #'   ),
 #'   jobDefinitionName = "sleep10"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1178,13 +1225,15 @@ batch_register_job_definition <- function(jobDefinitionName, type, parameters = 
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example submits a simple container job called example to the
 #' # HighPriority job queue.
-#' \donttest{svc$submit_job(
+#' svc$submit_job(
 #'   jobDefinition = "sleep60",
 #'   jobName = "example",
 #'   jobQueue = "HighPriority"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1230,11 +1279,13 @@ batch_submit_job <- function(jobName, jobQueue, arrayProperties = NULL, dependsO
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example terminates a job with the specified job ID.
-#' \donttest{svc$terminate_job(
+#' svc$terminate_job(
 #'   jobId = "61e743ed-35e4-48da-b2de-5c8333821c84",
 #'   reason = "Terminating job."
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1300,12 +1351,14 @@ batch_terminate_job <- function(jobId, reason) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example disables the P2OnDemand compute environment so it can be
 #' # deleted.
-#' \donttest{svc$update_compute_environment(
+#' svc$update_compute_environment(
 #'   computeEnvironment = "P2OnDemand",
 #'   state = "DISABLED"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1364,11 +1417,13 @@ batch_update_compute_environment <- function(computeEnvironment, state = NULL, c
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example disables a job queue so that it can be deleted.
-#' \donttest{svc$update_job_queue(
+#' svc$update_job_queue(
 #'   jobQueue = "GPGPU",
 #'   state = "DISABLED"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'

@@ -548,8 +548,8 @@ test_that("unmarshal list of structures", {
   )
   req <- unmarshal(req)
   out <- req$data
-  expect_equal(out$List[[1]], list(Bar = "firstbar", Baz = "firstbaz", Foo = "firstfoo"))
-  expect_equal(out$List[[2]], list(Bar = "secondbar", Baz = "secondbaz", Foo = "secondfoo"))
+  expect_equivalent(out$List[[1]], list(Bar = "firstbar", Baz = "firstbaz", Foo = "firstfoo"))
+  expect_equivalent(out$List[[2]], list(Bar = "secondbar", Baz = "secondbaz", Foo = "secondfoo"))
 })
 
 op_output7 <- Structure(
@@ -571,8 +571,8 @@ test_that("unmarshal flattened list of structures", {
   )
   req <- unmarshal(req)
   out <- req$data
-  expect_equal(out$List[[1]], list(Bar = "firstbar", Baz = "firstbaz", Foo = "firstfoo"))
-  expect_equal(out$List[[2]], list(Bar = "secondbar", Baz = "secondbaz", Foo = "secondfoo"))
+  expect_equivalent(out$List[[1]], list(Bar = "firstbar", Baz = "firstbaz", Foo = "firstfoo"))
+  expect_equivalent(out$List[[2]], list(Bar = "secondbar", Baz = "secondbaz", Foo = "secondfoo"))
 })
 
 op_output8 <- Structure(
@@ -710,32 +710,42 @@ request <- list()
 test_that("unmarshal error", {
   data <- "<ErrorResponse><Error><Code>FooError</Code><Message>Foo</Message><RequestId>123</RequestId><HostId>ABC</HostId></Error></ErrorResponse>"
   request$http_response$body <- charToRaw(data)
+  request$http_response$status_code <- 400
   request <- query_unmarshal_error(request)
   out <- request$error
   expect_equal(out$code, "FooError")
   expect_equal(out$message, "Foo")
+  expect_equal(out$status_code, 400)
+  expect_equal(out$error_response$RequestId, "123")
 })
 
 test_that("unmarshal error with an empty message", {
   data <- "<ErrorResponse><Error><Code>FooError</Code><Message></Message><RequestId>123</RequestId><HostId>ABC</HostId></Error></ErrorResponse>"
   request$http_response$body <- charToRaw(data)
+  request$http_response$status_code <- 400
   request <- query_unmarshal_error(request)
   out <- request$error
   expect_equal(out$code, "FooError")
+  expect_equal(out$status_code, 400)
+  expect_equal(out$error_response$RequestId, "123")
 })
 
 test_that("unmarshal error with invalid XML", {
   data <- "abc"
   request$http_response$body <- charToRaw(data)
+  request$http_response$status_code <- 400
   request <- query_unmarshal_error(request)
   out <- request$error
   expect_equal(out$code, "SerializationError")
+  expect_equal(out$status_code, 400)
 })
 
 test_that("unmarshal error with the wrong shape", {
   data <- "<Foo><Code>FooError</Code><Message>Foo</Message><RequestId>123</RequestId><HostId>ABC</HostId></Foo>"
   request$http_response$body <- charToRaw(data)
+  request$http_response$status_code <- 400
   request <- query_unmarshal_error(request)
   out <- request$error
   expect_equal(out$code, "SerializationError")
+  expect_equal(out$status_code, 400)
 })

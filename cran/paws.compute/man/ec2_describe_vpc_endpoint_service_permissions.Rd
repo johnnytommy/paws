@@ -19,15 +19,15 @@ Otherwise, it is \code{UnauthorizedOperation}.}
 \item{Filters}{One or more filters.
 \itemize{
 \item \code{principal} - The ARN of the principal.
-\item \code{principal-type} - The principal type (\code{All} \| \code{Service} \|
-\code{OrganizationUnit} \| \code{Account} \| \code{User} \| \code{Role}).
+\item \code{principal-type} - The principal type (\code{All} \\| \code{Service} \\|
+\code{OrganizationUnit} \\| \code{Account} \\| \code{User} \\| \code{Role}).
 }}
 
 \item{MaxResults}{The maximum number of results to return for the request in a single
 page. The remaining results of the initial request can be seen by
 sending another request with the returned \code{NextToken} value. This value
-can be between 5 and 1000; if \code{MaxResults} is given a value larger than
-1000, only 1000 results are returned.}
+can be between 5 and 1,000; if \code{MaxResults} is given a value larger than
+1,000, only 1,000 results are returned.}
 
 \item{NextToken}{The token to retrieve the next page of results.}
 }

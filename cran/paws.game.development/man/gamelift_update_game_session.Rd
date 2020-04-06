@@ -8,21 +8,21 @@ gamelift_update_game_session(GameSessionId, MaximumPlayerSessionCount,
   Name, PlayerSessionCreationPolicy, ProtectionPolicy)
 }
 \arguments{
-\item{GameSessionId}{[required] Unique identifier for the game session to update.}
+\item{GameSessionId}{[required] A unique identifier for the game session to update.}
 
-\item{MaximumPlayerSessionCount}{Maximum number of players that can be connected simultaneously to the
-game session.}
+\item{MaximumPlayerSessionCount}{The maximum number of players that can be connected simultaneously to
+the game session.}
 
-\item{Name}{Descriptive label that is associated with a game session. Session names
-do not need to be unique.}
+\item{Name}{A descriptive label that is associated with a game session. Session
+names do not need to be unique.}
 
 \item{PlayerSessionCreationPolicy}{Policy determining whether or not the game session accepts new players.}
 
 \item{ProtectionPolicy}{Game session protection policy to apply to this game session only.
 \itemize{
-\item \strong{NoProtection} \-- The game session can be terminated during a
+\item \strong{NoProtection} \\-- The game session can be terminated during a
 scale-down event.
-\item \strong{FullProtection} \-- If the game session is in an \code{ACTIVE} status,
+\item \strong{FullProtection} \\-- If the game session is in an \code{ACTIVE} status,
 it cannot be terminated during a scale-down event.
 }}
 }
@@ -44,9 +44,11 @@ object is returned.
 \item UpdateGameSession
 \item GetGameSessionLogUrl
 \item Game session placements
+\itemize{
 \item StartGameSessionPlacement
 \item DescribeGameSessionPlacement
 \item StopGameSessionPlacement
+}
 }
 }
 \section{Request syntax}{

@@ -13,7 +13,7 @@ autoscaling_put_scheduled_update_group_action(AutoScalingGroupName,
 
 \item{ScheduledActionName}{[required] The name of this scaling action.}
 
-\item{Time}{This parameter is deprecated.}
+\item{Time}{This parameter is no longer used.}
 
 \item{StartTime}{The date and time for this action to start, in YYYY-MM-DDThh:mm:ssZ
 format in UTC/GMT only and in quotes (for example,
@@ -31,7 +31,7 @@ Scaling does not perform the action after this time.}
 
 \item{Recurrence}{The recurring schedule for this action, in Unix cron syntax format. This
 format consists of five fields separated by white spaces: [Minute]
-[Hour] [Day\_of\_Month] [Month\_of\_Year] [Day\_of\_Week]. The
+[Hour] [Day\\_of\\_Month] [Month\\_of\\_Year] [Day\\_of\\_Week]. The
 value must be in quotes (for example, \code{"30 0 1 1,6,12 *"}). For more
 information about this format, see \href{http://crontab.org}{Crontab}.
 
@@ -76,9 +76,10 @@ in the \emph{Amazon EC2 Auto Scaling User Guide}.
 }
 
 \examples{
+\dontrun{
 # This example adds the specified scheduled action to the specified Auto
 # Scaling group.
-\donttest{svc$put_scheduled_update_group_action(
+svc$put_scheduled_update_group_action(
   AutoScalingGroupName = "my-auto-scaling-group",
   DesiredCapacity = 4L,
   EndTime = "2014-05-12T08:00:00Z",
@@ -86,7 +87,8 @@ in the \emph{Amazon EC2 Auto Scaling User Guide}.
   MinSize = 2L,
   ScheduledActionName = "my-scheduled-action",
   StartTime = "2014-05-12T08:00:00Z"
-)}
+)
+}
 
 }
 \keyword{internal}

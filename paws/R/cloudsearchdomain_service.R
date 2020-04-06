@@ -41,10 +41,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- cloudsearchdomain()
+#' \dontrun{
+#' svc <- cloudsearchdomain()
 #' svc$search(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -76,8 +78,7 @@ cloudsearchdomain <- function(config = list()) {
   target_prefix = ""
 )
 
-.cloudsearchdomain$handlers <- new_handlers("restjson", "v4")
-
 .cloudsearchdomain$service <- function(config = list()) {
-  new_service(.cloudsearchdomain$metadata, .cloudsearchdomain$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.cloudsearchdomain$metadata, handlers, config)
 }

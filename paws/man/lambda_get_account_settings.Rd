@@ -7,7 +7,7 @@
 lambda_get_account_settings()
 }
 \description{
-Retrieves details about your account's
+Retrieves details about your account\'s
 \href{https://docs.aws.amazon.com/lambda/latest/dg/limits.html}{limits} and
 usage in an AWS Region.
 }
@@ -17,8 +17,10 @@ usage in an AWS Region.
 }
 
 \examples{
+\dontrun{
 # This operation retrieves a Lambda customer's account settings
-\donttest{svc$get_account_settings()}
+svc$get_account_settings()
+}
 
 }
 \keyword{internal}

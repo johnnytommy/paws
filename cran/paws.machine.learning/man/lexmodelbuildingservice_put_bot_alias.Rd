@@ -6,7 +6,7 @@
 alias for the specified bot}
 \usage{
 lexmodelbuildingservice_put_bot_alias(name, description, botVersion,
-  botName, checksum)
+  botName, checksum, conversationLogs)
 }
 \arguments{
 \item{name}{[required] The name of the alias. The name is \emph{not} case sensitive.}
@@ -17,16 +17,18 @@ lexmodelbuildingservice_put_bot_alias(name, description, botVersion,
 
 \item{botName}{[required] The name of the bot.}
 
-\item{checksum}{Identifies a specific revision of the \code{$LATEST} version.
+\item{checksum}{Identifies a specific revision of the \verb{$LATEST} version.
 
 When you create a new bot alias, leave the \code{checksum} field blank. If
 you specify a checksum you get a \code{BadRequestException} exception.
 
 When you want to update a bot alias, set the \code{checksum} field to the
-checksum of the most recent revision of the \code{$LATEST} version. If you
-don't specify the \code{ checksum} field, or if the checksum does not match
-the \code{$LATEST} version, you get a \code{PreconditionFailedException}
+checksum of the most recent revision of the \verb{$LATEST} version. If you
+don\'t specify the \code{ checksum} field, or if the checksum does not match
+the \verb{$LATEST} version, you get a \code{PreconditionFailedException}
 exception.}
+
+\item{conversationLogs}{Settings for conversation logs for the alias.}
 }
 \description{
 Creates an alias for the specified version of the bot or replaces an
@@ -43,7 +45,18 @@ This operation requires permissions for the \code{lex:PutBotAlias} action.
   description = "string",
   botVersion = "string",
   botName = "string",
-  checksum = "string"
+  checksum = "string",
+  conversationLogs = list(
+    logSettings = list(
+      list(
+        logType = "AUDIO"|"TEXT",
+        destination = "CLOUDWATCH_LOGS"|"S3",
+        kmsKeyArn = "string",
+        resourceArn = "string"
+      )
+    ),
+    iamRoleArn = "string"
+  )
 )
 }
 }

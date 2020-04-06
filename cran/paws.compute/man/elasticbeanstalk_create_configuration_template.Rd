@@ -69,7 +69,7 @@ specific application and are used to deploy different versions of the
 application with the same configuration settings.
 }
 \details{
-Templates aren't associated with any environment. The \code{EnvironmentName}
+Templates aren\'t associated with any environment. The \code{EnvironmentName}
 response element is always \code{null}.
 
 Related Topics
@@ -110,13 +110,15 @@ Related Topics
 }
 
 \examples{
+\dontrun{
 # The following operation creates a configuration template named my-app-v1
 # from the settings applied to an environment with the id e-rpqsewtp2j:
-\donttest{svc$create_configuration_template(
+svc$create_configuration_template(
   ApplicationName = "my-app",
   EnvironmentId = "e-rpqsewtp2j",
   TemplateName = "my-app-v1"
-)}
+)
+}
 
 }
 \keyword{internal}

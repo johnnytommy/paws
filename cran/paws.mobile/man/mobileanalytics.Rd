@@ -39,9 +39,11 @@ understanding app usage data at scale.
 }
 
 \examples{
-\donttest{svc <- mobileanalytics()
+\dontrun{
+svc <- mobileanalytics()
 svc$put_events(
   Foo = 123
-)}
+)
+}
 
 }

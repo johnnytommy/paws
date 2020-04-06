@@ -9,7 +9,7 @@ rest_build <- function(request) {
 
 rest_build_location_elements <- function(request, values, build_get_query) {
 
-  query <- parse_query(request$http_request$url$raw_query)
+  query <- parse_query_string(request$http_request$url$raw_query)
 
   request$http_request$url$raw_path <- request$http_request$url$path
 
@@ -48,7 +48,7 @@ rest_build_location_elements <- function(request, values, build_get_query) {
     }
   }
 
-  request$http_request$url$raw_query <- encode(query)
+  request$http_request$url$raw_query <- build_query_string(query)
   if (!request$config$disable_rest_protocol_uri_cleaning) {
     request$http_request$url <- clean_path(request$http_request$url)
   }
@@ -160,19 +160,24 @@ rest_unmarshal_location_elements <- function(request) {
       name <- field_name
     }
 
+    tags <- tag_get_all(field)
     location <- tag_get(field, "location")
     if (location == "statusCode") {
-      values[[field_name]] <- rest_unmarshal_status_code(request$http_response$status_code)
+      result <- rest_unmarshal_status_code(request$http_response$status_code)
     } else if (location == "header") {
       v <- request$http_response$header[[name]]
       type <- tag_get(field, "type")
-      values[[field_name]] <- rest_unmarshal_header(v, type)
+      result <- rest_unmarshal_header(v, type)
     } else if (location == "headers") {
       v <- request$http_response$header
       prefix <- tag_get(field, "locationName")
       type <- tag_get(field, "type")
-      values[[field_name]] <- rest_unmarshal_header_map(v, prefix, type)
+      result <- rest_unmarshal_header_map(v, prefix, type)
+    } else {
+      result <- values[[field_name]]
     }
+    result <- tag_add(result, tags)
+    values[[field_name]] <- result
   }
   request$data <- values
   return(request)

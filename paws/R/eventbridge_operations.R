@@ -1100,7 +1100,7 @@ eventbridge_put_partner_events <- function(Entries) {
 #' To enable multiple AWS accounts to put events to an event bus, run
 #' `PutPermission` once for each of these accounts. Or, if all the accounts
 #' are members of the same AWS organization, you can run `PutPermission`
-#' once specifying `Principal` as \"\*\" and specifying the AWS
+#' once specifying `Principal` as \"*\" and specifying the AWS
 #' organization ID in `Condition`, to grant permissions to all accounts in
 #' that organization.
 #' 
@@ -1122,14 +1122,15 @@ eventbridge_put_partner_events <- function(Entries) {
 #' @param Action &#91;required&#93; The action that you\'re enabling the other account to perform.
 #' Currently, this must be `events:PutEvents`.
 #' @param Principal &#91;required&#93; The 12-digit AWS account ID that you are permitting to put events to
-#' your default event bus. Specify \"\*\" to permit any account to put
+#' your default event bus. Specify \"*\" to permit any account to put
 #' events to your default event bus.
 #' 
-#' If you specify \"\*\" without specifying `Condition`, avoid creating
+#' If you specify \"*\" without specifying `Condition`, avoid creating
 #' rules that might match undesirable events. To create more secure rules,
 #' make sure that the event pattern for each rule contains an `account`
-#' field with a specific account ID to receive events from. Rules with an
-#' account field don\'t match any events sent from other accounts.
+#' field with a specific account ID to receive events from. Rules that have
+#' an account field match events sent only from accounts that are listed in
+#' the rule\'s `account` field.
 #' @param StatementId &#91;required&#93; An identifier string for the external account that you\'re granting
 #' permissions to. If you later want to revoke the permission for this
 #' external account, specify this `StatementId` when you run
@@ -1142,7 +1143,7 @@ eventbridge_put_partner_events <- function(Entries) {
 #' in the *AWS Organizations User Guide*.
 #' 
 #' If you specify `Condition` with an AWS organization ID and specify
-#' \"\*\" as the value for `Principal`, you grant permission to all the
+#' \"*\" as the value for `Principal`, you grant permission to all the
 #' accounts in the named organization.
 #' 
 #' The `Condition` is a JSON string that must contain `Type`, `Key`, and
@@ -1251,6 +1252,9 @@ eventbridge_put_permission <- function(EventBusName = NULL, Action, Principal, S
 #'   Description, RoleArn, Tags, EventBusName)
 #'
 #' @param Name &#91;required&#93; The name of the rule that you\'re creating or updating.
+#' 
+#' A rule can\'t have the same name as another rule in the same Region or
+#' on the same event bus.
 #' @param ScheduleExpression The scheduling expression: for example, `"cron(0 20 * * ? *)"` or
 #' `"rate(5 minutes)"`.
 #' @param EventPattern The event pattern. For more information, see [Event

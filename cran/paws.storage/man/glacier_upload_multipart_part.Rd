@@ -10,9 +10,9 @@ glacier_upload_multipart_part(accountId, vaultName, uploadId, checksum,
 \arguments{
 \item{accountId}{[required] The \code{AccountId} value is the AWS account ID of the account that owns the
 vault. You can either specify an AWS account ID or optionally a single
-'\code{-}' (hyphen), in which case Amazon S3 Glacier uses the AWS account
+\'\code{-}\' (hyphen), in which case Amazon S3 Glacier uses the AWS account
 ID associated with the credentials used to sign the request. If you use
-an account ID, do not include any hyphens ('-') in the ID.}
+an account ID, do not include any hyphens (\'-\') in the ID.}
 
 \item{vaultName}{[required] The name of the vault.}
 
@@ -40,19 +40,17 @@ conditions is true:
 corrupted in transmission, you compute a SHA256 tree hash of the
 part and include it in your request. Upon receiving the part data,
 Amazon S3 Glacier also computes a SHA256 tree hash. If these hash
-values don't match, the operation fails. For information about
+values don\'t match, the operation fails. For information about
 computing a SHA256 tree hash, see \href{https://docs.aws.amazon.com/amazonglacier/latest/dev/checksum-calculations.html}{Computing Checksums}.
 \item \strong{Part size does not match}The size of each part except the last
 must match the size specified in the corresponding
 InitiateMultipartUpload request. The size of the last part must be
 the same size as, or smaller than, the specified size.
-}
 
 If you upload a part whose size is smaller than the part size you
 specified in your initiate multipart upload request and that part is
 not the last part, then the upload part request will succeed.
 However, the subsequent Complete Multipart Upload request will fail.
-\itemize{
 \item \strong{Range does not align}The byte range value in the request does not
 align with the part size specified in the corresponding initiate
 request. For example, if you specify a part size of 4194304 bytes (4
@@ -67,7 +65,7 @@ times, the data included in the most recent request overwrites the
 previously uploaded data.
 
 An AWS account has full permission to perform all operations (actions).
-However, AWS Identity and Access Management (IAM) users don't have any
+However, AWS Identity and Access Management (IAM) users don\'t have any
 permissions by default. You must grant them explicit permission to
 perform specific actions. For more information, see \href{https://docs.aws.amazon.com/amazonglacier/latest/dev/using-iam-with-amazon-glacier.html}{Access Control Using AWS Identity and Access Management (IAM)}.
 
@@ -88,16 +86,18 @@ in the \emph{Amazon Glacier Developer Guide}.
 }
 
 \examples{
+\dontrun{
 # The example uploads the first 1 MiB (1024 x 1024 bytes) part of an
 # archive.
-\donttest{svc$upload_multipart_part(
+svc$upload_multipart_part(
   accountId = "-",
   body = "part1",
   checksum = "c06f7cd4baacb087002a99a5f48bf953",
   range = "bytes 0-1048575/*",
   uploadId = "19gaRezEXAMPLES6Ry5YYdqthHOC_kGRCT03L9yetr220UmPtBYKk-OssZtLqyFu7sY1_lR7vgFuJV...",
   vaultName = "examplevault"
-)}
+)
+}
 
 }
 \keyword{internal}

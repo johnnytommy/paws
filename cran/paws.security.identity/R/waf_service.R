@@ -38,12 +38,14 @@ NULL
 #' ```
 #'
 #' @examples
+#' \dontrun{
+#' svc <- waf()
 #' # The following example creates an IP match set named MyIPSetFriendlyName.
-#' \donttest{svc <- waf()
 #' svc$create_ip_set(
 #'   ChangeToken = "abcd12f2-46da-4fdb-b8d5-fbd4c466928f",
 #'   Name = "MyIPSetFriendlyName"
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -148,8 +150,7 @@ waf <- function(config = list()) {
   target_prefix = "AWSWAF_20150824"
 )
 
-.waf$handlers <- new_handlers("jsonrpc", "v4")
-
 .waf$service <- function(config = list()) {
-  new_service(.waf$metadata, .waf$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.waf$metadata, handlers, config)
 }

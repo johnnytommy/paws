@@ -12,7 +12,7 @@ storagegateway_start_gateway(GatewayARN)
 \description{
 Starts a gateway that you previously shut down (see ShutdownGateway).
 After the gateway starts, you can then make other API calls, your
-applications can read from or write to the gateway's storage volumes
+applications can read from or write to the gateway\'s storage volumes
 and you will be able to take snapshot backups.
 }
 \details{
@@ -33,10 +33,12 @@ the gateway in your request.
 }
 
 \examples{
+\dontrun{
 # Starts a gateway service that was previously shut down.
-\donttest{svc$start_gateway(
+svc$start_gateway(
   GatewayARN = "arn:aws:storagegateway:us-east-1:999999999999:gateway/sgw-12A3456B"
-)}
+)
+}
 
 }
 \keyword{internal}

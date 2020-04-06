@@ -41,12 +41,14 @@ listener, use DescribeListenerCertificates.
 }
 
 \examples{
+\dontrun{
 # This example describes the specified listener.
-\donttest{svc$describe_listeners(
+svc$describe_listeners(
   ListenerArns = list(
     "arn:aws:elasticloadbalancing:us-west-2:123456789012:listener/app/my-load-balancer/50dc6..."
   )
-)}
+)
+}
 
 }
 \keyword{internal}

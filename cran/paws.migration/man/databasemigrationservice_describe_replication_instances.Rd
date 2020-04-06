@@ -11,8 +11,8 @@ databasemigrationservice_describe_replication_instances(Filters,
 \arguments{
 \item{Filters}{Filters applied to the describe action.
 
-Valid filter names: replication-instance-arn \| replication-instance-id
-\| replication-instance-class \| engine-version}
+Valid filter names: replication-instance-arn \\| replication-instance-id
+\\| replication-instance-class \\| engine-version}
 
 \item{MaxRecords}{The maximum number of records to include in the response. If more
 records exist than the specified \code{MaxRecords} value, a pagination token
@@ -48,8 +48,9 @@ current region.
 }
 
 \examples{
+\dontrun{
 # Returns the status of the refresh-schemas operation.
-\donttest{svc$describe_replication_instances(
+svc$describe_replication_instances(
   Filters = list(
     list(
       Name = "string",
@@ -61,7 +62,8 @@ current region.
   ),
   Marker = "",
   MaxRecords = 123L
-)}
+)
+}
 
 }
 \keyword{internal}

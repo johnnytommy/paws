@@ -2,19 +2,27 @@
 % Please edit documentation in R/devicefarm_operations.R
 \name{devicefarm_list_unique_problems}
 \alias{devicefarm_list_unique_problems}
-\title{Gets information about unique problems}
+\title{Gets information about unique problems, such as exceptions or crashes}
 \usage{
 devicefarm_list_unique_problems(arn, nextToken)
 }
 \arguments{
-\item{arn}{[required] The unique problems' ARNs.}
+\item{arn}{[required] The unique problems\' ARNs.}
 
 \item{nextToken}{An identifier that was returned from the previous call to this
 operation, which can be used to return the next set of items in the
 list.}
 }
 \description{
-Gets information about unique problems.
+Gets information about unique problems, such as exceptions or crashes.
+}
+\details{
+Unique problems are defined as a single instance of an error across a
+run, job, or suite. For example, if a call in your application
+consistently raises an exception
+(\verb{OutOfBoundsException in MyActivity.java:386}), \code{ListUniqueProblems}
+returns a single entry instead of many individual entries for that
+exception.
 }
 \section{Request syntax}{
 \preformatted{svc$list_unique_problems(
@@ -25,12 +33,14 @@ Gets information about unique problems.
 }
 
 \examples{
+\dontrun{
 # The following example returns information about unique problems, given a
 # specific Device Farm project.
-\donttest{svc$list_unique_problems(
+svc$list_unique_problems(
   arn = "arn:aws:devicefarm:us-west-2:123456789101:project:EXAMPLE-GUID-123-456",
   nextToken = "RW5DdDJkMWYwZjM2MzM2VHVpOHJIUXlDUXlhc2QzRGViYnc9SEXAMPLE"
-)}
+)
+}
 
 }
 \keyword{internal}

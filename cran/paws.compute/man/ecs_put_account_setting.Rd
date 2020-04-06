@@ -28,13 +28,16 @@ IAM user or role explicitly overrides these settings. If this field is
 omitted, the setting is changed only for the authenticated user.}
 }
 \description{
-Modifies an account setting. If you change the account setting for the
-root user, the default settings for all of the IAM users and roles for
-which no individual account setting has been specified are reset. For
-more information, see \href{https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-account-settings.html}{Account Settings}
-in the \emph{Amazon Elastic Container Service Developer Guide}.
+Modifies an account setting. Account settings are set on a per-Region
+basis.
 }
 \details{
+If you change the account setting for the root user, the default
+settings for all of the IAM users and roles for which no individual
+account setting has been specified are reset. For more information, see
+\href{https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-account-settings.html}{Account Settings}
+in the \emph{Amazon Elastic Container Service Developer Guide}.
+
 When \code{serviceLongArnFormat}, \code{taskLongArnFormat}, or
 \code{containerInstanceLongArnFormat} are specified, the Amazon Resource Name
 (ARN) and resource ID format of the resource type for a specified IAM
@@ -69,25 +72,27 @@ in the \emph{Amazon Elastic Container Service Developer Guide}.
 }
 
 \examples{
+\dontrun{
 # This example modifies your account settings to opt in to the new ARN and
 # resource ID format for Amazon ECS services. If youâ€™re using this command
 # as the root user, then changes apply to the entire AWS account, unless
 # an IAM user or role explicitly overrides these settings for themselves.
-\donttest{svc$put_account_setting(
+svc$put_account_setting(
   name = "serviceLongArnFormat",
   value = "enabled"
-)}
+)
 
 # This example modifies the account setting for a specific IAM user or IAM
 # role to opt in to the new ARN and resource ID format for Amazon ECS
 # container instances. If youâ€™re using this command as the root user, then
 # changes apply to the entire AWS account, unless an IAM user or role
 # explicitly overrides these settings for themselves.
-\donttest{svc$put_account_setting(
+svc$put_account_setting(
   name = "containerInstanceLongArnFormat",
   value = "enabled",
   principalArn = "arn:aws:iam::<aws_account_id>:user/principalName"
-)}
+)
+}
 
 }
 \keyword{internal}

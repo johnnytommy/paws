@@ -26,8 +26,8 @@ target is not \code{deleted}.
 The operation requires permissions for the following actions:
 \itemize{
 \item \code{elasticfilesystem:ModifyMountTargetSecurityGroups} action on the
-mount target's file system.
-\item \code{ec2:ModifyNetworkInterfaceAttribute} action on the mount target's
+mount target\'s file system.
+\item \code{ec2:ModifyNetworkInterfaceAttribute} action on the mount target\'s
 network interface.
 }
 }
@@ -42,14 +42,16 @@ network interface.
 }
 
 \examples{
+\dontrun{
 # This operation modifies the security groups associated with a mount
 # target for a file system.
-\donttest{svc$modify_mount_target_security_groups(
+svc$modify_mount_target_security_groups(
   MountTargetId = "fsmt-12340abc",
   SecurityGroups = list(
     "sg-abcd1234"
   )
-)}
+)
+}
 
 }
 \keyword{internal}

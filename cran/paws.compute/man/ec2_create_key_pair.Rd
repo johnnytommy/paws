@@ -19,7 +19,7 @@ Otherwise, it is \code{UnauthorizedOperation}.}
 \description{
 Creates a 2048-bit RSA key pair with the specified name. Amazon EC2
 stores the public key and displays the private key for you to save to a
-file. The private key is returned as an unencrypted PEM encoded PKCS\#1
+file. The private key is returned as an unencrypted PEM encoded PKCS\\#1
 private key. If a key with the specified name already exists, Amazon EC2
 returns an error.
 }
@@ -42,10 +42,12 @@ in the \emph{Amazon Elastic Compute Cloud User Guide}.
 }
 
 \examples{
+\dontrun{
 # This example creates a key pair named my-key-pair.
-\donttest{svc$create_key_pair(
+svc$create_key_pair(
   KeyName = "my-key-pair"
-)}
+)
+}
 
 }
 \keyword{internal}

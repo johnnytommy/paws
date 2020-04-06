@@ -33,7 +33,7 @@ API requests.
 \enumerate{
 \item \code{AWS_REGION} R environment variable
 \item \code{AWS_REGION} OS environment variable (Linux and macOS)
-\item \code{~/.aws/config} AWS configuration file
+\item \verb{~/.aws/config} AWS configuration file
 }
 
 \code{new_service} also requires that you've set your AWS credentials in one of:
@@ -41,13 +41,14 @@ API requests.
 \item \code{AWS_ACCESS_KEY_ID} and \code{AWS_SECRET_ACCESS_KEY} R environment variables
 \item \code{AWS_ACCESS_KEY_ID} and \code{AWS_SECRET_ACCESS_KEY} OS environment variables
 (Linux and macOS)
-\item \code{~/.aws/credentials} AWS credentials file
+\item \verb{~/.aws/credentials} AWS credentials file
 \item IAM role
 }
 }
 
 \examples{
-\donttest{# Metadata for the S3 API.
+\dontrun{
+# Metadata for the S3 API.
 metadata <- list(
   service_name = "s3",
   endpoints = list("us-east-1" = list(endpoint = "s3.amazonaws.com", global = FALSE)),
@@ -63,12 +64,15 @@ handlers <- new_handlers("restxml", "v4")
 
 # Build a service object for S3, containing the information necessary to
 # build, send, and receive requests.
-service <- new_service(metadata, handlers)}
+service <- new_service(metadata, handlers)
+}
 
 }
 \seealso{
-Other API request functions: \code{\link{new_handlers}},
-  \code{\link{new_operation}}, \code{\link{new_request}},
-  \code{\link{send_request}}
+Other API request functions: 
+\code{\link{new_handlers}()},
+\code{\link{new_operation}()},
+\code{\link{new_request}()},
+\code{\link{send_request}()}
 }
 \concept{API request functions}

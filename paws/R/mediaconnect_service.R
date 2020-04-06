@@ -30,10 +30,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- mediaconnect()
+#' \dontrun{
+#' svc <- mediaconnect()
 #' svc$add_flow_outputs(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -79,8 +81,7 @@ mediaconnect <- function(config = list()) {
   target_prefix = ""
 )
 
-.mediaconnect$handlers <- new_handlers("restjson", "v4")
-
 .mediaconnect$service <- function(config = list()) {
-  new_service(.mediaconnect$metadata, .mediaconnect$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.mediaconnect$metadata, handlers, config)
 }

@@ -39,7 +39,7 @@ learn more about the Secrets Manager HTTP Query API, see \href{https://docs.aws.
 in the \emph{AWS Secrets Manager User Guide}.
 
 Secrets Manager supports GET and POST requests for all actions. That is,
-the API doesn't require you to use GET for some actions and POST for
+the API doesn\'t require you to use GET for some actions and POST for
 others. However, GET requests are subject to the limitation size of a
 URL. Therefore, for operations that require larger sizes, use a POST
 request.
@@ -66,7 +66,7 @@ single JSON text string.
 
 AWS Secrets Manager supports AWS CloudTrail, a service that records AWS
 API calls for your AWS account and delivers log files to an Amazon S3
-bucket. By using information that's collected by AWS CloudTrail, you
+bucket. By using information that\'s collected by AWS CloudTrail, you
 can determine which requests were successfully made to Secrets Manager,
 who made the request, when it was made, and so on. For more about AWS
 Secrets Manager and its support for AWS CloudTrail, see \href{http://docs.aws.amazon.com/secretsmanager/latest/userguide/monitoring.html#monitoring_cloudtrail}{Logging AWS Secrets Manager Events with AWS CloudTrail}
@@ -102,8 +102,8 @@ including how to turn it on and find your log files, see the \href{https://docs.
 \link[=secretsmanager_get_random_password]{get_random_password} \tab Generates a random password of the specified complexity \cr
 \link[=secretsmanager_get_resource_policy]{get_resource_policy} \tab Retrieves the JSON text of the resource-based policy document that's attached to the specified secret \cr
 \link[=secretsmanager_get_secret_value]{get_secret_value} \tab Retrieves the contents of the encrypted fields SecretString or SecretBinary from the specified version of a secret, whichever contains content\cr
-\link[=secretsmanager_list_secret_version_ids]{list_secret_version_ids} \tab Lists all of the versions attached to the specified secret \cr
 \link[=secretsmanager_list_secrets]{list_secrets} \tab Lists all of the secrets that are stored by Secrets Manager in the AWS account \cr
+\link[=secretsmanager_list_secret_version_ids]{list_secret_version_ids} \tab Lists all of the versions attached to the specified secret \cr
 \link[=secretsmanager_put_resource_policy]{put_resource_policy} \tab Attaches the contents of the specified resource-based permission policy to a secret \cr
 \link[=secretsmanager_put_secret_value]{put_secret_value} \tab Stores a new encrypted secret value in the specified secret \cr
 \link[=secretsmanager_restore_secret]{restore_secret} \tab Cancels the scheduled deletion of a secret by removing the DeletedDate time stamp \cr
@@ -116,13 +116,15 @@ including how to turn it on and find your log files, see the \href{https://docs.
 }
 
 \examples{
+\dontrun{
+svc <- secretsmanager()
 # The following example shows how to cancel rotation for a secret. The
 # operation sets the RotationEnabled field to false and cancels all
 # scheduled rotations. To resume scheduled rotations, you must re-enable
 # rotation by calling the rotate-secret operation.
-\donttest{svc <- secretsmanager()
 svc$cancel_rotate_secret(
   SecretId = "MyTestDatabaseSecret"
-)}
+)
+}
 
 }

@@ -33,15 +33,17 @@ NULL
 #' ```
 #'
 #' @examples
+#' \dontrun{
+#' svc <- ec2instanceconnect()
 #' # The following example pushes a sample SSH public key to the EC2 instance
 #' # i-abcd1234 in AZ us-west-2b for use by the instance OS user ec2-user.
-#' \donttest{svc <- ec2instanceconnect()
 #' svc$send_ssh_public_key(
 #'   AvailabilityZone = "us-west-2a",
 #'   InstanceId = "i-abcd1234",
 #'   InstanceOSUser = "ec2-user",
 #'   SSHPublicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC3FlHqj2eqCdrGHuA6dRjfZXQ4HX5lXEIRHa..."
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -71,8 +73,7 @@ ec2instanceconnect <- function(config = list()) {
   target_prefix = "AWSEC2InstanceConnectService"
 )
 
-.ec2instanceconnect$handlers <- new_handlers("jsonrpc", "v4")
-
 .ec2instanceconnect$service <- function(config = list()) {
-  new_service(.ec2instanceconnect$metadata, .ec2instanceconnect$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.ec2instanceconnect$metadata, handlers, config)
 }

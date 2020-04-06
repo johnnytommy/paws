@@ -8,30 +8,31 @@ gamelift_describe_player_sessions(GameSessionId, PlayerId,
   PlayerSessionId, PlayerSessionStatusFilter, Limit, NextToken)
 }
 \arguments{
-\item{GameSessionId}{Unique identifier for the game session to retrieve player sessions for.}
+\item{GameSessionId}{A unique identifier for the game session to retrieve player sessions
+for.}
 
-\item{PlayerId}{Unique identifier for a player to retrieve player sessions for.}
+\item{PlayerId}{A unique identifier for a player to retrieve player sessions for.}
 
-\item{PlayerSessionId}{Unique identifier for a player session to retrieve.}
+\item{PlayerSessionId}{A unique identifier for a player session to retrieve.}
 
 \item{PlayerSessionStatusFilter}{Player session status to filter results on.
 
 Possible player session statuses include the following:
 \itemize{
-\item \strong{RESERVED} \-- The player session request has been received, but
+\item \strong{RESERVED} \\-- The player session request has been received, but
 the player has not yet connected to the server process and/or been
 validated.
-\item \strong{ACTIVE} \-- The player has been validated by the server process
+\item \strong{ACTIVE} \\-- The player has been validated by the server process
 and is currently connected.
-\item \strong{COMPLETED} \-- The player connection has been dropped.
-\item \strong{TIMEDOUT} \-- A player session request was received, but the
+\item \strong{COMPLETED} \\-- The player connection has been dropped.
+\item \strong{TIMEDOUT} \\-- A player session request was received, but the
 player did not connect and/or was not validated within the timeout
 limit (60 seconds).
 }}
 
-\item{Limit}{Maximum number of results to return. Use this parameter with \code{NextToken}
-to get results as a set of sequential pages. If a player session ID is
-specified, this parameter is ignored.}
+\item{Limit}{The maximum number of results to return. Use this parameter with
+\code{NextToken} to get results as a set of sequential pages. If a player
+session ID is specified, this parameter is ignored.}
 
 \item{NextToken}{Token that indicates the start of the next sequential page of results.
 Use the token that is returned with a previous call to this action. To
@@ -59,9 +60,11 @@ PlayerSession object is returned for each session matching the request.
 \item CreatePlayerSessions
 \item DescribePlayerSessions
 \item Game session placements
+\itemize{
 \item StartGameSessionPlacement
 \item DescribeGameSessionPlacement
 \item StopGameSessionPlacement
+}
 }
 }
 \section{Request syntax}{

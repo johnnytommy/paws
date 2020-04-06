@@ -27,7 +27,7 @@ adjustment to use. For example, if the breach threshold is 50 and you
 want to use a step adjustment with a lower bound of 0 and an upper bound
 of 10, you can set the metric value to 59.
 
-If you specify a metric value that doesn't correspond to a step
+If you specify a metric value that doesn\'t correspond to a step
 adjustment for the policy, the call returns an error.
 
 Conditional: This parameter is required if the policy type is
@@ -53,13 +53,15 @@ Executes the specified policy.
 }
 
 \examples{
+\dontrun{
 # This example executes the specified Auto Scaling policy for the
 # specified Auto Scaling group.
-\donttest{svc$execute_policy(
+svc$execute_policy(
   AutoScalingGroupName = "my-auto-scaling-group",
   HonorCooldown = TRUE,
   PolicyName = "ScaleIn"
-)}
+)
+}
 
 }
 \keyword{internal}

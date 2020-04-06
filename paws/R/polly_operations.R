@@ -11,7 +11,7 @@ NULL
 #' `ListLexicon` APIs.
 #' 
 #' For more information, see [Managing
-#' Lexicons](http://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html).
+#' Lexicons](https://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html).
 #'
 #' @usage
 #' polly_delete_lexicon(Name)
@@ -27,10 +27,12 @@ NULL
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # Deletes a specified pronunciation lexicon stored in an AWS Region.
-#' \donttest{svc$delete_lexicon(
+#' svc$delete_lexicon(
 #'   Name = "example"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -77,9 +79,11 @@ polly_delete_lexicon <- function(Name) {
 #' `polly:DescribeVoices` action.
 #'
 #' @usage
-#' polly_describe_voices(LanguageCode, IncludeAdditionalLanguageCodes,
-#'   NextToken)
+#' polly_describe_voices(Engine, LanguageCode,
+#'   IncludeAdditionalLanguageCodes, NextToken)
 #'
+#' @param Engine Specifies the engine (`standard` or `neural`) used by Amazon Polly when
+#' processing input text for speech synthesis.
 #' @param LanguageCode The language identification tag (ISO 639 code for the language name-ISO
 #' 3166 country code) for filtering the list of voices returned. If you
 #' don\'t specify this optional parameter, all available voices are
@@ -95,6 +99,7 @@ polly_delete_lexicon <- function(Name) {
 #' @section Request syntax:
 #' ```
 #' svc$describe_voices(
+#'   Engine = "standard"|"neural",
 #'   LanguageCode = "arb"|"cmn-CN"|"cy-GB"|"da-DK"|"de-DE"|"en-AU"|"en-GB"|"en-GB-WLS"|"en-IN"|"en-US"|"es-ES"|"es-MX"|"es-US"|"fr-CA"|"fr-FR"|"is-IS"|"it-IT"|"ja-JP"|"hi-IN"|"ko-KR"|"nb-NO"|"nl-NL"|"pl-PL"|"pt-BR"|"pt-PT"|"ro-RO"|"ru-RU"|"sv-SE"|"tr-TR",
 #'   IncludeAdditionalLanguageCodes = TRUE|FALSE,
 #'   NextToken = "string"
@@ -102,25 +107,27 @@ polly_delete_lexicon <- function(Name) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # Returns the list of voices that are available for use when requesting
 #' # speech synthesis. Displayed languages are those within the specified
 #' # language code. If no language code is specified, voices for all
 #' # available languages are displayed.
-#' \donttest{svc$describe_voices(
+#' svc$describe_voices(
 #'   LanguageCode = "en-GB"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
 #' @rdname polly_describe_voices
-polly_describe_voices <- function(LanguageCode = NULL, IncludeAdditionalLanguageCodes = NULL, NextToken = NULL) {
+polly_describe_voices <- function(Engine = NULL, LanguageCode = NULL, IncludeAdditionalLanguageCodes = NULL, NextToken = NULL) {
   op <- new_operation(
     name = "DescribeVoices",
     http_method = "GET",
     http_path = "/v1/voices",
     paginator = list()
   )
-  input <- .polly$describe_voices_input(LanguageCode = LanguageCode, IncludeAdditionalLanguageCodes = IncludeAdditionalLanguageCodes, NextToken = NextToken)
+  input <- .polly$describe_voices_input(Engine = Engine, LanguageCode = LanguageCode, IncludeAdditionalLanguageCodes = IncludeAdditionalLanguageCodes, NextToken = NextToken)
   output <- .polly$describe_voices_output()
   config <- get_config()
   svc <- .polly$service(config)
@@ -135,7 +142,7 @@ polly_describe_voices <- function(LanguageCode = NULL, IncludeAdditionalLanguage
 #'
 #' Returns the content of the specified pronunciation lexicon stored in an
 #' AWS Region. For more information, see [Managing
-#' Lexicons](http://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html).
+#' Lexicons](https://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html).
 #'
 #' @usage
 #' polly_get_lexicon(Name)
@@ -150,11 +157,13 @@ polly_describe_voices <- function(LanguageCode = NULL, IncludeAdditionalLanguage
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # Returns the content of the specified pronunciation lexicon stored in an
 #' # AWS Region.
-#' \donttest{svc$get_lexicon(
+#' svc$get_lexicon(
 #'   Name = ""
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -219,7 +228,7 @@ polly_get_speech_synthesis_task <- function(TaskId) {
 #'
 #' Returns a list of pronunciation lexicons stored in an AWS Region. For
 #' more information, see [Managing
-#' Lexicons](http://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html).
+#' Lexicons](https://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html).
 #'
 #' @usage
 #' polly_list_lexicons(NextToken)
@@ -235,8 +244,10 @@ polly_get_speech_synthesis_task <- function(TaskId) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # Returns a list of pronunciation lexicons stored in an AWS Region.
-#' \donttest{svc$list_lexicons()}
+#' svc$list_lexicons()
+#' }
 #'
 #' @keywords internal
 #'
@@ -311,7 +322,7 @@ polly_list_speech_synthesis_tasks <- function(MaxResults = NULL, NextToken = NUL
 #' SynthesizeSpeech operation.
 #' 
 #' For more information, see [Managing
-#' Lexicons](http://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html).
+#' Lexicons](https://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html).
 #'
 #' @usage
 #' polly_put_lexicon(Name, Content)
@@ -330,11 +341,13 @@ polly_list_speech_synthesis_tasks <- function(MaxResults = NULL, NextToken = NUL
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # Stores a pronunciation lexicon in an AWS Region.
-#' \donttest{svc$put_lexicon(
+#' svc$put_lexicon(
 #'   Content = "file://example.pls",
 #'   Name = "W3C"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -369,10 +382,23 @@ polly_put_lexicon <- function(Name, Content) {
 #' task as well as the current status.
 #'
 #' @usage
-#' polly_start_speech_synthesis_task(LexiconNames, OutputFormat,
-#'   OutputS3BucketName, OutputS3KeyPrefix, SampleRate, SnsTopicArn,
-#'   SpeechMarkTypes, Text, TextType, VoiceId, LanguageCode)
+#' polly_start_speech_synthesis_task(Engine, LanguageCode, LexiconNames,
+#'   OutputFormat, OutputS3BucketName, OutputS3KeyPrefix, SampleRate,
+#'   SnsTopicArn, SpeechMarkTypes, Text, TextType, VoiceId)
 #'
+#' @param Engine Specifies the engine (`standard` or `neural`) for Amazon Polly to use
+#' when processing input text for speech synthesis. Using a voice that is
+#' not supported for the engine selected will result in an error.
+#' @param LanguageCode Optional language code for the Speech Synthesis request. This is only
+#' necessary if using a bilingual voice, such as Aditi, which can be used
+#' for either Indian English (en-IN) or Hindi (hi-IN).
+#' 
+#' If a bilingual voice is used and no language code is specified, Amazon
+#' Polly will use the default language of the bilingual voice. The default
+#' language for any voice is the one returned by the
+#' [DescribeVoices](https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html)
+#' operation for the `LanguageCode` parameter. For example, if no language
+#' code is specified, Aditi will use Indian English rather than Hindi.
 #' @param LexiconNames List of one or more pronunciation lexicon names you want the service to
 #' apply during synthesis. Lexicons are applied only if the language of the
 #' lexicon is the same as the language of the voice.
@@ -383,8 +409,9 @@ polly_put_lexicon <- function(Name, Content) {
 #' @param OutputS3KeyPrefix The Amazon S3 key prefix for the output speech file.
 #' @param SampleRate The audio frequency specified in Hz.
 #' 
-#' The valid values for mp3 and ogg\\_vorbis are \"8000\", \"16000\", and
-#' \"22050\". The default value is \"22050\".
+#' The valid values for mp3 and ogg\\_vorbis are \"8000\", \"16000\",
+#' \"22050\", and \"24000\". The default value for standard voices is
+#' \"22050\". The default value for neural voices is \"24000\".
 #' 
 #' Valid values for pcm are \"8000\" and \"16000\" The default value is
 #' \"16000\".
@@ -396,20 +423,12 @@ polly_put_lexicon <- function(Name, Content) {
 #' @param TextType Specifies whether the input text is plain text or SSML. The default
 #' value is plain text.
 #' @param VoiceId &#91;required&#93; Voice ID to use for the synthesis.
-#' @param LanguageCode Optional language code for the Speech Synthesis request. This is only
-#' necessary if using a bilingual voice, such as Aditi, which can be used
-#' for either Indian English (en-IN) or Hindi (hi-IN).
-#' 
-#' If a bilingual voice is used and no language code is specified, Amazon
-#' Polly will use the default language of the bilingual voice. The default
-#' language for any voice is the one returned by the
-#' [DescribeVoices](https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html)
-#' operation for the `LanguageCode` parameter. For example, if no language
-#' code is specified, Aditi will use Indian English rather than Hindi.
 #'
 #' @section Request syntax:
 #' ```
 #' svc$start_speech_synthesis_task(
+#'   Engine = "standard"|"neural",
+#'   LanguageCode = "arb"|"cmn-CN"|"cy-GB"|"da-DK"|"de-DE"|"en-AU"|"en-GB"|"en-GB-WLS"|"en-IN"|"en-US"|"es-ES"|"es-MX"|"es-US"|"fr-CA"|"fr-FR"|"is-IS"|"it-IT"|"ja-JP"|"hi-IN"|"ko-KR"|"nb-NO"|"nl-NL"|"pl-PL"|"pt-BR"|"pt-PT"|"ro-RO"|"ru-RU"|"sv-SE"|"tr-TR",
 #'   LexiconNames = list(
 #'     "string"
 #'   ),
@@ -423,22 +442,21 @@ polly_put_lexicon <- function(Name, Content) {
 #'   ),
 #'   Text = "string",
 #'   TextType = "ssml"|"text",
-#'   VoiceId = "Aditi"|"Amy"|"Astrid"|"Bianca"|"Brian"|"Carla"|"Carmen"|"Celine"|"Chantal"|"Conchita"|"Cristiano"|"Dora"|"Emma"|"Enrique"|"Ewa"|"Filiz"|"Geraint"|"Giorgio"|"Gwyneth"|"Hans"|"Ines"|"Ivy"|"Jacek"|"Jan"|"Joanna"|"Joey"|"Justin"|"Karl"|"Kendra"|"Kimberly"|"Lea"|"Liv"|"Lotte"|"Lucia"|"Mads"|"Maja"|"Marlene"|"Mathieu"|"Matthew"|"Maxim"|"Mia"|"Miguel"|"Mizuki"|"Naja"|"Nicole"|"Penelope"|"Raveena"|"Ricardo"|"Ruben"|"Russell"|"Salli"|"Seoyeon"|"Takumi"|"Tatyana"|"Vicki"|"Vitoria"|"Zeina"|"Zhiyu",
-#'   LanguageCode = "arb"|"cmn-CN"|"cy-GB"|"da-DK"|"de-DE"|"en-AU"|"en-GB"|"en-GB-WLS"|"en-IN"|"en-US"|"es-ES"|"es-MX"|"es-US"|"fr-CA"|"fr-FR"|"is-IS"|"it-IT"|"ja-JP"|"hi-IN"|"ko-KR"|"nb-NO"|"nl-NL"|"pl-PL"|"pt-BR"|"pt-PT"|"ro-RO"|"ru-RU"|"sv-SE"|"tr-TR"
+#'   VoiceId = "Aditi"|"Amy"|"Astrid"|"Bianca"|"Brian"|"Camila"|"Carla"|"Carmen"|"Celine"|"Chantal"|"Conchita"|"Cristiano"|"Dora"|"Emma"|"Enrique"|"Ewa"|"Filiz"|"Geraint"|"Giorgio"|"Gwyneth"|"Hans"|"Ines"|"Ivy"|"Jacek"|"Jan"|"Joanna"|"Joey"|"Justin"|"Karl"|"Kendra"|"Kimberly"|"Lea"|"Liv"|"Lotte"|"Lucia"|"Lupe"|"Mads"|"Maja"|"Marlene"|"Mathieu"|"Matthew"|"Maxim"|"Mia"|"Miguel"|"Mizuki"|"Naja"|"Nicole"|"Penelope"|"Raveena"|"Ricardo"|"Ruben"|"Russell"|"Salli"|"Seoyeon"|"Takumi"|"Tatyana"|"Vicki"|"Vitoria"|"Zeina"|"Zhiyu"
 #' )
 #' ```
 #'
 #' @keywords internal
 #'
 #' @rdname polly_start_speech_synthesis_task
-polly_start_speech_synthesis_task <- function(LexiconNames = NULL, OutputFormat, OutputS3BucketName, OutputS3KeyPrefix = NULL, SampleRate = NULL, SnsTopicArn = NULL, SpeechMarkTypes = NULL, Text, TextType = NULL, VoiceId, LanguageCode = NULL) {
+polly_start_speech_synthesis_task <- function(Engine = NULL, LanguageCode = NULL, LexiconNames = NULL, OutputFormat, OutputS3BucketName, OutputS3KeyPrefix = NULL, SampleRate = NULL, SnsTopicArn = NULL, SpeechMarkTypes = NULL, Text, TextType = NULL, VoiceId) {
   op <- new_operation(
     name = "StartSpeechSynthesisTask",
     http_method = "POST",
     http_path = "/v1/synthesisTasks",
     paginator = list()
   )
-  input <- .polly$start_speech_synthesis_task_input(LexiconNames = LexiconNames, OutputFormat = OutputFormat, OutputS3BucketName = OutputS3BucketName, OutputS3KeyPrefix = OutputS3KeyPrefix, SampleRate = SampleRate, SnsTopicArn = SnsTopicArn, SpeechMarkTypes = SpeechMarkTypes, Text = Text, TextType = TextType, VoiceId = VoiceId, LanguageCode = LanguageCode)
+  input <- .polly$start_speech_synthesis_task_input(Engine = Engine, LanguageCode = LanguageCode, LexiconNames = LexiconNames, OutputFormat = OutputFormat, OutputS3BucketName = OutputS3BucketName, OutputS3KeyPrefix = OutputS3KeyPrefix, SampleRate = SampleRate, SnsTopicArn = SnsTopicArn, SpeechMarkTypes = SpeechMarkTypes, Text = Text, TextType = TextType, VoiceId = VoiceId)
   output <- .polly$start_speech_synthesis_task_output()
   config <- get_config()
   svc <- .polly$service(config)
@@ -455,40 +473,15 @@ polly_start_speech_synthesis_task <- function(LexiconNames = NULL, OutputFormat,
 #' available with all the voices (for example, Cyrillic might not be read
 #' at all by English voices) unless phoneme mapping is used. For more
 #' information, see [How it
-#' Works](http://docs.aws.amazon.com/polly/latest/dg/how-text-to-speech-works.html).
+#' Works](https://docs.aws.amazon.com/polly/latest/dg/how-text-to-speech-works.html).
 #'
 #' @usage
-#' polly_synthesize_speech(LexiconNames, OutputFormat, SampleRate,
-#'   SpeechMarkTypes, Text, TextType, VoiceId, LanguageCode)
+#' polly_synthesize_speech(Engine, LanguageCode, LexiconNames,
+#'   OutputFormat, SampleRate, SpeechMarkTypes, Text, TextType, VoiceId)
 #'
-#' @param LexiconNames List of one or more pronunciation lexicon names you want the service to
-#' apply during synthesis. Lexicons are applied only if the language of the
-#' lexicon is the same as the language of the voice. For information about
-#' storing lexicons, see
-#' [PutLexicon](http://docs.aws.amazon.com/polly/latest/dg/API_PutLexicon.html).
-#' @param OutputFormat &#91;required&#93; The format in which the returned output will be encoded. For audio
-#' stream, this will be mp3, ogg\\_vorbis, or pcm. For speech marks, this
-#' will be json.
-#' 
-#' When pcm is used, the content returned is audio/pcm in a signed 16-bit,
-#' 1 channel (mono), little-endian format.
-#' @param SampleRate The audio frequency specified in Hz.
-#' 
-#' The valid values for `mp3` and `ogg_vorbis` are \"8000\", \"16000\", and
-#' \"22050\". The default value is \"22050\".
-#' 
-#' Valid values for `pcm` are \"8000\" and \"16000\" The default value is
-#' \"16000\".
-#' @param SpeechMarkTypes The type of speech marks returned for the input text.
-#' @param Text &#91;required&#93; Input text to synthesize. If you specify `ssml` as the `TextType`,
-#' follow the SSML format for the input text.
-#' @param TextType Specifies whether the input text is plain text or SSML. The default
-#' value is plain text. For more information, see [Using
-#' SSML](http://docs.aws.amazon.com/polly/latest/dg/ssml.html).
-#' @param VoiceId &#91;required&#93; Voice ID to use for the synthesis. You can get a list of available voice
-#' IDs by calling the
-#' [DescribeVoices](http://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html)
-#' operation.
+#' @param Engine Specifies the engine (`standard` or `neural`) for Amazon Polly to use
+#' when processing input text for speech synthesis. Using a voice that is
+#' not supported for the engine selected will result in an error.
 #' @param LanguageCode Optional language code for the Synthesize Speech request. This is only
 #' necessary if using a bilingual voice, such as Aditi, which can be used
 #' for either Indian English (en-IN) or Hindi (hi-IN).
@@ -499,10 +492,41 @@ polly_start_speech_synthesis_task <- function(LexiconNames = NULL, OutputFormat,
 #' [DescribeVoices](https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html)
 #' operation for the `LanguageCode` parameter. For example, if no language
 #' code is specified, Aditi will use Indian English rather than Hindi.
+#' @param LexiconNames List of one or more pronunciation lexicon names you want the service to
+#' apply during synthesis. Lexicons are applied only if the language of the
+#' lexicon is the same as the language of the voice. For information about
+#' storing lexicons, see
+#' [PutLexicon](https://docs.aws.amazon.com/polly/latest/dg/API_PutLexicon.html).
+#' @param OutputFormat &#91;required&#93; The format in which the returned output will be encoded. For audio
+#' stream, this will be mp3, ogg\\_vorbis, or pcm. For speech marks, this
+#' will be json.
+#' 
+#' When pcm is used, the content returned is audio/pcm in a signed 16-bit,
+#' 1 channel (mono), little-endian format.
+#' @param SampleRate The audio frequency specified in Hz.
+#' 
+#' The valid values for mp3 and ogg\\_vorbis are \"8000\", \"16000\",
+#' \"22050\", and \"24000\". The default value for standard voices is
+#' \"22050\". The default value for neural voices is \"24000\".
+#' 
+#' Valid values for pcm are \"8000\" and \"16000\" The default value is
+#' \"16000\".
+#' @param SpeechMarkTypes The type of speech marks returned for the input text.
+#' @param Text &#91;required&#93; Input text to synthesize. If you specify `ssml` as the `TextType`,
+#' follow the SSML format for the input text.
+#' @param TextType Specifies whether the input text is plain text or SSML. The default
+#' value is plain text. For more information, see [Using
+#' SSML](https://docs.aws.amazon.com/polly/latest/dg/ssml.html).
+#' @param VoiceId &#91;required&#93; Voice ID to use for the synthesis. You can get a list of available voice
+#' IDs by calling the
+#' [DescribeVoices](https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html)
+#' operation.
 #'
 #' @section Request syntax:
 #' ```
 #' svc$synthesize_speech(
+#'   Engine = "standard"|"neural",
+#'   LanguageCode = "arb"|"cmn-CN"|"cy-GB"|"da-DK"|"de-DE"|"en-AU"|"en-GB"|"en-GB-WLS"|"en-IN"|"en-US"|"es-ES"|"es-MX"|"es-US"|"fr-CA"|"fr-FR"|"is-IS"|"it-IT"|"ja-JP"|"hi-IN"|"ko-KR"|"nb-NO"|"nl-NL"|"pl-PL"|"pt-BR"|"pt-PT"|"ro-RO"|"ru-RU"|"sv-SE"|"tr-TR",
 #'   LexiconNames = list(
 #'     "string"
 #'   ),
@@ -513,14 +537,14 @@ polly_start_speech_synthesis_task <- function(LexiconNames = NULL, OutputFormat,
 #'   ),
 #'   Text = "string",
 #'   TextType = "ssml"|"text",
-#'   VoiceId = "Aditi"|"Amy"|"Astrid"|"Bianca"|"Brian"|"Carla"|"Carmen"|"Celine"|"Chantal"|"Conchita"|"Cristiano"|"Dora"|"Emma"|"Enrique"|"Ewa"|"Filiz"|"Geraint"|"Giorgio"|"Gwyneth"|"Hans"|"Ines"|"Ivy"|"Jacek"|"Jan"|"Joanna"|"Joey"|"Justin"|"Karl"|"Kendra"|"Kimberly"|"Lea"|"Liv"|"Lotte"|"Lucia"|"Mads"|"Maja"|"Marlene"|"Mathieu"|"Matthew"|"Maxim"|"Mia"|"Miguel"|"Mizuki"|"Naja"|"Nicole"|"Penelope"|"Raveena"|"Ricardo"|"Ruben"|"Russell"|"Salli"|"Seoyeon"|"Takumi"|"Tatyana"|"Vicki"|"Vitoria"|"Zeina"|"Zhiyu",
-#'   LanguageCode = "arb"|"cmn-CN"|"cy-GB"|"da-DK"|"de-DE"|"en-AU"|"en-GB"|"en-GB-WLS"|"en-IN"|"en-US"|"es-ES"|"es-MX"|"es-US"|"fr-CA"|"fr-FR"|"is-IS"|"it-IT"|"ja-JP"|"hi-IN"|"ko-KR"|"nb-NO"|"nl-NL"|"pl-PL"|"pt-BR"|"pt-PT"|"ro-RO"|"ru-RU"|"sv-SE"|"tr-TR"
+#'   VoiceId = "Aditi"|"Amy"|"Astrid"|"Bianca"|"Brian"|"Camila"|"Carla"|"Carmen"|"Celine"|"Chantal"|"Conchita"|"Cristiano"|"Dora"|"Emma"|"Enrique"|"Ewa"|"Filiz"|"Geraint"|"Giorgio"|"Gwyneth"|"Hans"|"Ines"|"Ivy"|"Jacek"|"Jan"|"Joanna"|"Joey"|"Justin"|"Karl"|"Kendra"|"Kimberly"|"Lea"|"Liv"|"Lotte"|"Lucia"|"Lupe"|"Mads"|"Maja"|"Marlene"|"Mathieu"|"Matthew"|"Maxim"|"Mia"|"Miguel"|"Mizuki"|"Naja"|"Nicole"|"Penelope"|"Raveena"|"Ricardo"|"Ruben"|"Russell"|"Salli"|"Seoyeon"|"Takumi"|"Tatyana"|"Vicki"|"Vitoria"|"Zeina"|"Zhiyu"
 #' )
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # Synthesizes plain text or SSML into a file of human-like speech.
-#' \donttest{svc$synthesize_speech(
+#' svc$synthesize_speech(
 #'   LexiconNames = list(
 #'     "example"
 #'   ),
@@ -529,19 +553,20 @@ polly_start_speech_synthesis_task <- function(LexiconNames = NULL, OutputFormat,
 #'   Text = "All Gaul is divided into three parts",
 #'   TextType = "text",
 #'   VoiceId = "Joanna"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
 #' @rdname polly_synthesize_speech
-polly_synthesize_speech <- function(LexiconNames = NULL, OutputFormat, SampleRate = NULL, SpeechMarkTypes = NULL, Text, TextType = NULL, VoiceId, LanguageCode = NULL) {
+polly_synthesize_speech <- function(Engine = NULL, LanguageCode = NULL, LexiconNames = NULL, OutputFormat, SampleRate = NULL, SpeechMarkTypes = NULL, Text, TextType = NULL, VoiceId) {
   op <- new_operation(
     name = "SynthesizeSpeech",
     http_method = "POST",
     http_path = "/v1/speech",
     paginator = list()
   )
-  input <- .polly$synthesize_speech_input(LexiconNames = LexiconNames, OutputFormat = OutputFormat, SampleRate = SampleRate, SpeechMarkTypes = SpeechMarkTypes, Text = Text, TextType = TextType, VoiceId = VoiceId, LanguageCode = LanguageCode)
+  input <- .polly$synthesize_speech_input(Engine = Engine, LanguageCode = LanguageCode, LexiconNames = LexiconNames, OutputFormat = OutputFormat, SampleRate = SampleRate, SpeechMarkTypes = SpeechMarkTypes, Text = Text, TextType = TextType, VoiceId = VoiceId)
   output <- .polly$synthesize_speech_output()
   config <- get_config()
   svc <- .polly$service(config)

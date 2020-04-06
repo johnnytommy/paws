@@ -13,9 +13,9 @@ Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
 
 For example:
 \itemize{
-\item Key ID: \code{1234abcd-12ab-34cd-56ef-1234567890ab}
+\item Key ID: \verb{1234abcd-12ab-34cd-56ef-1234567890ab}
 \item Key ARN:
-\code{arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab}
+\verb{arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab}
 }
 
 To get the key ID and key ARN for a CMK, use ListKeys or DescribeKey.}
@@ -36,12 +36,14 @@ You cannot perform this operation on a CMK in a different AWS account.
 }
 
 \examples{
+\dontrun{
 # The following example retrieves the key policy for the specified
 # customer master key (CMK).
-\donttest{svc$get_key_policy(
+svc$get_key_policy(
   KeyId = "1234abcd-12ab-34cd-56ef-1234567890ab",
   PolicyName = "default"
-)}
+)
+}
 
 }
 \keyword{internal}

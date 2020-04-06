@@ -12,7 +12,7 @@ quicksight_list_user_groups(UserName, AwsAccountId, Namespace,
 \item{UserName}{[required] The Amazon QuickSight user name that you want to list group memberships
 for.}
 
-\item{AwsAccountId}{[required] The AWS Account ID that the user is in. Currently, you use the ID for
+\item{AwsAccountId}{[required] The AWS account ID that the user is in. Currently, you use the ID for
 the AWS account that contains your Amazon QuickSight account.}
 
 \item{Namespace}{[required] The namespace. Currently, you should set this to \code{default}.}
@@ -24,16 +24,6 @@ the AWS account that contains your Amazon QuickSight account.}
 \description{
 Lists the Amazon QuickSight groups that an Amazon QuickSight user is a
 member of.
-}
-\details{
-The permission resource is
-\code{arn:aws:quicksight:us-east-1:<i>&lt;aws-account-id&gt;</i>:user/default/<i>&lt;user-name&gt;</i> }.
-
-The response is a one or more group objects.
-
-\strong{CLI Sample:}
-
-\code{aws quicksight list-user-groups -\\-user-name=Pat -\\-aws-account-id=111122223333 -\\-namespace=default -\\-region=us-east-1 }
 }
 \section{Request syntax}{
 \preformatted{svc$list_user_groups(

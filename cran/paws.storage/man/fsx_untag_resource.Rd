@@ -10,7 +10,7 @@ fsx_untag_resource(ResourceARN, TagKeys)
 \item{ResourceARN}{[required] The ARN of the Amazon FSx resource to untag.}
 
 \item{TagKeys}{[required] A list of keys of tags on the resource to untag. In case the tag key
-doesn't exist, the call will still succeed to be idempotent.}
+doesn\'t exist, the call will still succeed to be idempotent.}
 }
 \description{
 This action removes a tag from an Amazon FSx resource.
@@ -26,13 +26,15 @@ This action removes a tag from an Amazon FSx resource.
 }
 
 \examples{
+\dontrun{
 # This operation untags an Amazon FSx resource.
-\donttest{svc$untag_resource(
+svc$untag_resource(
   ResourceARN = "arn:aws:fsx:us-east-1:012345678912:file-system/fs-0498eed5fe91001ec",
   TagKeys = list(
     "Name"
   )
-)}
+)
+}
 
 }
 \keyword{internal}

@@ -30,10 +30,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- pinpointsmsvoice()
+#' \dontrun{
+#' svc <- pinpointsmsvoice()
 #' svc$create_configuration_set(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -70,8 +72,7 @@ pinpointsmsvoice <- function(config = list()) {
   target_prefix = ""
 )
 
-.pinpointsmsvoice$handlers <- new_handlers("restjson", "v4")
-
 .pinpointsmsvoice$service <- function(config = list()) {
-  new_service(.pinpointsmsvoice$metadata, .pinpointsmsvoice$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.pinpointsmsvoice$metadata, handlers, config)
 }

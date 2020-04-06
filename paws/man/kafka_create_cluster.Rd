@@ -6,7 +6,7 @@
 \usage{
 kafka_create_cluster(BrokerNodeGroupInfo, ClientAuthentication,
   ClusterName, ConfigurationInfo, EncryptionInfo, EnhancedMonitoring,
-  KafkaVersion, NumberOfBrokerNodes, Tags)
+  OpenMonitoring, KafkaVersion, NumberOfBrokerNodes, Tags)
 }
 \arguments{
 \item{BrokerNodeGroupInfo}{[required]
@@ -23,6 +23,8 @@ kafka_create_cluster(BrokerNodeGroupInfo, ClientAuthentication,
 
 \item{EnhancedMonitoring}{<p>Specifies the level of monitoring for the MSK cluster. The possible values are DEFAULT, PER_BROKER, and PER_TOPIC_PER_BROKER.</p>}
 
+\item{OpenMonitoring}{<p>The settings for open monitoring.</p>}
+
 \item{KafkaVersion}{[required]
 <p>The version of Apache Kafka.</p>}
 
@@ -32,7 +34,8 @@ kafka_create_cluster(BrokerNodeGroupInfo, ClientAuthentication,
 \item{Tags}{<p>Create tags when creating the cluster.</p>}
 }
 \description{
-<p>Creates a new MSK cluster.</p>
+\preformatted{        <p>Creates a new MSK cluster.</p>
+}
 }
 \section{Request syntax}{
 \preformatted{svc$create_cluster(
@@ -73,6 +76,16 @@ kafka_create_cluster(BrokerNodeGroupInfo, ClientAuthentication,
     )
   ),
   EnhancedMonitoring = "DEFAULT"|"PER_BROKER"|"PER_TOPIC_PER_BROKER",
+  OpenMonitoring = list(
+    Prometheus = list(
+      JmxExporter = list(
+        EnabledInBroker = TRUE|FALSE
+      ),
+      NodeExporter = list(
+        EnabledInBroker = TRUE|FALSE
+      )
+    )
+  ),
   KafkaVersion = "string",
   NumberOfBrokerNodes = 123,
   Tags = list(

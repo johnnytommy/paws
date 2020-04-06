@@ -64,10 +64,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- workmail()
+#' \dontrun{
+#' svc <- workmail()
 #' svc$associate_delegate_to_resource(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -129,8 +131,7 @@ workmail <- function(config = list()) {
   target_prefix = "WorkMailService"
 )
 
-.workmail$handlers <- new_handlers("jsonrpc", "v4")
-
 .workmail$service <- function(config = list()) {
-  new_service(.workmail$metadata, .workmail$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.workmail$metadata, handlers, config)
 }

@@ -7,7 +7,7 @@
 devicefarm_get_device_pool(arn)
 }
 \arguments{
-\item{arn}{[required] The device pool's ARN.}
+\item{arn}{[required] The device pool\'s ARN.}
 }
 \description{
 Gets information about a device pool.
@@ -20,11 +20,13 @@ Gets information about a device pool.
 }
 
 \examples{
+\dontrun{
 # The following example returns information about a specific device pool,
 # given a project ARN.
-\donttest{svc$get_device_pool(
+svc$get_device_pool(
   arn = "arn:aws:devicefarm:us-west-2:123456789101:project:EXAMPLE-GUID-123-456"
-)}
+)
+}
 
 }
 \keyword{internal}

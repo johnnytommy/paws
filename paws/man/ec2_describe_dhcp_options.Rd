@@ -19,7 +19,7 @@ Default: Describes all your DHCP options sets.}
 \item \code{value} - The value for one of the options.
 \item \code{owner-id} - The ID of the AWS account that owns the DHCP options
 set.
-\item \code{tag}:\<key\> - The key/value combination of a tag assigned to the
+\item \code{tag}:\\<key\\> - The key/value combination of a tag assigned to the
 resource. Use the tag key in the filter name and the tag value as
 the filter value. For example, to find all resources that have a tag
 with the key \code{Owner} and the value \code{TeamA}, specify \code{tag:Owner} for
@@ -68,12 +68,14 @@ in the \emph{Amazon Virtual Private Cloud User Guide}.
 }
 
 \examples{
+\dontrun{
 # This example describes the specified DHCP options set.
-\donttest{svc$describe_dhcp_options(
+svc$describe_dhcp_options(
   DhcpOptionsIds = list(
     "dopt-d9070ebb"
   )
-)}
+)
+}
 
 }
 \keyword{internal}

@@ -50,10 +50,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- cognitoidentity()
+#' \dontrun{
+#' svc <- cognitoidentity()
 #' svc$create_identity_pool(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -103,8 +105,7 @@ cognitoidentity <- function(config = list()) {
   target_prefix = "AWSCognitoIdentityService"
 )
 
-.cognitoidentity$handlers <- new_handlers("jsonrpc", "v4")
-
 .cognitoidentity$service <- function(config = list()) {
-  new_service(.cognitoidentity$metadata, .cognitoidentity$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.cognitoidentity$metadata, handlers, config)
 }

@@ -7,8 +7,8 @@
 devicefarm_delete_upload(arn)
 }
 \arguments{
-\item{arn}{[required] Represents the Amazon Resource Name (ARN) of the Device Farm upload you
-wish to delete.}
+\item{arn}{[required] Represents the Amazon Resource Name (ARN) of the Device Farm upload to
+delete.}
 }
 \description{
 Deletes an upload given the upload ARN.
@@ -21,10 +21,12 @@ Deletes an upload given the upload ARN.
 }
 
 \examples{
+\dontrun{
 # The following example deletes a specific upload.
-\donttest{svc$delete_upload(
+svc$delete_upload(
   arn = "arn:aws:devicefarm:us-west-2:123456789101:upload:EXAMPLE-GUID-123-456"
-)}
+)
+}
 
 }
 \keyword{internal}

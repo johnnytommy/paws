@@ -17,7 +17,7 @@ the required permissions, the error response is \code{DryRunOperation}.
 Otherwise, it is \code{UnauthorizedOperation}.}
 }
 \description{
-Starts an Amazon EBS-backed instance that you've previously stopped.
+Starts an Amazon EBS-backed instance that you\'ve previously stopped.
 }
 \details{
 Instances that use Amazon EBS volumes as their root devices can be
@@ -55,12 +55,14 @@ in the \emph{Amazon Elastic Compute Cloud User Guide}.
 }
 
 \examples{
+\dontrun{
 # This example starts the specified EC2 instance.
-\donttest{svc$start_instances(
+svc$start_instances(
   InstanceIds = list(
     "i-1234567890abcdef0"
   )
-)}
+)
+}
 
 }
 \keyword{internal}

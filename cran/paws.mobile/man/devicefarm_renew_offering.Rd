@@ -16,8 +16,8 @@ devicefarm_renew_offering(offeringId, quantity)
 Explicitly sets the quantity of devices to renew for an offering,
 starting from the \code{effectiveDate} of the next period. The API returns a
 \code{NotEligible} error if the user is not permitted to invoke the
-operation. Please contact \href{mailto:aws-devicefarm-support@amazon.com}{aws-devicefarm-support@amazon.com} if you
-believe that you should be able to invoke this operation.
+operation. If you must be able to invoke this operation, contact
+\href{mailto:aws-devicefarm-support@amazon.com}{aws-devicefarm-support@amazon.com}.
 }
 \section{Request syntax}{
 \preformatted{svc$renew_offering(
@@ -28,11 +28,13 @@ believe that you should be able to invoke this operation.
 }
 
 \examples{
+\dontrun{
 # The following example renews a specific device slot offering.
-\donttest{svc$renew_offering(
+svc$renew_offering(
   offeringId = "D68B3C05-1BA6-4360-BC69-12345EXAMPLE",
   quantity = 1L
-)}
+)
+}
 
 }
 \keyword{internal}

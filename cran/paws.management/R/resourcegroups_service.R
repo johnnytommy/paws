@@ -65,10 +65,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- resourcegroups()
+#' \dontrun{
+#' svc <- resourcegroups()
 #' svc$create_group(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -109,8 +111,7 @@ resourcegroups <- function(config = list()) {
   target_prefix = ""
 )
 
-.resourcegroups$handlers <- new_handlers("restjson", "v4")
-
 .resourcegroups$service <- function(config = list()) {
-  new_service(.resourcegroups$metadata, .resourcegroups$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.resourcegroups$metadata, handlers, config)
 }

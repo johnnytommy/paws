@@ -34,12 +34,14 @@ NULL
 #' ```
 #'
 #' @examples
+#' \dontrun{
+#' svc <- lexmodelbuildingservice()
 #' # This example shows how to get configuration information for a bot.
-#' \donttest{svc <- lexmodelbuildingservice()
 #' svc$get_bot(
 #'   name = "DocOrderPizza",
 #'   versionOrAlias = "$LATEST"
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -60,19 +62,19 @@ NULL
 #'  \link[=lexmodelbuildingservice_get_bot_aliases]{get_bot_aliases} \tab Returns a list of aliases for a specified Amazon Lex bot \cr
 #'  \link[=lexmodelbuildingservice_get_bot_channel_association]{get_bot_channel_association} \tab Returns information about the association between an Amazon Lex bot and a messaging platform \cr
 #'  \link[=lexmodelbuildingservice_get_bot_channel_associations]{get_bot_channel_associations} \tab Returns a list of all of the channels associated with the specified bot \cr
-#'  \link[=lexmodelbuildingservice_get_bot_versions]{get_bot_versions} \tab Gets information about all of the versions of a bot \cr
 #'  \link[=lexmodelbuildingservice_get_bots]{get_bots} \tab Returns bot information as follows: - If you provide the nameContains field, the response includes information for the $LATEST version of all bots whose name contains the specified string\cr
+#'  \link[=lexmodelbuildingservice_get_bot_versions]{get_bot_versions} \tab Gets information about all of the versions of a bot \cr
 #'  \link[=lexmodelbuildingservice_get_builtin_intent]{get_builtin_intent} \tab Returns information about a built-in intent \cr
 #'  \link[=lexmodelbuildingservice_get_builtin_intents]{get_builtin_intents} \tab Gets a list of built-in intents that meet the specified criteria \cr
 #'  \link[=lexmodelbuildingservice_get_builtin_slot_types]{get_builtin_slot_types} \tab Gets a list of built-in slot types that meet the specified criteria \cr
 #'  \link[=lexmodelbuildingservice_get_export]{get_export} \tab Exports the contents of a Amazon Lex resource in a specified format \cr
 #'  \link[=lexmodelbuildingservice_get_import]{get_import} \tab Gets information about an import job started with the StartImport operation \cr
 #'  \link[=lexmodelbuildingservice_get_intent]{get_intent} \tab Returns information about an intent \cr
-#'  \link[=lexmodelbuildingservice_get_intent_versions]{get_intent_versions} \tab Gets information about all of the versions of an intent \cr
 #'  \link[=lexmodelbuildingservice_get_intents]{get_intents} \tab Returns intent information as follows: - If you specify the nameContains field, returns the $LATEST version of all intents that contain the specified string \cr
+#'  \link[=lexmodelbuildingservice_get_intent_versions]{get_intent_versions} \tab Gets information about all of the versions of an intent \cr
 #'  \link[=lexmodelbuildingservice_get_slot_type]{get_slot_type} \tab Returns information about a specific version of a slot type \cr
-#'  \link[=lexmodelbuildingservice_get_slot_type_versions]{get_slot_type_versions} \tab Gets information about all versions of a slot type \cr
 #'  \link[=lexmodelbuildingservice_get_slot_types]{get_slot_types} \tab Returns slot type information as follows: - If you specify the nameContains field, returns the $LATEST version of all slot types that contain the specified string \cr
+#'  \link[=lexmodelbuildingservice_get_slot_type_versions]{get_slot_type_versions} \tab Gets information about all versions of a slot type \cr
 #'  \link[=lexmodelbuildingservice_get_utterances_view]{get_utterances_view} \tab Use the GetUtterancesView operation to get information about the utterances that your users have made to your bot \cr
 #'  \link[=lexmodelbuildingservice_put_bot]{put_bot} \tab Creates an Amazon Lex conversational bot or replaces an existing bot \cr
 #'  \link[=lexmodelbuildingservice_put_bot_alias]{put_bot_alias} \tab Creates an alias for the specified version of the bot or replaces an alias for the specified bot \cr
@@ -104,8 +106,7 @@ lexmodelbuildingservice <- function(config = list()) {
   target_prefix = ""
 )
 
-.lexmodelbuildingservice$handlers <- new_handlers("restjson", "v4")
-
 .lexmodelbuildingservice$service <- function(config = list()) {
-  new_service(.lexmodelbuildingservice$metadata, .lexmodelbuildingservice$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.lexmodelbuildingservice$metadata, handlers, config)
 }

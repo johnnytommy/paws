@@ -10,7 +10,7 @@ databasemigrationservice_describe_endpoints(Filters, MaxRecords, Marker)
 \arguments{
 \item{Filters}{Filters applied to the describe action.
 
-Valid filter names: endpoint-arn \| endpoint-type \| endpoint-id \|
+Valid filter names: endpoint-arn \\| endpoint-type \\| endpoint-id \\|
 engine-name}
 
 \item{MaxRecords}{The maximum number of records to include in the response. If more
@@ -47,9 +47,10 @@ region.
 }
 
 \examples{
+\dontrun{
 # Returns information about the endpoints for your account in the current
 # region.
-\donttest{svc$describe_endpoints(
+svc$describe_endpoints(
   Filters = list(
     list(
       Name = "string",
@@ -61,7 +62,8 @@ region.
   ),
   Marker = "",
   MaxRecords = 123L
-)}
+)
+}
 
 }
 \keyword{internal}

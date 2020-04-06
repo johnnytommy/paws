@@ -15,8 +15,7 @@ tag is composed of a key/value pair.}
 }
 \description{
 Removes one or more tags from the specified resource. This operation is
-only supported in the cached volume, stored volume and tape gateway
-types.
+supported in storage gateways of all types.
 }
 \section{Request syntax}{
 \preformatted{svc$remove_tags_from_resource(
@@ -29,15 +28,17 @@ types.
 }
 
 \examples{
+\dontrun{
 # Lists the iSCSI stored volumes of a gateway. Removes one or more tags
 # from the specified resource.
-\donttest{svc$remove_tags_from_resource(
+svc$remove_tags_from_resource(
   ResourceARN = "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-11A2222B",
   TagKeys = list(
     "Dev Gatgeway Region",
     "East Coast"
   )
-)}
+)
+}
 
 }
 \keyword{internal}

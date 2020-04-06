@@ -47,10 +47,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- iotjobsdataplane()
+#' \dontrun{
+#' svc <- iotjobsdataplane()
 #' svc$describe_job_execution(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -83,8 +85,7 @@ iotjobsdataplane <- function(config = list()) {
   target_prefix = ""
 )
 
-.iotjobsdataplane$handlers <- new_handlers("restjson", "v4")
-
 .iotjobsdataplane$service <- function(config = list()) {
-  new_service(.iotjobsdataplane$metadata, .iotjobsdataplane$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.iotjobsdataplane$metadata, handlers, config)
 }

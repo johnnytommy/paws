@@ -36,10 +36,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- fms()
+#' \dontrun{
+#' svc <- fms()
 #' svc$associate_admin_account(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -49,14 +51,17 @@ NULL
 #'  \link[=fms_disassociate_admin_account]{disassociate_admin_account} \tab Disassociates the account that has been set as the AWS Firewall Manager administrator account \cr
 #'  \link[=fms_get_admin_account]{get_admin_account} \tab Returns the AWS Organizations master account that is associated with AWS Firewall Manager as the AWS Firewall Manager administrator \cr
 #'  \link[=fms_get_compliance_detail]{get_compliance_detail} \tab Returns detailed compliance information about the specified member account \cr
-#'  \link[=fms_get_notification_channel]{get_notification_channel} \tab Returns information about the Amazon Simple Notification Service (SNS) topic that is used to record AWS Firewall Manager SNS logs \cr
+#'  \link[=fms_get_notification_channel]{get_notification_channel} \tab Information about the Amazon Simple Notification Service (SNS) topic that is used to record AWS Firewall Manager SNS logs \cr
 #'  \link[=fms_get_policy]{get_policy} \tab Returns information about the specified AWS Firewall Manager policy \cr
 #'  \link[=fms_get_protection_status]{get_protection_status} \tab If you created a Shield Advanced policy, returns policy-level attack summary information in the event of a potential DDoS attack \cr
 #'  \link[=fms_list_compliance_status]{list_compliance_status} \tab Returns an array of PolicyComplianceStatus objects in the response \cr
 #'  \link[=fms_list_member_accounts]{list_member_accounts} \tab Returns a MemberAccounts object that lists the member accounts in the administrator's AWS organization \cr
 #'  \link[=fms_list_policies]{list_policies} \tab Returns an array of PolicySummary objects in the response \cr
+#'  \link[=fms_list_tags_for_resource]{list_tags_for_resource} \tab Retrieves the list of tags for the specified AWS resource \cr
 #'  \link[=fms_put_notification_channel]{put_notification_channel} \tab Designates the IAM role and Amazon Simple Notification Service (SNS) topic that AWS Firewall Manager uses to record SNS logs \cr
-#'  \link[=fms_put_policy]{put_policy} \tab Creates an AWS Firewall Manager policy 
+#'  \link[=fms_put_policy]{put_policy} \tab Creates an AWS Firewall Manager policy \cr
+#'  \link[=fms_tag_resource]{tag_resource} \tab Adds one or more tags to an AWS resource \cr
+#'  \link[=fms_untag_resource]{untag_resource} \tab Removes one or more tags from an AWS resource 
 #' }
 #'
 #' @rdname fms
@@ -82,8 +87,7 @@ fms <- function(config = list()) {
   target_prefix = "AWSFMS_20180101"
 )
 
-.fms$handlers <- new_handlers("jsonrpc", "v4")
-
 .fms$service <- function(config = list()) {
-  new_service(.fms$metadata, .fms$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.fms$metadata, handlers, config)
 }

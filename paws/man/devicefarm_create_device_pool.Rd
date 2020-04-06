@@ -10,17 +10,17 @@ devicefarm_create_device_pool(projectArn, name, description, rules,
 \arguments{
 \item{projectArn}{[required] The ARN of the project for the device pool.}
 
-\item{name}{[required] The device pool's name.}
+\item{name}{[required] The device pool\'s name.}
 
-\item{description}{The device pool's description.}
+\item{description}{The device pool\'s description.}
 
-\item{rules}{[required] The device pool's rules.}
+\item{rules}{[required] The device pool\'s rules.}
 
 \item{maxDevices}{The number of devices that Device Farm can add to your device pool.
-Device Farm adds devices that are available and that meet the criteria
-that you assign for the \code{rules} parameter. Depending on how many devices
-meet these constraints, your device pool might contain fewer devices
-than the value for this parameter.
+Device Farm adds devices that are available and meet the criteria that
+you assign for the \code{rules} parameter. Depending on how many devices meet
+these constraints, your device pool might contain fewer devices than the
+value for this parameter.
 
 By specifying the maximum number of devices, you can control the costs
 that you incur by running tests.}
@@ -46,14 +46,16 @@ Creates a device pool.
 }
 
 \examples{
+\dontrun{
 # The following example creates a new device pool named MyDevicePool
 # inside an existing project.
-\donttest{svc$create_device_pool(
+svc$create_device_pool(
   name = "MyDevicePool",
   description = "My Android devices",
   projectArn = "arn:aws:devicefarm:us-west-2:123456789101:project:EXAMPLE-GUID-123-456",
   rules = list()
-)}
+)
+}
 
 }
 \keyword{internal}

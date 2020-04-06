@@ -14,7 +14,7 @@ elbv2_create_listener(LoadBalancerArn, Protocol, Port, SslPolicy,
 \item{Protocol}{[required] The protocol for connections from clients to the load balancer. For
 Application Load Balancers, the supported protocols are HTTP and HTTPS.
 For Network Load Balancers, the supported protocols are TCP, TLS, UDP,
-and TCP\_UDP.}
+and TCP\\_UDP.}
 
 \item{Port}{[required] The port on which the load balancer is listening.}
 
@@ -32,10 +32,10 @@ AddListenerCertificates.}
 \item{DefaultActions}{[required] The actions for the default rule. The rule must include one forward
 action or one or more fixed-response actions.
 
-If the action type is \code{forward}, you specify a target group. The
-protocol of the target group must be HTTP or HTTPS for an Application
-Load Balancer. The protocol of the target group must be TCP, TLS, UDP,
-or TCP\_UDP for a Network Load Balancer.
+If the action type is \code{forward}, you specify one or more target groups.
+The protocol of the target group must be HTTP or HTTPS for an
+Application Load Balancer. The protocol of the target group must be TCP,
+TLS, UDP, or TCP\\_UDP for a Network Load Balancer.
 
 [HTTPS listeners] If the action type is \code{authenticate-oidc}, you
 authenticate users through an identity provider that is OpenID Connect
@@ -125,6 +125,18 @@ in the \emph{Network Load Balancers Guide}.
         MessageBody = "string",
         StatusCode = "string",
         ContentType = "string"
+      ),
+      ForwardConfig = list(
+        TargetGroups = list(
+          list(
+            TargetGroupArn = "string",
+            Weight = 123
+          )
+        ),
+        TargetGroupStickinessConfig = list(
+          Enabled = TRUE|FALSE,
+          DurationSeconds = 123
+        )
       )
     )
   )
@@ -133,9 +145,10 @@ in the \emph{Network Load Balancers Guide}.
 }
 
 \examples{
+\dontrun{
 # This example creates an HTTP listener for the specified load balancer
 # that forwards requests to the specified target group.
-\donttest{svc$create_listener(
+svc$create_listener(
   DefaultActions = list(
     list(
       TargetGroupArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-t...",
@@ -145,7 +158,7 @@ in the \emph{Network Load Balancers Guide}.
   LoadBalancerArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my...",
   Port = 80L,
   Protocol = "HTTP"
-)}
+)
 
 # This example creates an HTTPS listener for the specified load balancer
 # that forwards requests to the specified target group. Note that you must
@@ -154,7 +167,7 @@ in the \emph{Network Load Balancers Guide}.
 # you can create a certificate using SSL/TLS tools, get the certificate
 # signed by a certificate authority (CA), and upload the certificate to
 # AWS Identity and Access Management (IAM).
-\donttest{svc$create_listener(
+svc$create_listener(
   Certificates = list(
     list(
       CertificateArn = "arn:aws:iam::123456789012:server-certificate/my-server-cert"
@@ -170,7 +183,8 @@ in the \emph{Network Load Balancers Guide}.
   Port = 443L,
   Protocol = "HTTPS",
   SslPolicy = "ELBSecurityPolicy-2015-05"
-)}
+)
+}
 
 }
 \keyword{internal}

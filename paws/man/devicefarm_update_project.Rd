@@ -8,13 +8,13 @@ name}
 devicefarm_update_project(arn, name, defaultJobTimeoutMinutes)
 }
 \arguments{
-\item{arn}{[required] The Amazon Resource Name (ARN) of the project whose name you wish to
-update.}
+\item{arn}{[required] The Amazon Resource Name (ARN) of the project whose name to update.}
 
-\item{name}{A string representing the new name of the project that you are updating.}
+\item{name}{A string that represents the new name of the project that you are
+updating.}
 
-\item{defaultJobTimeoutMinutes}{The number of minutes a test run in the project will execute before it
-times out.}
+\item{defaultJobTimeoutMinutes}{The number of minutes a test run in the project executes before it times
+out.}
 }
 \description{
 Modifies the specified project name, given the project ARN and a new
@@ -30,11 +30,13 @@ name.
 }
 
 \examples{
+\dontrun{
 # The following example updates the specified project with a new name.
-\donttest{svc$update_project(
+svc$update_project(
   name = "NewName",
   arn = "arn:aws:devicefarm:us-west-2:123456789101:project:8f75187d-101e-4625-accc-12345EXAM..."
-)}
+)
+}
 
 }
 \keyword{internal}

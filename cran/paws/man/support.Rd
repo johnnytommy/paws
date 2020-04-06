@@ -54,9 +54,9 @@ specified check.
 status of one or more checks.
 }
 
-For authentication of requests, AWS Support uses \href{http://docs.aws.amazon.com/general/latest/gr/signature-version-4.html}{Signature Version 4 Signing Process}.
+For authentication of requests, AWS Support uses \href{https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html}{Signature Version 4 Signing Process}.
 
-See \href{http://docs.aws.amazon.com/awssupport/latest/user/Welcome.html}{About the AWS Support API} in
+See \href{https://docs.aws.amazon.com/awssupport/latest/user/Welcome.html}{About the AWS Support API} in
 the \emph{AWS Support User Guide} for information about how to use this
 service to create and manage your support cases, and how to call Trusted
 Advisor for results of checks on your resources.
@@ -92,17 +92,19 @@ Advisor for results of checks on your resources.
 \link[=support_describe_severity_levels]{describe_severity_levels} \tab Returns the list of severity levels that you can assign to an AWS Support case \cr
 \link[=support_describe_trusted_advisor_check_refresh_statuses]{describe_trusted_advisor_check_refresh_statuses} \tab Returns the refresh status of the Trusted Advisor checks that have the specified check IDs \cr
 \link[=support_describe_trusted_advisor_check_result]{describe_trusted_advisor_check_result} \tab Returns the results of the Trusted Advisor check that has the specified check ID \cr
-\link[=support_describe_trusted_advisor_check_summaries]{describe_trusted_advisor_check_summaries} \tab Returns the summaries of the results of the Trusted Advisor checks that have the specified check IDs \cr
 \link[=support_describe_trusted_advisor_checks]{describe_trusted_advisor_checks} \tab Returns information about all available Trusted Advisor checks, including name, ID, category, description, and metadata \cr
+\link[=support_describe_trusted_advisor_check_summaries]{describe_trusted_advisor_check_summaries} \tab Returns the summaries of the results of the Trusted Advisor checks that have the specified check IDs \cr
 \link[=support_refresh_trusted_advisor_check]{refresh_trusted_advisor_check} \tab Requests a refresh of the Trusted Advisor check that has the specified check ID \cr
 \link[=support_resolve_case]{resolve_case} \tab Takes a caseId and returns the initial state of the case along with the state of the case after the call to ResolveCase completed
 }
 }
 
 \examples{
-\donttest{svc <- support()
+\dontrun{
+svc <- support()
 svc$add_attachments_to_set(
   Foo = 123
-)}
+)
+}
 
 }

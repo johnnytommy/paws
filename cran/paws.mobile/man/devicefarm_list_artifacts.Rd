@@ -7,15 +7,15 @@
 devicefarm_list_artifacts(arn, type, nextToken)
 }
 \arguments{
-\item{arn}{[required] The Run, Job, Suite, or Test ARN.}
+\item{arn}{[required] The run, job, suite, or test ARN.}
 
-\item{type}{[required] The artifacts' type.
+\item{type}{[required] The artifacts\' type.
 
 Allowed values include:
 \itemize{
-\item FILE: The artifacts are files.
-\item LOG: The artifacts are logs.
-\item SCREENSHOT: The artifacts are screenshots.
+\item FILE
+\item LOG
+\item SCREENSHOT
 }}
 
 \item{nextToken}{An identifier that was returned from the previous call to this
@@ -35,11 +35,13 @@ Gets information about artifacts.
 }
 
 \examples{
+\dontrun{
 # The following example lists screenshot artifacts for a specific run.
-\donttest{svc$list_artifacts(
+svc$list_artifacts(
   type = "SCREENSHOT",
   arn = "arn:aws:devicefarm:us-west-2:123456789101:run:EXAMPLE-GUID-123-456"
-)}
+)
+}
 
 }
 \keyword{internal}

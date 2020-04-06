@@ -12,7 +12,7 @@ iam_update_access_key(UserName, AccessKeyId, Status)
 
 This parameter allows (through its \href{http://wikipedia.org/wiki/regex}{regex pattern}) a string of characters
 consisting of upper and lowercase alphanumeric characters with no
-spaces. You can also include any of the following characters: \_+=,.@-}
+spaces. You can also include any of the following characters: \\_+=,.@-}
 
 \item{AccessKeyId}{[required] The access key ID of the secret access key you want to update.
 
@@ -25,7 +25,7 @@ that the key cannot be used.}
 }
 \description{
 Changes the status of the specified access key from Active to Inactive,
-or vice versa. This operation can be used to disable a user's key as
+or vice versa. This operation can be used to disable a user\'s key as
 part of a key rotation workflow.
 }
 \details{
@@ -48,13 +48,15 @@ in the \emph{IAM User Guide}.
 }
 
 \examples{
+\dontrun{
 # The following command deactivates the specified access key (access key
 # ID and secret access key) for the IAM user named Bob.
-\donttest{svc$update_access_key(
+svc$update_access_key(
   AccessKeyId = "AKIAIOSFODNN7EXAMPLE",
   Status = "Inactive",
   UserName = "Bob"
-)}
+)
+}
 
 }
 \keyword{internal}

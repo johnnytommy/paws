@@ -30,10 +30,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- iot1clickprojects()
+#' \dontrun{
+#' svc <- iot1clickprojects()
 #' svc$associate_device_with_placement(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -78,8 +80,7 @@ iot1clickprojects <- function(config = list()) {
   target_prefix = ""
 )
 
-.iot1clickprojects$handlers <- new_handlers("restjson", "v4")
-
 .iot1clickprojects$service <- function(config = list()) {
-  new_service(.iot1clickprojects$metadata, .iot1clickprojects$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.iot1clickprojects$metadata, handlers, config)
 }

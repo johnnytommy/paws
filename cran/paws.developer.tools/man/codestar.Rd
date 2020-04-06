@@ -39,7 +39,7 @@ project.
 for a project.
 \item \code{ListTeamMembers}, which lists all the IAM users in the team for a
 project, including their roles and attributes.
-\item \code{UpdateTeamMember}, which updates a team member's attributes in a
+\item \code{UpdateTeamMember}, which updates a team member\'s attributes in a
 project.
 }
 
@@ -97,9 +97,11 @@ across all projects.
 }
 
 \examples{
-\donttest{svc <- codestar()
+\dontrun{
+svc <- codestar()
 svc$associate_team_member(
   Foo = 123
-)}
+)
+}
 
 }

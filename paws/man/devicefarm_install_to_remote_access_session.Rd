@@ -11,8 +11,7 @@ devicefarm_install_to_remote_access_session(remoteAccessSessionArn,
 \item{remoteAccessSessionArn}{[required] The Amazon Resource Name (ARN) of the remote access session about which
 you are requesting information.}
 
-\item{appArn}{[required] The Amazon Resource Name (ARN) of the app about which you are requesting
-information.}
+\item{appArn}{[required] The ARN of the app about which you are requesting information.}
 }
 \description{
 Installs an application to the device in a remote access session. For
@@ -28,12 +27,14 @@ applications, the file must be in .ipa format.
 }
 
 \examples{
+\dontrun{
 # The following example installs a specific app to a device in a specific
 # remote access session.
-\donttest{svc$install_to_remote_access_session(
+svc$install_to_remote_access_session(
   appArn = "arn:aws:devicefarm:us-west-2:123456789101:app:EXAMPLE-GUID-123-456",
   remoteAccessSessionArn = "arn:aws:devicefarm:us-west-2:123456789101:session:EXAMPLE-GUID-1..."
-)}
+)
+}
 
 }
 \keyword{internal}

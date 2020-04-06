@@ -10,11 +10,11 @@ storagegateway_create_tapes(GatewayARN, TapeSizeInBytes, ClientToken,
 \arguments{
 \item{GatewayARN}{[required] The unique Amazon Resource Name (ARN) that represents the gateway to
 associate the virtual tapes with. Use the ListGateways operation to
-return a list of gateways for your account and region.}
+return a list of gateways for your account and AWS Region.}
 
 \item{TapeSizeInBytes}{[required] The size, in bytes, of the virtual tapes that you want to create.
 
-The size must be aligned by gigabyte (1024*1024*1024 byte).}
+The size must be aligned by gigabyte (1024\emph{1024}1024 byte).}
 
 \item{ClientToken}{[required] A unique identifier that you use to retry a request. If you retry a
 request, use the same \code{ClientToken} you specified in the initial
@@ -43,15 +43,15 @@ with the pool. When you use your backup application to eject the tape,
 the tape is archived directly into the storage class (Glacier or Deep
 Archive) that corresponds to the pool.
 
-Valid values: "GLACIER", "DEEP\_ARCHIVE"}
+Valid values: \"GLACIER\", \"DEEP\\_ARCHIVE\"}
 
 \item{Tags}{A list of up to 50 tags that can be assigned to a virtual tape. Each tag
 is a key-value pair.
 
 Valid characters for key and value are letters, spaces, and numbers
 representable in UTF-8 format, and the following special characters: + -
-= . \_ : / @. The maximum length of a tag's key is 128 characters, and
-the maximum length for a tag's value is 256.}
+= . \\_ : / @. The maximum length of a tag\'s key is 128 characters, and
+the maximum length for a tag\'s value is 256.}
 }
 \description{
 Creates one or more virtual tapes. You write data to the virtual tapes
@@ -84,14 +84,16 @@ gateway.
 }
 
 \examples{
+\dontrun{
 # Creates one or more virtual tapes.
-\donttest{svc$create_tapes(
+svc$create_tapes(
   ClientToken = "77777",
   GatewayARN = "arn:aws:storagegateway:us-east-1:999999999999:gateway/sgw-12A3456B",
   NumTapesToCreate = 3L,
   TapeBarcodePrefix = "TEST",
   TapeSizeInBytes = 107374182400
-)}
+)
+}
 
 }
 \keyword{internal}

@@ -31,10 +31,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- robomaker()
+#' \dontrun{
+#' svc <- robomaker()
 #' svc$batch_describe_simulation_job(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -99,8 +101,7 @@ robomaker <- function(config = list()) {
   target_prefix = ""
 )
 
-.robomaker$handlers <- new_handlers("restjson", "v4")
-
 .robomaker$service <- function(config = list()) {
-  new_service(.robomaker$metadata, .robomaker$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.robomaker$metadata, handlers, config)
 }

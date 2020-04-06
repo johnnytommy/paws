@@ -10,9 +10,9 @@ glacier_initiate_job(accountId, vaultName, jobParameters)
 \arguments{
 \item{accountId}{[required] The \code{AccountId} value is the AWS account ID of the account that owns the
 vault. You can either specify an AWS account ID or optionally a single
-'\code{-}' (hyphen), in which case Amazon S3 Glacier uses the AWS account
+\'\code{-}\' (hyphen), in which case Amazon S3 Glacier uses the AWS account
 ID associated with the credentials used to sign the request. If you use
-an account ID, do not include any hyphens ('-') in the ID.}
+an account ID, do not include any hyphens (\'-\') in the ID.}
 
 \item{vaultName}{[required] The name of the vault.}
 
@@ -102,9 +102,10 @@ underlying REST API \href{https://docs.aws.amazon.com/amazonglacier/latest/dev/a
 }
 
 \examples{
+\dontrun{
 # The example initiates an inventory-retrieval job for the vault named
 # examplevault.
-\donttest{svc$initiate_job(
+svc$initiate_job(
   accountId = "-",
   jobParameters = list(
     Description = "My inventory job",
@@ -113,7 +114,8 @@ underlying REST API \href{https://docs.aws.amazon.com/amazonglacier/latest/dev/a
     Type = "inventory-retrieval"
   ),
   vaultName = "examplevault"
-)}
+)
+}
 
 }
 \keyword{internal}

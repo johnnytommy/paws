@@ -12,7 +12,7 @@ operation. If present, indicates where to continue the list of lexicons.}
 }
 \description{
 Returns a list of pronunciation lexicons stored in an AWS Region. For
-more information, see \href{http://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html}{Managing Lexicons}.
+more information, see \href{https://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html}{Managing Lexicons}.
 }
 \section{Request syntax}{
 \preformatted{svc$list_lexicons(
@@ -22,8 +22,10 @@ more information, see \href{http://docs.aws.amazon.com/polly/latest/dg/managing-
 }
 
 \examples{
+\dontrun{
 # Returns a list of pronunciation lexicons stored in an AWS Region.
-\donttest{svc$list_lexicons()}
+svc$list_lexicons()
+}
 
 }
 \keyword{internal}

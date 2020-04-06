@@ -17,7 +17,7 @@ Otherwise, it is \code{UnauthorizedOperation}.}
 \item{Filters}{The filters.
 \itemize{
 \item \code{availability-zone} - The Availability Zone (for example,
-\code{us-west-2a}).
+\verb{us-west-2a}).
 \item \code{instance-type} - The instance type (for example, \code{c4.large}).
 \item \code{network-platform} - The network platform (\code{EC2-Classic} or
 \code{EC2-VPC}).
@@ -94,10 +94,11 @@ schedule.
 }
 
 \examples{
+\dontrun{
 # This example describes a schedule that occurs every week on Sunday,
 # starting on the specified date. Note that the output contains a single
 # schedule as an example.
-\donttest{svc$describe_scheduled_instance_availability(
+svc$describe_scheduled_instance_availability(
   FirstSlotStartTimeRange = list(
     EarliestTime = "2016-01-31T00:00:00Z",
     LatestTime = "2016-01-31T04:00:00Z"
@@ -109,7 +110,8 @@ schedule.
       1L
     )
   )
-)}
+)
+}
 
 }
 \keyword{internal}

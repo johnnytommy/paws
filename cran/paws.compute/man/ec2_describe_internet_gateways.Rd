@@ -17,7 +17,7 @@ attached.
 \item \code{internet-gateway-id} - The ID of the Internet gateway.
 \item \code{owner-id} - The ID of the AWS account that owns the internet
 gateway.
-\item \code{tag}:\<key\> - The key/value combination of a tag assigned to the
+\item \code{tag}:\\<key\\> - The key/value combination of a tag assigned to the
 resource. Use the tag key in the filter name and the tag value as
 the filter value. For example, to find all resources that have a tag
 with the key \code{Owner} and the value \code{TeamA}, specify \code{tag:Owner} for
@@ -66,8 +66,9 @@ Describes one or more of your internet gateways.
 }
 
 \examples{
+\dontrun{
 # This example describes the Internet gateway for the specified VPC.
-\donttest{svc$describe_internet_gateways(
+svc$describe_internet_gateways(
   Filters = list(
     list(
       Name = "attachment.vpc-id",
@@ -76,7 +77,8 @@ Describes one or more of your internet gateways.
       )
     )
   )
-)}
+)
+}
 
 }
 \keyword{internal}

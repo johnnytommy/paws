@@ -30,7 +30,7 @@ becomes part of the CNAME, and therefore part of the visible URL for
 your application.}
 
 \item{GroupName}{The name of the group to which the target environment belongs. Specify a
-group name only if the environment's name is specified in an
+group name only if the environment\'s name is specified in an
 environment manifest and not with the environment name parameter. See
 \href{https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/environment-cfg-manifest.html}{Environment Manifest (env.yaml)}
 for details.}
@@ -120,15 +120,17 @@ specified configuration.
 }
 
 \examples{
+\dontrun{
 # The following operation creates a new environment for version v1 of a
 # java application named my-app:
-\donttest{svc$create_environment(
+svc$create_environment(
   ApplicationName = "my-app",
   CNAMEPrefix = "my-app",
   EnvironmentName = "my-env",
   SolutionStackName = "64bit Amazon Linux 2015.03 v2.0.0 running Tomcat 8 Java 8",
   VersionLabel = "v1"
-)}
+)
+}
 
 }
 \keyword{internal}

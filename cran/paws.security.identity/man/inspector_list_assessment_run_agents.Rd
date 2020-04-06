@@ -12,7 +12,7 @@ inspector_list_assessment_run_agents(assessmentRunArn, filter,
 \item{assessmentRunArn}{[required] The ARN that specifies the assessment run whose agents you want to list.}
 
 \item{filter}{You can use this parameter to specify a subset of data to be included in
-the action's response.
+the action\'s response.
 
 For a record to match a filter, all specified filter attributes must
 match. When multiple values are specified for a filter attribute, any of
@@ -50,12 +50,14 @@ of the assessment runs.
 }
 
 \examples{
+\dontrun{
 # Lists the agents of the assessment runs that are specified by the ARNs
 # of the assessment runs.
-\donttest{svc$list_assessment_run_agents(
+svc$list_assessment_run_agents(
   assessmentRunArn = "arn:aws:inspector:us-west-2:123456789012:target/0-0kFIPusq/template/0-...",
   maxResults = 123L
-)}
+)
+}
 
 }
 \keyword{internal}

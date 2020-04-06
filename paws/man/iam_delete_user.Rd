@@ -11,7 +11,7 @@ iam_delete_user(UserName)
 
 This parameter allows (through its \href{http://wikipedia.org/wiki/regex}{regex pattern}) a string of characters
 consisting of upper and lowercase alphanumeric characters with no
-spaces. You can also include any of the following characters: \_+=,.@-}
+spaces. You can also include any of the following characters: \\_+=,.@-}
 }
 \description{
 Deletes the specified IAM user. Unlike the AWS Management Console, when
@@ -42,11 +42,13 @@ DeleteVirtualMFADevice)
 }
 
 \examples{
+\dontrun{
 # The following command removes the IAM user named Bob from the current
 # account.
-\donttest{svc$delete_user(
+svc$delete_user(
   UserName = "Bob"
-)}
+)
+}
 
 }
 \keyword{internal}

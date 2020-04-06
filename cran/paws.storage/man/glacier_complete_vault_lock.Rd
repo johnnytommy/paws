@@ -11,10 +11,10 @@ glacier_complete_vault_lock(accountId, vaultName, lockId)
 \arguments{
 \item{accountId}{[required] The \code{AccountId} value is the AWS account ID. This value must match the
 AWS account ID associated with the credentials used to sign the request.
-You can either specify an AWS account ID or optionally a single '\code{-}'
+You can either specify an AWS account ID or optionally a single \'\code{-}\'
 (hyphen), in which case Amazon Glacier uses the AWS account ID
 associated with the credentials used to sign the request. If you specify
-your account ID, do not include any hyphens ('-') in the ID.}
+your account ID, do not include any hyphens (\'-\') in the ID.}
 
 \item{vaultName}{[required] The name of the vault.}
 
@@ -50,13 +50,15 @@ lock is in the \code{InProgress} state, the operation throws an
 }
 
 \examples{
+\dontrun{
 # The example completes the vault locking process by transitioning the
 # vault lock from the InProgress state to the Locked state.
-\donttest{svc$complete_vault_lock(
+svc$complete_vault_lock(
   accountId = "-",
   lockId = "AE863rKkWZU53SLW5be4DUcW",
   vaultName = "example-vault"
-)}
+)
+}
 
 }
 \keyword{internal}

@@ -30,9 +30,9 @@ the month and 28 represents the last day of the month.
 This value is only available for tape and volume gateways.}
 }
 \description{
-Updates a gateway's weekly maintenance start time information,
+Updates a gateway\'s weekly maintenance start time information,
 including day and time of the week. The maintenance time is the time in
-your gateway's time zone.
+your gateway\'s time zone.
 }
 \section{Request syntax}{
 \preformatted{svc$update_maintenance_start_time(
@@ -46,15 +46,17 @@ your gateway's time zone.
 }
 
 \examples{
+\dontrun{
 # Updates a gateway's weekly maintenance start time information, including
 # day and time of the week. The maintenance time is in your gateway's time
 # zone.
-\donttest{svc$update_maintenance_start_time(
+svc$update_maintenance_start_time(
   DayOfWeek = 2L,
   GatewayARN = "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B",
   HourOfDay = 0L,
   MinuteOfHour = 30L
-)}
+)
+}
 
 }
 \keyword{internal}

@@ -13,7 +13,7 @@ inspector_list_assessment_runs(assessmentTemplateArns, filter,
 want to list.}
 
 \item{filter}{You can use this parameter to specify a subset of data to be included in
-the action's response.
+the action\'s response.
 
 For a record to match a filter, all specified filter attributes must
 match. When multiple values are specified for a filter attribute, any of
@@ -82,14 +82,16 @@ that are specified by the ARNs of the assessment templates.
 }
 
 \examples{
+\dontrun{
 # Lists the assessment runs that correspond to the assessment templates
 # that are specified by the ARNs of the assessment templates.
-\donttest{svc$list_assessment_runs(
+svc$list_assessment_runs(
   assessmentTemplateArns = list(
     "arn:aws:inspector:us-west-2:123456789012:target/0-0kFIPusq/template/0-4r1V2mAw"
   ),
   maxResults = 123L
-)}
+)
+}
 
 }
 \keyword{internal}

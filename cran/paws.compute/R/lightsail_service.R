@@ -44,10 +44,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- lightsail()
+#' \dontrun{
+#' svc <- lightsail()
 #' svc$allocate_static_ip(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -57,27 +59,28 @@ NULL
 #'  \link[=lightsail_attach_load_balancer_tls_certificate]{attach_load_balancer_tls_certificate} \tab Attaches a Transport Layer Security (TLS) certificate to your load balancer \cr
 #'  \link[=lightsail_attach_static_ip]{attach_static_ip} \tab Attaches a static IP address to a specific Amazon Lightsail instance \cr
 #'  \link[=lightsail_close_instance_public_ports]{close_instance_public_ports} \tab Closes the public ports on a specific Amazon Lightsail instance \cr
-#'  \link[=lightsail_copy_snapshot]{copy_snapshot} \tab Copies an instance or disk snapshot from one AWS Region to another in Amazon Lightsail \cr
+#'  \link[=lightsail_copy_snapshot]{copy_snapshot} \tab Copies a manual snapshot of an instance or disk as another manual snapshot, or copies an automatic snapshot of an instance or disk as a manual snapshot \cr
 #'  \link[=lightsail_create_cloud_formation_stack]{create_cloud_formation_stack} \tab Creates an AWS CloudFormation stack, which creates a new Amazon EC2 instance from an exported Amazon Lightsail snapshot \cr
-#'  \link[=lightsail_create_disk]{create_disk} \tab Creates a block storage disk that can be attached to a Lightsail instance in the same Availability Zone (e \cr
-#'  \link[=lightsail_create_disk_from_snapshot]{create_disk_from_snapshot} \tab Creates a block storage disk from a disk snapshot that can be attached to a Lightsail instance in the same Availability Zone (e \cr
+#'  \link[=lightsail_create_disk]{create_disk} \tab Creates a block storage disk that can be attached to an Amazon Lightsail instance in the same Availability Zone (e \cr
+#'  \link[=lightsail_create_disk_from_snapshot]{create_disk_from_snapshot} \tab Creates a block storage disk from a manual or automatic snapshot of a disk \cr
 #'  \link[=lightsail_create_disk_snapshot]{create_disk_snapshot} \tab Creates a snapshot of a block storage disk \cr
 #'  \link[=lightsail_create_domain]{create_domain} \tab Creates a domain resource for the specified domain (e \cr
 #'  \link[=lightsail_create_domain_entry]{create_domain_entry} \tab Creates one of the following entry records associated with the domain: Address (A), canonical name (CNAME), mail exchanger (MX), name server (NS), start of authority (SOA), service locator (SRV), or text (TXT)\cr
+#'  \link[=lightsail_create_instances]{create_instances} \tab Creates one or more Amazon Lightsail instances \cr
+#'  \link[=lightsail_create_instances_from_snapshot]{create_instances_from_snapshot} \tab Creates one or more new instances from a manual or automatic snapshot of an instance \cr
 #'  \link[=lightsail_create_instance_snapshot]{create_instance_snapshot} \tab Creates a snapshot of a specific virtual private server, or _instance_ \cr
-#'  \link[=lightsail_create_instances]{create_instances} \tab Creates one or more Amazon Lightsail virtual private servers, or _instances_ \cr
-#'  \link[=lightsail_create_instances_from_snapshot]{create_instances_from_snapshot} \tab Uses a specific snapshot as a blueprint for creating one or more new instances that are based on that identical configuration \cr
 #'  \link[=lightsail_create_key_pair]{create_key_pair} \tab Creates an SSH key pair \cr
 #'  \link[=lightsail_create_load_balancer]{create_load_balancer} \tab Creates a Lightsail load balancer \cr
 #'  \link[=lightsail_create_load_balancer_tls_certificate]{create_load_balancer_tls_certificate} \tab Creates a Lightsail load balancer TLS certificate \cr
 #'  \link[=lightsail_create_relational_database]{create_relational_database} \tab Creates a new database in Amazon Lightsail \cr
 #'  \link[=lightsail_create_relational_database_from_snapshot]{create_relational_database_from_snapshot} \tab Creates a new database from an existing database snapshot in Amazon Lightsail \cr
 #'  \link[=lightsail_create_relational_database_snapshot]{create_relational_database_snapshot} \tab Creates a snapshot of your database in Amazon Lightsail \cr
+#'  \link[=lightsail_delete_auto_snapshot]{delete_auto_snapshot} \tab Deletes an automatic snapshot of an instance or disk \cr
 #'  \link[=lightsail_delete_disk]{delete_disk} \tab Deletes the specified block storage disk \cr
 #'  \link[=lightsail_delete_disk_snapshot]{delete_disk_snapshot} \tab Deletes the specified disk snapshot \cr
 #'  \link[=lightsail_delete_domain]{delete_domain} \tab Deletes the specified domain recordset and all of its domain records \cr
 #'  \link[=lightsail_delete_domain_entry]{delete_domain_entry} \tab Deletes a specific domain entry \cr
-#'  \link[=lightsail_delete_instance]{delete_instance} \tab Deletes a specific Amazon Lightsail virtual private server, or _instance_ \cr
+#'  \link[=lightsail_delete_instance]{delete_instance} \tab Deletes an Amazon Lightsail instance \cr
 #'  \link[=lightsail_delete_instance_snapshot]{delete_instance_snapshot} \tab Deletes a specific snapshot of a virtual private server (or _instance_) \cr
 #'  \link[=lightsail_delete_key_pair]{delete_key_pair} \tab Deletes a specific SSH key pair \cr
 #'  \link[=lightsail_delete_known_host_keys]{delete_known_host_keys} \tab Deletes the known host key or certificate used by the Amazon Lightsail browser-based SSH or RDP clients to authenticate an instance \cr
@@ -88,16 +91,19 @@ NULL
 #'  \link[=lightsail_detach_disk]{detach_disk} \tab Detaches a stopped block storage disk from a Lightsail instance \cr
 #'  \link[=lightsail_detach_instances_from_load_balancer]{detach_instances_from_load_balancer} \tab Detaches the specified instances from a Lightsail load balancer \cr
 #'  \link[=lightsail_detach_static_ip]{detach_static_ip} \tab Detaches a static IP from the Amazon Lightsail instance to which it is attached \cr
+#'  \link[=lightsail_disable_add_on]{disable_add_on} \tab Disables an add-on for an Amazon Lightsail resource \cr
 #'  \link[=lightsail_download_default_key_pair]{download_default_key_pair} \tab Downloads the default SSH key pair from the user's account \cr
+#'  \link[=lightsail_enable_add_on]{enable_add_on} \tab Enables or modifies an add-on for an Amazon Lightsail resource \cr
 #'  \link[=lightsail_export_snapshot]{export_snapshot} \tab Exports an Amazon Lightsail instance or block storage disk snapshot to Amazon Elastic Compute Cloud (Amazon EC2) \cr
 #'  \link[=lightsail_get_active_names]{get_active_names} \tab Returns the names of all active (not deleted) resources \cr
+#'  \link[=lightsail_get_auto_snapshots]{get_auto_snapshots} \tab Returns the available automatic snapshots for an instance or disk \cr
 #'  \link[=lightsail_get_blueprints]{get_blueprints} \tab Returns the list of available instance images, or _blueprints_ \cr
 #'  \link[=lightsail_get_bundles]{get_bundles} \tab Returns the list of bundles that are available for purchase \cr
 #'  \link[=lightsail_get_cloud_formation_stack_records]{get_cloud_formation_stack_records} \tab Returns the CloudFormation stack record created as a result of the create cloud formation stack operation \cr
 #'  \link[=lightsail_get_disk]{get_disk} \tab Returns information about a specific block storage disk \cr
+#'  \link[=lightsail_get_disks]{get_disks} \tab Returns information about all block storage disks in your AWS account and region \cr
 #'  \link[=lightsail_get_disk_snapshot]{get_disk_snapshot} \tab Returns information about a specific block storage disk snapshot \cr
 #'  \link[=lightsail_get_disk_snapshots]{get_disk_snapshots} \tab Returns information about all block storage disk snapshots in your AWS account and region \cr
-#'  \link[=lightsail_get_disks]{get_disks} \tab Returns information about all block storage disks in your AWS account and region \cr
 #'  \link[=lightsail_get_domain]{get_domain} \tab Returns information about a specific domain recordset \cr
 #'  \link[=lightsail_get_domains]{get_domains} \tab Returns a list of all domains in the user's account \cr
 #'  \link[=lightsail_get_export_snapshot_records]{get_export_snapshot_records} \tab Returns the export snapshot record created as a result of the export snapshot operation \cr
@@ -105,16 +111,16 @@ NULL
 #'  \link[=lightsail_get_instance_access_details]{get_instance_access_details} \tab Returns temporary SSH keys you can use to connect to a specific virtual private server, or _instance_ \cr
 #'  \link[=lightsail_get_instance_metric_data]{get_instance_metric_data} \tab Returns the data points for the specified Amazon Lightsail instance metric, given an instance name \cr
 #'  \link[=lightsail_get_instance_port_states]{get_instance_port_states} \tab Returns the port states for a specific virtual private server, or _instance_ \cr
+#'  \link[=lightsail_get_instances]{get_instances} \tab Returns information about all Amazon Lightsail virtual private servers, or _instances_ \cr
 #'  \link[=lightsail_get_instance_snapshot]{get_instance_snapshot} \tab Returns information about a specific instance snapshot \cr
 #'  \link[=lightsail_get_instance_snapshots]{get_instance_snapshots} \tab Returns all instance snapshots for the user's account \cr
 #'  \link[=lightsail_get_instance_state]{get_instance_state} \tab Returns the state of a specific instance \cr
-#'  \link[=lightsail_get_instances]{get_instances} \tab Returns information about all Amazon Lightsail virtual private servers, or _instances_ \cr
 #'  \link[=lightsail_get_key_pair]{get_key_pair} \tab Returns information about a specific key pair \cr
 #'  \link[=lightsail_get_key_pairs]{get_key_pairs} \tab Returns information about all key pairs in the user's account \cr
 #'  \link[=lightsail_get_load_balancer]{get_load_balancer} \tab Returns information about the specified Lightsail load balancer \cr
 #'  \link[=lightsail_get_load_balancer_metric_data]{get_load_balancer_metric_data} \tab Returns information about health metrics for your Lightsail load balancer \cr
-#'  \link[=lightsail_get_load_balancer_tls_certificates]{get_load_balancer_tls_certificates} \tab Returns information about the TLS certificates that are associated with the specified Lightsail load balancer \cr
 #'  \link[=lightsail_get_load_balancers]{get_load_balancers} \tab Returns information about all load balancers in an account \cr
+#'  \link[=lightsail_get_load_balancer_tls_certificates]{get_load_balancer_tls_certificates} \tab Returns information about the TLS certificates that are associated with the specified Lightsail load balancer \cr
 #'  \link[=lightsail_get_operation]{get_operation} \tab Returns information about a specific operation \cr
 #'  \link[=lightsail_get_operations]{get_operations} \tab Returns information about all operations \cr
 #'  \link[=lightsail_get_operations_for_resource]{get_operations_for_resource} \tab Gets operations for a specific resource (e \cr
@@ -128,9 +134,9 @@ NULL
 #'  \link[=lightsail_get_relational_database_master_user_password]{get_relational_database_master_user_password} \tab Returns the current, previous, or pending versions of the master user password for a Lightsail database \cr
 #'  \link[=lightsail_get_relational_database_metric_data]{get_relational_database_metric_data} \tab Returns the data points of the specified metric for a database in Amazon Lightsail \cr
 #'  \link[=lightsail_get_relational_database_parameters]{get_relational_database_parameters} \tab Returns all of the runtime parameters offered by the underlying database software, or engine, for a specific database in Amazon Lightsail \cr
+#'  \link[=lightsail_get_relational_databases]{get_relational_databases} \tab Returns information about all of your databases in Amazon Lightsail \cr
 #'  \link[=lightsail_get_relational_database_snapshot]{get_relational_database_snapshot} \tab Returns information about a specific database snapshot in Amazon Lightsail \cr
 #'  \link[=lightsail_get_relational_database_snapshots]{get_relational_database_snapshots} \tab Returns information about all of your database snapshots in Amazon Lightsail \cr
-#'  \link[=lightsail_get_relational_databases]{get_relational_databases} \tab Returns information about all of your databases in Amazon Lightsail \cr
 #'  \link[=lightsail_get_static_ip]{get_static_ip} \tab Returns information about a specific static IP \cr
 #'  \link[=lightsail_get_static_ips]{get_static_ips} \tab Returns information about all static IPs in the user's account \cr
 #'  \link[=lightsail_import_key_pair]{import_key_pair} \tab Imports a public SSH key from a specific key pair \cr
@@ -177,8 +183,7 @@ lightsail <- function(config = list()) {
   target_prefix = "Lightsail_20161128"
 )
 
-.lightsail$handlers <- new_handlers("jsonrpc", "v4")
-
 .lightsail$service <- function(config = list()) {
-  new_service(.lightsail$metadata, .lightsail$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.lightsail$metadata, handlers, config)
 }

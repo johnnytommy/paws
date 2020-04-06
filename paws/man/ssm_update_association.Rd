@@ -14,7 +14,7 @@ ssm_update_association(AssociationId, Parameters, DocumentVersion,
 
 \item{Parameters}{The parameters you want to update for the association. If you create a
 parameter using Parameter Store, you can reference the parameter using
-{{ssm:parameter-name}}}
+\{\{ssm:parameter-name\}\}}
 
 \item{DocumentVersion}{The document version you want update for the association.}
 
@@ -32,7 +32,7 @@ document that is shared with you from another account.
 For SSM documents that are shared with you from other AWS accounts, you
 must specify the complete SSM document ARN, in the following format:
 
-\code{arn:aws:ssm:<i>region</i>:<i>account-id</i>:document/<i>document-name</i> }
+\verb{arn:aws:ssm:<i>region</i>:<i>account-id</i>:document/<i>document-name</i> }
 
 For example:
 
@@ -48,7 +48,7 @@ account, you only need to specify the document name. For example,
 
 \item{AssociationVersion}{This parameter is provided for concurrency control purposes. You must
 specify the latest association version in the service. If you want to
-ensure that this request succeeds, either specify \code{$LATEST}, or omit
+ensure that this request succeeds, either specify \verb{$LATEST}, or omit
 this parameter.}
 
 \item{AutomationTargetParameterName}{Specify the target for the association. This target is required for
@@ -67,7 +67,7 @@ is received.
 
 Executions that are already running an association when MaxErrors is
 reached are allowed to complete, but some of these executions may fail
-as well. If you need to ensure that there won't be more than max-errors
+as well. If you need to ensure that there won\'t be more than max-errors
 failed executions, set MaxConcurrency to 1 so that executions proceed
 one at a time.}
 
@@ -89,6 +89,12 @@ Updates an association. You can update the association name and version,
 the document version, schedule, parameters, and Amazon S3 output.
 }
 \details{
+In order to call this API action, your IAM user account, group, or role
+must be configured with permission to call the DescribeAssociation API
+action. If you don\'t have permission to call DescribeAssociation, then
+you receive the following error:
+\verb{An error occurred (AccessDeniedException) when calling the UpdateAssociation operation: User: &lt;user_arn&gt; is not authorized to perform: ssm:DescribeAssociation on resource: &lt;resource_arn&gt;}
+
 When you update an association, the association immediately runs against
 the specified targets.
 }

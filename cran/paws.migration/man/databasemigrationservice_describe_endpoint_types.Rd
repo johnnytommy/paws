@@ -10,7 +10,7 @@ databasemigrationservice_describe_endpoint_types(Filters, MaxRecords,
 \arguments{
 \item{Filters}{Filters applied to the describe action.
 
-Valid filter names: engine-name \| endpoint-type}
+Valid filter names: engine-name \\| endpoint-type}
 
 \item{MaxRecords}{The maximum number of records to include in the response. If more
 records exist than the specified \code{MaxRecords} value, a pagination token
@@ -45,8 +45,9 @@ Returns information about the type of endpoints available.
 }
 
 \examples{
+\dontrun{
 # Returns information about the type of endpoints available.
-\donttest{svc$describe_endpoint_types(
+svc$describe_endpoint_types(
   Filters = list(
     list(
       Name = "string",
@@ -58,7 +59,8 @@ Returns information about the type of endpoints available.
   ),
   Marker = "",
   MaxRecords = 123L
-)}
+)
+}
 
 }
 \keyword{internal}

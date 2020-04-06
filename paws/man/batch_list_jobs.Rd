@@ -47,8 +47,8 @@ Returns a list of AWS Batch jobs.
 You must specify only one of the following:
 \itemize{
 \item a job queue ID to return a list of jobs in that job queue
-\item a multi-node parallel job ID to return a list of that job's nodes
-\item an array job ID to return a list of that job's children
+\item a multi-node parallel job ID to return a list of that job\'s nodes
+\item an array job ID to return a list of that job\'s children
 }
 
 You can filter the results by job status with the \code{jobStatus} parameter.
@@ -67,17 +67,19 @@ If you do not specify a status, only \code{RUNNING} jobs are returned.
 }
 
 \examples{
+\dontrun{
 # This example lists the running jobs in the HighPriority job queue.
-\donttest{svc$list_jobs(
+svc$list_jobs(
   jobQueue = "HighPriority"
-)}
+)
 
 # This example lists jobs in the HighPriority job queue that are in the
 # SUBMITTED job status.
-\donttest{svc$list_jobs(
+svc$list_jobs(
   jobQueue = "HighPriority",
   jobStatus = "SUBMITTED"
-)}
+)
+}
 
 }
 \keyword{internal}

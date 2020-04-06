@@ -36,11 +36,13 @@ NULL
 #' ```
 #'
 #' @examples
+#' \dontrun{
+#' svc <- polly()
 #' # Deletes a specified pronunciation lexicon stored in an AWS Region.
-#' \donttest{svc <- polly()
 #' svc$delete_lexicon(
 #'   Name = "example"
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -78,8 +80,7 @@ polly <- function(config = list()) {
   target_prefix = ""
 )
 
-.polly$handlers <- new_handlers("restjson", "v4")
-
 .polly$service <- function(config = list()) {
-  new_service(.polly$metadata, .polly$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.polly$metadata, handlers, config)
 }

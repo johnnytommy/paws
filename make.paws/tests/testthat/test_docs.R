@@ -36,7 +36,7 @@ test_that("make_doc_desc", {
 test_that("make_doc_desc with special characters", {
   operation <- list(documentation = "<body><p>Foo%</p><p>Bar{</p><p>}Baz</p><p>\\Qux</p></body>")
   expected <- paste(
-    "#' Foo\\%",
+    "#' Foo%",
     "#' ",
     "#' Bar\\{",
     "#' ",
@@ -194,13 +194,15 @@ test_that("make_doc_examples", {
   actual <- make_doc_examples(operation, api)
   expected <- paste(
     "#' @examples",
+    "#' \\dontrun{",
     "#' # Description",
-    "#' \\donttest{svc$operation(",
+    "#' svc$operation(",
     "#'   Foo = \"bar\",",
     "#'   Baz = list(",
     "#'     Qux = 123",
     "#'   )",
-    "#' )}",
+    "#' )",
+    "#' }",
     sep = "\n"
   )
   expect_equal(actual, expected)
@@ -226,16 +228,18 @@ test_that("make_doc_examples", {
   actual <- make_doc_examples(operation, api)
   expected <- paste(
     "#' @examples",
+    "#' \\dontrun{",
     "#' # Description1",
-    "#' \\donttest{svc$operation()}",
+    "#' svc$operation()",
     "#' ",
     "#' # Description2",
-    "#' \\donttest{svc$operation(",
+    "#' svc$operation(",
     "#'   Foo = \"bar\",",
     "#'   Baz = list(",
     "#'     Qux = 123",
     "#'   )",
-    "#' )}",
+    "#' )",
+    "#' }",
     sep = "\n"
   )
   expect_equal(actual, expected)
@@ -257,13 +261,15 @@ test_that("make_doc_examples", {
   actual <- make_doc_examples(operation, api)
   expected <- paste(
     "#' @examples",
+    "#' \\dontrun{",
     "#' # Description, with a comma",
-    "#' \\donttest{svc$operation(",
+    "#' svc$operation(",
     "#'   Foo = \"bar\",",
     "#'   Baz = list(",
     "#'     Qux = 123",
     "#'   )",
-    "#' )}",
+    "#' )",
+    "#' }",
     sep = "\n"
   )
   expect_equal(actual, expected)
@@ -285,13 +291,15 @@ test_that("make_doc_examples", {
   actual <- make_doc_examples(operation, api)
   expected <- paste(
     "#' @examples",
+    "#' \\dontrun{",
     "#' # Description, with a comma",
-    "#' \\donttest{svc$operation(",
+    "#' svc$operation(",
     "#'   Foo = \"bar\",",
     "#'   Baz = list(",
     "#'     Qux = \"a,b,c\"",
     "#'   )",
-    "#' )}",
+    "#' )",
+    "#' }",
     sep = "\n"
   )
   expect_equal(actual, expected)
@@ -313,13 +321,15 @@ test_that("make_doc_examples", {
   actual <- make_doc_examples(operation, api)
   expected <- paste(
     "#' @examples",
+    "#' \\dontrun{",
     "#' # A very long string",
-    "#' \\donttest{svc$operation(",
+    "#' svc$operation(",
     "#'   Foo = \"bar\",",
     "#'   Baz = list(",
-    "#'     Qux = \"{\\\"Version\\\":\\\"2012-10-17\\\",\\\"Statement\\\":[{\\\"Sid\\\":\\\"Stmt1\\\",\\\"Effect\\\":...\"",
+    "#'     Qux = \"\\{\\\"Version\\\":\\\"2012-10-17\\\",\\\"Statement\\\":[\\{\\\"Sid\\\":\\\"Stmt1\\\",\\\"Effect\\\":...\"",
     "#'   )",
-    "#' )}",
+    "#' )",
+    "#' }",
     sep = "\n"
   )
   expect_equal(actual, expected)
@@ -341,13 +351,15 @@ test_that("make_doc_examples", {
   actual <- make_doc_examples(operation, api)
   expected <- paste(
     "#' @examples",
+    "#' \\dontrun{",
     "#' # Description with inline `code`",
-    "#' \\donttest{svc$operation(",
+    "#' svc$operation(",
     "#'   Foo = \"bar\",",
     "#'   Baz = list(",
     "#'     Qux = 123",
     "#'   )",
-    "#' )}",
+    "#' )",
+    "#' }",
     sep = "\n"
   )
   expect_equal(actual, expected)
@@ -369,13 +381,15 @@ test_that("make_doc_examples", {
   actual <- make_doc_examples(operation, api)
   expected <- paste(
     "#' @examples",
+    "#' \\dontrun{",
     "#' # Description with inline ```code```",
-    "#' \\donttest{svc$operation(",
+    "#' svc$operation(",
     "#'   Foo = \"bar\",",
     "#'   Baz = list(",
     "#'     Qux = 123",
     "#'   )",
-    "#' )}",
+    "#' )",
+    "#' }",
     sep = "\n"
   )
   expect_equal(actual, expected)
@@ -441,11 +455,15 @@ test_that("convert", {
   expect_equal(convert(text), expected)
 
   text <- "<body>%{}\\</body>"
-  expected <- "\\%\\{\\}\\\\"
+  expected <- "%\\{\\}\\\\"
   expect_equal(convert(text), expected)
 
   text <- "<body>123%{}</body>"
-  expected <- "123\\%\\{\\}"
+  expected <- "123%\\{\\}"
+  expect_equal(convert(text), expected)
+
+  text <- "<body>*</body>"
+  expected <- "*"
   expect_equal(convert(text), expected)
 
   text <- "<body>foo \\bar { \\u0123 <code>baz'</code></body>"
@@ -489,7 +507,15 @@ test_that("convert", {
   expect_equal(convert(text), expected)
 
   text <- "<a href='mailto:foo@bar.com'>foo@bar.com</a>"
-  expected <- c("<foo@bar.com>")
+  expected <- c("<foo@@bar.com>")
+  expect_equal(convert(text), expected)
+
+  text <- "<a href='example.com'>foo</a>"
+  expected <- c("[foo](https://example.com)")
+  expect_equal(convert(text), expected)
+
+  text <- "<dt>Description</dt><dd>Definition.</dd>"
+  expected <- c("### Description", "", "Definition.")
   expect_equal(convert(text), expected)
 })
 

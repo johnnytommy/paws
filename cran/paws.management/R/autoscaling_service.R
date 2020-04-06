@@ -8,9 +8,9 @@ NULL
 #' Amazon EC2 Auto Scaling
 #' 
 #' Amazon EC2 Auto Scaling is designed to automatically launch or terminate
-#' EC2 instances based on user-defined policies, schedules, and health
-#' checks. Use this service with AWS Auto Scaling, Amazon CloudWatch, and
-#' Elastic Load Balancing.
+#' EC2 instances based on user-defined scaling policies, scheduled actions,
+#' and health checks. Use this service with AWS Auto Scaling, Amazon
+#' CloudWatch, and Elastic Load Balancing.
 #' 
 #' For more information, including information about granting IAM users
 #' required permissions for Amazon EC2 Auto Scaling actions, see the
@@ -40,21 +40,23 @@ NULL
 #' ```
 #'
 #' @examples
+#' \dontrun{
+#' svc <- autoscaling()
 #' # This example attaches the specified instance to the specified Auto
 #' # Scaling group.
-#' \donttest{svc <- autoscaling()
 #' svc$attach_instances(
 #'   AutoScalingGroupName = "my-auto-scaling-group",
 #'   InstanceIds = list(
 #'     "i-93633f9b"
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
 #'  \link[=autoscaling_attach_instances]{attach_instances} \tab Attaches one or more EC2 instances to the specified Auto Scaling group \cr
-#'  \link[=autoscaling_attach_load_balancer_target_groups]{attach_load_balancer_target_groups} \tab Attaches one or more target groups to the specified Auto Scaling group \cr
 #'  \link[=autoscaling_attach_load_balancers]{attach_load_balancers} \tab Attaches one or more Classic Load Balancers to the specified Auto Scaling group \cr
+#'  \link[=autoscaling_attach_load_balancer_target_groups]{attach_load_balancer_target_groups} \tab Attaches one or more target groups to the specified Auto Scaling group \cr
 #'  \link[=autoscaling_batch_delete_scheduled_action]{batch_delete_scheduled_action} \tab Deletes one or more scheduled actions for the specified Auto Scaling group \cr
 #'  \link[=autoscaling_batch_put_scheduled_update_group_action]{batch_put_scheduled_update_group_action} \tab Creates or updates one or more scheduled scaling actions for an Auto Scaling group \cr
 #'  \link[=autoscaling_complete_lifecycle_action]{complete_lifecycle_action} \tab Completes the lifecycle action for the specified token or instance with the specified result \cr
@@ -74,10 +76,10 @@ NULL
 #'  \link[=autoscaling_describe_auto_scaling_instances]{describe_auto_scaling_instances} \tab Describes one or more Auto Scaling instances \cr
 #'  \link[=autoscaling_describe_auto_scaling_notification_types]{describe_auto_scaling_notification_types} \tab Describes the notification types that are supported by Amazon EC2 Auto Scaling \cr
 #'  \link[=autoscaling_describe_launch_configurations]{describe_launch_configurations} \tab Describes one or more launch configurations \cr
-#'  \link[=autoscaling_describe_lifecycle_hook_types]{describe_lifecycle_hook_types} \tab Describes the available types of lifecycle hooks \cr
 #'  \link[=autoscaling_describe_lifecycle_hooks]{describe_lifecycle_hooks} \tab Describes the lifecycle hooks for the specified Auto Scaling group \cr
-#'  \link[=autoscaling_describe_load_balancer_target_groups]{describe_load_balancer_target_groups} \tab Describes the target groups for the specified Auto Scaling group \cr
+#'  \link[=autoscaling_describe_lifecycle_hook_types]{describe_lifecycle_hook_types} \tab Describes the available types of lifecycle hooks \cr
 #'  \link[=autoscaling_describe_load_balancers]{describe_load_balancers} \tab Describes the load balancers for the specified Auto Scaling group \cr
+#'  \link[=autoscaling_describe_load_balancer_target_groups]{describe_load_balancer_target_groups} \tab Describes the target groups for the specified Auto Scaling group \cr
 #'  \link[=autoscaling_describe_metric_collection_types]{describe_metric_collection_types} \tab Describes the available CloudWatch metrics for Amazon EC2 Auto Scaling \cr
 #'  \link[=autoscaling_describe_notification_configurations]{describe_notification_configurations} \tab Describes the notification actions associated with the specified Auto Scaling group \cr
 #'  \link[=autoscaling_describe_policies]{describe_policies} \tab Describes the policies for the specified Auto Scaling group \cr
@@ -87,8 +89,8 @@ NULL
 #'  \link[=autoscaling_describe_tags]{describe_tags} \tab Describes the specified tags \cr
 #'  \link[=autoscaling_describe_termination_policy_types]{describe_termination_policy_types} \tab Describes the termination policies supported by Amazon EC2 Auto Scaling \cr
 #'  \link[=autoscaling_detach_instances]{detach_instances} \tab Removes one or more instances from the specified Auto Scaling group \cr
-#'  \link[=autoscaling_detach_load_balancer_target_groups]{detach_load_balancer_target_groups} \tab Detaches one or more target groups from the specified Auto Scaling group \cr
 #'  \link[=autoscaling_detach_load_balancers]{detach_load_balancers} \tab Detaches one or more Classic Load Balancers from the specified Auto Scaling group \cr
+#'  \link[=autoscaling_detach_load_balancer_target_groups]{detach_load_balancer_target_groups} \tab Detaches one or more target groups from the specified Auto Scaling group \cr
 #'  \link[=autoscaling_disable_metrics_collection]{disable_metrics_collection} \tab Disables group metrics for the specified Auto Scaling group \cr
 #'  \link[=autoscaling_enable_metrics_collection]{enable_metrics_collection} \tab Enables group metrics for the specified Auto Scaling group \cr
 #'  \link[=autoscaling_enter_standby]{enter_standby} \tab Moves the specified instances into the standby state \cr
@@ -96,7 +98,7 @@ NULL
 #'  \link[=autoscaling_exit_standby]{exit_standby} \tab Moves the specified instances out of the standby state \cr
 #'  \link[=autoscaling_put_lifecycle_hook]{put_lifecycle_hook} \tab Creates or updates a lifecycle hook for the specified Auto Scaling group \cr
 #'  \link[=autoscaling_put_notification_configuration]{put_notification_configuration} \tab Configures an Auto Scaling group to send notifications when specified events take place \cr
-#'  \link[=autoscaling_put_scaling_policy]{put_scaling_policy} \tab Creates or updates a policy for an Auto Scaling group \cr
+#'  \link[=autoscaling_put_scaling_policy]{put_scaling_policy} \tab Creates or updates a scaling policy for an Auto Scaling group \cr
 #'  \link[=autoscaling_put_scheduled_update_group_action]{put_scheduled_update_group_action} \tab Creates or updates a scheduled scaling action for an Auto Scaling group \cr
 #'  \link[=autoscaling_record_lifecycle_action_heartbeat]{record_lifecycle_action_heartbeat} \tab Records a heartbeat for the lifecycle action associated with the specified token or instance \cr
 #'  \link[=autoscaling_resume_processes]{resume_processes} \tab Resumes the specified suspended automatic scaling processes, or all suspended process, for the specified Auto Scaling group\cr
@@ -131,8 +133,7 @@ autoscaling <- function(config = list()) {
   target_prefix = ""
 )
 
-.autoscaling$handlers <- new_handlers("query", "v4")
-
 .autoscaling$service <- function(config = list()) {
-  new_service(.autoscaling$metadata, .autoscaling$handlers, config)
+  handlers <- new_handlers("query", "v4")
+  new_service(.autoscaling$metadata, handlers, config)
 }

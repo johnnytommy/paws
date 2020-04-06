@@ -69,6 +69,10 @@ NULL
 #' Service User
 #' Guide*](http://docs.aws.amazon.com/application-discovery/latest/userguide/)
 #' .
+#' 
+#' Remember that you must set your AWS Migration Hub home region before you
+#' call any of these APIs, or a `HomeRegionNotSetException` error will be
+#' returned. Also, you must make the API calls while in your home region.
 #'
 #' @param
 #' config
@@ -93,10 +97,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- applicationdiscoveryservice()
+#' \dontrun{
+#' svc <- applicationdiscoveryservice()
 #' svc$associate_configuration_items_to_application(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -150,8 +156,7 @@ applicationdiscoveryservice <- function(config = list()) {
   target_prefix = "AWSPoseidonService_V2015_11_01"
 )
 
-.applicationdiscoveryservice$handlers <- new_handlers("jsonrpc", "v4")
-
 .applicationdiscoveryservice$service <- function(config = list()) {
-  new_service(.applicationdiscoveryservice$metadata, .applicationdiscoveryservice$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.applicationdiscoveryservice$metadata, handlers, config)
 }

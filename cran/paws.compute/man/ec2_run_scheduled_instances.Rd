@@ -33,7 +33,7 @@ Before you can launch a Scheduled Instance, you must purchase it and
 obtain an identifier using PurchaseScheduledInstances.
 
 You must launch a Scheduled Instance during its scheduled time period.
-You can't stop or reboot a Scheduled Instance, but you can terminate it
+You can\'t stop or reboot a Scheduled Instance, but you can terminate it
 as needed. If you terminate a Scheduled Instance before the current
 scheduled time period ends, you can launch it again after a few minutes.
 For more information, see \href{https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-scheduled-instances.html}{Scheduled Instances}
@@ -116,8 +116,9 @@ in the \emph{Amazon Elastic Compute Cloud User Guide}.
 }
 
 \examples{
+\dontrun{
 # This example launches the specified Scheduled Instance in a VPC.
-\donttest{svc$run_scheduled_instances(
+svc$run_scheduled_instances(
   InstanceCount = 1L,
   LaunchSpecification = list(
     IamInstanceProfile = list(
@@ -138,10 +139,10 @@ in the \emph{Amazon Elastic Compute Cloud User Guide}.
     )
   ),
   ScheduledInstanceId = "sci-1234-1234-1234-1234-123456789012"
-)}
+)
 
 # This example launches the specified Scheduled Instance in EC2-Classic.
-\donttest{svc$run_scheduled_instances(
+svc$run_scheduled_instances(
   InstanceCount = 1L,
   LaunchSpecification = list(
     IamInstanceProfile = list(
@@ -158,7 +159,8 @@ in the \emph{Amazon Elastic Compute Cloud User Guide}.
     )
   ),
   ScheduledInstanceId = "sci-1234-1234-1234-1234-123456789012"
-)}
+)
+}
 
 }
 \keyword{internal}

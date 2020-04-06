@@ -24,7 +24,7 @@ version used for the AWS account.
 \details{
 By default, AWS Security Token Service (STS) is available as a global
 service, and all STS requests go to a single endpoint at
-\code{https://sts.amazonaws.com}. AWS recommends using Regional STS endpoints
+\verb{https://sts.amazonaws.com}. AWS recommends using Regional STS endpoints
 to reduce latency, build in redundancy, and increase session token
 availability. For information about Regional endpoints for STS, see \href{https://docs.aws.amazon.com/general/latest/gr/rande.html#sts_region}{AWS Regions and Endpoints}
 in the \emph{AWS General Reference}.
@@ -51,11 +51,13 @@ GetAccountSummary operation.
 }
 
 \examples{
+\dontrun{
 # The following command sets the STS global endpoint token to version 2.
 # Version 2 tokens are valid in all Regions.
-\donttest{svc$set_security_token_service_preferences(
+svc$set_security_token_service_preferences(
   GlobalEndpointTokenVersion = "v2Token"
-)}
+)
+}
 
 }
 \keyword{internal}

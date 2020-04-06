@@ -10,11 +10,11 @@ snowball_update_cluster(ClusterId, RoleARN, Description, Resources,
 }
 \arguments{
 \item{ClusterId}{[required] The cluster ID of the cluster that you want to update, for example
-\code{CID123e4567-e89b-12d3-a456-426655440000}.}
+\verb{CID123e4567-e89b-12d3-a456-426655440000}.}
 
 \item{RoleARN}{The new role Amazon Resource Name (ARN) that you want to associate with
 this cluster. To create a role ARN, use the
-\href{http://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateRole.html}{CreateRole}
+\href{https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateRole.html}{CreateRole}
 API action in AWS Identity and Access Management (IAM).}
 
 \item{Description}{The updated description of this cluster.}
@@ -24,7 +24,7 @@ S3Resource objects or LambdaResource objects.}
 
 \item{AddressId}{The ID of the updated Address object.}
 
-\item{ShippingOption}{The updated shipping option value of this cluster's ShippingDetails
+\item{ShippingOption}{The updated shipping option value of this cluster\'s ShippingDetails
 object.}
 
 \item{Notification}{The new or updated Notification object.}
@@ -33,7 +33,7 @@ object.}
 not supported in most regions.}
 }
 \description{
-While a cluster's \code{ClusterState} value is in the \code{AwaitingQuorum}
+While a cluster\'s \code{ClusterState} value is in the \code{AwaitingQuorum}
 state, you can update some of the information associated with a cluster.
 Once the cluster changes to a different job state, usually 60 minutes
 after the cluster being created, this action is no longer available.
@@ -85,14 +85,16 @@ after the cluster being created, this action is no longer available.
 }
 
 \examples{
+\dontrun{
 # This action allows you to update certain parameters for a cluster. Once
 # the cluster changes to a different state, usually within 60 minutes of
 # it being created, this action is no longer available.
-\donttest{svc$update_cluster(
+svc$update_cluster(
   AddressId = "ADID1234ab12-3eec-4eb3-9be6-9374c10eb51b",
   ClusterId = "CID123e4567-e89b-12d3-a456-426655440000",
   Description = "Updated the address to send this to image processing - RJ"
-)}
+)
+}
 
 }
 \keyword{internal}

@@ -7,13 +7,14 @@
 gamelift_describe_fleet_port_settings(FleetId)
 }
 \arguments{
-\item{FleetId}{[required] Unique identifier for a fleet to retrieve port settings for.}
+\item{FleetId}{[required] A unique identifier for a fleet to retrieve port settings for. You can
+use either the fleet ID or ARN value.}
 }
 \description{
 Retrieves the inbound connection permissions for a fleet. Connection
 permissions include a range of IP addresses and port settings that
 incoming traffic can use to access server processes in the fleet. To get
-a fleet's inbound connection permissions, specify a fleet ID. If
+a fleet\'s inbound connection permissions, specify a fleet ID. If
 successful, a collection of IpPermission objects is returned for the
 requested fleet ID. If the requested fleet has been deleted, the result
 set is empty.
@@ -29,6 +30,7 @@ set is empty.
 \item ListFleets
 \item DeleteFleet
 \item Describe fleets:
+\itemize{
 \item DescribeFleetAttributes
 \item DescribeFleetCapacity
 \item DescribeFleetPortSettings
@@ -36,14 +38,13 @@ set is empty.
 \item DescribeRuntimeConfiguration
 \item DescribeEC2InstanceLimits
 \item DescribeFleetEvents
-\item Update fleets:
+}
 \item UpdateFleetAttributes
-\item UpdateFleetCapacity
-\item UpdateFleetPortSettings
-\item UpdateRuntimeConfiguration
 \item Manage fleet actions:
+\itemize{
 \item StartFleetActions
 \item StopFleetActions
+}
 }
 }
 \section{Request syntax}{

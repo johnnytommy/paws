@@ -13,18 +13,18 @@ parameter empty.
 
 Possible build statuses include the following:
 \itemize{
-\item \strong{INITIALIZED} \-- A new build has been defined, but no files have
+\item \strong{INITIALIZED} \\-- A new build has been defined, but no files have
 been uploaded. You cannot create fleets for builds that are in this
 status. When a build is successfully created, the build status is
 set to this value.
-\item \strong{READY} \-- The game build has been successfully uploaded. You can
+\item \strong{READY} \\-- The game build has been successfully uploaded. You can
 now create new fleets for this build.
-\item \strong{FAILED} \-- The game build upload failed. You cannot create new
+\item \strong{FAILED} \\-- The game build upload failed. You cannot create new
 fleets for this build.
 }}
 
-\item{Limit}{Maximum number of results to return. Use this parameter with \code{NextToken}
-to get results as a set of sequential pages.}
+\item{Limit}{The maximum number of results to return. Use this parameter with
+\code{NextToken} to get results as a set of sequential pages.}
 
 \item{NextToken}{Token that indicates the start of the next sequential page of results.
 Use the token that is returned with a previous call to this action. To

@@ -57,9 +57,11 @@ objects.
 }
 
 \examples{
-\donttest{svc <- mediastore()
+\dontrun{
+svc <- mediastore()
 svc$create_container(
   Foo = 123
-)}
+)
+}
 
 }

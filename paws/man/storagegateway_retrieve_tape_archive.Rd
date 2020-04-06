@@ -13,7 +13,7 @@ from the virtual tape shelf (VTS).}
 
 \item{GatewayARN}{[required] The Amazon Resource Name (ARN) of the gateway you want to retrieve the
 virtual tape to. Use the ListGateways operation to return a list of
-gateways for your account and region.
+gateways for your account and AWS Region.
 
 You retrieve archived virtual tapes to only one gateway and the gateway
 must be a tape gateway.}
@@ -40,13 +40,15 @@ supported in the tape gateway type.
 }
 
 \examples{
+\dontrun{
 # Retrieves an archived virtual tape from the virtual tape shelf (VTS) to
 # a gateway-VTL. Virtual tapes archived in the VTS are not associated with
 # any gateway.
-\donttest{svc$retrieve_tape_archive(
+svc$retrieve_tape_archive(
   GatewayARN = "arn:aws:storagegateway:us-east-1:999999999999:gateway/sgw-12A3456B",
   TapeARN = "arn:aws:storagegateway:us-east-1:999999999999:tape/TEST0AA2AF"
-)}
+)
+}
 
 }
 \keyword{internal}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/ec2_operations.R
 \name{ec2_describe_fleets}
 \alias{ec2_describe_fleets}
-\title{Describes the specified EC2 Fleets or all your EC2 Fleets}
+\title{Describes the specified EC2 Fleets or all of your EC2 Fleets}
 \usage{
 ec2_describe_fleets(DryRun, MaxResults, NextToken, FleetIds, Filters)
 }
@@ -23,21 +23,21 @@ value.}
 
 \item{Filters}{The filters.
 \itemize{
-\item \code{activity-status} - The progress of the EC2 Fleet ( \code{error} \|
-\code{pending-fulfillment} \| \code{pending-termination} \| \code{fulfilled}).
+\item \code{activity-status} - The progress of the EC2 Fleet ( \code{error} \\|
+\code{pending-fulfillment} \\| \code{pending-termination} \\| \code{fulfilled}).
 \item \code{excess-capacity-termination-policy} - Indicates whether to
 terminate running instances if the target capacity is decreased
-below the current EC2 Fleet size (\code{true} \| \code{false}).
-\item \code{fleet-state} - The state of the EC2 Fleet (\code{submitted} \| \code{active}
-\| \code{deleted} \| \code{failed} \| \code{deleted-running} \|
-\code{deleted-terminating} \| \code{modifying}).
+below the current EC2 Fleet size (\code{true} \\| \code{false}).
+\item \code{fleet-state} - The state of the EC2 Fleet (\code{submitted} \\| \code{active}
+\\| \code{deleted} \\| \code{failed} \\| \code{deleted-running} \\|
+\code{deleted-terminating} \\| \code{modifying}).
 \item \code{replace-unhealthy-instances} - Indicates whether EC2 Fleet should
-replace unhealthy instances (\code{true} \| \code{false}).
-\item \code{type} - The type of request (\code{instant} \| \code{request} \| \code{maintain}).
+replace unhealthy instances (\code{true} \\| \code{false}).
+\item \code{type} - The type of request (\code{instant} \\| \code{request} \\| \code{maintain}).
 }}
 }
 \description{
-Describes the specified EC2 Fleets or all your EC2 Fleets.
+Describes the specified EC2 Fleets or all of your EC2 Fleets.
 }
 \section{Request syntax}{
 \preformatted{svc$describe_fleets(

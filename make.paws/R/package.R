@@ -2,7 +2,7 @@
 # Create the skeleton for category package.
 write_skeleton_category <- function(path) {
   if (!dir.exists(path)) dir.create(path)
-  else clear_files(path, keep = "cran-comments.md")
+  else clear_files(path, keep = c("cran-comments.md", "NEWS.md"))
   for (dir in c("man", "R", "tests/testthat")) {
     dir.create(file.path(path, dir), recursive = TRUE)
   }
@@ -58,7 +58,7 @@ get_version <- function(path) {
 clear_files <- function(path, keep) {
   if (dir.exists(path)) {
     files <- list.files(path, full.names = TRUE)
-    delete <- grep(keep, files, invert = TRUE, value = TRUE)
+    delete <- grep(paste(keep, collapse = "|"), files, invert = TRUE, value = TRUE)
     unlink(delete, recursive = TRUE)
   }
 }

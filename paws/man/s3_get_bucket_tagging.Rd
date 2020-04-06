@@ -7,10 +7,29 @@
 s3_get_bucket_tagging(Bucket)
 }
 \arguments{
-\item{Bucket}{[required]}
+\item{Bucket}{[required] The name of the bucket for which to get the tagging information.}
 }
 \description{
 Returns the tag set associated with the bucket.
+}
+\details{
+To use this operation, you must have permission to perform the
+\code{s3:GetBucketTagging} action. By default, the bucket owner has this
+permission and can grant this permission to others.
+
+\code{GetBucketTagging} has the following special error:
+\itemize{
+\item Error code: \code{NoSuchTagSetError}
+\itemize{
+\item Description: There is no tag set associated with the bucket.
+}
+}
+
+The following operations are related to \code{GetBucketTagging}:
+\itemize{
+\item PutBucketTagging
+\item DeleteBucketTagging
+}
 }
 \section{Request syntax}{
 \preformatted{svc$get_bucket_tagging(
@@ -20,10 +39,12 @@ Returns the tag set associated with the bucket.
 }
 
 \examples{
+\dontrun{
 # The following example returns tag set associated with a bucket
-\donttest{svc$get_bucket_tagging(
+svc$get_bucket_tagging(
   Bucket = "examplebucket"
-)}
+)
+}
 
 }
 \keyword{internal}

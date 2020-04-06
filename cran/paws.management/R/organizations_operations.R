@@ -46,7 +46,7 @@ NULL
 #' @param HandshakeId &#91;required&#93; The unique identifier (ID) of the handshake that you want to accept.
 #' 
 #' The [regex pattern](http://wikipedia.org/wiki/regex) for handshake ID
-#' string requires \"h-\" followed by from 8 to 32 lower-case letters or
+#' string requires \"h-\" followed by from 8 to 32 lowercase letters or
 #' digits.
 #'
 #' @section Request syntax:
@@ -57,13 +57,15 @@ NULL
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # Bill is the owner of an organization, and he invites Juan's account
 #' # (222222222222) to join his organization. The following example shows
 #' # Juan's account accepting the handshake and thus agreeing to the
 #' # invitation.
-#' \donttest{svc$accept_handshake(
+#' svc$accept_handshake(
 #'   HandshakeId = "h-examplehandshakeid111"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -89,47 +91,17 @@ organizations_accept_handshake <- function(HandshakeId) {
 #' individual account
 #'
 #' Attaches a policy to a root, an organizational unit (OU), or an
-#' individual account. How the policy affects accounts depends on the type
-#' of policy:
+#' individual account.
 #' 
-#' -   **Service control policy (SCP)** - An SCP specifies what permissions
-#'     can be delegated to users in affected member accounts. The scope of
-#'     influence for a policy depends on what you attach the policy to:
+#' How the policy affects accounts depends on the type of policy:
 #' 
-#'     -   If you attach an SCP to a root, it affects all accounts in the
-#'         organization
+#' -   For more information about attaching SCPs, see [How SCPs
+#'     Work](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_about-scps.html)
+#'     in the *AWS Organizations User Guide.*
 #' 
-#'     -   If you attach an SCP to an OU, it affects all accounts in that
-#'         OU and in any child OUs
-#' 
-#'     -   If you attach the policy directly to an account, it affects only
-#'         that account
-#' 
-#'     SCPs are JSON policies that specify the maximum permissions for an
-#'     organization or organizational unit (OU). When you attach one SCP to
-#'     a higher level root or OU, and you also attach a different SCP to a
-#'     child OU or to an account, the child policy can further restrict
-#'     only the permissions that pass through the parent filter and are
-#'     available to the child. An SCP that is attached to a child can\'t
-#'     grant a permission that the paren\'t hasn\'t already granted. For
-#'     example, imagine that the parent SCP allows permissions A, B, C, D,
-#'     and E. The child SCP allows C, D, E, F, and G. The result is that
-#'     the accounts affected by the child SCP are allowed to use only C, D,
-#'     and E. They can\'t use A or B because the child OU filtered them
-#'     out. They also can\'t use F and G because the parent OU filtered
-#'     them out. They can\'t be granted back by the child SCP; child SCPs
-#'     can only filter the permissions they receive from the parent SCP.
-#' 
-#'     AWS Organizations attaches a default SCP named `\"FullAWSAccess` to
-#'     every root, OU, and account. This default SCP allows all services
-#'     and actions, enabling any new child OU or account to inherit the
-#'     permissions of the parent root or OU. If you detach the default
-#'     policy, you must replace it with a policy that specifies the
-#'     permissions that you want to allow in that OU or account.
-#' 
-#'     For more information about how AWS Organizations policies
-#'     permissions work, see [Using Service Control
-#'     Policies](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scp.html)
+#' -   For information about attaching tag policies, see [How Policy
+#'     Inheritance
+#'     Works](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies-inheritance.html)
 #'     in the *AWS Organizations User Guide.*
 #' 
 #' This operation can be called only from the organization\'s master
@@ -143,7 +115,7 @@ organizations_accept_handshake <- function(HandshakeId) {
 #' operation.
 #' 
 #' The [regex pattern](http://wikipedia.org/wiki/regex) for a policy ID
-#' string requires \"p-\" followed by from 8 to 128 lower-case letters or
+#' string requires \"p-\" followed by from 8 to 128 lowercase letters or
 #' digits.
 #' @param TargetId &#91;required&#93; The unique identifier (ID) of the root, OU, or account that you want to
 #' attach the policy to. You can get the ID by calling the ListRoots,
@@ -152,15 +124,15 @@ organizations_accept_handshake <- function(HandshakeId) {
 #' The [regex pattern](http://wikipedia.org/wiki/regex) for a target ID
 #' string requires one of the following:
 #' 
-#' -   Root: a string that begins with \"r-\" followed by from 4 to 32
-#'     lower-case letters or digits.
+#' -   **Root** - A string that begins with \"r-\" followed by from 4 to 32
+#'     lowercase letters or digits.
 #' 
-#' -   Account: a string that consists of exactly 12 digits.
+#' -   **Account** - A string that consists of exactly 12 digits.
 #' 
-#' -   Organizational unit (OU): a string that begins with \"ou-\" followed
-#'     by from 4 to 32 lower-case letters or digits (the ID of the root
-#'     that the OU is in) followed by a second \"-\" dash and from 8 to 32
-#'     additional lower-case letters or digits.
+#' -   **Organizational unit (OU)** - A string that begins with \"ou-\"
+#'     followed by from 4 to 32 lowercase letters or digits (the ID of the
+#'     root that the OU is in). This string is followed by a second \"-\"
+#'     dash and from 8 to 32 additional lowercase letters or digits.
 #'
 #' @section Request syntax:
 #' ```
@@ -171,21 +143,23 @@ organizations_accept_handshake <- function(HandshakeId) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows how to attach a service control policy (SCP)
 #' # to an OU:
 #' # 
-#' \donttest{svc$attach_policy(
+#' svc$attach_policy(
 #'   PolicyId = "p-examplepolicyid111",
 #'   TargetId = "ou-examplerootid111-exampleouid111"
-#' )}
+#' )
 #' 
 #' # The following example shows how to attach a service control policy (SCP)
 #' # to an account:
 #' # 
-#' \donttest{svc$attach_policy(
+#' svc$attach_policy(
 #'   PolicyId = "p-examplepolicyid111",
 #'   TargetId = "333333333333"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -227,7 +201,7 @@ organizations_attach_policy <- function(PolicyId, TargetId) {
 #' can get the ID from the ListHandshakesForOrganization operation.
 #' 
 #' The [regex pattern](http://wikipedia.org/wiki/regex) for handshake ID
-#' string requires \"h-\" followed by from 8 to 32 lower-case letters or
+#' string requires \"h-\" followed by from 8 to 32 lowercase letters or
 #' digits.
 #'
 #' @section Request syntax:
@@ -238,14 +212,16 @@ organizations_attach_policy <- function(PolicyId, TargetId) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # Bill previously sent an invitation to Susan's account to join his
 #' # organization. He changes his mind and decides to cancel the invitation
 #' # before Susan accepts it. The following example shows Bill's
 #' # cancellation:
 #' # 
-#' \donttest{svc$cancel_handshake(
+#' svc$cancel_handshake(
 #'   HandshakeId = "h-examplehandshakeid111"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -289,9 +265,9 @@ organizations_cancel_handshake <- function(HandshakeId) {
 #' 
 #' The user who calls the API to create an account must have the
 #' `organizations:CreateAccount` permission. If you enabled all features in
-#' the organization, AWS Organizations will create the required
-#' service-linked role named `AWSServiceRoleForOrganizations`. For more
-#' information, see [AWS Organizations and Service-Linked
+#' the organization, AWS Organizations creates the required service-linked
+#' role named `AWSServiceRoleForOrganizations`. For more information, see
+#' [AWS Organizations and Service-Linked
 #' Roles](http://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html#orgs_integrate_services-using_slrs)
 #' in the *AWS Organizations User Guide*.
 #' 
@@ -310,14 +286,13 @@ organizations_cancel_handshake <- function(HandshakeId) {
 #' Organization](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_create.html)
 #' in the *AWS Organizations User Guide.*
 #' 
-#' -   When you create an account in an organization using the AWS
-#'     Organizations console, API, or CLI commands, the information
-#'     required for the account to operate as a standalone account, such as
-#'     a payment method and signing the end user license agreement (EULA)
-#'     is *not* automatically collected. If you must remove an account from
-#'     your organization later, you can do so only after you provide the
-#'     missing information. Follow the steps at [To leave an organization
-#'     as a member
+#' -   When you create an account in an organization, the information
+#'     required for the account to operate as a standalone account is *not*
+#'     automatically collected. For example, information about the payment
+#'     method and signing the end user license agreement (EULA) is not
+#'     collected. If you must remove an account from your organization
+#'     later, you can do so only after you provide the missing information.
+#'     Follow the steps at [To leave an organization as a member
 #'     account](http://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_remove.html#leave-without-all-info)
 #'     in the *AWS Organizations User Guide*.
 #' 
@@ -371,15 +346,15 @@ organizations_cancel_handshake <- function(HandshakeId) {
 #' For more information about how to use this role to access the member
 #' account, see [Accessing and Administering the Member Accounts in Your
 #' Organization](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_access.html#orgs_manage_accounts_create-cross-account-role)
-#' in the *AWS Organizations User Guide*, and steps 2 and 3 in [Tutorial:
-#' Delegate Access Across AWS Accounts Using IAM
+#' in the *AWS Organizations User Guide*. Also see steps 2 and 3 in
+#' [Tutorial: Delegate Access Across AWS Accounts Using IAM
 #' Roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_cross-account-with-roles.html)
 #' in the *IAM User Guide.*
 #' 
 #' The [regex pattern](http://wikipedia.org/wiki/regex) that is used to
-#' validate this parameter is a string of characters that can consist of
-#' uppercase letters, lowercase letters, digits with no spaces, and any of
-#' the following characters: =,.@-
+#' validate this parameter. The pattern can include uppercase letters,
+#' lowercase letters, digits with no spaces, and any of the following
+#' characters: =,.@@-
 #' @param IamUserAccessToBilling If set to `ALLOW`, the new account enables IAM users to access account
 #' billing information *if* they have the required permissions. If set to
 #' `DENY`, only the root user of the new account can access account billing
@@ -388,9 +363,9 @@ organizations_cancel_handshake <- function(HandshakeId) {
 #' Console](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/grantaccess.html#ControllingAccessWebsite-Activate)
 #' in the *AWS Billing and Cost Management User Guide*.
 #' 
-#' If you don\'t specify this parameter, the value defaults to `ALLOW`, and
-#' IAM users and roles with the required permissions can access billing
-#' information for the new account.
+#' If you don\'t specify this parameter, the value defaults to `ALLOW`.
+#' This value allows IAM users and roles with the required permissions to
+#' access billing information for the new account.
 #'
 #' @section Request syntax:
 #' ```
@@ -403,6 +378,7 @@ organizations_cancel_handshake <- function(HandshakeId) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The owner of an organization creates a member account in the
 #' # organization. The following example shows that when the organization
 #' # owner creates the member account, the account is preconfigured with the
@@ -412,10 +388,11 @@ organizations_cancel_handshake <- function(HandshakeId) {
 #' # Organizations sends Susan a "Welcome to AWS" email:
 #' # 
 #' # 
-#' \donttest{svc$create_account(
+#' svc$create_account(
 #'   AccountName = "Production Account",
 #'   Email = "susan@example.com"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -507,10 +484,10 @@ organizations_create_account <- function(Email, AccountName, RoleName = NULL, Ia
 #' allows the master account in the organization in the commercial Region
 #' to assume it. An AWS GovCloud (US) account is then created and
 #' associated with the commercial account that you just created. A role is
-#' created in the new AWS GovCloud (US) account that can be assumed by the
-#' AWS GovCloud (US) account that is associated with the master account of
-#' the commercial organization. For more information and to view a diagram
-#' that explains how account access works, see [AWS
+#' created in the new AWS GovCloud (US) account. This role can be assumed
+#' by the AWS GovCloud (US) account that is associated with the master
+#' account of the commercial organization. For more information and to view
+#' a diagram that explains how account access works, see [AWS
 #' Organizations](http://docs.aws.amazon.com/govcloud-us/latest/UserGuide/govcloud-organizations.html)
 #' in the *AWS GovCloud User Guide.*
 #' 
@@ -519,14 +496,13 @@ organizations_create_account <- function(Email, AccountName, RoleName = NULL, Ia
 #' Organization](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_create.html)
 #' in the *AWS Organizations User Guide.*
 #' 
-#' -   When you create an account in an organization using the AWS
-#'     Organizations console, API, or CLI commands, the information
-#'     required for the account to operate as a standalone account, such as
-#'     a payment method and signing the end user license agreement (EULA)
-#'     is *not* automatically collected. If you must remove an account from
-#'     your organization later, you can do so only after you provide the
-#'     missing information. Follow the steps at [To leave an organization
-#'     as a member
+#' -   You can create an account in an organization using the AWS
+#'     Organizations console, API, or CLI commands. When you do, the
+#'     information required for the account to operate as a standalone
+#'     account, such as a payment method, is *not* automatically collected.
+#'     If you must remove an account from your organization later, you can
+#'     do so only after you provide the missing information. Follow the
+#'     steps at [To leave an organization as a member
 #'     account](http://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_remove.html#leave-without-all-info)
 #'     in the *AWS Organizations User Guide.*
 #' 
@@ -567,7 +543,7 @@ organizations_create_account <- function(Email, AccountName, RoleName = NULL, Ia
 #' remove an account that was created with an invalid email address. Like
 #' all request parameters for `CreateGovCloudAccount`, the request for the
 #' email address for the AWS GovCloud (US) account originates from the
-#' commercial Region, not from the AWS GovCloud (US) Region.
+#' commercial Region. It does not come from the AWS GovCloud (US) Region.
 #' @param AccountName &#91;required&#93; The friendly name of the member account.
 #' @param RoleName (Optional)
 #' 
@@ -584,15 +560,15 @@ organizations_create_account <- function(Email, AccountName, RoleName = NULL, Ia
 #' For more information about how to use this role to access the member
 #' account, see [Accessing and Administering the Member Accounts in Your
 #' Organization](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_access.html#orgs_manage_accounts_create-cross-account-role)
-#' in the *AWS Organizations User Guide* and steps 2 and 3 in [Tutorial:
-#' Delegate Access Across AWS Accounts Using IAM
+#' in the *AWS Organizations User Guide*. See also steps 2 and 3 in
+#' [Tutorial: Delegate Access Across AWS Accounts Using IAM
 #' Roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_cross-account-with-roles.html)
 #' in the *IAM User Guide.*
 #' 
 #' The [regex pattern](http://wikipedia.org/wiki/regex) that is used to
-#' validate this parameter is a string of characters that can consist of
-#' uppercase letters, lowercase letters, digits with no spaces, and any of
-#' the following characters: =,.@-
+#' validate this parameter. The pattern can include uppercase letters,
+#' lowercase letters, digits with no spaces, and any of the following
+#' characters: =,.@@-
 #' @param IamUserAccessToBilling If set to `ALLOW`, the new linked account in the commercial Region
 #' enables IAM users to access account billing information *if* they have
 #' the required permissions. If set to `DENY`, only the root user of the
@@ -647,12 +623,11 @@ organizations_create_gov_cloud_account <- function(Email, AccountName, RoleName 
 #' also have the relevant IAM permissions.
 #' 
 #' By default (or if you set the `FeatureSet` parameter to `ALL`), the new
-#' organization is created with all features enabled and service control
-#' policies automatically enabled in the root. If you instead choose to
+#' organization is created with all features enabled. In addition, service
+#' control policies are automatically enabled in the root. If you instead
 #' create the organization supporting only the consolidated billing
-#' features by setting the `FeatureSet` parameter to
-#' `CONSOLIDATED_BILLING\"`, no policy types are enabled by default, and
-#' you can\'t use organization policies.
+#' features, no policy types are enabled by default, and you can\'t use
+#' organization policies.
 #'
 #' @usage
 #' organizations_create_organization(FeatureSet)
@@ -669,9 +644,9 @@ organizations_create_gov_cloud_account <- function(Email, AccountName, RoleName 
 #'     The consolidated billing feature subset isn\'t available for
 #'     organizations in the AWS GovCloud (US) Region.
 #' 
-#' -   `ALL`: In addition to all the features supported by the consolidated
-#'     billing feature set, the master account can also apply any type of
-#'     policy to any member account in the organization. For more
+#' -   `ALL`: In addition to all the features that consolidated billing
+#'     feature set supports, the master account can also apply any policy
+#'     type to any member account in the organization. For more
 #'     information, see [All
 #'     features](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#feature-set-all)
 #'     in the *AWS Organizations User Guide.*
@@ -684,6 +659,7 @@ organizations_create_gov_cloud_account <- function(Email, AccountName, RoleName 
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # Bill wants to create an organization using credentials from account
 #' # 111111111111. The following example shows that the account becomes the
 #' # master account in the new organization. Because he does not specify a
@@ -691,16 +667,17 @@ organizations_create_gov_cloud_account <- function(Email, AccountName, RoleName 
 #' # service control policies enabled on the root:
 #' # 
 #' # 
-#' \donttest{svc$create_organization()}
+#' svc$create_organization()
 #' 
 #' # In the following example, Bill creates an organization using credentials
 #' # from account 111111111111, and configures the organization to support
 #' # only the consolidated billing feature set:
 #' # 
 #' # 
-#' \donttest{svc$create_organization(
+#' svc$create_organization(
 #'   FeatureSet = "CONSOLIDATED_BILLING"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -746,13 +723,13 @@ organizations_create_organization <- function(FeatureSet = NULL) {
 #' The [regex pattern](http://wikipedia.org/wiki/regex) for a parent ID
 #' string requires one of the following:
 #' 
-#' -   Root: a string that begins with \"r-\" followed by from 4 to 32
-#'     lower-case letters or digits.
+#' -   **Root** - A string that begins with \"r-\" followed by from 4 to 32
+#'     lowercase letters or digits.
 #' 
-#' -   Organizational unit (OU): a string that begins with \"ou-\" followed
-#'     by from 4 to 32 lower-case letters or digits (the ID of the root
-#'     that the OU is in) followed by a second \"-\" dash and from 8 to 32
-#'     additional lower-case letters or digits.
+#' -   **Organizational unit (OU)** - A string that begins with \"ou-\"
+#'     followed by from 4 to 32 lowercase letters or digits (the ID of the
+#'     root that the OU is in). This string is followed by a second \"-\"
+#'     dash and from 8 to 32 additional lowercase letters or digits.
 #' @param Name &#91;required&#93; The friendly name to assign to the new OU.
 #'
 #' @section Request syntax:
@@ -764,14 +741,16 @@ organizations_create_organization <- function(FeatureSet = NULL) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows how to create an OU that is named
 #' # AccountingOU. The new OU is directly under the root.:
 #' # 
 #' # 
-#' \donttest{svc$create_organizational_unit(
+#' svc$create_organizational_unit(
 #'   Name = "AccountingOU",
 #'   ParentId = "r-examplerootid111"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -809,13 +788,13 @@ organizations_create_organizational_unit <- function(ParentId, Name) {
 #' @usage
 #' organizations_create_policy(Content, Description, Name, Type)
 #'
-#' @param Content &#91;required&#93; The policy content to add to the new policy. For example, if you create
-#' a [service control
+#' @param Content &#91;required&#93; The policy content to add to the new policy. For example, you could
+#' create a [service control
 #' policy](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scp.html)
-#' (SCP), this string must be JSON text that specifies the permissions that
-#' admins in attached accounts can delegate to their users, groups, and
-#' roles. For more information about the SCP syntax, see [Service Control
-#' Policy
+#' (SCP) that specifies the permissions that administrators in attached
+#' accounts can delegate to their users, groups, and roles. The string for
+#' this SCP must be JSON text. For more information about the SCP syntax,
+#' see [Service Control Policy
 #' Syntax](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_reference_scp-syntax.html)
 #' in the *AWS Organizations User Guide.*
 #' @param Description &#91;required&#93; An optional description to assign to the policy.
@@ -825,9 +804,6 @@ organizations_create_organizational_unit <- function(ParentId, Name) {
 #' validate this parameter is a string of any of the characters in the
 #' ASCII character range.
 #' @param Type &#91;required&#93; The type of policy to create.
-#' 
-#' In the current release, the only type of policy that you can create is a
-#' service control policy (SCP).
 #'
 #' @section Request syntax:
 #' ```
@@ -835,11 +811,12 @@ organizations_create_organizational_unit <- function(ParentId, Name) {
 #'   Content = "string",
 #'   Description = "string",
 #'   Name = "string",
-#'   Type = "SERVICE_CONTROL_POLICY"
+#'   Type = "SERVICE_CONTROL_POLICY"|"TAG_POLICY"
 #' )
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows how to create a service control policy (SCP)
 #' # that is named AllowAllS3Actions. The JSON string in the content
 #' # parameter specifies the content in the policy. The parameter string is
@@ -848,12 +825,13 @@ organizations_create_organizational_unit <- function(ParentId, Name) {
 #' # is surrounded by double quotes:
 #' # 
 #' # 
-#' \donttest{svc$create_policy(
-#'   Content = "{\\\"Version\\\":\\\"2012-10-17\\\",\\\"Statement\\\":{\\\"Effect\\\":...",
+#' svc$create_policy(
+#'   Content = "\{\\\"Version\\\":\\\"2012-10-17\\\",\\\"Statement\\\":\{\\\"Effect\\\":...",
 #'   Description = "Enables admins of attached accounts to delegate all S3 permissions",
 #'   Name = "AllowAllS3Actions",
 #'   Type = "SERVICE_CONTROL_POLICY"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -886,7 +864,7 @@ organizations_create_policy <- function(Content, Description, Name, Type) {
 #' reinitiate the process with a new handshake request.
 #' 
 #' After you decline a handshake, it continues to appear in the results of
-#' relevant APIs for only 30 days. After that, it\'s deleted.
+#' relevant API operations for only 30 days. After that, it\'s deleted.
 #'
 #' @usage
 #' organizations_decline_handshake(HandshakeId)
@@ -895,7 +873,7 @@ organizations_create_policy <- function(Content, Description, Name, Type) {
 #' You can get the ID from the ListHandshakesForAccount operation.
 #' 
 #' The [regex pattern](http://wikipedia.org/wiki/regex) for handshake ID
-#' string requires \"h-\" followed by from 8 to 32 lower-case letters or
+#' string requires \"h-\" followed by from 8 to 32 lowercase letters or
 #' digits.
 #'
 #' @section Request syntax:
@@ -906,12 +884,14 @@ organizations_create_policy <- function(Content, Description, Name, Type) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows Susan declining an invitation to join Bill's
 #' # organization. The DeclineHandshake operation returns a handshake object,
 #' # showing that the state is now DECLINED:
-#' \donttest{svc$decline_handshake(
+#' svc$decline_handshake(
 #'   HandshakeId = "h-examplehandshakeid111"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -984,9 +964,9 @@ organizations_delete_organization <- function() {
 #' 
 #' The [regex pattern](http://wikipedia.org/wiki/regex) for an
 #' organizational unit ID string requires \"ou-\" followed by from 4 to 32
-#' lower-case letters or digits (the ID of the root that contains the OU)
-#' followed by a second \"-\" dash and from 8 to 32 additional lower-case
-#' letters or digits.
+#' lowercase letters or digits (the ID of the root that contains the OU).
+#' This string is followed by a second \"-\" dash and from 8 to 32
+#' additional lowercase letters or digits.
 #'
 #' @section Request syntax:
 #' ```
@@ -996,13 +976,15 @@ organizations_delete_organization <- function() {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows how to delete an OU. The example assumes
 #' # that you previously removed all accounts and other OUs from the OU:
 #' # 
 #' # 
-#' \donttest{svc$delete_organizational_unit(
+#' svc$delete_organizational_unit(
 #'   OrganizationalUnitId = "ou-examplerootid111-exampleouid111"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1041,7 +1023,7 @@ organizations_delete_organizational_unit <- function(OrganizationalUnitId) {
 #' operations.
 #' 
 #' The [regex pattern](http://wikipedia.org/wiki/regex) for a policy ID
-#' string requires \"p-\" followed by from 8 to 128 lower-case letters or
+#' string requires \"p-\" followed by from 8 to 128 lowercase letters or
 #' digits.
 #'
 #' @section Request syntax:
@@ -1052,14 +1034,16 @@ organizations_delete_organizational_unit <- function(OrganizationalUnitId) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows how to delete a policy from an organization.
 #' # The example assumes that you previously detached the policy from all
 #' # entities:
 #' # 
 #' # 
-#' \donttest{svc$delete_policy(
+#' svc$delete_policy(
 #'   PolicyId = "p-examplepolicyid111"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1081,10 +1065,10 @@ organizations_delete_policy <- function(PolicyId) {
 }
 .organizations$operations$delete_policy <- organizations_delete_policy
 
-#' Retrieves AWS Organizations-related information about the specified
+#' Retrieves AWS Organizations related information about the specified
 #' account
 #'
-#' Retrieves AWS Organizations-related information about the specified
+#' Retrieves AWS Organizations related information about the specified
 #' account.
 #' 
 #' This operation can be called only from the organization\'s master
@@ -1108,11 +1092,13 @@ organizations_delete_policy <- function(PolicyId) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows a user in the master account (111111111111)
 #' # asking for details about account 555555555555:
-#' \donttest{svc$describe_account(
+#' svc$describe_account(
 #'   AccountId = "555555555555"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1150,9 +1136,9 @@ organizations_describe_account <- function(AccountId) {
 #' can get the ID from the response to an earlier CreateAccount request, or
 #' from the ListCreateAccountStatus operation.
 #' 
-#' The [regex pattern](http://wikipedia.org/wiki/regex) for an create
+#' The [regex pattern](http://wikipedia.org/wiki/regex) for a create
 #' account request ID string requires \"car-\" followed by from 8 to 32
-#' lower-case letters or digits.
+#' lowercase letters or digits.
 #'
 #' @section Request syntax:
 #' ```
@@ -1162,14 +1148,16 @@ organizations_describe_account <- function(AccountId) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows how to request the status about a previous
 #' # request to create an account in an organization. This operation can be
 #' # called only by a principal from the organization's master account. In
 #' # the example, the specified "createAccountRequestId" comes from the
 #' # response of the original call to "CreateAccount":
-#' \donttest{svc$describe_create_account_status(
+#' svc$describe_create_account_status(
 #'   CreateAccountRequestId = "car-exampleaccountcreationrequestid"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1190,6 +1178,56 @@ organizations_describe_create_account_status <- function(CreateAccountRequestId)
   return(response)
 }
 .organizations$operations$describe_create_account_status <- organizations_describe_create_account_status
+
+#' Returns the contents of the effective tag policy for the account
+#'
+#' Returns the contents of the effective tag policy for the account. The
+#' effective tag policy is the aggregation of any tag policies the account
+#' inherits, plus any policy directly that is attached to the account.
+#' 
+#' This action returns information on tag policies only.
+#' 
+#' For more information on policy inheritance, see [How Policy Inheritance
+#' Works](http://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies-inheritance.html)
+#' in the *AWS Organizations User Guide*.
+#' 
+#' This operation can be called from any account in the organization.
+#'
+#' @usage
+#' organizations_describe_effective_policy(PolicyType, TargetId)
+#'
+#' @param PolicyType &#91;required&#93; The type of policy that you want information about.
+#' @param TargetId When you\'re signed in as the master account, specify the ID of the
+#' account that you want details about. Specifying an organization root or
+#' OU as the target is not supported.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$describe_effective_policy(
+#'   PolicyType = "TAG_POLICY",
+#'   TargetId = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname organizations_describe_effective_policy
+organizations_describe_effective_policy <- function(PolicyType, TargetId = NULL) {
+  op <- new_operation(
+    name = "DescribeEffectivePolicy",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .organizations$describe_effective_policy_input(PolicyType = PolicyType, TargetId = TargetId)
+  output <- .organizations$describe_effective_policy_output()
+  config <- get_config()
+  svc <- .organizations$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.organizations$operations$describe_effective_policy <- organizations_describe_effective_policy
 
 #' Retrieves information about a previously requested handshake
 #'
@@ -1212,7 +1250,7 @@ organizations_describe_create_account_status <- function(CreateAccountRequestId)
 #' or ListHandshakesForOrganization.
 #' 
 #' The [regex pattern](http://wikipedia.org/wiki/regex) for handshake ID
-#' string requires \"h-\" followed by from 8 to 32 lower-case letters or
+#' string requires \"h-\" followed by from 8 to 32 lowercase letters or
 #' digits.
 #'
 #' @section Request syntax:
@@ -1223,13 +1261,15 @@ organizations_describe_create_account_status <- function(CreateAccountRequestId)
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows you how to request details about a
 #' # handshake. The handshake ID comes either from the original call to
 #' # "InviteAccountToOrganization", or from a call to
 #' # "ListHandshakesForAccount" or "ListHandshakesForOrganization":
-#' \donttest{svc$describe_handshake(
+#' svc$describe_handshake(
 #'   HandshakeId = "h-examplehandshakeid111"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1271,9 +1311,11 @@ organizations_describe_handshake <- function(HandshakeId) {
 
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows how to request information about the current
 #' # user's organization:/n/n
-#' \donttest{svc$describe_organization()}
+#' svc$describe_organization()
+#' }
 #'
 #' @keywords internal
 #'
@@ -1311,9 +1353,9 @@ organizations_describe_organization <- function() {
 #' 
 #' The [regex pattern](http://wikipedia.org/wiki/regex) for an
 #' organizational unit ID string requires \"ou-\" followed by from 4 to 32
-#' lower-case letters or digits (the ID of the root that contains the OU)
-#' followed by a second \"-\" dash and from 8 to 32 additional lower-case
-#' letters or digits.
+#' lowercase letters or digits (the ID of the root that contains the OU).
+#' This string is followed by a second \"-\" dash and from 8 to 32
+#' additional lowercase letters or digits.
 #'
 #' @section Request syntax:
 #' ```
@@ -1323,10 +1365,12 @@ organizations_describe_organization <- function() {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows how to request details about an OU:/n/n
-#' \donttest{svc$describe_organizational_unit(
+#' svc$describe_organizational_unit(
 #'   OrganizationalUnitId = "ou-examplerootid111-exampleouid111"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1363,7 +1407,7 @@ organizations_describe_organizational_unit <- function(OrganizationalUnitId) {
 #' operations.
 #' 
 #' The [regex pattern](http://wikipedia.org/wiki/regex) for a policy ID
-#' string requires \"p-\" followed by from 8 to 128 lower-case letters or
+#' string requires \"p-\" followed by from 8 to 128 lowercase letters or
 #' digits.
 #'
 #' @section Request syntax:
@@ -1374,11 +1418,13 @@ organizations_describe_organizational_unit <- function(OrganizationalUnitId) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows how to request information about a
 #' # policy:/n/n
-#' \donttest{svc$describe_policy(
+#' svc$describe_policy(
 #'   PolicyId = "p-examplepolicyid111"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1409,16 +1455,17 @@ organizations_describe_policy <- function(PolicyId) {
 #' are immediate.
 #' 
 #' **Note:** Every root, OU, and account must have at least one SCP
-#' attached. If you want to replace the default `FullAWSAccess` policy with
-#' one that limits the permissions that can be delegated, you must attach
-#' the replacement policy before you can remove the default one. This is
-#' the authorization strategy of
-#' [whitelisting](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_about-scps.html#orgs_policies_whitelist).
-#' If you instead attach a second SCP and leave the `FullAWSAccess` SCP
-#' still attached, and specify `"Effect": "Deny"` in the second SCP to
-#' override the `"Effect": "Allow"` in the `FullAWSAccess` policy (or any
-#' other attached SCP), you\'re using the authorization strategy of
-#' [blacklisting](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_about-scps.html#orgs_policies_blacklist).
+#' attached. You can replace the default `FullAWSAccess` policy with one
+#' that limits the permissions that can be delegated. To do that, you must
+#' attach the replacement policy before you can remove the default one.
+#' This is the authorization strategy of using an [allow
+#' list](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_about-scps.html#orgs_policies_whitelist).
+#' You could instead attach a second SCP and leave the `FullAWSAccess` SCP
+#' still attached. You could then specify `"Effect": "Deny"` in the second
+#' SCP to override the `"Effect": "Allow"` in the `FullAWSAccess` policy
+#' (or any other attached SCP). If you take these steps, you\'re using the
+#' authorization strategy of a [deny
+#' list](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_about-scps.html#orgs_policies_blacklist).
 #' 
 #' This operation can be called only from the organization\'s master
 #' account.
@@ -1430,7 +1477,7 @@ organizations_describe_policy <- function(PolicyId) {
 #' the ID from the ListPolicies or ListPoliciesForTarget operations.
 #' 
 #' The [regex pattern](http://wikipedia.org/wiki/regex) for a policy ID
-#' string requires \"p-\" followed by from 8 to 128 lower-case letters or
+#' string requires \"p-\" followed by from 8 to 128 lowercase letters or
 #' digits.
 #' @param TargetId &#91;required&#93; The unique identifier (ID) of the root, OU, or account that you want to
 #' detach the policy from. You can get the ID from the ListRoots,
@@ -1439,15 +1486,15 @@ organizations_describe_policy <- function(PolicyId) {
 #' The [regex pattern](http://wikipedia.org/wiki/regex) for a target ID
 #' string requires one of the following:
 #' 
-#' -   Root: a string that begins with \"r-\" followed by from 4 to 32
-#'     lower-case letters or digits.
+#' -   **Root** - A string that begins with \"r-\" followed by from 4 to 32
+#'     lowercase letters or digits.
 #' 
-#' -   Account: a string that consists of exactly 12 digits.
+#' -   **Account** - A string that consists of exactly 12 digits.
 #' 
-#' -   Organizational unit (OU): a string that begins with \"ou-\" followed
-#'     by from 4 to 32 lower-case letters or digits (the ID of the root
-#'     that the OU is in) followed by a second \"-\" dash and from 8 to 32
-#'     additional lower-case letters or digits.
+#' -   **Organizational unit (OU)** - A string that begins with \"ou-\"
+#'     followed by from 4 to 32 lowercase letters or digits (the ID of the
+#'     root that the OU is in). This string is followed by a second \"-\"
+#'     dash and from 8 to 32 additional lowercase letters or digits.
 #'
 #' @section Request syntax:
 #' ```
@@ -1458,11 +1505,13 @@ organizations_describe_policy <- function(PolicyId) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows how to detach a policy from an OU:/n/n
-#' \donttest{svc$detach_policy(
+#' svc$detach_policy(
 #'   PolicyId = "p-examplepolicyid111",
 #'   TargetId = "ou-examplerootid111-exampleouid111"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1507,8 +1556,8 @@ organizations_detach_policy <- function(PolicyId, TargetId) {
 #' 
 #' After you perform the `DisableAWSServiceAccess` operation, the specified
 #' service can no longer perform operations in your organization\'s
-#' accounts unless the operations are explicitly permitted by the IAM
-#' policies that are attached to your roles.
+#' accounts. The only exception is when the operations are explicitly
+#' permitted by IAM policies that are attached to your roles.
 #' 
 #' For more information about integrating other services with AWS
 #' Organizations, including the list of services that work with
@@ -1553,23 +1602,30 @@ organizations_disable_aws_service_access <- function(ServicePrincipal) {
 }
 .organizations$operations$disable_aws_service_access <- organizations_disable_aws_service_access
 
-#' Disables an organizational control policy type in a root
+#' Disables an organizational control policy type in a root and detaches
+#' all policies of that type from the organization root, OUs, and accounts
 #'
-#' Disables an organizational control policy type in a root. A policy of a
-#' certain type can be attached to entities in a root only if that type is
-#' enabled in the root. After you perform this operation, you no longer can
-#' attach policies of the specified type to that root or to any
-#' organizational unit (OU) or account in that root. You can undo this by
-#' using the EnablePolicyType operation.
+#' Disables an organizational control policy type in a root and detaches
+#' all policies of that type from the organization root, OUs, and accounts.
+#' A policy of a certain type can be attached to entities in a root only if
+#' that type is enabled in the root. After you perform this operation, you
+#' no longer can attach policies of the specified type to that root or to
+#' any organizational unit (OU) or account in that root. You can undo this
+#' by using the EnablePolicyType operation.
+#' 
+#' This is an asynchronous request that AWS performs in the background. If
+#' you disable a policy for a root, it still appears enabled for the
+#' organization if [all
+#' features](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html)
+#' are enabled for the organization. AWS recommends that you first use
+#' ListRoots to see the status of policy types for a specified root, and
+#' then use this operation.
 #' 
 #' This operation can be called only from the organization\'s master
 #' account.
 #' 
-#' If you disable a policy type for a root, it still shows as enabled for
-#' the organization if all features are enabled in that organization. Use
-#' ListRoots to see the status of policy types for a specified root. Use
-#' DescribeOrganization to see the status of policy types in the
-#' organization.
+#' To view the status of available policy types in the organization, use
+#' DescribeOrganization.
 #'
 #' @usage
 #' organizations_disable_policy_type(RootId, PolicyType)
@@ -1578,7 +1634,7 @@ organizations_disable_aws_service_access <- function(ServicePrincipal) {
 #' policy type. You can get the ID from the ListRoots operation.
 #' 
 #' The [regex pattern](http://wikipedia.org/wiki/regex) for a root ID
-#' string requires \"r-\" followed by from 4 to 32 lower-case letters or
+#' string requires \"r-\" followed by from 4 to 32 lowercase letters or
 #' digits.
 #' @param PolicyType &#91;required&#93; The policy type that you want to disable in this root.
 #'
@@ -1586,18 +1642,20 @@ organizations_disable_aws_service_access <- function(ServicePrincipal) {
 #' ```
 #' svc$disable_policy_type(
 #'   RootId = "string",
-#'   PolicyType = "SERVICE_CONTROL_POLICY"
+#'   PolicyType = "SERVICE_CONTROL_POLICY"|"TAG_POLICY"
 #' )
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows how to disable the service control policy
 #' # (SCP) policy type in a root. The response shows that the PolicyTypes
 #' # response element no longer includes SERVICE_CONTROL_POLICY:/n/n
-#' \donttest{svc$disable_policy_type(
+#' svc$disable_policy_type(
 #'   PolicyType = "SERVICE_CONTROL_POLICY",
 #'   RootId = "r-examplerootid111"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1685,9 +1743,9 @@ organizations_enable_aws_service_access <- function(ServicePrincipal) {
 #' Enables all features in an organization. This enables the use of
 #' organization policies that can restrict the services and actions that
 #' can be called in each account. Until you enable all features, you have
-#' access only to consolidated billing, and you can\'t use any of the
-#' advanced account administration features that AWS Organizations
-#' supports. For more information, see [Enabling All Features in Your
+#' access only to consolidated billing. You can\'t use any of the advanced
+#' account administration features that AWS Organizations supports. For
+#' more information, see [Enabling All Features in Your
 #' Organization](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html)
 #' in the *AWS Organizations User Guide.*
 #' 
@@ -1696,7 +1754,7 @@ organizations_enable_aws_service_access <- function(ServicePrincipal) {
 #' this operation sends a handshake to every invited account in the
 #' organization. The feature set change can be finalized and the additional
 #' features enabled only after all administrators in the invited accounts
-#' approve the change by accepting the handshake.
+#' approve the change. Accepting the handshake approves the change.
 #' 
 #' After you enable all features, you can separately enable or disable
 #' individual policy types in a root using EnablePolicyType and
@@ -1726,6 +1784,7 @@ organizations_enable_aws_service_access <- function(ServicePrincipal) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example shows the administrator asking all the invited accounts in
 #' # the organization to approve enabling all features in the organization.
 #' # AWS Organizations sends an email to the address that is registered with
@@ -1734,7 +1793,8 @@ organizations_enable_aws_service_access <- function(ServicePrincipal) {
 #' # accept the handshake, the organization administrator can finalize the
 #' # change to enable all features, and those with appropriate permissions
 #' # can create policies and apply them to roots, OUs, and accounts:/n/n
-#' \donttest{svc$enable_all_features()}
+#' svc$enable_all_features()
+#' }
 #'
 #' @keywords internal
 #'
@@ -1763,14 +1823,16 @@ organizations_enable_all_features <- function() {
 #' organizational unit (OU), or account in that root. You can undo this by
 #' using the DisablePolicyType operation.
 #' 
+#' This is an asynchronous request that AWS performs in the background. AWS
+#' recommends that you first use ListRoots to see the status of policy
+#' types for a specified root, and then use this operation.
+#' 
 #' This operation can be called only from the organization\'s master
 #' account.
 #' 
 #' You can enable a policy type in a root only if that policy type is
-#' available in the organization. Use DescribeOrganization to view the
-#' status of available policy types in the organization.
-#' 
-#' To view the status of policy type in a root, use ListRoots.
+#' available in the organization. To view the status of available policy
+#' types in the organization, use DescribeOrganization.
 #'
 #' @usage
 #' organizations_enable_policy_type(RootId, PolicyType)
@@ -1779,7 +1841,7 @@ organizations_enable_all_features <- function() {
 #' policy type. You can get the ID from the ListRoots operation.
 #' 
 #' The [regex pattern](http://wikipedia.org/wiki/regex) for a root ID
-#' string requires \"r-\" followed by from 4 to 32 lower-case letters or
+#' string requires \"r-\" followed by from 4 to 32 lowercase letters or
 #' digits.
 #' @param PolicyType &#91;required&#93; The policy type that you want to enable.
 #'
@@ -1787,18 +1849,20 @@ organizations_enable_all_features <- function() {
 #' ```
 #' svc$enable_policy_type(
 #'   RootId = "string",
-#'   PolicyType = "SERVICE_CONTROL_POLICY"
+#'   PolicyType = "SERVICE_CONTROL_POLICY"|"TAG_POLICY"
 #' )
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows how to enable the service control policy
 #' # (SCP) policy type in a root. The output shows a root object with a
 #' # PolicyTypes response element showing that SCPs are now enabled:/n/n
-#' \donttest{svc$enable_policy_type(
+#' svc$enable_policy_type(
 #'   PolicyType = "SERVICE_CONTROL_POLICY",
 #'   RootId = "r-examplerootid111"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1830,18 +1894,19 @@ organizations_enable_policy_type <- function(RootId, PolicyType) {
 #' response.
 #' 
 #' -   You can invite AWS accounts only from the same seller as the master
-#'     account. For example, if your organization\'s master account was
-#'     created by Amazon Internet Services Pvt. Ltd (AISPL), an AWS seller
-#'     in India, you can invite only other AISPL accounts to your
-#'     organization. You can\'t combine accounts from AISPL and AWS or from
-#'     any other AWS seller. For more information, see [Consolidated
+#'     account. For example, assume that your organization\'s master
+#'     account was created by Amazon Internet Services Pvt. Ltd (AISPL), an
+#'     AWS seller in India. You can invite only other AISPL accounts to
+#'     your organization. You can\'t combine accounts from AISPL and AWS or
+#'     from any other AWS seller. For more information, see [Consolidated
 #'     Billing in
 #'     India](http://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/useconsolidatedbilliing-India.html).
 #' 
-#' -   If you receive an exception that indicates that you exceeded your
+#' -   You might receive an exception that indicates that you exceeded your
 #'     account limits for the organization or that the operation failed
-#'     because your organization is still initializing, wait one hour and
-#'     then try again. If the error persists after an hour, contact [AWS
+#'     because your organization is still initializing. If so, wait one
+#'     hour and then try again. If the error persists after an hour,
+#'     contact [AWS
 #'     Support](https://console.aws.amazon.com/support/home#/).
 #' 
 #' This operation can be called only from the organization\'s master
@@ -1865,7 +1930,7 @@ organizations_enable_policy_type <- function(RootId, PolicyType) {
 #' number as the `Id`. If you specify `"Type": "EMAIL"`, you must specify
 #' the email address that is associated with the account.
 #' 
-#' `--target Id=diego@example.com,Type=EMAIL`
+#' `--target Id=diego@@example.com,Type=EMAIL`
 #' @param Notes Additional information that you want to include in the generated email
 #' to the recipient account owner.
 #'
@@ -1881,16 +1946,18 @@ organizations_enable_policy_type <- function(RootId, PolicyType) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows the admin of the master account owned by
 #' # bill@example.com inviting the account owned by juan@example.com to join
 #' # an organization.
-#' \donttest{svc$invite_account_to_organization(
+#' svc$invite_account_to_organization(
 #'   Notes = "This is a request for Juan's account to join Bill's organization",
 #'   Target = list(
 #'     Id = "juan@example.com",
 #'     Type = "EMAIL"
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1924,19 +1991,19 @@ organizations_invite_account_to_organization <- function(Target, Notes = NULL) {
 #' 
 #' -   The master account in an organization with all features enabled can
 #'     set service control policies (SCPs) that can restrict what
-#'     administrators of member accounts can do, including preventing them
-#'     from successfully calling `LeaveOrganization` and leaving the
-#'     organization.
+#'     administrators of member accounts can do. These restrictions can
+#'     include preventing member accounts from successfully calling
+#'     `LeaveOrganization`.
 #' 
 #' -   You can leave an organization as a member account only if the
 #'     account is configured with the information required to operate as a
 #'     standalone account. When you create an account in an organization
-#'     using the AWS Organizations console, API, or CLI commands, the
-#'     information required of standalone accounts is *not* automatically
-#'     collected. For each account that you want to make standalone, you
-#'     must accept the end user license agreement (EULA), choose a support
-#'     plan, provide and verify the required contact information, and
-#'     provide a current payment method. AWS uses the payment method to
+#'     using the AWS Organizations console, API, or CLI, the information
+#'     required of standalone accounts is *not* automatically collected.
+#'     For each account that you want to make standalone, you must accept
+#'     the end user license agreement (EULA). You must also choose a
+#'     support plan, provide and verify the required contact information,
+#'     and provide a current payment method. AWS uses the payment method to
 #'     charge for any billable (not free tier) AWS activity that occurs
 #'     while the account isn\'t attached to an organization. Follow the
 #'     steps at [To leave an organization when all required account
@@ -1958,9 +2025,11 @@ organizations_invite_account_to_organization <- function(Target, Notes = NULL) {
 
 #'
 #' @examples
+#' \dontrun{
 #' # TThe following example shows how to remove your member account from an
 #' # organization:
-#' \donttest{svc$leave_organization()}
+#' svc$leave_organization()
+#' }
 #'
 #' @keywords internal
 #'
@@ -2088,9 +2157,11 @@ organizations_list_aws_service_access_for_organization <- function(NextToken = N
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows you how to request a list of the accounts in
 #' # an organization:
-#' \donttest{svc$list_accounts()}
+#' svc$list_accounts()
+#' }
 #'
 #' @keywords internal
 #'
@@ -2161,11 +2232,13 @@ organizations_list_accounts <- function(NextToken = NULL, MaxResults = NULL) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows how to request a list of the accounts in an
 #' # OU:/n/n
-#' \donttest{svc$list_accounts_for_parent(
+#' svc$list_accounts_for_parent(
 #'   ParentId = "ou-examplerootid111-exampleouid111"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -2213,13 +2286,13 @@ organizations_list_accounts_for_parent <- function(ParentId, NextToken = NULL, M
 #' The [regex pattern](http://wikipedia.org/wiki/regex) for a parent ID
 #' string requires one of the following:
 #' 
-#' -   Root: a string that begins with \"r-\" followed by from 4 to 32
-#'     lower-case letters or digits.
+#' -   **Root** - A string that begins with \"r-\" followed by from 4 to 32
+#'     lowercase letters or digits.
 #' 
-#' -   Organizational unit (OU): a string that begins with \"ou-\" followed
-#'     by from 4 to 32 lower-case letters or digits (the ID of the root
-#'     that the OU is in) followed by a second \"-\" dash and from 8 to 32
-#'     additional lower-case letters or digits.
+#' -   **Organizational unit (OU)** - A string that begins with \"ou-\"
+#'     followed by from 4 to 32 lowercase letters or digits (the ID of the
+#'     root that the OU is in). This string is followed by a second \"-\"
+#'     dash and from 8 to 32 additional lowercase letters or digits.
 #' @param ChildType &#91;required&#93; Filters the output to include only the specified child type.
 #' @param NextToken Use this parameter if you receive a `NextToken` response in a previous
 #' request that indicates that there is more output available. Set it to
@@ -2247,12 +2320,14 @@ organizations_list_accounts_for_parent <- function(ParentId, NextToken = NULL, M
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows how to request a list of the child OUs in a
 #' # parent root or OU:/n/n
-#' \donttest{svc$list_children(
+#' svc$list_children(
 #'   ChildType = "ORGANIZATIONAL_UNIT",
 #'   ParentId = "ou-examplerootid111-exampleouid111"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -2322,21 +2397,23 @@ organizations_list_children <- function(ParentId, ChildType, NextToken = NULL, M
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows a user requesting a list of only the
 #' # completed account creation requests made for the current organization:
-#' \donttest{svc$list_create_account_status(
+#' svc$list_create_account_status(
 #'   States = list(
 #'     "SUCCEEDED"
 #'   )
-#' )}
+#' )
 #' 
 #' # The following example shows a user requesting a list of only the
 #' # in-progress account creation requests made for the current organization:
-#' \donttest{svc$list_create_account_status(
+#' svc$list_create_account_status(
 #'   States = list(
 #'     "IN_PROGRESS"
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -2382,10 +2459,11 @@ organizations_list_create_account_status <- function(States = NULL, NextToken = 
 #' @param Filter Filters the handshakes that you want included in the response. The
 #' default is all types. Use the `ActionType` element to limit the output
 #' to only a specified type, such as `INVITE`, `ENABLE_ALL_FEATURES`, or
-#' `APPROVE_ALL_FEATURES`. Alternatively, for the `ENABLE_ALL_FEATURES`
-#' handshake that generates a separate child handshake for each member
-#' account, you can specify `ParentHandshakeId` to see only the handshakes
-#' that were generated by that parent request.
+#' `APPROVE_ALL_FEATURES`. Alternatively, you can specify the
+#' `ENABLE_ALL_FEATURES` handshake, which generates a separate child
+#' handshake for each member account. When you do specify
+#' `ParentHandshakeId` to see only the handshakes that were generated by
+#' that parent request.
 #' @param NextToken Use this parameter if you receive a `NextToken` response in a previous
 #' request that indicates that there is more output available. Set it to
 #' the value of the previous call\'s `NextToken` response to indicate where
@@ -2414,10 +2492,12 @@ organizations_list_create_account_status <- function(States = NULL, NextToken = 
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows you how to get a list of handshakes that are
 #' # associated with the account of the credentials used to call the
 #' # operation:
-#' \donttest{svc$list_handshakes_for_account()}
+#' svc$list_handshakes_for_account()
+#' }
 #'
 #' @keywords internal
 #'
@@ -2467,10 +2547,11 @@ organizations_list_handshakes_for_account <- function(Filter = NULL, NextToken =
 #' @param Filter A filter of the handshakes that you want included in the response. The
 #' default is all types. Use the `ActionType` element to limit the output
 #' to only a specified type, such as `INVITE`, `ENABLE-ALL-FEATURES`, or
-#' `APPROVE-ALL-FEATURES`. Alternatively, for the `ENABLE-ALL-FEATURES`
-#' handshake that generates a separate child handshake for each member
-#' account, you can specify the `ParentHandshakeId` to see only the
-#' handshakes that were generated by that parent request.
+#' `APPROVE-ALL-FEATURES`. Alternatively, you can specify the
+#' `ENABLE-ALL-FEATURES` handshake, which generates a separate child
+#' handshake for each member account. When you do, specify the
+#' `ParentHandshakeId` to see only the handshakes that were generated by
+#' that parent request.
 #' @param NextToken Use this parameter if you receive a `NextToken` response in a previous
 #' request that indicates that there is more output available. Set it to
 #' the value of the previous call\'s `NextToken` response to indicate where
@@ -2499,9 +2580,11 @@ organizations_list_handshakes_for_account <- function(Filter = NULL, NextToken =
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows you how to get a list of handshakes
 #' # associated with the current organization:
-#' \donttest{svc$list_handshakes_for_organization()}
+#' svc$list_handshakes_for_organization()
+#' }
 #'
 #' @keywords internal
 #'
@@ -2548,13 +2631,13 @@ organizations_list_handshakes_for_organization <- function(Filter = NULL, NextTo
 #' The [regex pattern](http://wikipedia.org/wiki/regex) for a parent ID
 #' string requires one of the following:
 #' 
-#' -   Root: a string that begins with \"r-\" followed by from 4 to 32
-#'     lower-case letters or digits.
+#' -   **Root** - A string that begins with \"r-\" followed by from 4 to 32
+#'     lowercase letters or digits.
 #' 
-#' -   Organizational unit (OU): a string that begins with \"ou-\" followed
-#'     by from 4 to 32 lower-case letters or digits (the ID of the root
-#'     that the OU is in) followed by a second \"-\" dash and from 8 to 32
-#'     additional lower-case letters or digits.
+#' -   **Organizational unit (OU)** - A string that begins with \"ou-\"
+#'     followed by from 4 to 32 lowercase letters or digits (the ID of the
+#'     root that the OU is in). This string is followed by a second \"-\"
+#'     dash and from 8 to 32 additional lowercase letters or digits.
 #' @param NextToken Use this parameter if you receive a `NextToken` response in a previous
 #' request that indicates that there is more output available. Set it to
 #' the value of the previous call\'s `NextToken` response to indicate where
@@ -2580,11 +2663,13 @@ organizations_list_handshakes_for_organization <- function(Filter = NULL, NextTo
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows how to get a list of OUs in a specified
 #' # root:/n/n
-#' \donttest{svc$list_organizational_units_for_parent(
+#' svc$list_organizational_units_for_parent(
 #'   ParentId = "r-examplerootid111"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -2634,12 +2719,12 @@ organizations_list_organizational_units_for_parent <- function(ParentId, NextTok
 #' The [regex pattern](http://wikipedia.org/wiki/regex) for a child ID
 #' string requires one of the following:
 #' 
-#' -   Account: a string that consists of exactly 12 digits.
+#' -   **Account** - A string that consists of exactly 12 digits.
 #' 
-#' -   Organizational unit (OU): a string that begins with \"ou-\" followed
-#'     by from 4 to 32 lower-case letters or digits (the ID of the root
-#'     that contains the OU) followed by a second \"-\" dash and from 8 to
-#'     32 additional lower-case letters or digits.
+#' -   **Organizational unit (OU)** - A string that begins with \"ou-\"
+#'     followed by from 4 to 32 lowercase letters or digits (the ID of the
+#'     root that contains the OU). This string is followed by a second
+#'     \"-\" dash and from 8 to 32 additional lowercase letters or digits.
 #' @param NextToken Use this parameter if you receive a `NextToken` response in a previous
 #' request that indicates that there is more output available. Set it to
 #' the value of the previous call\'s `NextToken` response to indicate where
@@ -2665,11 +2750,13 @@ organizations_list_organizational_units_for_parent <- function(ParentId, NextTok
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows how to list the root or OUs that contain
 #' # account 444444444444:/n/n
-#' \donttest{svc$list_parents(
+#' svc$list_parents(
 #'   ChildId = "444444444444"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -2728,18 +2815,20 @@ organizations_list_parents <- function(ChildId, NextToken = NULL, MaxResults = N
 #' @section Request syntax:
 #' ```
 #' svc$list_policies(
-#'   Filter = "SERVICE_CONTROL_POLICY",
+#'   Filter = "SERVICE_CONTROL_POLICY"|"TAG_POLICY",
 #'   NextToken = "string",
 #'   MaxResults = 123
 #' )
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows how to get a list of service control
 #' # policies (SCPs):/n/n
-#' \donttest{svc$list_policies(
+#' svc$list_policies(
 #'   Filter = "SERVICE_CONTROL_POLICY"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -2787,15 +2876,15 @@ organizations_list_policies <- function(Filter, NextToken = NULL, MaxResults = N
 #' The [regex pattern](http://wikipedia.org/wiki/regex) for a target ID
 #' string requires one of the following:
 #' 
-#' -   Root: a string that begins with \"r-\" followed by from 4 to 32
-#'     lower-case letters or digits.
+#' -   **Root** - A string that begins with \"r-\" followed by from 4 to 32
+#'     lowercase letters or digits.
 #' 
-#' -   Account: a string that consists of exactly 12 digits.
+#' -   **Account** - A string that consists of exactly 12 digits.
 #' 
-#' -   Organizational unit (OU): a string that begins with \"ou-\" followed
-#'     by from 4 to 32 lower-case letters or digits (the ID of the root
-#'     that the OU is in) followed by a second \"-\" dash and from 8 to 32
-#'     additional lower-case letters or digits.
+#' -   **Organizational unit (OU)** - A string that begins with \"ou-\"
+#'     followed by from 4 to 32 lowercase letters or digits (the ID of the
+#'     root that the OU is in). This string is followed by a second \"-\"
+#'     dash and from 8 to 32 additional lowercase letters or digits.
 #' @param Filter &#91;required&#93; The type of policy that you want to include in the returned list.
 #' @param NextToken Use this parameter if you receive a `NextToken` response in a previous
 #' request that indicates that there is more output available. Set it to
@@ -2816,22 +2905,24 @@ organizations_list_policies <- function(Filter, NextToken = NULL, MaxResults = N
 #' ```
 #' svc$list_policies_for_target(
 #'   TargetId = "string",
-#'   Filter = "SERVICE_CONTROL_POLICY",
+#'   Filter = "SERVICE_CONTROL_POLICY"|"TAG_POLICY",
 #'   NextToken = "string",
 #'   MaxResults = 123
 #' )
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows how to get a list of all service control
 #' # policies (SCPs) of the type specified by the Filter parameter, that are
 #' # directly attached to an account. The returned list does not include
 #' # policies that apply to the account because of inheritance from its
 #' # location in an OU hierarchy:/n/n
-#' \donttest{svc$list_policies_for_target(
+#' svc$list_policies_for_target(
 #'   Filter = "SERVICE_CONTROL_POLICY",
 #'   TargetId = "444444444444"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -2900,9 +2991,11 @@ organizations_list_policies_for_target <- function(TargetId, Filter, NextToken =
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows how to get the list of the roots in the
 #' # current organization:/n/n
-#' \donttest{svc$list_roots()}
+#' svc$list_roots()
+#' }
 #'
 #' @keywords internal
 #'
@@ -2929,6 +3022,9 @@ organizations_list_roots <- function(NextToken = NULL, MaxResults = NULL) {
 #' Lists tags for the specified resource.
 #' 
 #' Currently, you can list tags on an account in AWS Organizations.
+#' 
+#' This operation can be called only from the organization\'s master
+#' account.
 #'
 #' @usage
 #' organizations_list_tags_for_resource(ResourceId, NextToken)
@@ -2989,7 +3085,7 @@ organizations_list_tags_for_resource <- function(ResourceId, NextToken = NULL) {
 #' know.
 #' 
 #' The [regex pattern](http://wikipedia.org/wiki/regex) for a policy ID
-#' string requires \"p-\" followed by from 8 to 128 lower-case letters or
+#' string requires \"p-\" followed by from 8 to 128 lowercase letters or
 #' digits.
 #' @param NextToken Use this parameter if you receive a `NextToken` response in a previous
 #' request that indicates that there is more output available. Set it to
@@ -3016,11 +3112,13 @@ organizations_list_tags_for_resource <- function(ResourceId, NextToken = NULL) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows how to get the list of roots, OUs, and
 #' # accounts to which the specified policy is attached:/n/n
-#' \donttest{svc$list_targets_for_policy(
+#' svc$list_targets_for_policy(
 #'   PolicyId = "p-FullAWSAccess"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -3065,26 +3163,26 @@ organizations_list_targets_for_policy <- function(PolicyId, NextToken = NULL, Ma
 #' The [regex pattern](http://wikipedia.org/wiki/regex) for a parent ID
 #' string requires one of the following:
 #' 
-#' -   Root: a string that begins with \"r-\" followed by from 4 to 32
-#'     lower-case letters or digits.
+#' -   **Root** - A string that begins with \"r-\" followed by from 4 to 32
+#'     lowercase letters or digits.
 #' 
-#' -   Organizational unit (OU): a string that begins with \"ou-\" followed
-#'     by from 4 to 32 lower-case letters or digits (the ID of the root
-#'     that the OU is in) followed by a second \"-\" dash and from 8 to 32
-#'     additional lower-case letters or digits.
+#' -   **Organizational unit (OU)** - A string that begins with \"ou-\"
+#'     followed by from 4 to 32 lowercase letters or digits (the ID of the
+#'     root that the OU is in). This string is followed by a second \"-\"
+#'     dash and from 8 to 32 additional lowercase letters or digits.
 #' @param DestinationParentId &#91;required&#93; The unique identifier (ID) of the root or organizational unit that you
 #' want to move the account to.
 #' 
 #' The [regex pattern](http://wikipedia.org/wiki/regex) for a parent ID
 #' string requires one of the following:
 #' 
-#' -   Root: a string that begins with \"r-\" followed by from 4 to 32
-#'     lower-case letters or digits.
+#' -   **Root** - A string that begins with \"r-\" followed by from 4 to 32
+#'     lowercase letters or digits.
 #' 
-#' -   Organizational unit (OU): a string that begins with \"ou-\" followed
-#'     by from 4 to 32 lower-case letters or digits (the ID of the root
-#'     that the OU is in) followed by a second \"-\" dash and from 8 to 32
-#'     additional lower-case letters or digits.
+#' -   **Organizational unit (OU)** - A string that begins with \"ou-\"
+#'     followed by from 4 to 32 lowercase letters or digits (the ID of the
+#'     root that the OU is in). This string is followed by a second \"-\"
+#'     dash and from 8 to 32 additional lowercase letters or digits.
 #'
 #' @section Request syntax:
 #' ```
@@ -3096,13 +3194,15 @@ organizations_list_targets_for_policy <- function(PolicyId, NextToken = NULL, Ma
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows how to move a member account from the root
 #' # to an OU:/n/n
-#' \donttest{svc$move_account(
+#' svc$move_account(
 #'   AccountId = "333333333333",
 #'   DestinationParentId = "ou-examplerootid111-exampleouid111",
 #'   SourceParentId = "r-examplerootid111"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -3141,16 +3241,17 @@ organizations_move_account <- function(AccountId, SourceParentId, DestinationPar
 #' You can remove an account from your organization only if the account is
 #' configured with the information required to operate as a standalone
 #' account. When you create an account in an organization using the AWS
-#' Organizations console, API, or CLI commands, the information required of
+#' Organizations console, API, or CLI, the information required of
 #' standalone accounts is *not* automatically collected. For an account
 #' that you want to make standalone, you must accept the end user license
-#' agreement (EULA), choose a support plan, provide and verify the required
-#' contact information, and provide a current payment method. AWS uses the
-#' payment method to charge for any billable (not free tier) AWS activity
-#' that occurs while the account isn\'t attached to an organization. To
-#' remove an account that doesn\'t yet have this information, you must sign
-#' in as the member account and follow the steps at [To leave an
-#' organization when all required account information has not yet been
+#' agreement (EULA). You must also choose a support plan, provide and
+#' verify the required contact information, and provide a current payment
+#' method. AWS uses the payment method to charge for any billable (not free
+#' tier) AWS activity that occurs while the account isn\'t attached to an
+#' organization. To remove an account that doesn\'t yet have this
+#' information, you must sign in as the member account. Then follow the
+#' steps at [To leave an organization when all required account information
+#' has not yet been
 #' provided](http://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_remove.html#leave-without-all-info)
 #' in the *AWS Organizations User Guide.*
 #'
@@ -3171,11 +3272,13 @@ organizations_move_account <- function(AccountId, SourceParentId, DestinationPar
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows you how to remove an account from an
 #' # organization:
-#' \donttest{svc$remove_account_from_organization(
+#' svc$remove_account_from_organization(
 #'   AccountId = "333333333333"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -3202,6 +3305,9 @@ organizations_remove_account_from_organization <- function(AccountId) {
 #' Adds one or more tags to the specified resource.
 #' 
 #' Currently, you can tag and untag accounts in AWS Organizations.
+#' 
+#' This operation can be called only from the organization\'s master
+#' account.
 #'
 #' @usage
 #' organizations_tag_resource(ResourceId, Tags)
@@ -3249,6 +3355,9 @@ organizations_tag_resource <- function(ResourceId, Tags) {
 #' Removes a tag from the specified resource.
 #' 
 #' Currently, you can tag and untag accounts in AWS Organizations.
+#' 
+#' This operation can be called only from the organization\'s master
+#' account.
 #'
 #' @usage
 #' organizations_untag_resource(ResourceId, TagKeys)
@@ -3303,9 +3412,9 @@ organizations_untag_resource <- function(ResourceId, TagKeys) {
 #' 
 #' The [regex pattern](http://wikipedia.org/wiki/regex) for an
 #' organizational unit ID string requires \"ou-\" followed by from 4 to 32
-#' lower-case letters or digits (the ID of the root that contains the OU)
-#' followed by a second \"-\" dash and from 8 to 32 additional lower-case
-#' letters or digits.
+#' lowercase letters or digits (the ID of the root that contains the OU).
+#' This string is followed by a second \"-\" dash and from 8 to 32
+#' additional lowercase letters or digits.
 #' @param Name The new name that you want to assign to the OU.
 #' 
 #' The [regex pattern](http://wikipedia.org/wiki/regex) that is used to
@@ -3321,12 +3430,14 @@ organizations_untag_resource <- function(ResourceId, TagKeys) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows how to rename an OU. The output confirms the
 #' # new name:/n/n
-#' \donttest{svc$update_organizational_unit(
+#' svc$update_organizational_unit(
 #'   Name = "AccountingOU",
 #'   OrganizationalUnitId = "ou-examplerootid111-exampleouid111"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -3363,7 +3474,7 @@ organizations_update_organizational_unit <- function(OrganizationalUnitId, Name 
 #' @param PolicyId &#91;required&#93; The unique identifier (ID) of the policy that you want to update.
 #' 
 #' The [regex pattern](http://wikipedia.org/wiki/regex) for a policy ID
-#' string requires \"p-\" followed by from 8 to 128 lower-case letters or
+#' string requires \"p-\" followed by from 8 to 128 lowercase letters or
 #' digits.
 #' @param Name If provided, the new name for the policy.
 #' 
@@ -3388,22 +3499,24 @@ organizations_update_organizational_unit <- function(OrganizationalUnitId, Name 
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example shows how to rename a policy and give it a new
 #' # description and new content. The output confirms the new name and
 #' # description text:/n/n
-#' \donttest{svc$update_policy(
+#' svc$update_policy(
 #'   Description = "This description replaces the original.",
 #'   Name = "Renamed-Policy",
 #'   PolicyId = "p-examplepolicyid111"
-#' )}
+#' )
 #' 
 #' # The following example shows how to replace the JSON text of the SCP from
 #' # the preceding example with a new JSON policy text string that allows S3
 #' # actions instead of EC2 actions:/n/n
-#' \donttest{svc$update_policy(
-#'   Content = "{ \\\"Version\\\": \\\"2012-10-17\\\", \\\"Statement\\\": {\\\"Effect\\\": ...",
+#' svc$update_policy(
+#'   Content = "\{ \\\"Version\\\": \\\"2012-10-17\\\", \\\"Statement\\\": \{\\\"Effect\\\": ...",
 #'   PolicyId = "p-examplepolicyid111"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'

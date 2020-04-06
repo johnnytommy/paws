@@ -54,10 +54,12 @@ secret, use GetSecretValue.
 }
 
 \examples{
+\dontrun{
 # The following example shows how to get the details about a secret.
-\donttest{svc$describe_secret(
+svc$describe_secret(
   SecretId = "MyTestDatabaseSecret"
-)}
+)
+}
 
 }
 \keyword{internal}

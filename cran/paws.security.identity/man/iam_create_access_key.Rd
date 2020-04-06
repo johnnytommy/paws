@@ -12,7 +12,7 @@ iam_create_access_key(UserName)
 
 This parameter allows (through its \href{http://wikipedia.org/wiki/regex}{regex pattern}) a string of characters
 consisting of upper and lowercase alphanumeric characters with no
-spaces. You can also include any of the following characters: \_+=,.@-}
+spaces. You can also include any of the following characters: \\_+=,.@-}
 }
 \description{
 Creates a new AWS secret access key and corresponding AWS access key ID
@@ -43,11 +43,13 @@ user and then create new keys.
 }
 
 \examples{
+\dontrun{
 # The following command creates an access key (access key ID and secret
 # access key) for the IAM user named Bob.
-\donttest{svc$create_access_key(
+svc$create_access_key(
   UserName = "Bob"
-)}
+)
+}
 
 }
 \keyword{internal}

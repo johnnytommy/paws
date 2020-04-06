@@ -51,10 +51,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- cognitosync()
+#' \dontrun{
+#' svc <- cognitosync()
 #' svc$bulk_publish(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -100,8 +102,7 @@ cognitosync <- function(config = list()) {
   target_prefix = ""
 )
 
-.cognitosync$handlers <- new_handlers("restjson", "v4")
-
 .cognitosync$service <- function(config = list()) {
-  new_service(.cognitosync$metadata, .cognitosync$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.cognitosync$metadata, handlers, config)
 }

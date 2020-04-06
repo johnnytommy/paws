@@ -14,8 +14,8 @@ resource. The value can be an empty string.
 
 Valid characters for key and value are letters, spaces, and numbers
 representable in UTF-8 format, and the following special characters: + -
-= . \_ : / @. The maximum length of a tag's key is 128 characters, and
-the maximum length for a tag's value is 256.}
+= . \\_ : / @. The maximum length of a tag\'s key is 128 characters, and
+the maximum length for a tag\'s value is 256.}
 }
 \description{
 Adds one or more tags to the specified resource. You use tags to add
@@ -49,8 +49,9 @@ storage volumes that are recovered to a new gateway maintain their tags.
 }
 
 \examples{
+\dontrun{
 # Adds one or more tags to the specified resource.
-\donttest{svc$add_tags_to_resource(
+svc$add_tags_to_resource(
   ResourceARN = "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-11A2222B",
   Tags = list(
     list(
@@ -58,7 +59,8 @@ storage volumes that are recovered to a new gateway maintain their tags.
       Value = "East Coast"
     )
   )
-)}
+)
+}
 
 }
 \keyword{internal}

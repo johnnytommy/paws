@@ -8,16 +8,16 @@ match}
 gamelift_accept_match(TicketId, PlayerIds, AcceptanceType)
 }
 \arguments{
-\item{TicketId}{[required] Unique identifier for a matchmaking ticket. The ticket must be in status
-\code{REQUIRES_ACCEPTANCE}; otherwise this request will fail.}
+\item{TicketId}{[required] A unique identifier for a matchmaking ticket. The ticket must be in
+status \code{REQUIRES_ACCEPTANCE}; otherwise this request will fail.}
 
-\item{PlayerIds}{[required] Unique identifier for a player delivering the response. This parameter
+\item{PlayerIds}{[required] A unique identifier for a player delivering the response. This parameter
 can include one or multiple player IDs.}
 
 \item{AcceptanceType}{[required] Player response to the proposed match.}
 }
 \description{
-Registers a player's acceptance or rejection of a proposed FlexMatch
+Registers a player\'s acceptance or rejection of a proposed FlexMatch
 match. A matchmaking configuration may require player acceptance; if so,
 then matches built with that configuration cannot be completed unless
 all players accept the proposed match within a specified time limit.

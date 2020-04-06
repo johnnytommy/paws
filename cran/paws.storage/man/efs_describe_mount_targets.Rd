@@ -49,10 +49,12 @@ the mount target that you specify in \code{MountTargetId}.
 }
 
 \examples{
+\dontrun{
 # This operation describes all of a file system's mount targets.
-\donttest{svc$describe_mount_targets(
+svc$describe_mount_targets(
   FileSystemId = "fs-01234567"
-)}
+)
+}
 
 }
 \keyword{internal}

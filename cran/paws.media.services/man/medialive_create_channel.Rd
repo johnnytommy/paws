@@ -46,6 +46,10 @@ Creates a new channel
           ChannelId = "string"
         )
       ),
+      MultiplexSettings = list(
+        MultiplexId = "string",
+        ProgramName = "string"
+      ),
       Settings = list(
         list(
           PasswordParam = "string",
@@ -261,6 +265,10 @@ Creates a new channel
       OutputTimingSource = "INPUT_CLOCK"|"SYSTEM_CLOCK",
       SupportLowFramerateInputs = "DISABLED"|"ENABLED"
     ),
+    NielsenConfiguration = list(
+      DistributorId = "string",
+      NielsenPcmToId3Tagging = "DISABLED"|"ENABLED"
+    ),
     OutputGroups = list(
       list(
         Name = "string",
@@ -281,7 +289,9 @@ Creates a new channel
               "ADOBE"|"ELEMENTAL"|"ELEMENTAL_SCTE35"
             ),
             BaseUrlContent = "string",
+            BaseUrlContent1 = "string",
             BaseUrlManifest = "string",
+            BaseUrlManifest1 = "string",
             CaptionLanguageMappings = list(
               list(
                 CaptionChannel = 123,
@@ -329,6 +339,7 @@ Creates a new channel
                 RestartDelay = 123
               )
             ),
+            HlsId3SegmentTagging = "DISABLED"|"ENABLED",
             IFrameOnlyPlaylists = "DISABLED"|"STANDARD",
             IndexNSegments = 123,
             InputLossAction = "EMIT_OUTPUT"|"PAUSE_OUTPUT",
@@ -392,6 +403,7 @@ Creates a new channel
             TimestampOffset = "string",
             TimestampOffsetMode = "USE_CONFIGURED_OFFSET"|"USE_EVENT_START_DATE"
           ),
+          MultiplexGroupSettings = list(),
           RtmpGroupSettings = list(
             AuthenticationScheme = "AKAMAI"|"COMMON",
             CacheFullBehavior = "DISCONNECT_IMMEDIATELY"|"WAIT_FOR_SERVER",
@@ -457,6 +469,7 @@ Creates a new channel
                     FragmentTime = 123.0,
                     Klv = "NONE"|"PASSTHROUGH",
                     KlvDataPids = "string",
+                    NielsenId3Behavior = "NO_PASSTHROUGH"|"PASSTHROUGH",
                     NullPacketBitrate = 123.0,
                     PatInterval = 123,
                     PcrControl = "CONFIGURED_PCR_PERIOD"|"PCR_EVERY_PES_PACKET",
@@ -485,6 +498,7 @@ Creates a new channel
                 NameModifier = "string"
               ),
               HlsOutputSettings = list(
+                H265PackagingType = "HEV1"|"HVC1",
                 HlsSettings = list(
                   AudioOnlyHlsSettings = list(
                     AudioGroupId = "string",
@@ -493,7 +507,11 @@ Creates a new channel
                       Uri = "string",
                       Username = "string"
                     ),
-                    AudioTrackType = "ALTERNATE_AUDIO_AUTO_SELECT"|"ALTERNATE_AUDIO_AUTO_SELECT_DEFAULT"|"ALTERNATE_AUDIO_NOT_AUTO_SELECT"|"AUDIO_ONLY_VARIANT_STREAM"
+                    AudioTrackType = "ALTERNATE_AUDIO_AUTO_SELECT"|"ALTERNATE_AUDIO_AUTO_SELECT_DEFAULT"|"ALTERNATE_AUDIO_NOT_AUTO_SELECT"|"AUDIO_ONLY_VARIANT_STREAM",
+                    SegmentType = "AAC"|"FMP4"
+                  ),
+                  Fmp4HlsSettings = list(
+                    AudioRenditionSets = "string"
                   ),
                   StandardHlsSettings = list(
                     AudioRenditionSets = "string",
@@ -501,6 +519,7 @@ Creates a new channel
                       AudioFramesPerPes = 123,
                       AudioPids = "string",
                       EcmPid = "string",
+                      NielsenId3Behavior = "NO_PASSTHROUGH"|"PASSTHROUGH",
                       PatInterval = 123,
                       PcrControl = "CONFIGURED_PCR_PERIOD"|"PCR_EVERY_PES_PACKET",
                       PcrPeriod = 123,
@@ -522,7 +541,13 @@ Creates a new channel
               ),
               MediaPackageOutputSettings = list(),
               MsSmoothOutputSettings = list(
+                H265PackagingType = "HEV1"|"HVC1",
                 NameModifier = "string"
+              ),
+              MultiplexOutputSettings = list(
+                Destination = list(
+                  DestinationRefId = "string"
+                )
               ),
               RtmpOutputSettings = list(
                 CertificateMode = "SELF_SIGNED"|"VERIFY_AUTHENTICITY",
@@ -574,6 +599,7 @@ Creates a new channel
                     FragmentTime = 123.0,
                     Klv = "NONE"|"PASSTHROUGH",
                     KlvDataPids = "string",
+                    NielsenId3Behavior = "NO_PASSTHROUGH"|"PASSTHROUGH",
                     NullPacketBitrate = 123.0,
                     PatInterval = 123,
                     PcrControl = "CONFIGURED_PCR_PERIOD"|"PCR_EVERY_PES_PACKET",
@@ -618,7 +644,8 @@ Creates a new channel
       list(
         CodecSettings = list(
           FrameCaptureSettings = list(
-            CaptureInterval = 123
+            CaptureInterval = 123,
+            CaptureIntervalUnits = "MILLISECONDS"|"SECONDS"
           ),
           H264Settings = list(
             AdaptiveQuantization = "HIGH"|"HIGHER"|"LOW"|"MAX"|"MEDIUM"|"OFF",
@@ -627,6 +654,11 @@ Creates a new channel
             BufFillPct = 123,
             BufSize = 123,
             ColorMetadata = "IGNORE"|"INSERT",
+            ColorSpaceSettings = list(
+              ColorSpacePassthroughSettings = list(),
+              Rec601Settings = list(),
+              Rec709Settings = list()
+            ),
             EntropyEncoding = "CABAC"|"CAVLC",
             FixedAfd = "AFD_0000"|"AFD_0010"|"AFD_0011"|"AFD_0100"|"AFD_1000"|"AFD_1001"|"AFD_1010"|"AFD_1011"|"AFD_1101"|"AFD_1110"|"AFD_1111",
             FlickerAq = "DISABLED"|"ENABLED",
@@ -648,7 +680,7 @@ Creates a new channel
             ParNumerator = 123,
             Profile = "BASELINE"|"HIGH"|"HIGH_10BIT"|"HIGH_422"|"HIGH_422_10BIT"|"MAIN",
             QvbrQualityLevel = 123,
-            RateControlMode = "CBR"|"QVBR"|"VBR",
+            RateControlMode = "CBR"|"MULTIPLEX"|"QVBR"|"VBR",
             ScanType = "INTERLACED"|"PROGRESSIVE",
             SceneChangeDetect = "DISABLED"|"ENABLED",
             Slices = 123,
@@ -657,6 +689,44 @@ Creates a new channel
             SubgopLength = "DYNAMIC"|"FIXED",
             Syntax = "DEFAULT"|"RP2027",
             TemporalAq = "DISABLED"|"ENABLED",
+            TimecodeInsertion = "DISABLED"|"PIC_TIMING_SEI"
+          ),
+          H265Settings = list(
+            AdaptiveQuantization = "HIGH"|"HIGHER"|"LOW"|"MAX"|"MEDIUM"|"OFF",
+            AfdSignaling = "AUTO"|"FIXED"|"NONE",
+            AlternativeTransferFunction = "INSERT"|"OMIT",
+            Bitrate = 123,
+            BufSize = 123,
+            ColorMetadata = "IGNORE"|"INSERT",
+            ColorSpaceSettings = list(
+              ColorSpacePassthroughSettings = list(),
+              Hdr10Settings = list(
+                MaxCll = 123,
+                MaxFall = 123
+              ),
+              Rec601Settings = list(),
+              Rec709Settings = list()
+            ),
+            FixedAfd = "AFD_0000"|"AFD_0010"|"AFD_0011"|"AFD_0100"|"AFD_1000"|"AFD_1001"|"AFD_1010"|"AFD_1011"|"AFD_1101"|"AFD_1110"|"AFD_1111",
+            FlickerAq = "DISABLED"|"ENABLED",
+            FramerateDenominator = 123,
+            FramerateNumerator = 123,
+            GopClosedCadence = 123,
+            GopSize = 123.0,
+            GopSizeUnits = "FRAMES"|"SECONDS",
+            Level = "H265_LEVEL_1"|"H265_LEVEL_2"|"H265_LEVEL_2_1"|"H265_LEVEL_3"|"H265_LEVEL_3_1"|"H265_LEVEL_4"|"H265_LEVEL_4_1"|"H265_LEVEL_5"|"H265_LEVEL_5_1"|"H265_LEVEL_5_2"|"H265_LEVEL_6"|"H265_LEVEL_6_1"|"H265_LEVEL_6_2"|"H265_LEVEL_AUTO",
+            LookAheadRateControl = "HIGH"|"LOW"|"MEDIUM",
+            MaxBitrate = 123,
+            MinIInterval = 123,
+            ParDenominator = 123,
+            ParNumerator = 123,
+            Profile = "MAIN"|"MAIN_10BIT",
+            QvbrQualityLevel = 123,
+            RateControlMode = "CBR"|"MULTIPLEX"|"QVBR",
+            ScanType = "PROGRESSIVE",
+            SceneChangeDetect = "DISABLED"|"ENABLED",
+            Slices = 123,
+            Tier = "HIGH"|"MAIN",
             TimecodeInsertion = "DISABLED"|"PIC_TIMING_SEI"
           )
         ),

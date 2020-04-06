@@ -18,12 +18,13 @@ storagegateway_update_bandwidth_rate_limit(GatewayARN,
 \description{
 Updates the bandwidth rate limits of a gateway. You can update both the
 upload and download bandwidth rate limit or specify only one of the two.
-If you don't set a bandwidth rate limit, the existing rate limit
-remains.
+If you don\'t set a bandwidth rate limit, the existing rate limit
+remains. This operation is supported for the stored volume, cached
+volume and tape gateway types.\'
 }
 \details{
-By default, a gateway's bandwidth rate limits are not set. If you
-don't set any limit, the gateway does not have any limitations on its
+By default, a gateway\'s bandwidth rate limits are not set. If you
+don\'t set any limit, the gateway does not have any limitations on its
 bandwidth usage and could potentially use the maximum available
 bandwidth.
 
@@ -40,14 +41,16 @@ of the gateway in your request.
 }
 
 \examples{
+\dontrun{
 # Updates the bandwidth rate limits of a gateway. Both the upload and
 # download bandwidth rate limit can be set, or either one of the two. If a
 # new limit is not set, the existing rate limit remains.
-\donttest{svc$update_bandwidth_rate_limit(
+svc$update_bandwidth_rate_limit(
   AverageDownloadRateLimitInBitsPerSec = 102400L,
   AverageUploadRateLimitInBitsPerSec = 51200L,
   GatewayARN = "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
-)}
+)
+}
 
 }
 \keyword{internal}

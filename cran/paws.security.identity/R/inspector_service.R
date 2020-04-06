@@ -33,9 +33,10 @@ NULL
 #' ```
 #'
 #' @examples
+#' \dontrun{
+#' svc <- inspector()
 #' # Assigns attributes (key and value pairs) to the findings that are
 #' # specified by the ARNs of the findings.
-#' \donttest{svc <- inspector()
 #' svc$add_attributes_to_findings(
 #'   attributes = list(
 #'     list(
@@ -46,7 +47,8 @@ NULL
 #'   findingArns = list(
 #'     "arn:aws:inspector:us-west-2:123456789012:target/0-0kFIPusq/template/0-8l1VIE0D/run/0-Z0..."
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -112,8 +114,7 @@ inspector <- function(config = list()) {
   target_prefix = "InspectorService"
 )
 
-.inspector$handlers <- new_handlers("jsonrpc", "v4")
-
 .inspector$service <- function(config = list()) {
-  new_service(.inspector$metadata, .inspector$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.inspector$metadata, handlers, config)
 }

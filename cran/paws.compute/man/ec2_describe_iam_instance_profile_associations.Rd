@@ -13,8 +13,8 @@ ec2_describe_iam_instance_profile_associations(AssociationIds, Filters,
 \item{Filters}{The filters.
 \itemize{
 \item \code{instance-id} - The ID of the instance.
-\item \code{state} - The state of the association (\code{associating} \|
-\code{associated} \| \code{disassociating} \| \code{disassociated}).
+\item \code{state} - The state of the association (\code{associating} \\|
+\code{associated} \\| \code{disassociating} \\| \code{disassociated}).
 }}
 
 \item{MaxResults}{The maximum number of results to return in a single call. To retrieve
@@ -46,12 +46,14 @@ Describes your IAM instance profile associations.
 }
 
 \examples{
+\dontrun{
 # This example describes the specified IAM instance profile association.
-\donttest{svc$describe_iam_instance_profile_associations(
+svc$describe_iam_instance_profile_associations(
   AssociationIds = list(
     "iip-assoc-0db249b1f25fa24b8"
   )
-)}
+)
+}
 
 }
 \keyword{internal}

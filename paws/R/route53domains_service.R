@@ -31,10 +31,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- route53domains()
+#' \dontrun{
+#' svc <- route53domains()
 #' svc$check_domain_availability(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -87,8 +89,7 @@ route53domains <- function(config = list()) {
   target_prefix = "Route53Domains_v20140515"
 )
 
-.route53domains$handlers <- new_handlers("jsonrpc", "v4")
-
 .route53domains$service <- function(config = list()) {
-  new_service(.route53domains$metadata, .route53domains$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.route53domains$metadata, handlers, config)
 }

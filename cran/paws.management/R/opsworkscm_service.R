@@ -2,11 +2,9 @@
 #' @importFrom paws.common new_handlers new_service set_config
 NULL
 
-#' AWS OpsWorks for Chef Automate
+#' AWS OpsWorks CM
 #'
 #' @description
-#' AWS OpsWorks CM
-#' 
 #' AWS OpsWorks for configuration management (CM) is a service that runs
 #' and manages configuration management servers. You can use AWS OpsWorks
 #' CM to create and manage AWS OpsWorks for Chef Automate and AWS OpsWorks
@@ -96,10 +94,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- opsworkscm()
+#' \dontrun{
+#' svc <- opsworkscm()
 #' svc$associate_node(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -115,8 +115,11 @@ NULL
 #'  \link[=opsworkscm_describe_servers]{describe_servers} \tab Lists all configuration management servers that are identified with your account \cr
 #'  \link[=opsworkscm_disassociate_node]{disassociate_node} \tab Disassociates a node from an AWS OpsWorks CM server, and removes the node from the server's managed nodes \cr
 #'  \link[=opsworkscm_export_server_engine_attribute]{export_server_engine_attribute} \tab Exports a specified server engine attribute as a base64-encoded string \cr
-#'  \link[=opsworkscm_restore_server]{restore_server} \tab Restores a backup to a server that is in a CONNECTION_LOST, HEALTHY, RUNNING, UNHEALTHY, or TERMINATED state\cr
+#'  \link[=opsworkscm_list_tags_for_resource]{list_tags_for_resource} \tab Returns a list of tags that are applied to the specified AWS OpsWorks for Chef Automate or AWS OpsWorks for Puppet Enterprise servers or backups\cr
+#'  \link[=opsworkscm_restore_server]{restore_server} \tab Restores a backup to a server that is in a CONNECTION_LOST, HEALTHY, RUNNING, UNHEALTHY, or TERMINATED state \cr
 #'  \link[=opsworkscm_start_maintenance]{start_maintenance} \tab Manually starts server maintenance \cr
+#'  \link[=opsworkscm_tag_resource]{tag_resource} \tab Applies tags to an AWS OpsWorks for Chef Automate or AWS OpsWorks for Puppet Enterprise server, or to server backups \cr
+#'  \link[=opsworkscm_untag_resource]{untag_resource} \tab Removes specified tags from an AWS OpsWorks-CM server or backup \cr
 #'  \link[=opsworkscm_update_server]{update_server} \tab Updates settings for a server \cr
 #'  \link[=opsworkscm_update_server_engine_attributes]{update_server_engine_attributes} \tab Updates engine-specific attributes on a specified server 
 #' }
@@ -144,8 +147,7 @@ opsworkscm <- function(config = list()) {
   target_prefix = "OpsWorksCM_V2016_11_01"
 )
 
-.opsworkscm$handlers <- new_handlers("jsonrpc", "v4")
-
 .opsworkscm$service <- function(config = list()) {
-  new_service(.opsworkscm$metadata, .opsworkscm$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.opsworkscm$metadata, handlers, config)
 }

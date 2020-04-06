@@ -13,7 +13,7 @@ returned by CreateIPSet and by ListIPSets.}
 \item{ChangeToken}{[required] The value returned by the most recent call to GetChangeToken.}
 }
 \description{
-Permanently deletes an IPSet. You can't delete an \code{IPSet} if it's
+Permanently deletes an IPSet. You can\'t delete an \code{IPSet} if it\'s
 still used in any \code{Rules} or if it still includes any IP addresses.
 }
 \details{
@@ -38,12 +38,14 @@ information, see UpdateIPSet.
 }
 
 \examples{
+\dontrun{
 # The following example deletes an IP match set  with the ID
 # example1ds3t-46da-4fdb-b8d5-abc321j569j5.
-\donttest{svc$delete_ip_set(
+svc$delete_ip_set(
   ChangeToken = "abcd12f2-46da-4fdb-b8d5-fbd4c466928f",
   IPSetId = "example1ds3t-46da-4fdb-b8d5-abc321j569j5"
-)}
+)
+}
 
 }
 \keyword{internal}

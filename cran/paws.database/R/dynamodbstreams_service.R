@@ -36,11 +36,13 @@ NULL
 #' ```
 #'
 #' @examples
+#' \dontrun{
+#' svc <- dynamodbstreams()
 #' # The following example describes a stream with a given stream ARN.
-#' \donttest{svc <- dynamodbstreams()
 #' svc$describe_stream(
 #'   StreamArn = "arn:aws:dynamodb:us-west-2:111122223333:table/Forum/stream/2015-05-20T20:51:1..."
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -73,8 +75,7 @@ dynamodbstreams <- function(config = list()) {
   target_prefix = "DynamoDBStreams_20120810"
 )
 
-.dynamodbstreams$handlers <- new_handlers("jsonrpc", "v4")
-
 .dynamodbstreams$service <- function(config = list()) {
-  new_service(.dynamodbstreams$metadata, .dynamodbstreams$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.dynamodbstreams$metadata, handlers, config)
 }

@@ -26,7 +26,7 @@ To avoid this situation, we recommend that you don't create secret names
 that end with a hyphen followed by six characters.}
 }
 \description{
-Deletes the resource-based permission policy that's attached to the
+Deletes the resource-based permission policy that\'s attached to the
 secret.
 }
 \details{
@@ -40,7 +40,7 @@ To run this command, you must have the following permissions:
 \strong{Related operations}
 \itemize{
 \item To attach a resource policy to a secret, use PutResourcePolicy.
-\item To retrieve the current resource-based policy that's attached to a
+\item To retrieve the current resource-based policy that\'s attached to a
 secret, use GetResourcePolicy.
 \item To list all of the currently available secrets, use ListSecrets.
 }
@@ -53,11 +53,13 @@ secret, use GetResourcePolicy.
 }
 
 \examples{
+\dontrun{
 # The following example shows how to delete the resource-based policy that
 # is attached to a secret.
-\donttest{svc$delete_resource_policy(
+svc$delete_resource_policy(
   SecretId = "MyTestDatabaseSecret"
-)}
+)
+}
 
 }
 \keyword{internal}

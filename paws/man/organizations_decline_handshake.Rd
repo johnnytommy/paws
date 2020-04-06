@@ -11,7 +11,7 @@ organizations_decline_handshake(HandshakeId)
 You can get the ID from the ListHandshakesForAccount operation.
 
 The \href{http://wikipedia.org/wiki/regex}{regex pattern} for handshake ID
-string requires "h-" followed by from 8 to 32 lower-case letters or
+string requires \"h-\" followed by from 8 to 32 lowercase letters or
 digits.}
 }
 \description{
@@ -21,11 +21,11 @@ Declines a handshake request. This sets the handshake state to
 \details{
 This operation can be called only from the account that received the
 handshake. The originator of the handshake can use CancelHandshake
-instead. The originator can't reactivate a declined request, but can
+instead. The originator can\'t reactivate a declined request, but can
 reinitiate the process with a new handshake request.
 
 After you decline a handshake, it continues to appear in the results of
-relevant APIs for only 30 days. After that, it's deleted.
+relevant API operations for only 30 days. After that, it\'s deleted.
 }
 \section{Request syntax}{
 \preformatted{svc$decline_handshake(
@@ -35,12 +35,14 @@ relevant APIs for only 30 days. After that, it's deleted.
 }
 
 \examples{
+\dontrun{
 # The following example shows Susan declining an invitation to join Bill's
 # organization. The DeclineHandshake operation returns a handshake object,
 # showing that the state is now DECLINED:
-\donttest{svc$decline_handshake(
+svc$decline_handshake(
   HandshakeId = "h-examplehandshakeid111"
-)}
+)
+}
 
 }
 \keyword{internal}

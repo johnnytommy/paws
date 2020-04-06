@@ -36,10 +36,7 @@ information, see \href{https://docs.aws.amazon.com/sagemaker/latest/dg/host-vpc.
 and \href{https://docs.aws.amazon.com/sagemaker/latest/dg/batch-vpc.html}{Protect Data in Batch Transform Jobs by Using an Amazon Virtual Private Cloud}.}
 
 \item{EnableNetworkIsolation}{Isolates the model container. No inbound or outbound network calls can
-be made to or from the model container.
-
-The Semantic Segmentation built-in algorithm does not support network
-isolation.}
+be made to or from the model container.}
 }
 \description{
 Creates a model in Amazon SageMaker. In the request, you name the model
@@ -78,6 +75,7 @@ grant necessary permissions via this role.
   PrimaryContainer = list(
     ContainerHostname = "string",
     Image = "string",
+    Mode = "SingleModel"|"MultiModel",
     ModelDataUrl = "string",
     Environment = list(
       "string"
@@ -88,6 +86,7 @@ grant necessary permissions via this role.
     list(
       ContainerHostname = "string",
       Image = "string",
+      Mode = "SingleModel"|"MultiModel",
       ModelDataUrl = "string",
       Environment = list(
         "string"

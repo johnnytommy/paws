@@ -19,7 +19,7 @@ Otherwise, it is \code{UnauthorizedOperation}.}
 }
 \description{
 Changes which network ACL a subnet is associated with. By default when
-you create a subnet, it's automatically associated with the default
+you create a subnet, it\'s automatically associated with the default
 network ACL. For more information, see \href{https://docs.aws.amazon.com/vpc/latest/userguide/VPC_ACLs.html}{Network ACLs} in
 the \emph{Amazon Virtual Private Cloud User Guide}.
 }
@@ -36,12 +36,14 @@ This is an idempotent operation.
 }
 
 \examples{
+\dontrun{
 # This example associates the specified network ACL with the subnet for
 # the specified network ACL association.
-\donttest{svc$replace_network_acl_association(
+svc$replace_network_acl_association(
   AssociationId = "aclassoc-e5b95c8c",
   NetworkAclId = "acl-5fb85d36"
-)}
+)
+}
 
 }
 \keyword{internal}

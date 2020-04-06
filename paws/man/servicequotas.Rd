@@ -19,7 +19,7 @@ Service Quotas from the console, see \href{https://docs.aws.amazon.com/servicequ
 
 AWS provides SDKs that consist of libraries and sample code for
 programming languages and platforms (Java, Ruby, .NET, iOS, Android,
-etc\...,). The SDKs provide a convenient way to create programmatic
+etc\\...,). The SDKs provide a convenient way to create programmatic
 access to Service Quotas and AWS. For information about the AWS SDKs,
 including how to download and install them, see the Tools for Amazon Web
 Services page.
@@ -48,8 +48,8 @@ Services page.
 \link[=servicequotas_associate_service_quota_template]{associate_service_quota_template} \tab Associates the Service Quotas template with your organization so that when new accounts are created in your organization, the template submits increase requests for the specified service quotas\cr
 \link[=servicequotas_delete_service_quota_increase_request_from_template]{delete_service_quota_increase_request_from_template} \tab Removes a service quota increase request from the Service Quotas template \cr
 \link[=servicequotas_disassociate_service_quota_template]{disassociate_service_quota_template} \tab Disables the Service Quotas template \cr
-\link[=servicequotas_get_aws_default_service_quota]{get_aws_default_service_quota} \tab Retrieves the default service quotas values \cr
 \link[=servicequotas_get_association_for_service_quota_template]{get_association_for_service_quota_template} \tab Retrieves the ServiceQuotaTemplateAssociationStatus value from the service \cr
+\link[=servicequotas_get_aws_default_service_quota]{get_aws_default_service_quota} \tab Retrieves the default service quotas values \cr
 \link[=servicequotas_get_requested_service_quota_change]{get_requested_service_quota_change} \tab Retrieves the details for a particular increase request \cr
 \link[=servicequotas_get_service_quota]{get_service_quota} \tab Returns the details for the specified service quota \cr
 \link[=servicequotas_get_service_quota_increase_request_from_template]{get_service_quota_increase_request_from_template} \tab Returns the details of the service quota increase request in your template \cr
@@ -65,9 +65,11 @@ Services page.
 }
 
 \examples{
-\donttest{svc <- servicequotas()
+\dontrun{
+svc <- servicequotas()
 svc$associate_service_quota_template(
   Foo = 123
-)}
+)
+}
 
 }

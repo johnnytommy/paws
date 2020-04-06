@@ -7,7 +7,7 @@
 devicefarm_get_job(arn)
 }
 \arguments{
-\item{arn}{[required] The job's ARN.}
+\item{arn}{[required] The job\'s ARN.}
 }
 \description{
 Gets information about a job.
@@ -20,10 +20,12 @@ Gets information about a job.
 }
 
 \examples{
+\dontrun{
 # The following example returns information about a specific job.
-\donttest{svc$get_job(
+svc$get_job(
   arn = "arn:aws:devicefarm:us-west-2::job:123-456-EXAMPLE-GUID"
-)}
+)
+}
 
 }
 \keyword{internal}

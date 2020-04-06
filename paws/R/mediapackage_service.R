@@ -30,20 +30,25 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- mediapackage()
+#' \dontrun{
+#' svc <- mediapackage()
 #' svc$create_channel(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
 #'  \link[=mediapackage_create_channel]{create_channel} \tab Creates a new Channel \cr
+#'  \link[=mediapackage_create_harvest_job]{create_harvest_job} \tab Creates a new HarvestJob record \cr
 #'  \link[=mediapackage_create_origin_endpoint]{create_origin_endpoint} \tab Creates a new OriginEndpoint record \cr
 #'  \link[=mediapackage_delete_channel]{delete_channel} \tab Deletes an existing Channel \cr
 #'  \link[=mediapackage_delete_origin_endpoint]{delete_origin_endpoint} \tab Deletes an existing OriginEndpoint \cr
 #'  \link[=mediapackage_describe_channel]{describe_channel} \tab Gets details about a Channel \cr
+#'  \link[=mediapackage_describe_harvest_job]{describe_harvest_job} \tab Gets details about an existing HarvestJob \cr
 #'  \link[=mediapackage_describe_origin_endpoint]{describe_origin_endpoint} \tab Gets details about an existing OriginEndpoint \cr
 #'  \link[=mediapackage_list_channels]{list_channels} \tab Returns a collection of Channels \cr
+#'  \link[=mediapackage_list_harvest_jobs]{list_harvest_jobs} \tab Returns a collection of HarvestJob records \cr
 #'  \link[=mediapackage_list_origin_endpoints]{list_origin_endpoints} \tab Returns a collection of OriginEndpoint records \cr
 #'  \link[=mediapackage_list_tags_for_resource]{list_tags_for_resource} \tab List tags for resource \cr
 #'  \link[=mediapackage_rotate_channel_credentials]{rotate_channel_credentials} \tab Changes the Channel's first IngestEndpoint's username and password \cr
@@ -77,8 +82,7 @@ mediapackage <- function(config = list()) {
   target_prefix = ""
 )
 
-.mediapackage$handlers <- new_handlers("restjson", "v4")
-
 .mediapackage$service <- function(config = list()) {
-  new_service(.mediapackage$metadata, .mediapackage$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.mediapackage$metadata, handlers, config)
 }

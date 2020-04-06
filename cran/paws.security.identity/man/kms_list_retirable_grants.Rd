@@ -29,7 +29,7 @@ in the Example ARNs section of the \emph{Amazon Web Services General
 Reference}.}
 }
 \description{
-Returns a list of all grants for which the grant's \code{RetiringPrincipal}
+Returns a list of all grants for which the grant\'s \code{RetiringPrincipal}
 matches the one specified.
 }
 \details{
@@ -46,11 +46,13 @@ retire a grant, use RetireGrant.
 }
 
 \examples{
+\dontrun{
 # The following example lists the grants that the specified principal
 # (identity) can retire.
-\donttest{svc$list_retirable_grants(
+svc$list_retirable_grants(
   RetiringPrincipal = "arn:aws:iam::111122223333:role/ExampleRole"
-)}
+)
+}
 
 }
 \keyword{internal}

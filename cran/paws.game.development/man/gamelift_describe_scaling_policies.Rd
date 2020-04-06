@@ -8,25 +8,26 @@ gamelift_describe_scaling_policies(FleetId, StatusFilter, Limit,
   NextToken)
 }
 \arguments{
-\item{FleetId}{[required] Unique identifier for a fleet to retrieve scaling policies for.}
+\item{FleetId}{[required] A unique identifier for a fleet to retrieve scaling policies for. You
+can use either the fleet ID or ARN value.}
 
 \item{StatusFilter}{Scaling policy status to filter results on. A scaling policy is only in
 force when in an \code{ACTIVE} status.
 \itemize{
-\item \strong{ACTIVE} \-- The scaling policy is currently in force.
-\item \strong{UPDATEREQUESTED} \-- A request to update the scaling policy has
+\item \strong{ACTIVE} \\-- The scaling policy is currently in force.
+\item \strong{UPDATEREQUESTED} \\-- A request to update the scaling policy has
 been received.
-\item \strong{UPDATING} \-- A change is being made to the scaling policy.
-\item \strong{DELETEREQUESTED} \-- A request to delete the scaling policy has
+\item \strong{UPDATING} \\-- A change is being made to the scaling policy.
+\item \strong{DELETEREQUESTED} \\-- A request to delete the scaling policy has
 been received.
-\item \strong{DELETING} \-- The scaling policy is being deleted.
-\item \strong{DELETED} \-- The scaling policy has been deleted.
-\item \strong{ERROR} \-- An error occurred in creating the policy. It should be
+\item \strong{DELETING} \\-- The scaling policy is being deleted.
+\item \strong{DELETED} \\-- The scaling policy has been deleted.
+\item \strong{ERROR} \\-- An error occurred in creating the policy. It should be
 removed and recreated.
 }}
 
-\item{Limit}{Maximum number of results to return. Use this parameter with \code{NextToken}
-to get results as a set of sequential pages.}
+\item{Limit}{The maximum number of results to return. Use this parameter with
+\code{NextToken} to get results as a set of sequential pages.}
 
 \item{NextToken}{Token that indicates the start of the next sequential page of results.
 Use the token that is returned with a previous call to this action. To
@@ -36,7 +37,7 @@ start at the beginning of the result set, do not specify a value.}
 Retrieves all scaling policies applied to a fleet.
 }
 \details{
-To get a fleet's scaling policies, specify the fleet ID. You can filter
+To get a fleet\'s scaling policies, specify the fleet ID. You can filter
 this request by policy status, such as to retrieve only active scaling
 policies. Use the pagination parameters to retrieve results as a set of
 sequential pages. If successful, set of ScalingPolicy objects is
@@ -44,7 +45,7 @@ returned for the fleet.
 
 A fleet may have all of its scaling policies suspended
 (StopFleetActions). This action does not affect the status of the
-scaling policies, which remains ACTIVE. To see whether a fleet's
+scaling policies, which remains ACTIVE. To see whether a fleet\'s
 scaling policies are in force or suspended, call DescribeFleetAttributes
 and check the stopped actions.
 \itemize{
@@ -52,12 +53,16 @@ and check the stopped actions.
 \item UpdateFleetCapacity
 \item DescribeEC2InstanceLimits
 \item Manage scaling policies:
+\itemize{
 \item PutScalingPolicy (auto-scaling)
 \item DescribeScalingPolicies (auto-scaling)
 \item DeleteScalingPolicy (auto-scaling)
+}
 \item Manage fleet actions:
+\itemize{
 \item StartFleetActions
 \item StopFleetActions
+}
 }
 }
 \section{Request syntax}{

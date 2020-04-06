@@ -24,7 +24,7 @@ following information for each:
 \item A set of DKIM tokens that represent the identity. If the identity is
 an email address, the tokens represent the domain of that address.
 \item Whether Amazon SES has successfully verified the DKIM tokens
-published in the domain's DNS. This information is only returned
+published in the domain\'s DNS. This information is only returned
 for domain name identities, not for email addresses.
 }
 
@@ -44,14 +44,16 @@ the \href{https://docs.aws.amazon.com/ses/latest/DeveloperGuide/easy-dkim-dns-re
 }
 
 \examples{
+\dontrun{
 # The following example retrieves the Amazon SES Easy DKIM attributes for
 # a list of identities:
-\donttest{svc$get_identity_dkim_attributes(
+svc$get_identity_dkim_attributes(
   Identities = list(
     "example.com",
     "user@example.com"
   )
-)}
+)
+}
 
 }
 \keyword{internal}

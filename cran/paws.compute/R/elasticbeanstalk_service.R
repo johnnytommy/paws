@@ -48,12 +48,14 @@ NULL
 #' ```
 #'
 #' @examples
+#' \dontrun{
+#' svc <- elasticbeanstalk()
 #' # The following code aborts a running application version deployment for
 #' # an environment named my-env:
-#' \donttest{svc <- elasticbeanstalk()
 #' svc$abort_environment_update(
 #'   EnvironmentName = "my-env"
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -73,8 +75,8 @@ NULL
 #'  \link[=elasticbeanstalk_delete_environment_configuration]{delete_environment_configuration} \tab Deletes the draft configuration associated with the running environment \cr
 #'  \link[=elasticbeanstalk_delete_platform_version]{delete_platform_version} \tab Deletes the specified version of a custom platform \cr
 #'  \link[=elasticbeanstalk_describe_account_attributes]{describe_account_attributes} \tab Returns attributes related to AWS Elastic Beanstalk that are associated with the calling AWS account \cr
-#'  \link[=elasticbeanstalk_describe_application_versions]{describe_application_versions} \tab Retrieve a list of application versions \cr
 #'  \link[=elasticbeanstalk_describe_applications]{describe_applications} \tab Returns the descriptions of existing applications \cr
+#'  \link[=elasticbeanstalk_describe_application_versions]{describe_application_versions} \tab Retrieve a list of application versions \cr
 #'  \link[=elasticbeanstalk_describe_configuration_options]{describe_configuration_options} \tab Describes the configuration options that are used in a particular configuration template or environment, or that a specified solution stack defines \cr
 #'  \link[=elasticbeanstalk_describe_configuration_settings]{describe_configuration_settings} \tab Returns a description of the settings for the specified configuration set, that is, either a configuration template or the configuration set associated with a running environment \cr
 #'  \link[=elasticbeanstalk_describe_environment_health]{describe_environment_health} \tab Returns information about the overall health of the specified environment \cr
@@ -126,8 +128,7 @@ elasticbeanstalk <- function(config = list()) {
   target_prefix = ""
 )
 
-.elasticbeanstalk$handlers <- new_handlers("query", "v4")
-
 .elasticbeanstalk$service <- function(config = list()) {
-  new_service(.elasticbeanstalk$metadata, .elasticbeanstalk$handlers, config)
+  handlers <- new_handlers("query", "v4")
+  new_service(.elasticbeanstalk$metadata, handlers, config)
 }

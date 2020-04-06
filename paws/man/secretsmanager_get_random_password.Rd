@@ -25,10 +25,10 @@ characters. The default if you do not include this switch parameter is
 that punctuation characters can be included.
 
 The following are the punctuation characters that \emph{can} be included in
-the generated password if you don't explicitly exclude them with
+the generated password if you don\'t explicitly exclude them with
 \code{ExcludeCharacters} or \code{ExcludePunctuation}:
 
-\code{! \" # $ \\\% &amp; \' ( ) * + , - . / : ; &lt; = &gt; ? @ \\[ \\ \\] ^ _ \` \{ | \} ~}}
+\verb{! \\" # $ \% &amp; \\' ( ) * + , - . / : ; &lt; = &gt; ? @ \\\[ \\\\ \\\] ^ _ \\` \\\{ | \\\} ~}}
 
 \item{ExcludeUppercase}{Specifies that the generated password should not include uppercase
 letters. The default if you do not include this switch parameter is that
@@ -77,15 +77,17 @@ To run this command, you must have the following permissions:
 }
 
 \examples{
+\dontrun{
 # The following example shows how to request a randomly generated
 # password. This example includes the optional flags to require spaces and
 # at least one character of each included type. It specifies a length of
 # 20 characters.
-\donttest{svc$get_random_password(
+svc$get_random_password(
   IncludeSpace = TRUE,
   PasswordLength = 20L,
   RequireEachIncludedType = TRUE
-)}
+)
+}
 
 }
 \keyword{internal}

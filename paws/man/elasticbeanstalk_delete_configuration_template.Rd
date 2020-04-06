@@ -18,7 +18,7 @@ Deletes the specified configuration template.
 \details{
 When you launch an environment using a configuration template, the
 environment gets a copy of the template. You can delete or modify the
-environment's copy of the template without affecting the running
+environment\'s copy of the template without affecting the running
 environment.
 }
 \section{Request syntax}{
@@ -30,12 +30,14 @@ environment.
 }
 
 \examples{
+\dontrun{
 # The following operation deletes a configuration template named
 # my-template for an application named my-app:
-\donttest{svc$delete_configuration_template(
+svc$delete_configuration_template(
   ApplicationName = "my-app",
   TemplateName = "my-template"
-)}
+)
+}
 
 }
 \keyword{internal}

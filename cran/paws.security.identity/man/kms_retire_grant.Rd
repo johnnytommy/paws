@@ -12,7 +12,7 @@ kms_retire_grant(GrantToken, KeyId, GrantId)
 \item{KeyId}{The Amazon Resource Name (ARN) of the CMK associated with the grant.
 
 For example:
-\code{arn:aws:kms:us-east-2:444455556666:key/1234abcd-12ab-34cd-56ef-1234567890ab}}
+\verb{arn:aws:kms:us-east-2:444455556666:key/1234abcd-12ab-34cd-56ef-1234567890ab}}
 
 \item{GrantId}{Unique identifier of the grant to retire. The grant ID is returned in
 the response to a \code{CreateGrant} operation.
@@ -22,7 +22,7 @@ the response to a \code{CreateGrant} operation.
 }}
 }
 \description{
-Retires a grant. To clean up, you can retire a grant when you're done
+Retires a grant. To clean up, you can retire a grant when you\'re done
 using it. You should revoke a grant when you intend to actively deny
 operations that depend on it. The following are permitted to call this
 API:
@@ -51,11 +51,13 @@ a grant. The CreateGrant operation returns both.
 }
 
 \examples{
+\dontrun{
 # The following example retires a grant.
-\donttest{svc$retire_grant(
+svc$retire_grant(
   GrantId = "0c237476b39f8bc44e45212e08498fbe3151305030726c0590dd8d3e9f3d6a60",
   KeyId = "arn:aws:kms:us-east-2:444455556666:key/1234abcd-12ab-34cd-56ef-1234567890ab"
-)}
+)
+}
 
 }
 \keyword{internal}

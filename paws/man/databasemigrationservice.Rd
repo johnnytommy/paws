@@ -50,6 +50,7 @@ in the \emph{AWS Database Migration User Guide.}
 \link[=databasemigrationservice_create_replication_subnet_group]{create_replication_subnet_group} \tab Creates a replication subnet group given a list of the subnet IDs in a VPC \cr
 \link[=databasemigrationservice_create_replication_task]{create_replication_task} \tab Creates a replication task using the specified parameters \cr
 \link[=databasemigrationservice_delete_certificate]{delete_certificate} \tab Deletes the specified certificate \cr
+\link[=databasemigrationservice_delete_connection]{delete_connection} \tab Deletes the connection between a replication instance and an endpoint \cr
 \link[=databasemigrationservice_delete_endpoint]{delete_endpoint} \tab Deletes the specified endpoint \cr
 \link[=databasemigrationservice_delete_event_subscription]{delete_event_subscription} \tab Deletes an AWS DMS event subscription \cr
 \link[=databasemigrationservice_delete_replication_instance]{delete_replication_instance} \tab Deletes the specified replication instance \cr
@@ -58,16 +59,16 @@ in the \emph{AWS Database Migration User Guide.}
 \link[=databasemigrationservice_describe_account_attributes]{describe_account_attributes} \tab Lists all of the AWS DMS attributes for a customer account \cr
 \link[=databasemigrationservice_describe_certificates]{describe_certificates} \tab Provides a description of the certificate \cr
 \link[=databasemigrationservice_describe_connections]{describe_connections} \tab Describes the status of the connections that have been made between the replication instance and an endpoint \cr
-\link[=databasemigrationservice_describe_endpoint_types]{describe_endpoint_types} \tab Returns information about the type of endpoints available \cr
 \link[=databasemigrationservice_describe_endpoints]{describe_endpoints} \tab Returns information about the endpoints for your account in the current region \cr
+\link[=databasemigrationservice_describe_endpoint_types]{describe_endpoint_types} \tab Returns information about the type of endpoints available \cr
 \link[=databasemigrationservice_describe_event_categories]{describe_event_categories} \tab Lists categories for all event source types, or, if specified, for a specified source type \cr
-\link[=databasemigrationservice_describe_event_subscriptions]{describe_event_subscriptions} \tab Lists all the event subscriptions for a customer account \cr
 \link[=databasemigrationservice_describe_events]{describe_events} \tab Lists events for a given source identifier and source type \cr
+\link[=databasemigrationservice_describe_event_subscriptions]{describe_event_subscriptions} \tab Lists all the event subscriptions for a customer account \cr
 \link[=databasemigrationservice_describe_orderable_replication_instances]{describe_orderable_replication_instances} \tab Returns information about the replication instance types that can be created in the specified region \cr
 \link[=databasemigrationservice_describe_pending_maintenance_actions]{describe_pending_maintenance_actions} \tab For internal use only \cr
 \link[=databasemigrationservice_describe_refresh_schemas_status]{describe_refresh_schemas_status} \tab Returns the status of the RefreshSchemas operation \cr
-\link[=databasemigrationservice_describe_replication_instance_task_logs]{describe_replication_instance_task_logs} \tab Returns information about the task logs for the specified task \cr
 \link[=databasemigrationservice_describe_replication_instances]{describe_replication_instances} \tab Returns information about replication instances for your account in the current region \cr
+\link[=databasemigrationservice_describe_replication_instance_task_logs]{describe_replication_instance_task_logs} \tab Returns information about the task logs for the specified task \cr
 \link[=databasemigrationservice_describe_replication_subnet_groups]{describe_replication_subnet_groups} \tab Returns information about the replication subnet groups \cr
 \link[=databasemigrationservice_describe_replication_task_assessment_results]{describe_replication_task_assessment_results} \tab Returns the task assessment results from Amazon S3 \cr
 \link[=databasemigrationservice_describe_replication_tasks]{describe_replication_tasks} \tab Returns information about replication tasks for your account in the current region \cr
@@ -92,12 +93,13 @@ in the \emph{AWS Database Migration User Guide.}
 }
 
 \examples{
+\dontrun{
+svc <- databasemigrationservice()
 # Adds metadata tags to an AWS DMS resource, including replication
 # instance, endpoint, security group, and migration task. These tags can
 # also be used with cost allocation reporting to track cost associated
 # with AWS DMS resources, or used in a Condition statement in an IAM
 # policy for AWS DMS.
-\donttest{svc <- databasemigrationservice()
 svc$add_tags_to_resource(
   ResourceArn = "arn:aws:dms:us-east-1:123456789012:endpoint:ASXWXJZLNWNT5HTWCGV2BUJQ7E",
   Tags = list(
@@ -106,6 +108,7 @@ svc$add_tags_to_resource(
       Value = "1633456"
     )
   )
-)}
+)
+}
 
 }

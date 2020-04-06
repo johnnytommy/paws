@@ -25,10 +25,10 @@ task definition revisions are returned. If you paginate the resulting
 output, be sure to keep the \code{status} value constant in each subsequent
 request.}
 
-\item{nextToken}{The \code{nextToken} value returned from a previous paginated
-\code{ListTaskDefinitionFamilies} request where \code{maxResults} was used and the
-results exceeded the value of that parameter. Pagination continues from
-the end of the previous results that returned the \code{nextToken} value.
+\item{nextToken}{The \code{nextToken} value returned from a \code{ListTaskDefinitionFamilies}
+request indicating that more results are available to fulfill the
+request and further calls will be needed. If \code{maxResults} was provided,
+it is possible the number of results to be fewer than \code{maxResults}.
 
 This token should be treated as an opaque identifier that is only used
 to retrieve the next items in a list and not for other programmatic
@@ -66,13 +66,15 @@ parameter.
 }
 
 \examples{
+\dontrun{
 # This example lists all of your registered task definition families.
-\donttest{svc$list_task_definition_families()}
+svc$list_task_definition_families()
 
 # This example lists the task definition revisions that start with "hpcc".
-\donttest{svc$list_task_definition_families(
+svc$list_task_definition_families(
   familyPrefix = "hpcc"
-)}
+)
+}
 
 }
 \keyword{internal}

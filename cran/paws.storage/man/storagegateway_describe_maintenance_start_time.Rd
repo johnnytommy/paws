@@ -11,8 +11,8 @@ storagegateway_describe_maintenance_start_time(GatewayARN)
 \item{GatewayARN}{[required]}
 }
 \description{
-Returns your gateway's weekly maintenance start time including the day
-and time of the week. Note that values are in terms of the gateway's
+Returns your gateway\'s weekly maintenance start time including the day
+and time of the week. Note that values are in terms of the gateway\'s
 time zone.
 }
 \section{Request syntax}{
@@ -23,11 +23,13 @@ time zone.
 }
 
 \examples{
+\dontrun{
 # Returns your gateway's weekly maintenance start time including the day
 # and time of the week.
-\donttest{svc$describe_maintenance_start_time(
+svc$describe_maintenance_start_time(
   GatewayARN = "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
-)}
+)
+}
 
 }
 \keyword{internal}

@@ -12,7 +12,7 @@ to.
 
 This parameter allows (through its \href{http://wikipedia.org/wiki/regex}{regex pattern}) a string of characters
 consisting of upper and lowercase alphanumeric characters with no
-spaces. You can also include any of the following characters: \_+=,.@-}
+spaces. You can also include any of the following characters: \\_+=,.@-}
 
 \item{PolicyArn}{[required] The Amazon Resource Name (ARN) of the IAM policy you want to attach.
 
@@ -38,12 +38,14 @@ in the \emph{IAM User Guide}.
 }
 
 \examples{
+\dontrun{
 # The following command attaches the AWS managed policy named
 # AdministratorAccess to the IAM user named Alice.
-\donttest{svc$attach_user_policy(
+svc$attach_user_policy(
   PolicyArn = "arn:aws:iam::aws:policy/AdministratorAccess",
   UserName = "Alice"
-)}
+)
+}
 
 }
 \keyword{internal}

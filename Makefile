@@ -19,6 +19,7 @@ help:
 	@echo "  install            build and install the AWS SDK package"
 	@echo "  common             build and install common functions"
 	@echo "  codegen            build and install the code generator"
+	@echo "  check              run R CMD check on packages"
 	@echo "  unit               run unit tests for common and codegen"
 	@echo "  integration        run integration tests for the AWS SDK"
 	@echo "  deps               get project dependencies"
@@ -30,13 +31,23 @@ install: build
 	@echo "install the AWS SDK package"
 	@Rscript -e "devtools::install('${OUT_DIR}', upgrade = FALSE, quiet = TRUE)"
 
-build-full: deps codegen
+build-full: codegen
 	@echo "build the AWS SDK package"
 	@Rscript -e "library(make.paws); make_sdk('${IN_DIR}', '${OUT_DIR}')"
 
 build-cran: codegen
 	@echo "build CRAN packages"
 	@Rscript -e "library(make.paws); make_cran('${OUT_DIR}', '${CRAN_DIR}')"
+
+check:
+	@echo "run R CMD check on packages"
+	@set -e ; \
+	cleanup () { rm *.tar.gz; rm -fr *.Rcheck; } ; \
+	trap cleanup EXIT ; \
+	for package in paws.common make.paws $$(find cran -mindepth 1 -maxdepth 1) ; do \
+		R CMD build $$package ; \
+		R CMD check --as-cran --run-donttest --no-manual $$(basename $$package)_*.tar.gz ; \
+	done ;
 
 unit: test-common test-codegen
 
@@ -68,6 +79,6 @@ deps:
 	@if [ ! -x "$(command -v pandoc)" ]; then echo "Please install Pandoc. See https://pandoc.org."; fi
 	@if [ ! -d ${IN_DIR} ]; then git submodule init && git submodule update; fi
 
-update-deps: deps
+update-deps:
 	@echo "update project dependencies"
 	@git submodule update --remote

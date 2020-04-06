@@ -11,13 +11,13 @@ iam_add_user_to_group(GroupName, UserName)
 
 This parameter allows (through its \href{http://wikipedia.org/wiki/regex}{regex pattern}) a string of characters
 consisting of upper and lowercase alphanumeric characters with no
-spaces. You can also include any of the following characters: \_+=,.@-}
+spaces. You can also include any of the following characters: \\_+=,.@-}
 
 \item{UserName}{[required] The name of the user to add.
 
 This parameter allows (through its \href{http://wikipedia.org/wiki/regex}{regex pattern}) a string of characters
 consisting of upper and lowercase alphanumeric characters with no
-spaces. You can also include any of the following characters: \_+=,.@-}
+spaces. You can also include any of the following characters: \\_+=,.@-}
 }
 \description{
 Adds the specified user to the specified group.
@@ -31,12 +31,14 @@ Adds the specified user to the specified group.
 }
 
 \examples{
+\dontrun{
 # The following command adds an IAM user named Bob to the IAM group named
 # Admins:
-\donttest{svc$add_user_to_group(
+svc$add_user_to_group(
   GroupName = "Admins",
   UserName = "Bob"
-)}
+)
+}
 
 }
 \keyword{internal}

@@ -14,13 +14,17 @@ Send a request and handle the response. Build the HTTP request, send it to
 AWS, interpret the response, and throw an error if the response is not ok.
 }
 \examples{
+\dontrun{
 # Send a request and handle the response.
-\donttest{resp <- send_request(req)}
+resp <- send_request(req)
+}
 
 }
 \seealso{
-Other API request functions: \code{\link{new_handlers}},
-  \code{\link{new_operation}}, \code{\link{new_request}},
-  \code{\link{new_service}}
+Other API request functions: 
+\code{\link{new_handlers}()},
+\code{\link{new_operation}()},
+\code{\link{new_request}()},
+\code{\link{new_service}()}
 }
 \concept{API request functions}

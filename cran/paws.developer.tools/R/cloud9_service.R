@@ -66,8 +66,9 @@ NULL
 #' ```
 #'
 #' @examples
+#' \dontrun{
+#' svc <- cloud9()
 #' # 
-#' \donttest{svc <- cloud9()
 #' svc$create_environment_ec2(
 #'   name = "my-demo-environment",
 #'   automaticStopTimeMinutes = 60L,
@@ -75,7 +76,8 @@ NULL
 #'   instanceType = "t2.micro",
 #'   ownerArn = "arn:aws:iam::123456789012:user/MyDemoUser",
 #'   subnetId = "subnet-1fab8aEX"
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -84,8 +86,8 @@ NULL
 #'  \link[=cloud9_delete_environment]{delete_environment} \tab Deletes an AWS Cloud9 development environment \cr
 #'  \link[=cloud9_delete_environment_membership]{delete_environment_membership} \tab Deletes an environment member from an AWS Cloud9 development environment \cr
 #'  \link[=cloud9_describe_environment_memberships]{describe_environment_memberships} \tab Gets information about environment members for an AWS Cloud9 development environment \cr
-#'  \link[=cloud9_describe_environment_status]{describe_environment_status} \tab Gets status information for an AWS Cloud9 development environment \cr
 #'  \link[=cloud9_describe_environments]{describe_environments} \tab Gets information about AWS Cloud9 development environments \cr
+#'  \link[=cloud9_describe_environment_status]{describe_environment_status} \tab Gets status information for an AWS Cloud9 development environment \cr
 #'  \link[=cloud9_list_environments]{list_environments} \tab Gets a list of AWS Cloud9 development environment identifiers \cr
 #'  \link[=cloud9_update_environment]{update_environment} \tab Changes the settings of an existing AWS Cloud9 development environment \cr
 #'  \link[=cloud9_update_environment_membership]{update_environment_membership} \tab Changes the settings of an existing environment member for an AWS Cloud9 development environment 
@@ -114,8 +116,7 @@ cloud9 <- function(config = list()) {
   target_prefix = "AWSCloud9WorkspaceManagementService"
 )
 
-.cloud9$handlers <- new_handlers("jsonrpc", "v4")
-
 .cloud9$service <- function(config = list()) {
-  new_service(.cloud9$metadata, .cloud9$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.cloud9$metadata, handlers, config)
 }

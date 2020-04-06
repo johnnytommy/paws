@@ -7,12 +7,12 @@ Amazon Machine Image (AMI)}
 \usage{
 ec2_import_image(Architecture, ClientData, ClientToken, Description,
   DiskContainers, DryRun, Encrypted, Hypervisor, KmsKeyId, LicenseType,
-  Platform, RoleName)
+  Platform, RoleName, LicenseSpecifications)
 }
 \arguments{
 \item{Architecture}{The architecture of the virtual machine.
 
-Valid values: \code{i386} \| \code{x86_64} \| \code{arm64}}
+Valid values: \code{i386} \\| \code{x86_64} \\| \code{arm64}}
 
 \item{ClientData}{The client-specific data.}
 
@@ -37,11 +37,11 @@ in the \emph{Amazon Elastic Compute Cloud User Guide}.}
 
 Valid values: \code{xen}}
 
-\item{KmsKeyId}{An identifier for the AWS Key Management Service (AWS KMS) customer
-master key (CMK) to use when creating the encrypted AMI. This parameter
-is only required if you want to use a non-default CMK; if this parameter
-is not specified, the default CMK for EBS is used. If a \code{KmsKeyId} is
-specified, the \code{Encrypted} flag must also be set.
+\item{KmsKeyId}{An identifier for the symmetric AWS Key Management Service (AWS KMS)
+customer master key (CMK) to use when creating the encrypted AMI. This
+parameter is only required if you want to use a non-default CMK; if this
+parameter is not specified, the default CMK for EBS is used. If a
+\code{KmsKeyId} is specified, the \code{Encrypted} flag must also be set.
 
 The CMK identifier may be provided in any of the following formats:
 \itemize{
@@ -66,7 +66,9 @@ may appear to complete even though you provided an invalid identifier.
 This action will eventually report failure.
 
 The specified CMK must exist in the Region that the AMI is being copied
-to.}
+to.
+
+Amazon EBS does not support asymmetric CMKs.}
 
 \item{LicenseType}{The license type to be used for the Amazon Machine Image (AMI) after
 importing.
@@ -83,10 +85,12 @@ in the VM Import/Export User Guide.}
 
 \item{Platform}{The operating system of the virtual machine.
 
-Valid values: \code{Windows} \| \code{Linux}}
+Valid values: \code{Windows} \\| \code{Linux}}
 
 \item{RoleName}{The name of the role to use when not using the default role,
-'vmimport'.}
+\'vmimport\'.}
+
+\item{LicenseSpecifications}{The ARNs of the license configurations.}
 }
 \description{
 Import single or multi-volume disk images or EBS snapshots into an
@@ -127,7 +131,12 @@ in the \emph{VM Import/Export User Guide}.
   KmsKeyId = "string",
   LicenseType = "string",
   Platform = "string",
-  RoleName = "string"
+  RoleName = "string",
+  LicenseSpecifications = list(
+    list(
+      LicenseConfigurationArn = "string"
+    )
+  )
 )
 }
 }

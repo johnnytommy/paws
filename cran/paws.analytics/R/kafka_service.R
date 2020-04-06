@@ -29,10 +29,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- kafka()
+#' \dontrun{
+#' svc <- kafka()
 #' svc$create_cluster(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -52,8 +54,10 @@ NULL
 #'  \link[=kafka_list_tags_for_resource]{list_tags_for_resource} \tab Returns a list of the tags associated with the specified resource \cr
 #'  \link[=kafka_tag_resource]{tag_resource} \tab Adds tags to the specified MSK resource \cr
 #'  \link[=kafka_untag_resource]{untag_resource} \tab Removes the tags associated with the keys that are provided in the query \cr
+#'  \link[=kafka_update_broker_count]{update_broker_count} \tab Updates the number of broker nodes in the cluster \cr
 #'  \link[=kafka_update_broker_storage]{update_broker_storage} \tab Updates the EBS storage associated with MSK brokers \cr
-#'  \link[=kafka_update_cluster_configuration]{update_cluster_configuration} \tab Updates the cluster with the configuration that is specified in the request body 
+#'  \link[=kafka_update_cluster_configuration]{update_cluster_configuration} \tab Updates the cluster with the configuration that is specified in the request body \cr
+#'  \link[=kafka_update_monitoring]{update_monitoring} \tab Updates the monitoring settings for the cluster 
 #' }
 #'
 #' @rdname kafka
@@ -79,8 +83,7 @@ kafka <- function(config = list()) {
   target_prefix = ""
 )
 
-.kafka$handlers <- new_handlers("restjson", "v4")
-
 .kafka$service <- function(config = list()) {
-  new_service(.kafka$metadata, .kafka$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.kafka$metadata, handlers, config)
 }

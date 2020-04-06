@@ -11,7 +11,7 @@ iam_attach_group_policy(GroupName, PolicyArn)
 
 This parameter allows (through its \href{http://wikipedia.org/wiki/regex}{regex pattern}) a string of characters
 consisting of upper and lowercase alphanumeric characters with no
-spaces. You can also include any of the following characters: \_+=,.@-}
+spaces. You can also include any of the following characters: \\_+=,.@-}
 
 \item{PolicyArn}{[required] The Amazon Resource Name (ARN) of the IAM policy you want to attach.
 
@@ -37,12 +37,14 @@ in the \emph{IAM User Guide}.
 }
 
 \examples{
+\dontrun{
 # The following command attaches the AWS managed policy named
 # ReadOnlyAccess to the IAM group named Finance.
-\donttest{svc$attach_group_policy(
+svc$attach_group_policy(
   GroupName = "Finance",
   PolicyArn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
-)}
+)
+}
 
 }
 \keyword{internal}

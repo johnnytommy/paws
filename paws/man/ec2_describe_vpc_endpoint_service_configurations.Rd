@@ -20,9 +20,9 @@ Otherwise, it is \code{UnauthorizedOperation}.}
 \itemize{
 \item \code{service-name} - The name of the service.
 \item \code{service-id} - The ID of the service.
-\item \code{service-state} - The state of the service (\code{Pending} \| \code{Available}
-\| \code{Deleting} \| \code{Deleted} \| \code{Failed}).
-\item \code{tag}:\<key\> - The key/value combination of a tag assigned to the
+\item \code{service-state} - The state of the service (\code{Pending} \\| \code{Available}
+\\| \code{Deleting} \\| \code{Deleted} \\| \code{Failed}).
+\item \code{tag}:\\<key\\> - The key/value combination of a tag assigned to the
 resource. Use the tag key in the filter name and the tag value as
 the filter value. For example, to find all resources that have a tag
 with the key \code{Owner} and the value \code{TeamA}, specify \code{tag:Owner} for
@@ -35,8 +35,8 @@ regardless of the tag value.
 \item{MaxResults}{The maximum number of results to return for the request in a single
 page. The remaining results of the initial request can be seen by
 sending another request with the returned \code{NextToken} value. This value
-can be between 5 and 1000; if \code{MaxResults} is given a value larger than
-1000, only 1000 results are returned.}
+can be between 5 and 1,000; if \code{MaxResults} is given a value larger than
+1,000, only 1,000 results are returned.}
 
 \item{NextToken}{The token to retrieve the next page of results.}
 }

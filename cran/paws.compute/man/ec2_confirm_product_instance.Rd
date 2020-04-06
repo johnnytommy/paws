@@ -19,7 +19,7 @@ Otherwise, it is \code{UnauthorizedOperation}.}
 \description{
 Determines whether a product code is associated with an instance. This
 action can only be used by the owner of the product code. It is useful
-when a product code owner must verify whether another user's instance
+when a product code owner must verify whether another user\'s instance
 is eligible for support.
 }
 \section{Request syntax}{
@@ -32,12 +32,14 @@ is eligible for support.
 }
 
 \examples{
+\dontrun{
 # This example determines whether the specified product code is associated
 # with the specified instance.
-\donttest{svc$confirm_product_instance(
+svc$confirm_product_instance(
   InstanceId = "i-1234567890abcdef0",
   ProductCode = "774F4FF8"
-)}
+)
+}
 
 }
 \keyword{internal}

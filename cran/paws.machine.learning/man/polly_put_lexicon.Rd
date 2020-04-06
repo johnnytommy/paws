@@ -8,7 +8,7 @@ polly_put_lexicon(Name, Content)
 }
 \arguments{
 \item{Name}{[required] Name of the lexicon. The name must follow the regular express format
-[0-9A-Za-z]{1,20}. That is, the name is a case-sensitive alphanumeric
+[0-9A-Za-z]\{1,20\}. That is, the name is a case-sensitive alphanumeric
 string up to 20 characters long.}
 
 \item{Content}{[required] Content of the PLS lexicon as string data.}
@@ -21,7 +21,7 @@ might take some time before the lexicon is available to the
 SynthesizeSpeech operation.
 }
 \details{
-For more information, see \href{http://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html}{Managing Lexicons}.
+For more information, see \href{https://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html}{Managing Lexicons}.
 }
 \section{Request syntax}{
 \preformatted{svc$put_lexicon(
@@ -32,11 +32,13 @@ For more information, see \href{http://docs.aws.amazon.com/polly/latest/dg/manag
 }
 
 \examples{
+\dontrun{
 # Stores a pronunciation lexicon in an AWS Region.
-\donttest{svc$put_lexicon(
+svc$put_lexicon(
   Content = "file://example.pls",
   Name = "W3C"
-)}
+)
+}
 
 }
 \keyword{internal}

@@ -15,6 +15,9 @@ autoscaling_exit_standby(InstanceIds, AutoScalingGroupName)
 Moves the specified instances out of the standby state.
 }
 \details{
+After you put the instances back in service, the desired capacity is
+incremented.
+
 For more information, see \href{https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-enter-exit-standby.html}{Temporarily Removing Instances from Your Auto Scaling Group}
 in the \emph{Amazon EC2 Auto Scaling User Guide}.
 }
@@ -29,13 +32,15 @@ in the \emph{Amazon EC2 Auto Scaling User Guide}.
 }
 
 \examples{
+\dontrun{
 # This example moves the specified instance out of standby mode.
-\donttest{svc$exit_standby(
+svc$exit_standby(
   AutoScalingGroupName = "my-auto-scaling-group",
   InstanceIds = list(
     "i-93633f9b"
   )
-)}
+)
+}
 
 }
 \keyword{internal}

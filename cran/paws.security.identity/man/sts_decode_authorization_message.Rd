@@ -40,7 +40,7 @@ in the \emph{IAM User Guide}.
 \item The principal who made the request.
 \item The requested action.
 \item The requested resource.
-\item The values of condition keys in the context of the user's request.
+\item The values of condition keys in the context of the user\'s request.
 }
 }
 \section{Request syntax}{
@@ -51,10 +51,12 @@ in the \emph{IAM User Guide}.
 }
 
 \examples{
+\dontrun{
 # 
-\donttest{svc$decode_authorization_message(
+svc$decode_authorization_message(
   EncodedMessage = "<encoded-message>"
-)}
+)
+}
 
 }
 \keyword{internal}

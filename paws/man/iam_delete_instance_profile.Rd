@@ -11,7 +11,7 @@ iam_delete_instance_profile(InstanceProfileName)
 
 This parameter allows (through its \href{http://wikipedia.org/wiki/regex}{regex pattern}) a string of characters
 consisting of upper and lowercase alphanumeric characters with no
-spaces. You can also include any of the following characters: \_+=,.@-}
+spaces. You can also include any of the following characters: \\_+=,.@-}
 }
 \description{
 Deletes the specified instance profile. The instance profile must not
@@ -33,11 +33,13 @@ For more information about instance profiles, go to \href{https://docs.aws.amazo
 }
 
 \examples{
+\dontrun{
 # The following command deletes the instance profile named
 # ExampleInstanceProfile
-\donttest{svc$delete_instance_profile(
+svc$delete_instance_profile(
   InstanceProfileName = "ExampleInstanceProfile"
-)}
+)
+}
 
 }
 \keyword{internal}

@@ -5,7 +5,7 @@
 \title{Initiates a snapshot of a gateway from a volume recovery point}
 \usage{
 storagegateway_create_snapshot_from_volume_recovery_point(VolumeARN,
-  SnapshotDescription)
+  SnapshotDescription, Tags)
 }
 \arguments{
 \item{VolumeARN}{[required] The Amazon Resource Name (ARN) of the iSCSI volume target. Use the
@@ -16,6 +16,14 @@ for specified VolumeARN.}
 console, Elastic Block Store snapshots panel in the \strong{Description}
 field, and in the AWS Storage Gateway snapshot \strong{Details} pane,
 \strong{Description} field}
+
+\item{Tags}{A list of up to 50 tags that can be assigned to a snapshot. Each tag is
+a key-value pair.
+
+Valid characters for key and value are letters, spaces, and numbers
+representable in UTF-8 format, and the following special characters: + -
+= . \\_ : / @. The maximum length of a tag\'s key is 128 characters, and
+the maximum length for a tag\'s value is 256.}
 }
 \description{
 Initiates a snapshot of a gateway from a volume recovery point. This
@@ -42,17 +50,25 @@ information, in \emph{Amazon Elastic Compute Cloud API Reference}.
 \section{Request syntax}{
 \preformatted{svc$create_snapshot_from_volume_recovery_point(
   VolumeARN = "string",
-  SnapshotDescription = "string"
+  SnapshotDescription = "string",
+  Tags = list(
+    list(
+      Key = "string",
+      Value = "string"
+    )
+  )
 )
 }
 }
 
 \examples{
+\dontrun{
 # Initiates a snapshot of a gateway from a volume recovery point.
-\donttest{svc$create_snapshot_from_volume_recovery_point(
+svc$create_snapshot_from_volume_recovery_point(
   SnapshotDescription = "My root volume snapshot as of 2017-06-30T10:10:10.000Z",
   VolumeARN = "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/volume/vol..."
-)}
+)
+}
 
 }
 \keyword{internal}

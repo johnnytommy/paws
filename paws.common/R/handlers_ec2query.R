@@ -10,11 +10,11 @@ ec2query_build <- function(request) {
   if (!is_presigned(request)) {
     request$http_request$method <- "POST"
     request$http_request$header["Content-Type"] <- "application/x-www-form-urlencoded; charset=utf-8"
-    request$body <- encode(body)
+    request$body <- build_query_string(body)
     request$http_request$body <- request$body
   } else {
     request$http_request$method <- "GET"
-    request$http_request$url$raw_query <- encode(body)
+    request$http_request$url$raw_query <- build_query_string(body)
   }
   return(request)
 }
@@ -37,8 +37,10 @@ ec2query_unmarshal_meta <- function(request) {
 ec2query_unmarshal_error <- function(request) {
   body <- decode_xml(request$http_response$body)
   data <- body[[1]]
-  code <- data$Errors$Error$Code
-  message <- data$Errors$Error$Message
-  request$error <- Error(code, message)
+  error_response <- lapply(data$Error, unlist)
+  code <- error_response$Code
+  message <- error_response$Message
+
+  request$error <- Error(code, message, request$http_response$status_code, error_response)
   return(request)
 }

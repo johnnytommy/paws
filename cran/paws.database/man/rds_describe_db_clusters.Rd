@@ -10,7 +10,7 @@ rds_describe_db_clusters(DBClusterIdentifier, Filters, MaxRecords,
 \arguments{
 \item{DBClusterIdentifier}{The user-supplied DB cluster identifier. If this parameter is specified,
 information from only the specific DB cluster is returned. This
-parameter isn't case-sensitive.
+parameter isn\'t case-sensitive.
 
 Constraints:
 \itemize{
@@ -28,8 +28,8 @@ information about the DB clusters identified by these ARNs.
 
 \item{MaxRecords}{The maximum number of records to include in the response. If more
 records exist than the specified \code{MaxRecords} value, a pagination token
-called a marker is included in the response so that the remaining
-results can be retrieved.
+called a marker is included in the response so you can retrieve the
+remaining results.
 
 Default: 100
 
@@ -50,7 +50,8 @@ supports pagination.
 For more information on Amazon Aurora, see \href{https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraOverview.html}{What Is Amazon Aurora?}
 in the \emph{Amazon Aurora User Guide.}
 
-This action only applies to Aurora DB clusters.
+This operation can also return information for Amazon Neptune DB
+instances and Amazon DocumentDB instances.
 }
 \section{Request syntax}{
 \preformatted{svc$describe_db_clusters(

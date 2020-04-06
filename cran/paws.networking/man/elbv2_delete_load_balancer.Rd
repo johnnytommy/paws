@@ -15,7 +15,7 @@ Deletes the specified Application Load Balancer or Network Load Balancer
 and its attached listeners.
 }
 \details{
-You can't delete a load balancer if deletion protection is enabled. If
+You can\'t delete a load balancer if deletion protection is enabled. If
 the load balancer does not exist or has already been deleted, the call
 succeeds.
 
@@ -32,10 +32,12 @@ stop or terminate them.
 }
 
 \examples{
+\dontrun{
 # This example deletes the specified load balancer.
-\donttest{svc$delete_load_balancer(
+svc$delete_load_balancer(
   LoadBalancerArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my..."
-)}
+)
+}
 
 }
 \keyword{internal}

@@ -38,10 +38,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- dlm()
+#' \dontrun{
+#' svc <- dlm()
 #' svc$create_lifecycle_policy(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -49,6 +51,9 @@ NULL
 #'  \link[=dlm_delete_lifecycle_policy]{delete_lifecycle_policy} \tab Deletes the specified lifecycle policy and halts the automated operations that the policy specified\cr
 #'  \link[=dlm_get_lifecycle_policies]{get_lifecycle_policies} \tab Gets summary information about all or the specified data lifecycle policies \cr
 #'  \link[=dlm_get_lifecycle_policy]{get_lifecycle_policy} \tab Gets detailed information about the specified lifecycle policy \cr
+#'  \link[=dlm_list_tags_for_resource]{list_tags_for_resource} \tab Lists the tags for the specified resource \cr
+#'  \link[=dlm_tag_resource]{tag_resource} \tab Adds the specified tags to the specified resource \cr
+#'  \link[=dlm_untag_resource]{untag_resource} \tab Removes the specified tags from the specified resource \cr
 #'  \link[=dlm_update_lifecycle_policy]{update_lifecycle_policy} \tab Updates the specified lifecycle policy 
 #' }
 #'
@@ -75,8 +80,7 @@ dlm <- function(config = list()) {
   target_prefix = ""
 )
 
-.dlm$handlers <- new_handlers("restjson", "v4")
-
 .dlm$service <- function(config = list()) {
-  new_service(.dlm$metadata, .dlm$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.dlm$metadata, handlers, config)
 }

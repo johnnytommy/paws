@@ -25,7 +25,7 @@ Creates a new report using the description that you provide.
     ),
     S3Bucket = "string",
     S3Prefix = "string",
-    S3Region = "us-east-1"|"us-west-1"|"us-west-2"|"eu-central-1"|"eu-west-1"|"ap-southeast-1"|"ap-southeast-2"|"ap-northeast-1"|"eu-north-1"|"ap-northeast-3",
+    S3Region = "us-east-1"|"us-west-1"|"us-west-2"|"eu-central-1"|"eu-west-1"|"ap-southeast-1"|"ap-southeast-2"|"ap-northeast-1"|"eu-north-1"|"ap-northeast-3"|"ap-east-1",
     AdditionalArtifacts = list(
       "REDSHIFT"|"QUICKSIGHT"|"ATHENA"
     ),
@@ -37,9 +37,10 @@ Creates a new report using the description that you provide.
 }
 
 \examples{
+\dontrun{
 # The following example creates a AWS Cost and Usage report named
 # ExampleReport.
-\donttest{svc$put_report_definition(
+svc$put_report_definition(
   ReportDefinition = list(
     AdditionalArtifacts = list(
       "REDSHIFT",
@@ -56,7 +57,8 @@ Creates a new report using the description that you provide.
     S3Region = "us-east-1",
     TimeUnit = "DAILY"
   )
-)}
+)
+}
 
 }
 \keyword{internal}

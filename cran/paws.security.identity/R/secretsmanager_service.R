@@ -45,7 +45,7 @@ NULL
 #' **Support and Feedback for AWS Secrets Manager**
 #' 
 #' We welcome your feedback. Send your comments to
-#' <awssecretsmanager-feedback@amazon.com>, or post your feedback and
+#' <awssecretsmanager-feedback@@amazon.com>, or post your feedback and
 #' questions in the [AWS Secrets Manager Discussion
 #' Forum](http://forums.aws.amazon.com/forum.jspa?forumID=296). For more
 #' information about the AWS Discussion Forums, see [Forums
@@ -100,14 +100,16 @@ NULL
 #' ```
 #'
 #' @examples
+#' \dontrun{
+#' svc <- secretsmanager()
 #' # The following example shows how to cancel rotation for a secret. The
 #' # operation sets the RotationEnabled field to false and cancels all
 #' # scheduled rotations. To resume scheduled rotations, you must re-enable
 #' # rotation by calling the rotate-secret operation.
-#' \donttest{svc <- secretsmanager()
 #' svc$cancel_rotate_secret(
 #'   SecretId = "MyTestDatabaseSecret"
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -119,8 +121,8 @@ NULL
 #'  \link[=secretsmanager_get_random_password]{get_random_password} \tab Generates a random password of the specified complexity \cr
 #'  \link[=secretsmanager_get_resource_policy]{get_resource_policy} \tab Retrieves the JSON text of the resource-based policy document that's attached to the specified secret \cr
 #'  \link[=secretsmanager_get_secret_value]{get_secret_value} \tab Retrieves the contents of the encrypted fields SecretString or SecretBinary from the specified version of a secret, whichever contains content\cr
-#'  \link[=secretsmanager_list_secret_version_ids]{list_secret_version_ids} \tab Lists all of the versions attached to the specified secret \cr
 #'  \link[=secretsmanager_list_secrets]{list_secrets} \tab Lists all of the secrets that are stored by Secrets Manager in the AWS account \cr
+#'  \link[=secretsmanager_list_secret_version_ids]{list_secret_version_ids} \tab Lists all of the versions attached to the specified secret \cr
 #'  \link[=secretsmanager_put_resource_policy]{put_resource_policy} \tab Attaches the contents of the specified resource-based permission policy to a secret \cr
 #'  \link[=secretsmanager_put_secret_value]{put_secret_value} \tab Stores a new encrypted secret value in the specified secret \cr
 #'  \link[=secretsmanager_restore_secret]{restore_secret} \tab Cancels the scheduled deletion of a secret by removing the DeletedDate time stamp \cr
@@ -154,8 +156,7 @@ secretsmanager <- function(config = list()) {
   target_prefix = "secretsmanager"
 )
 
-.secretsmanager$handlers <- new_handlers("jsonrpc", "v4")
-
 .secretsmanager$service <- function(config = list()) {
-  new_service(.secretsmanager$metadata, .secretsmanager$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.secretsmanager$metadata, handlers, config)
 }

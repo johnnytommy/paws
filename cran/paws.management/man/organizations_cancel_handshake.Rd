@@ -11,7 +11,7 @@ organizations_cancel_handshake(HandshakeId)
 can get the ID from the ListHandshakesForOrganization operation.
 
 The \href{http://wikipedia.org/wiki/regex}{regex pattern} for handshake ID
-string requires "h-" followed by from 8 to 32 lower-case letters or
+string requires \"h-\" followed by from 8 to 32 lowercase letters or
 digits.}
 }
 \description{
@@ -20,12 +20,12 @@ Cancels a handshake. Canceling a handshake sets the handshake state to
 }
 \details{
 This operation can be called only from the account that originated the
-handshake. The recipient of the handshake can't cancel it, but can use
+handshake. The recipient of the handshake can\'t cancel it, but can use
 DeclineHandshake instead. After a handshake is canceled, the recipient
 can no longer respond to that handshake.
 
 After you cancel a handshake, it continues to appear in the results of
-relevant APIs for only 30 days. After that, it's deleted.
+relevant APIs for only 30 days. After that, it\'s deleted.
 }
 \section{Request syntax}{
 \preformatted{svc$cancel_handshake(
@@ -35,14 +35,16 @@ relevant APIs for only 30 days. After that, it's deleted.
 }
 
 \examples{
+\dontrun{
 # Bill previously sent an invitation to Susan's account to join his
 # organization. He changes his mind and decides to cancel the invitation
 # before Susan accepts it. The following example shows Bill's
 # cancellation:
 # 
-\donttest{svc$cancel_handshake(
+svc$cancel_handshake(
   HandshakeId = "h-examplehandshakeid111"
-)}
+)
+}
 
 }
 \keyword{internal}

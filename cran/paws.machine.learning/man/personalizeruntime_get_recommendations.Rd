@@ -5,7 +5,7 @@
 \title{Returns a list of recommended items}
 \usage{
 personalizeruntime_get_recommendations(campaignArn, itemId, userId,
-  numResults)
+  numResults, context)
 }
 \arguments{
 \item{campaignArn}{[required] The Amazon Resource Name (ARN) of the campaign to use for getting
@@ -19,7 +19,12 @@ Required for \code{RELATED_ITEMS} recipe type.}
 
 Required for \code{USER_PERSONALIZATION} recipe type.}
 
-\item{numResults}{The number of results to return. The default is 25. The maximum is 100.}
+\item{numResults}{The number of results to return. The default is 25. The maximum is 500.}
+
+\item{context}{The contextual metadata to use when getting recommendations. Contextual
+metadata includes any interaction information that might be relevant
+when getting a user\'s recommendations, such as the user\'s current
+location or device type. For more information, see Contextual Metadata.}
 }
 \description{
 Returns a list of recommended items. The required input depends on the
@@ -28,19 +33,22 @@ follows:
 }
 \details{
 \itemize{
-\item RELATED\_ITEMS - \code{itemId} required, \code{userId} not used
-\item USER\_PERSONALIZATION - \code{itemId} optional, \code{userId} required
+\item RELATED\\_ITEMS - \code{itemId} required, \code{userId} not used
+\item USER\\_PERSONALIZATION - \code{itemId} optional, \code{userId} required
 }
 
 Campaigns that are backed by a solution created using a recipe of type
-PERSONALIZED\_RANKING use the API.
+PERSONALIZED\\_RANKING use the API.
 }
 \section{Request syntax}{
 \preformatted{svc$get_recommendations(
   campaignArn = "string",
   itemId = "string",
   userId = "string",
-  numResults = 123
+  numResults = 123,
+  context = list(
+    "string"
+  )
 )
 }
 }

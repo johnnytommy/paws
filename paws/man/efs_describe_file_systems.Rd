@@ -28,7 +28,7 @@ EFS file system.}
 Returns the description of a specific Amazon EFS file system if either
 the file system \code{CreationToken} or the \code{FileSystemId} is provided.
 Otherwise, it returns descriptions of all file systems owned by the
-caller's AWS account in the AWS Region of the endpoint that you're
+caller\'s AWS account in the AWS Region of the endpoint that you\'re
 calling.
 }
 \details{
@@ -64,8 +64,10 @@ This operation requires permissions for the
 }
 
 \examples{
+\dontrun{
 # This operation describes all of the EFS file systems in an account.
-\donttest{svc$describe_file_systems()}
+svc$describe_file_systems()
+}
 
 }
 \keyword{internal}

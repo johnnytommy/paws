@@ -26,12 +26,12 @@ Otherwise, it is \code{UnauthorizedOperation}.}
 
 Constraints: 3-128 alphanumeric characters, parentheses (()), square
 brackets ([]), spaces ( ), periods (.), slashes (/), dashes (-),
-single quotes ('), at-signs (@), or underscores(\_)}
+single quotes (\'), at-signs (@), or underscores(\\_)}
 
 \item{NoReboot}{By default, Amazon EC2 attempts to shut down and reboot the instance
-before creating the image. If the 'No Reboot' option is set, Amazon
-EC2 doesn't shut down the instance before creating the image. When this
-option is used, file system integrity on the created image can't be
+before creating the image. If the \'No Reboot\' option is set, Amazon
+EC2 doesn\'t shut down the instance before creating the image. When this
+option is used, file system integrity on the created image can\'t be
 guaranteed.}
 }
 \description{
@@ -76,10 +76,11 @@ in the \emph{Amazon Elastic Compute Cloud User Guide}.
 }
 
 \examples{
+\dontrun{
 # This example creates an AMI from the specified instance and adds an EBS
 # volume with the device name /dev/sdh and an instance store volume with
 # the device name /dev/sdc.
-\donttest{svc$create_image(
+svc$create_image(
   BlockDeviceMappings = list(
     list(
       DeviceName = "/dev/sdh",
@@ -96,7 +97,8 @@ in the \emph{Amazon Elastic Compute Cloud User Guide}.
   InstanceId = "i-1234567890abcdef0",
   Name = "My server",
   NoReboot = TRUE
-)}
+)
+}
 
 }
 \keyword{internal}

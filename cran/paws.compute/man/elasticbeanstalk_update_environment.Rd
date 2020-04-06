@@ -32,7 +32,7 @@ you do not specify either, AWS Elastic Beanstalk returns
 \code{MissingRequiredParameter} error.}
 
 \item{GroupName}{The name of the group to which the target environment belongs. Specify a
-group name only if the environment's name is specified in an
+group name only if the environment\'s name is specified in an
 environment manifest and not with the environment name or environment ID
 parameters. See \href{https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/environment-cfg-manifest.html}{Environment Manifest (env.yaml)}
 for details.}
@@ -118,16 +118,17 @@ descriptions with different \code{DeploymentStatus} values.
 }
 
 \examples{
+\dontrun{
 # The following operation updates an environment named "my-env" to version
 # "v2" of the application to which it belongs:
-\donttest{svc$update_environment(
+svc$update_environment(
   EnvironmentName = "my-env",
   VersionLabel = "v2"
-)}
+)
 
 # The following operation configures several options in the
 # aws:elb:loadbalancer namespace:
-\donttest{svc$update_environment(
+svc$update_environment(
   EnvironmentName = "my-env",
   OptionSettings = list(
     list(
@@ -151,7 +152,8 @@ descriptions with different \code{DeploymentStatus} values.
       Value = "3"
     )
   )
-)}
+)
+}
 
 }
 \keyword{internal}

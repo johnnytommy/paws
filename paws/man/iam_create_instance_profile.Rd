@@ -11,7 +11,7 @@ iam_create_instance_profile(InstanceProfileName, Path)
 
 This parameter allows (through its \href{http://wikipedia.org/wiki/regex}{regex pattern}) a string of characters
 consisting of upper and lowercase alphanumeric characters with no
-spaces. You can also include any of the following characters: \_+=,.@-}
+spaces. You can also include any of the following characters: \\_+=,.@-}
 
 \item{Path}{The path to the instance profile. For more information about paths, see
 \href{https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html}{IAM Identifiers}
@@ -24,7 +24,7 @@ This parameter allows (through its \href{http://wikipedia.org/wiki/regex}{regex 
 consisting of either a forward slash (/) by itself or a string that must
 begin and end with forward slashes. In addition, it can contain any
 ASCII character from the ! (\code{U+0021}) through the DEL character
-(\code{U+007F}), including most punctuation characters, digits, and upper and
+(\verb{U+007F}), including most punctuation characters, digits, and upper and
 lowercased letters.}
 }
 \description{
@@ -45,12 +45,14 @@ in the \emph{IAM User Guide}.
 }
 
 \examples{
+\dontrun{
 # The following command creates an instance profile named Webserver that
 # is ready to have a role attached and then be associated with an EC2
 # instance.
-\donttest{svc$create_instance_profile(
+svc$create_instance_profile(
   InstanceProfileName = "Webserver"
-)}
+)
+}
 
 }
 \keyword{internal}

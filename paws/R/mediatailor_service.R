@@ -40,10 +40,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- mediatailor()
+#' \dontrun{
+#' svc <- mediatailor()
 #' svc$delete_playback_configuration(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -79,8 +81,7 @@ mediatailor <- function(config = list()) {
   target_prefix = ""
 )
 
-.mediatailor$handlers <- new_handlers("restjson", "v4")
-
 .mediatailor$service <- function(config = list()) {
-  new_service(.mediatailor$metadata, .mediatailor$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.mediatailor$metadata, handlers, config)
 }

@@ -33,10 +33,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- mobile()
+#' \dontrun{
+#' svc <- mobile()
 #' svc$create_project(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -74,8 +76,7 @@ mobile <- function(config = list()) {
   target_prefix = ""
 )
 
-.mobile$handlers <- new_handlers("restjson", "v4")
-
 .mobile$service <- function(config = list()) {
-  new_service(.mobile$metadata, .mobile$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.mobile$metadata, handlers, config)
 }

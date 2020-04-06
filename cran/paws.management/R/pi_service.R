@@ -48,10 +48,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- pi()
+#' \dontrun{
+#' svc <- pi()
 #' svc$describe_dimension_keys(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -82,8 +84,7 @@ pi <- function(config = list()) {
   target_prefix = "PerformanceInsightsv20180227"
 )
 
-.pi$handlers <- new_handlers("jsonrpc", "v4")
-
 .pi$service <- function(config = list()) {
-  new_service(.pi$metadata, .pi$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.pi$metadata, handlers, config)
 }

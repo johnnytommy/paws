@@ -17,7 +17,8 @@ rds_modify_db_instance(DBInstanceIdentifier, AllocatedStorage,
   EnableIAMDatabaseAuthentication, EnablePerformanceInsights,
   PerformanceInsightsKMSKeyId, PerformanceInsightsRetentionPeriod,
   CloudwatchLogsExportConfiguration, ProcessorFeatures,
-  UseDefaultProcessorFeatures, DeletionProtection, MaxAllocatedStorage)
+  UseDefaultProcessorFeatures, DeletionProtection, MaxAllocatedStorage,
+  CertificateRotationRestart)
 }
 \arguments{
 \item{DBInstanceIdentifier}{[required] The DB instance identifier. This value is stored as a lowercase string.
@@ -51,7 +52,7 @@ The change is applied during the next maintenance window, unless
 Default: Uses existing setting}
 
 \item{DBSubnetGroupName}{The new DB subnet group for the DB instance. You can use this parameter
-to move your DB instance to a different VPC. If your DB instance is not
+to move your DB instance to a different VPC. If your DB instance isn\'t
 in a VPC, you can also use this parameter to move your DB instance into
 a VPC. For more information, see \href{http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.WorkingWithRDSInstanceinaVPC.html#USER_VPC.Non-VPC2VPC}{Updating the VPC for a DB Instance}
 in the \emph{Amazon RDS User Guide.}
@@ -66,7 +67,7 @@ DBSubnetGroup.
 Example: \code{mySubnetGroup}}
 
 \item{DBSecurityGroups}{A list of DB security groups to authorize on this DB instance. Changing
-this setting doesn't result in an outage and the change is
+this setting doesn\'t result in an outage and the change is
 asynchronously applied as soon as possible.
 
 Constraints:
@@ -101,9 +102,9 @@ disabling \code{ApplyImmediately} for each modified parameter and to
 determine when the changes are applied.}
 
 \item{MasterUserPassword}{The new password for the master user. The password can include any
-printable ASCII character except "/", """, or "@".
+printable ASCII character except \"/\", \"\"\", or \"@\".
 
-Changing this parameter doesn't result in an outage and the change is
+Changing this parameter doesn\'t result in an outage and the change is
 asynchronously applied as soon as possible. Between the time of the
 request and the completion of the request, the \code{MasterUserPassword}
 element exists in the \code{PendingModifiedValues} element of the operation
@@ -142,11 +143,11 @@ password is lost. This includes restoring privileges that might have
 been accidentally revoked.}
 
 \item{DBParameterGroupName}{The name of the DB parameter group to apply to the DB instance. Changing
-this setting doesn't result in an outage. The parameter group name
+this setting doesn\'t result in an outage. The parameter group name
 itself is changed immediately, but the actual parameter changes are not
 applied until you reboot the instance without failover. In this case,
-the DB instance isn't rebooted automatically and the parameter changes
-isn't applied during the next maintenance window.
+the DB instance isn\'t rebooted automatically and the parameter changes
+isn\'t applied during the next maintenance window.
 
 Default: Uses existing setting
 
@@ -178,12 +179,12 @@ Constraints:
 running MySQL 5.6 or later
 \item Can be specified for a PostgreSQL Read Replica only if the source is
 running PostgreSQL 9.3.5
-\item Can't be set to 0 if the DB instance is a source to Read Replicas
+\item Can\'t be set to 0 if the DB instance is a source to Read Replicas
 }}
 
 \item{PreferredBackupWindow}{The daily time range during which automated backups are created if
 automated backups are enabled, as determined by the
-\code{BackupRetentionPeriod} parameter. Changing this parameter doesn't
+\code{BackupRetentionPeriod} parameter. Changing this parameter doesn\'t
 result in an outage and the change is asynchronously applied as soon as
 possible.
 
@@ -201,7 +202,7 @@ Constraints:
 }}
 
 \item{PreferredMaintenanceWindow}{The weekly time range (in UTC) during which system maintenance can
-occur, which might result in an outage. Changing this parameter doesn't
+occur, which might result in an outage. Changing this parameter doesn\'t
 result in an outage, except in the following situation, and the change
 is asynchronously applied as soon as possible. If there are pending
 actions that cause a reboot, and the maintenance window is changed to
@@ -214,12 +215,12 @@ Default: Uses existing setting
 
 Format: ddd:hh24:mi-ddd:hh24:mi
 
-Valid Days: Mon \| Tue \| Wed \| Thu \| Fri \| Sat \| Sun
+Valid Days: Mon \\| Tue \\| Wed \\| Thu \\| Fri \\| Sat \\| Sun
 
 Constraints: Must be at least 30 minutes}
 
 \item{MultiAZ}{A value that indicates whether the DB instance is a Multi-AZ deployment.
-Changing this parameter doesn't result in an outage and the change is
+Changing this parameter doesn\'t result in an outage and the change is
 applied during the next maintenance window unless the \code{ApplyImmediately}
 parameter is enabled for this request.}
 
@@ -237,16 +238,16 @@ For information about valid engine versions, see \code{CreateDBInstance}, or
 call \code{DescribeDBEngineVersions}.}
 
 \item{AllowMajorVersionUpgrade}{A value that indicates whether major version upgrades are allowed.
-Changing this parameter doesn't result in an outage and the change is
+Changing this parameter doesn\'t result in an outage and the change is
 asynchronously applied as soon as possible.
 
 Constraints: Major version upgrades must be allowed when specifying a
 value for the EngineVersion parameter that is a different major version
-than the DB instance's current version.}
+than the DB instance\'s current version.}
 
 \item{AutoMinorVersionUpgrade}{A value that indicates whether minor version upgrades are applied
 automatically to the DB instance during the maintenance window. Changing
-this parameter doesn't result in an outage except in the following case
+this parameter doesn\'t result in an outage except in the following case
 and the change is asynchronously applied as soon as possible. An outage
 results if this parameter is enabled during the maintenance window, and
 a newer minor version is available, and RDS has enabled auto patching
@@ -254,13 +255,13 @@ for that engine version.}
 
 \item{LicenseModel}{The license model for the DB instance.
 
-Valid values: \code{license-included} \| \code{bring-your-own-license} \|
+Valid values: \code{license-included} \\| \code{bring-your-own-license} \\|
 \code{general-public-license}}
 
 \item{Iops}{The new Provisioned IOPS (I/O operations per second) value for the RDS
 instance.
 
-Changing this setting doesn't result in an outage and the change is
+Changing this setting doesn\'t result in an outage and the change is
 applied during the next maintenance window unless the \code{ApplyImmediately}
 parameter is enabled for this request. If you are migrating from
 Provisioned IOPS to standard storage, set this value to 0. The DB
@@ -290,7 +291,7 @@ so that they are 10\% greater than the current value.
 Default: Uses existing setting}
 
 \item{OptionGroupName}{Indicates that the DB instance should be associated with the specified
-option group. Changing this parameter doesn't result in an outage
+option group. Changing this parameter doesn\'t result in an outage
 except in the following case and the change is applied during the next
 maintenance window unless the \code{ApplyImmediately} parameter is enabled
 for this request. If the parameter change results in an option group
@@ -299,8 +300,8 @@ during which new connections are rejected but existing connections are
 not interrupted.
 
 Permanent options, such as the TDE option for Oracle Advanced Security
-TDE, can't be removed from an option group, and that option group
-can't be removed from a DB instance once it is associated with a DB
+TDE, can\'t be removed from an option group, and that option group
+can\'t be removed from a DB instance once it is associated with a DB
 instance}
 
 \item{NewDBInstanceIdentifier}{The new DB instance identifier for the DB instance when renaming a DB
@@ -313,7 +314,7 @@ Constraints:
 \itemize{
 \item Must contain from 1 to 63 letters, numbers, or hyphens.
 \item The first character must be a letter.
-\item Can't end with a hyphen or contain two consecutive hyphens.
+\item Can\'t end with a hyphen or contain two consecutive hyphens.
 }
 
 Example: \code{mydbinstance}}
@@ -350,10 +351,20 @@ device.}
 
 \item{CACertificateIdentifier}{Indicates the certificate that needs to be associated with the instance.}
 
-\item{Domain}{The Active Directory Domain to move the instance to. Specify \code{none} to
-remove the instance from its current domain. The domain must be created
-prior to this operation. Currently only a Microsoft SQL Server instance
-can be created in a Active Directory Domain.}
+\item{Domain}{The Active Directory directory ID to move the DB instance to. Specify
+\code{none} to remove the instance from its current domain. The domain must
+be created prior to this operation. Currently, only Microsoft SQL Server
+and Oracle DB instances can be created in an Active Directory Domain.
+
+For Microsoft SQL Server DB instances, Amazon RDS can use Windows
+Authentication to authenticate users that connect to the DB instance.
+For more information, see \href{https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_SQLServerWinAuth.html}{Using Windows Authentication with an Amazon RDS DB Instance Running Microsoft SQL Server}
+in the \emph{Amazon RDS User Guide}.
+
+For Oracle DB instances, Amazon RDS can use Kerberos Authentication to
+authenticate users that connect to the DB instance. For more
+information, see \href{https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/oracle-kerberos.html}{Using Kerberos Authentication with Amazon RDS for Oracle}
+in the \emph{Amazon RDS User Guide}.}
 
 \item{CopyTagsToSnapshot}{A value that indicates whether to copy all tags from the DB instance to
 snapshots of the DB instance. By default, tags are not copied.
@@ -371,7 +382,7 @@ Enhanced Monitoring metrics, specify 0. The default is 0.
 If \code{MonitoringRoleArn} is specified, then you must also set
 \code{MonitoringInterval} to a value other than 0.
 
-Valid Values: \code{0, 1, 5, 10, 15, 30, 60}}
+Valid Values: \verb{0, 1, 5, 10, 15, 30, 60}}
 
 \item{DBPortNumber}{The port number on which the database accepts connections.
 
@@ -423,7 +434,7 @@ Valid Values: \code{1150-65535}}
 \item{PubliclyAccessible}{A value that indicates whether the DB instance is publicly accessible.
 When the DB instance is publicly accessible, it is an Internet-facing
 instance with a publicly resolvable DNS name, which resolves to a public
-IP address. When the DB instance is not publicly accessible, it is an
+IP address. When the DB instance isn\'t publicly accessible, it is an
 internal instance with a DNS name that resolves to a private IP address.
 
 \code{PubliclyAccessible} only applies to DB instances in a VPC. The DB
@@ -456,21 +467,11 @@ Valid Values: 0 - 15}
 
 \item{EnableIAMDatabaseAuthentication}{A value that indicates whether to enable mapping of AWS Identity and
 Access Management (IAM) accounts to database accounts. By default,
-mapping is disabled.
+mapping is disabled. For information about the supported DB engines, see
+CreateDBInstance.
 
-You can enable IAM database authentication for the following database
-engines
-
-\strong{Amazon Aurora}
-
-Not applicable. Mapping AWS IAM accounts to database accounts is managed
-by the DB cluster. For more information, see \code{ModifyDBCluster}.
-
-\strong{MySQL}
-\itemize{
-\item For MySQL 5.6, minor version 5.6.34 or higher
-\item For MySQL 5.7, minor version 5.7.16 or higher
-}}
+For more information about IAM database authentication, see \href{https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html}{IAM Database Authentication for MySQL and PostgreSQL}
+in the \emph{Amazon RDS User Guide.}}
 
 \item{EnablePerformanceInsights}{A value that indicates whether to enable Performance Insights for the DB
 instance.
@@ -504,12 +505,34 @@ instance class of the DB instance.}
 uses its default processor features.}
 
 \item{DeletionProtection}{A value that indicates whether the DB instance has deletion protection
-enabled. The database can't be deleted when deletion protection is
+enabled. The database can\'t be deleted when deletion protection is
 enabled. By default, deletion protection is disabled. For more
 information, see \href{https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_DeleteInstance.html}{Deleting a DB Instance}.}
 
 \item{MaxAllocatedStorage}{The upper limit to which Amazon RDS can automatically scale the storage
 of the DB instance.}
+
+\item{CertificateRotationRestart}{A value that indicates whether the DB instance is restarted when you
+rotate your SSL/TLS certificate.
+
+By default, the DB instance is restarted when you rotate your SSL/TLS
+certificate. The certificate is not updated until the DB instance is
+restarted.
+
+Set this parameter only if you are \emph{not} using SSL/TLS to connect to the
+DB instance.
+
+If you are using SSL/TLS to connect to the DB instance, follow the
+appropriate instructions for your DB engine to rotate your SSL/TLS
+certificate:
+\itemize{
+\item For more information about rotating your SSL/TLS certificate for RDS
+DB engines, see \href{https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL-certificate-rotation.html}{Rotating Your SSL/TLS Certificate.}
+in the \emph{Amazon RDS User Guide.}
+\item For more information about rotating your SSL/TLS certificate for
+Aurora DB engines, see \href{https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/UsingWithRDS.SSL-certificate-rotation.html}{Rotating Your SSL/TLS Certificate}
+in the \emph{Amazon Aurora User Guide.}
+}}
 }
 \description{
 Modifies settings for a DB instance. You can change one or more database
@@ -576,7 +599,8 @@ DB instance, call \code{DescribeValidDBInstanceModifications} before you call
   ),
   UseDefaultProcessorFeatures = TRUE|FALSE,
   DeletionProtection = TRUE|FALSE,
-  MaxAllocatedStorage = 123
+  MaxAllocatedStorage = 123,
+  CertificateRotationRestart = TRUE|FALSE
 )
 }
 }

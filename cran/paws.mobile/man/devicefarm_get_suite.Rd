@@ -7,7 +7,7 @@
 devicefarm_get_suite(arn)
 }
 \arguments{
-\item{arn}{[required] The suite's ARN.}
+\item{arn}{[required] The suite\'s ARN.}
 }
 \description{
 Gets information about a suite.
@@ -20,10 +20,12 @@ Gets information about a suite.
 }
 
 \examples{
+\dontrun{
 # The following example gets information about a specific test suite.
-\donttest{svc$get_suite(
+svc$get_suite(
   arn = "arn:aws:devicefarm:us-west-2:123456789101:suite:EXAMPLE-GUID-123-456"
-)}
+)
+}
 
 }
 \keyword{internal}

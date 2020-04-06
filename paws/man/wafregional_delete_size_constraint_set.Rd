@@ -14,8 +14,8 @@ by ListSizeConstraintSets.}
 \item{ChangeToken}{[required] The value returned by the most recent call to GetChangeToken.}
 }
 \description{
-Permanently deletes a SizeConstraintSet. You can't delete a
-\code{SizeConstraintSet} if it's still used in any \code{Rules} or if it still
+Permanently deletes a SizeConstraintSet. You can\'t delete a
+\code{SizeConstraintSet} if it\'s still used in any \code{Rules} or if it still
 includes any SizeConstraint objects (any filters).
 }
 \details{
@@ -41,12 +41,14 @@ information, see UpdateSizeConstraintSet.
 }
 
 \examples{
+\dontrun{
 # The following example deletes a size constraint set  with the ID
 # example1ds3t-46da-4fdb-b8d5-abc321j569j5.
-\donttest{svc$delete_size_constraint_set(
+svc$delete_size_constraint_set(
   ChangeToken = "abcd12f2-46da-4fdb-b8d5-fbd4c466928f",
   SizeConstraintSetId = "example1ds3t-46da-4fdb-b8d5-abc321j569j5"
-)}
+)
+}
 
 }
 \keyword{internal}

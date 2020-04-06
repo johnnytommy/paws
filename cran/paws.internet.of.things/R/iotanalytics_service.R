@@ -55,10 +55,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- iotanalytics()
+#' \dontrun{
+#' svc <- iotanalytics()
 #' svc$batch_put_message(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -121,8 +123,7 @@ iotanalytics <- function(config = list()) {
   target_prefix = ""
 )
 
-.iotanalytics$handlers <- new_handlers("restjson", "v4")
-
 .iotanalytics$service <- function(config = list()) {
-  new_service(.iotanalytics$metadata, .iotanalytics$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.iotanalytics$metadata, handlers, config)
 }

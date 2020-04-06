@@ -18,11 +18,11 @@ Otherwise, it is \code{UnauthorizedOperation}.}
 
 \item{Filters}{One or more filters.
 \itemize{
-\item \code{connection-notification-arn} - The ARN of SNS topic for the
+\item \code{connection-notification-arn} - The ARN of the SNS topic for the
 notification.
 \item \code{connection-notification-id} - The ID of the notification.
 \item \code{connection-notification-state} - The state of the notification
-(\code{Enabled} \| \code{Disabled}).
+(\code{Enabled} \\| \code{Disabled}).
 \item \code{connection-notification-type} - The type of notification (\code{Topic}).
 \item \code{service-id} - The ID of the endpoint service.
 \item \code{vpc-endpoint-id} - The ID of the VPC endpoint.

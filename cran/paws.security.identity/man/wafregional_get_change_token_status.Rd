@@ -18,7 +18,7 @@ GetChangeToken. \code{ChangeTokenStatus} is one of the following values:
 \details{
 \itemize{
 \item \code{PROVISIONED}: You requested the change token by calling
-\code{GetChangeToken}, but you haven't used it yet in a call to create,
+\code{GetChangeToken}, but you haven\'t used it yet in a call to create,
 update, or delete an AWS WAF object.
 \item \code{PENDING}: AWS WAF is propagating the create, update, or delete
 request to all AWS WAF servers.
@@ -33,11 +33,13 @@ request to all AWS WAF servers.
 }
 
 \examples{
+\dontrun{
 # The following example returns the status of a change token with the ID
 # abcd12f2-46da-4fdb-b8d5-fbd4c466928f.
-\donttest{svc$get_change_token_status(
+svc$get_change_token_status(
   ChangeToken = "abcd12f2-46da-4fdb-b8d5-fbd4c466928f"
-)}
+)
+}
 
 }
 \keyword{internal}

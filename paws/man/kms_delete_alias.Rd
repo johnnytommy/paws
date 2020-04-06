@@ -7,7 +7,7 @@
 kms_delete_alias(AliasName)
 }
 \arguments{
-\item{AliasName}{[required] The alias to be deleted. The alias name must begin with \code{alias/}
+\item{AliasName}{[required] The alias to be deleted. The alias name must begin with \verb{alias/}
 followed by the alias name, such as \code{alias/ExampleAlias}.}
 }
 \description{
@@ -33,10 +33,12 @@ key (CMK), call UpdateAlias.
 }
 
 \examples{
+\dontrun{
 # The following example deletes the specified alias.
-\donttest{svc$delete_alias(
+svc$delete_alias(
   AliasName = "alias/ExampleAlias"
-)}
+)
+}
 
 }
 \keyword{internal}

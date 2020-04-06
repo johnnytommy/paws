@@ -11,7 +11,7 @@ databasemigrationservice_describe_connections(Filters, MaxRecords,
 \arguments{
 \item{Filters}{The filters applied to the connection.
 
-Valid filter names: endpoint-arn \| replication-instance-arn}
+Valid filter names: endpoint-arn \\| replication-instance-arn}
 
 \item{MaxRecords}{The maximum number of records to include in the response. If more
 records exist than the specified \code{MaxRecords} value, a pagination token
@@ -48,10 +48,11 @@ test an endpoint.
 }
 
 \examples{
+\dontrun{
 # Describes the status of the connections that have been made between the
 # replication instance and an endpoint. Connections are created when you
 # test an endpoint.
-\donttest{svc$describe_connections(
+svc$describe_connections(
   Filters = list(
     list(
       Name = "string",
@@ -63,7 +64,8 @@ test an endpoint.
   ),
   Marker = "",
   MaxRecords = 123L
-)}
+)
+}
 
 }
 \keyword{internal}

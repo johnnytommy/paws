@@ -30,10 +30,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- greengrass()
+#' \dontrun{
+#' svc <- greengrass()
 #' svc$associate_role_to_group(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -58,7 +60,6 @@ NULL
 #'  \link[=greengrass_create_software_update_job]{create_software_update_job} \tab Creates a software update for a core or group of cores (specified as an IoT thing group \cr
 #'  \link[=greengrass_create_subscription_definition]{create_subscription_definition} \tab Creates a subscription definition \cr
 #'  \link[=greengrass_create_subscription_definition_version]{create_subscription_definition_version} \tab Creates a version of a subscription definition which has already been defined \cr
-#'  \link[=greengrass_tag_resource]{tag_resource} \tab Add tags to a resource \cr
 #'  \link[=greengrass_delete_connector_definition]{delete_connector_definition} \tab Deletes a connector definition \cr
 #'  \link[=greengrass_delete_core_definition]{delete_core_definition} \tab Deletes a core definition \cr
 #'  \link[=greengrass_delete_device_definition]{delete_device_definition} \tab Deletes a device definition \cr
@@ -67,7 +68,6 @@ NULL
 #'  \link[=greengrass_delete_logger_definition]{delete_logger_definition} \tab Deletes a logger definition \cr
 #'  \link[=greengrass_delete_resource_definition]{delete_resource_definition} \tab Deletes a resource definition \cr
 #'  \link[=greengrass_delete_subscription_definition]{delete_subscription_definition} \tab Deletes a subscription definition \cr
-#'  \link[=greengrass_untag_resource]{untag_resource} \tab Remove tags with specified keys from a resource \cr
 #'  \link[=greengrass_disassociate_role_from_group]{disassociate_role_from_group} \tab Disassociates the role from a group \cr
 #'  \link[=greengrass_disassociate_service_role_from_account]{disassociate_service_role_from_account} \tab Disassociates the service role from your account \cr
 #'  \link[=greengrass_get_associated_role]{get_associated_role} \tab Retrieves the role associated with a particular group \cr
@@ -95,28 +95,30 @@ NULL
 #'  \link[=greengrass_get_subscription_definition_version]{get_subscription_definition_version} \tab Retrieves information about a subscription definition version \cr
 #'  \link[=greengrass_list_bulk_deployment_detailed_reports]{list_bulk_deployment_detailed_reports} \tab Gets a paginated list of the deployments that have been started in a bulk deployment operation, and their current deployment status \cr
 #'  \link[=greengrass_list_bulk_deployments]{list_bulk_deployments} \tab Returns a list of bulk deployments \cr
-#'  \link[=greengrass_list_connector_definition_versions]{list_connector_definition_versions} \tab Lists the versions of a connector definition, which are containers for connectors \cr
 #'  \link[=greengrass_list_connector_definitions]{list_connector_definitions} \tab Retrieves a list of connector definitions \cr
-#'  \link[=greengrass_list_core_definition_versions]{list_core_definition_versions} \tab Lists the versions of a core definition \cr
+#'  \link[=greengrass_list_connector_definition_versions]{list_connector_definition_versions} \tab Lists the versions of a connector definition, which are containers for connectors \cr
 #'  \link[=greengrass_list_core_definitions]{list_core_definitions} \tab Retrieves a list of core definitions \cr
+#'  \link[=greengrass_list_core_definition_versions]{list_core_definition_versions} \tab Lists the versions of a core definition \cr
 #'  \link[=greengrass_list_deployments]{list_deployments} \tab Returns a history of deployments for the group \cr
-#'  \link[=greengrass_list_device_definition_versions]{list_device_definition_versions} \tab Lists the versions of a device definition \cr
 #'  \link[=greengrass_list_device_definitions]{list_device_definitions} \tab Retrieves a list of device definitions \cr
-#'  \link[=greengrass_list_function_definition_versions]{list_function_definition_versions} \tab Lists the versions of a Lambda function definition \cr
+#'  \link[=greengrass_list_device_definition_versions]{list_device_definition_versions} \tab Lists the versions of a device definition \cr
 #'  \link[=greengrass_list_function_definitions]{list_function_definitions} \tab Retrieves a list of Lambda function definitions \cr
+#'  \link[=greengrass_list_function_definition_versions]{list_function_definition_versions} \tab Lists the versions of a Lambda function definition \cr
 #'  \link[=greengrass_list_group_certificate_authorities]{list_group_certificate_authorities} \tab Retrieves the current CAs for a group \cr
-#'  \link[=greengrass_list_group_versions]{list_group_versions} \tab Lists the versions of a group \cr
 #'  \link[=greengrass_list_groups]{list_groups} \tab Retrieves a list of groups \cr
-#'  \link[=greengrass_list_logger_definition_versions]{list_logger_definition_versions} \tab Lists the versions of a logger definition \cr
+#'  \link[=greengrass_list_group_versions]{list_group_versions} \tab Lists the versions of a group \cr
 #'  \link[=greengrass_list_logger_definitions]{list_logger_definitions} \tab Retrieves a list of logger definitions \cr
-#'  \link[=greengrass_list_resource_definition_versions]{list_resource_definition_versions} \tab Lists the versions of a resource definition \cr
+#'  \link[=greengrass_list_logger_definition_versions]{list_logger_definition_versions} \tab Lists the versions of a logger definition \cr
 #'  \link[=greengrass_list_resource_definitions]{list_resource_definitions} \tab Retrieves a list of resource definitions \cr
-#'  \link[=greengrass_list_subscription_definition_versions]{list_subscription_definition_versions} \tab Lists the versions of a subscription definition \cr
+#'  \link[=greengrass_list_resource_definition_versions]{list_resource_definition_versions} \tab Lists the versions of a resource definition \cr
 #'  \link[=greengrass_list_subscription_definitions]{list_subscription_definitions} \tab Retrieves a list of subscription definitions \cr
-#'  \link[=greengrass_list_tags_for_resource]{list_tags_for_resource} \tab Retrieves the tags for a resource \cr
+#'  \link[=greengrass_list_subscription_definition_versions]{list_subscription_definition_versions} \tab Lists the versions of a subscription definition \cr
+#'  \link[=greengrass_list_tags_for_resource]{list_tags_for_resource} \tab Retrieves a list of resource tags for a resource arn \cr
 #'  \link[=greengrass_reset_deployments]{reset_deployments} \tab Resets a group's deployments \cr
 #'  \link[=greengrass_start_bulk_deployment]{start_bulk_deployment} \tab Deploys multiple groups in one operation \cr
 #'  \link[=greengrass_stop_bulk_deployment]{stop_bulk_deployment} \tab Stops the execution of a bulk deployment \cr
+#'  \link[=greengrass_tag_resource]{tag_resource} \tab Adds tags to a Greengrass resource \cr
+#'  \link[=greengrass_untag_resource]{untag_resource} \tab Remove resource tags from a Greengrass Resource \cr
 #'  \link[=greengrass_update_connectivity_info]{update_connectivity_info} \tab Updates the connectivity information for the core \cr
 #'  \link[=greengrass_update_connector_definition]{update_connector_definition} \tab Updates a connector definition \cr
 #'  \link[=greengrass_update_core_definition]{update_core_definition} \tab Updates a core definition \cr
@@ -152,8 +154,7 @@ greengrass <- function(config = list()) {
   target_prefix = ""
 )
 
-.greengrass$handlers <- new_handlers("restjson", "v4")
-
 .greengrass$service <- function(config = list()) {
-  new_service(.greengrass$metadata, .greengrass$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.greengrass$metadata, handlers, config)
 }

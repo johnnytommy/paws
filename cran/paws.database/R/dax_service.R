@@ -36,10 +36,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- dax()
+#' \dontrun{
+#' svc <- dax()
 #' svc$create_cluster(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -89,8 +91,7 @@ dax <- function(config = list()) {
   target_prefix = "AmazonDAXV3"
 )
 
-.dax$handlers <- new_handlers("jsonrpc", "v4")
-
 .dax$service <- function(config = list()) {
-  new_service(.dax$metadata, .dax$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.dax$metadata, handlers, config)
 }

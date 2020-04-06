@@ -44,10 +44,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- autoscalingplans()
+#' \dontrun{
+#' svc <- autoscalingplans()
 #' svc$create_scaling_plan(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -82,8 +84,7 @@ autoscalingplans <- function(config = list()) {
   target_prefix = "AnyScaleScalingPlannerFrontendService"
 )
 
-.autoscalingplans$handlers <- new_handlers("jsonrpc", "v4")
-
 .autoscalingplans$service <- function(config = list()) {
-  new_service(.autoscalingplans$metadata, .autoscalingplans$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.autoscalingplans$metadata, handlers, config)
 }

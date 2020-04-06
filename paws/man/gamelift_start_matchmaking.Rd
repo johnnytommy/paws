@@ -8,14 +8,14 @@ custom matchmaking rules, and starts a new game for the matched players}
 gamelift_start_matchmaking(TicketId, ConfigurationName, Players)
 }
 \arguments{
-\item{TicketId}{Unique identifier for a matchmaking ticket. If no ticket ID is specified
-here, Amazon GameLift will generate one in the form of a UUID. Use this
-identifier to track the matchmaking ticket status and retrieve match
-results.}
+\item{TicketId}{A unique identifier for a matchmaking ticket. If no ticket ID is
+specified here, Amazon GameLift will generate one in the form of a UUID.
+Use this identifier to track the matchmaking ticket status and retrieve
+match results.}
 
 \item{ConfigurationName}{[required] Name of the matchmaking configuration to use for this request.
-Matchmaking configurations must exist in the same region as this
-request.}
+Matchmaking configurations must exist in the same Region as this
+request. You can use either the configuration name or ARN value.}
 
 \item{Players}{[required] Information on each player to be matched. This information must include
 a player ID, and may contain player attributes and latency data to be
@@ -43,14 +43,14 @@ status set to \code{QUEUED}. Track the status of the ticket to respond as
 needed and acquire game session connection information for successfully
 completed matches.
 
-\strong{Tracking ticket status} \-- A couple of options are available for
+\strong{Tracking ticket status} \\-- A couple of options are available for
 tracking the status of matchmaking requests:
 \itemize{
-\item Polling \-- Call \code{DescribeMatchmaking}. This operation returns the
+\item Polling \\-- Call \code{DescribeMatchmaking}. This operation returns the
 full ticket object, including current status and (for completed
 tickets) game session connection info. We recommend polling no more
 than once every 10 seconds.
-\item Notifications \-- Get event notifications for changes in ticket
+\item Notifications \\-- Get event notifications for changes in ticket
 status using Amazon Simple Notification Service (SNS). Notifications
 are easy to set up (see CreateMatchmakingConfiguration) and
 typically deliver match status changes faster and more efficiently
@@ -60,7 +60,7 @@ notifications (since delivery is not guaranteed) and call
 within 30 seconds.
 }
 
-\strong{Processing a matchmaking request} \-- FlexMatch handles a matchmaking
+\strong{Processing a matchmaking request} \\-- FlexMatch handles a matchmaking
 request as follows:
 \enumerate{
 \item Your client code submits a \code{StartMatchmaking} request for one or

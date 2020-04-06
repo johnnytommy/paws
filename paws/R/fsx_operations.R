@@ -3,6 +3,52 @@
 #' @include fsx_service.R
 NULL
 
+#' Cancels an existing Amazon FSx for Lustre data repository task if that
+#' task is in either the PENDING or EXECUTING state
+#'
+#' Cancels an existing Amazon FSx for Lustre data repository task if that
+#' task is in either the `PENDING` or `EXECUTING` state. When you cancel a
+#' task, Amazon FSx does the following.
+#' 
+#' -   Any files that FSx has already exported are not reverted.
+#' 
+#' -   FSx continues to export any files that are \"in-flight\" when the
+#'     cancel operation is received.
+#' 
+#' -   FSx does not export any files that have not yet been exported.
+#'
+#' @usage
+#' fsx_cancel_data_repository_task(TaskId)
+#'
+#' @param TaskId &#91;required&#93; Specifies the data repository task to cancel.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$cancel_data_repository_task(
+#'   TaskId = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname fsx_cancel_data_repository_task
+fsx_cancel_data_repository_task <- function(TaskId) {
+  op <- new_operation(
+    name = "CancelDataRepositoryTask",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .fsx$cancel_data_repository_task_input(TaskId = TaskId)
+  output <- .fsx$cancel_data_repository_task_output()
+  config <- get_config()
+  svc <- .fsx$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.fsx$operations$cancel_data_repository_task <- fsx_cancel_data_repository_task
+
 #' Creates a backup of an existing Amazon FSx for Windows File Server file
 #' system
 #'
@@ -62,8 +108,9 @@ NULL
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This operation creates a new backup.
-#' \donttest{svc$create_backup(
+#' svc$create_backup(
 #'   FileSystemId = "fs-0498eed5fe91001ec",
 #'   Tags = list(
 #'     list(
@@ -71,7 +118,8 @@ NULL
 #'       Value = "MyBackup"
 #'     )
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -92,6 +140,82 @@ fsx_create_backup <- function(FileSystemId, ClientRequestToken = NULL, Tags = NU
   return(response)
 }
 .fsx$operations$create_backup <- fsx_create_backup
+
+#' Creates an Amazon FSx for Lustre data repository task
+#'
+#' Creates an Amazon FSx for Lustre data repository task. You use data
+#' repository tasks to perform bulk operations between your Amazon FSx file
+#' system and its linked data repository. An example of a data repository
+#' task is exporting any data and metadata changes, including POSIX
+#' metadata, to files, directories, and symbolic links (symlinks) from your
+#' FSx file system to its linked data repository. A
+#' `CreateDataRepositoryTask` operation will fail if a data repository is
+#' not linked to the FSx file system. To learn more about data repository
+#' tasks, see [Using Data Repository
+#' Tasks](https://docs.aws.amazon.com/fsx/latest/LustreGuide/data-repository-tasks.html).
+#' To learn more about linking a data repository to your file system, see
+#' [Step 1: Create Your Amazon FSx for Lustre File
+#' System](https://docs.aws.amazon.com/fsx/latest/LustreGuide/getting-started-step1.html).
+#'
+#' @usage
+#' fsx_create_data_repository_task(Type, Paths, FileSystemId, Report,
+#'   ClientRequestToken, Tags)
+#'
+#' @param Type &#91;required&#93; Specifies the type of data repository task to create.
+#' @param Paths (Optional) The path or paths on the Amazon FSx file system to use when
+#' the data repository task is processed. The default path is the file
+#' system root directory.
+#' @param FileSystemId &#91;required&#93; 
+#' @param Report &#91;required&#93; Defines whether or not Amazon FSx provides a CompletionReport once the
+#' task has completed. A CompletionReport provides a detailed report on the
+#' files that Amazon FSx processed that meet the criteria specified by the
+#' `Scope` parameter.
+#' @param ClientRequestToken 
+#' @param Tags 
+#'
+#' @section Request syntax:
+#' ```
+#' svc$create_data_repository_task(
+#'   Type = "EXPORT_TO_REPOSITORY",
+#'   Paths = list(
+#'     "string"
+#'   ),
+#'   FileSystemId = "string",
+#'   Report = list(
+#'     Enabled = TRUE|FALSE,
+#'     Path = "string",
+#'     Format = "REPORT_CSV_20191124",
+#'     Scope = "FAILED_FILES_ONLY"
+#'   ),
+#'   ClientRequestToken = "string",
+#'   Tags = list(
+#'     list(
+#'       Key = "string",
+#'       Value = "string"
+#'     )
+#'   )
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname fsx_create_data_repository_task
+fsx_create_data_repository_task <- function(Type, Paths = NULL, FileSystemId, Report, ClientRequestToken = NULL, Tags = NULL) {
+  op <- new_operation(
+    name = "CreateDataRepositoryTask",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .fsx$create_data_repository_task_input(Type = Type, Paths = Paths, FileSystemId = FileSystemId, Report = Report, ClientRequestToken = ClientRequestToken, Tags = Tags)
+  output <- .fsx$create_data_repository_task_output()
+  config <- get_config()
+  svc <- .fsx$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.fsx$operations$create_data_repository_task <- fsx_create_data_repository_task
 
 #' Creates a new, empty Amazon FSx file system
 #'
@@ -138,14 +262,20 @@ fsx_create_backup <- function(FileSystemId, ClientRequestToken = NULL, Tags = NU
 #' @param FileSystemType &#91;required&#93; The type of Amazon FSx file system to create.
 #' @param StorageCapacity &#91;required&#93; The storage capacity of the file system being created.
 #' 
-#' For Windows file systems, the storage capacity has a minimum of 300 GiB,
-#' and a maximum of 65,536 GiB.
+#' For Windows file systems, valid values are 32 GiB - 65,536 GiB.
 #' 
-#' For Lustre file systems, the storage capacity has a minimum of 3,600
-#' GiB. Storage capacity is provisioned in increments of 3,600 GiB.
-#' @param SubnetIds &#91;required&#93; The IDs of the subnets that the file system will be accessible from.
-#' File systems support only one subnet. The file server is also launched
-#' in that subnet\'s Availability Zone.
+#' For Lustre file systems, valid values are 1,200, 2,400, 3,600, then
+#' continuing in increments of 3600 GiB.
+#' @param SubnetIds &#91;required&#93; Specifies the IDs of the subnets that the file system will be accessible
+#' from. For Windows `MULTI_AZ_1` file system deployment types, provide
+#' exactly two subnet IDs, one for the preferred file server and one for
+#' the standy file server. You specify one of these subnets as the
+#' preferred subnet using the `WindowsConfiguration &gt; PreferredSubnetID`
+#' property.
+#' 
+#' For Windows `SINGLE_AZ_1` file system deployment types and Lustre file
+#' systems, provide exactly one subnet ID. The file server is launched in
+#' that subnet\'s Availability Zone.
 #' @param SecurityGroupIds A list of IDs specifying the security groups to apply to all network
 #' interfaces created for file system access. This list isn\'t returned in
 #' later requests to describe the file system.
@@ -187,6 +317,8 @@ fsx_create_backup <- function(FileSystemId, ClientRequestToken = NULL, Tags = NU
 #'         "string"
 #'       )
 #'     ),
+#'     DeploymentType = "MULTI_AZ_1"|"SINGLE_AZ_1",
+#'     PreferredSubnetId = "string",
 #'     ThroughputCapacity = 123,
 #'     WeeklyMaintenanceStartTime = "string",
 #'     DailyAutomaticBackupStartTime = "string",
@@ -203,8 +335,9 @@ fsx_create_backup <- function(FileSystemId, ClientRequestToken = NULL, Tags = NU
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This operation creates a new file system.
-#' \donttest{svc$create_file_system(
+#' svc$create_file_system(
 #'   ClientRequestToken = "a8ca07e4-61ec-4399-99f4-19853801bcd5",
 #'   FileSystemType = "WINDOWS",
 #'   KmsKeyId = "arn:aws:kms:us-east-1:012345678912:key/0ff3ea8d-130e-4133-877f-93908b6fdbd6",
@@ -228,7 +361,8 @@ fsx_create_backup <- function(FileSystemId, ClientRequestToken = NULL, Tags = NU
 #'     ThroughputCapacity = 8L,
 #'     WeeklyMaintenanceStartTime = "1:05:00"
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -337,6 +471,8 @@ fsx_create_file_system <- function(ClientRequestToken = NULL, FileSystemType, St
 #'         "string"
 #'       )
 #'     ),
+#'     DeploymentType = "MULTI_AZ_1"|"SINGLE_AZ_1",
+#'     PreferredSubnetId = "string",
 #'     ThroughputCapacity = 123,
 #'     WeeklyMaintenanceStartTime = "string",
 #'     DailyAutomaticBackupStartTime = "string",
@@ -347,8 +483,9 @@ fsx_create_file_system <- function(ClientRequestToken = NULL, FileSystemType, St
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This operation creates a new file system from backup.
-#' \donttest{svc$create_file_system_from_backup(
+#' svc$create_file_system_from_backup(
 #'   BackupId = "backup-03e3c82e0183b7b6b",
 #'   ClientRequestToken = "f4c94ed7-238d-4c46-93db-48cd62ec33b7",
 #'   SecurityGroupIds = list(
@@ -366,7 +503,8 @@ fsx_create_file_system <- function(ClientRequestToken = NULL, FileSystemType, St
 #'   WindowsConfiguration = list(
 #'     ThroughputCapacity = 8L
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -418,10 +556,12 @@ fsx_create_file_system_from_backup <- function(BackupId, ClientRequestToken = NU
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This operation deletes an Amazon FSx file system backup.
-#' \donttest{svc$delete_backup(
+#' svc$delete_backup(
 #'   BackupId = "backup-03e3c82e0183b7b6b"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -461,6 +601,10 @@ fsx_delete_backup <- function(BackupId, ClientRequestToken = NULL) {
 #' file system, the DescribeFileSystems returns a `FileSystemNotFound`
 #' error.
 #' 
+#' Deleting an Amazon FSx for Lustre file system will fail with a 400
+#' BadRequest if a data repository task is in a `PENDING` or `EXECUTING`
+#' state.
+#' 
 #' The data in a deleted file system is also deleted and can\'t be
 #' recovered by any means.
 #'
@@ -492,10 +636,12 @@ fsx_delete_backup <- function(BackupId, ClientRequestToken = NULL) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This operation deletes an Amazon FSx file system.
-#' \donttest{svc$delete_file_system(
+#' svc$delete_file_system(
 #'   FileSystemId = "fs-0498eed5fe91001ec"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -583,8 +729,10 @@ fsx_delete_file_system <- function(FileSystemId, ClientRequestToken = NULL, Wind
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This operation describes all of the Amazon FSx backups in an account.
-#' \donttest{svc$describe_backups()}
+#' svc$describe_backups()
+#' }
 #'
 #' @keywords internal
 #'
@@ -605,6 +753,76 @@ fsx_describe_backups <- function(BackupIds = NULL, Filters = NULL, MaxResults = 
   return(response)
 }
 .fsx$operations$describe_backups <- fsx_describe_backups
+
+#' Returns the description of specific Amazon FSx for Lustre data
+#' repository tasks, if one or more TaskIds values are provided in the
+#' request, or if filters are used in the request
+#'
+#' Returns the description of specific Amazon FSx for Lustre data
+#' repository tasks, if one or more `TaskIds` values are provided in the
+#' request, or if filters are used in the request. You can use filters to
+#' narrow the response to include just tasks for specific file systems, or
+#' tasks in a specific lifecycle state. Otherwise, it returns all data
+#' repository tasks owned by your AWS account in the AWS Region of the
+#' endpoint that you\'re calling.
+#' 
+#' When retrieving all tasks, you can paginate the response by using the
+#' optional `MaxResults` parameter to limit the number of tasks returned in
+#' a response. If more tasks remain, Amazon FSx returns a `NextToken` value
+#' in the response. In this case, send a later request with the `NextToken`
+#' request parameter set to the value of `NextToken` from the last
+#' response.
+#'
+#' @usage
+#' fsx_describe_data_repository_tasks(TaskIds, Filters, MaxResults,
+#'   NextToken)
+#'
+#' @param TaskIds (Optional) IDs of the tasks whose descriptions you want to retrieve
+#' (String).
+#' @param Filters (Optional) You can use filters to narrow the
+#' `DescribeDataRepositoryTasks` response to include just tasks for
+#' specific file systems, or tasks in a specific lifecycle state.
+#' @param MaxResults 
+#' @param NextToken 
+#'
+#' @section Request syntax:
+#' ```
+#' svc$describe_data_repository_tasks(
+#'   TaskIds = list(
+#'     "string"
+#'   ),
+#'   Filters = list(
+#'     list(
+#'       Name = "file-system-id"|"task-lifecycle",
+#'       Values = list(
+#'         "string"
+#'       )
+#'     )
+#'   ),
+#'   MaxResults = 123,
+#'   NextToken = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname fsx_describe_data_repository_tasks
+fsx_describe_data_repository_tasks <- function(TaskIds = NULL, Filters = NULL, MaxResults = NULL, NextToken = NULL) {
+  op <- new_operation(
+    name = "DescribeDataRepositoryTasks",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .fsx$describe_data_repository_tasks_input(TaskIds = TaskIds, Filters = Filters, MaxResults = MaxResults, NextToken = NextToken)
+  output <- .fsx$describe_data_repository_tasks_output()
+  config <- get_config()
+  svc <- .fsx$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.fsx$operations$describe_data_repository_tasks <- fsx_describe_data_repository_tasks
 
 #' Returns the description of specific Amazon FSx file systems, if a
 #' FileSystemIds value is provided for that file system
@@ -662,9 +880,11 @@ fsx_describe_backups <- function(BackupIds = NULL, Filters = NULL, MaxResults = 
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This operation describes all of the Amazon FSx file systems in an
 #' # account.
-#' \donttest{svc$describe_file_systems()}
+#' svc$describe_file_systems()
+#' }
 #'
 #' @keywords internal
 #'
@@ -736,10 +956,12 @@ fsx_describe_file_systems <- function(FileSystemIds = NULL, MaxResults = NULL, N
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This operation lists tags for an Amazon FSx resource.
-#' \donttest{svc$list_tags_for_resource(
+#' svc$list_tags_for_resource(
 #'   ResourceARN = "arn:aws:fsx:us-east-1:012345678912:file-system/fs-0498eed5fe91001ec"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -787,8 +1009,9 @@ fsx_list_tags_for_resource <- function(ResourceARN, MaxResults = NULL, NextToken
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This operation tags an Amazon FSx resource.
-#' \donttest{svc$tag_resource(
+#' svc$tag_resource(
 #'   ResourceARN = "arn:aws:fsx:us-east-1:012345678912:file-system/fs-0498eed5fe91001ec",
 #'   Tags = list(
 #'     list(
@@ -796,7 +1019,8 @@ fsx_list_tags_for_resource <- function(ResourceARN, MaxResults = NULL, NextToken
 #'       Value = "MyFileSystem"
 #'     )
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -840,13 +1064,15 @@ fsx_tag_resource <- function(ResourceARN, Tags) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This operation untags an Amazon FSx resource.
-#' \donttest{svc$untag_resource(
+#' svc$untag_resource(
 #'   ResourceARN = "arn:aws:fsx:us-east-1:012345678912:file-system/fs-0498eed5fe91001ec",
 #'   TagKeys = list(
 #'     "Name"
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -910,15 +1136,17 @@ fsx_untag_resource <- function(ResourceARN, TagKeys) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This operation updates an existing file system.
-#' \donttest{svc$update_file_system(
+#' svc$update_file_system(
 #'   FileSystemId = "fs-0498eed5fe91001ec",
 #'   WindowsConfiguration = list(
 #'     AutomaticBackupRetentionDays = 10L,
 #'     DailyAutomaticBackupStartTime = "06:00",
 #'     WeeklyMaintenanceStartTime = "3:06:00"
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'

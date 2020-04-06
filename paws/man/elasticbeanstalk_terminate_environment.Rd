@@ -34,7 +34,7 @@ For more information, see the \href{https://docs.aws.amazon.com/elasticbeanstalk
 
 Default: \code{true}
 
-Valid Values: \code{true} \| \code{false}}
+Valid Values: \code{true} \\| \code{false}}
 
 \item{ForceTerminate}{Terminates the target environment even if another environment in the
 same group is dependent on it.}
@@ -53,11 +53,13 @@ Terminates the specified environment.
 }
 
 \examples{
+\dontrun{
 # The following operation terminates an Elastic Beanstalk environment
 # named my-env:
-\donttest{svc$terminate_environment(
+svc$terminate_environment(
   EnvironmentName = "my-env"
-)}
+)
+}
 
 }
 \keyword{internal}

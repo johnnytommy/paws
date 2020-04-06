@@ -18,8 +18,8 @@ in the next request.}
 will return. The default is 10.}
 
 \item{nameContains}{Substring to match in bot names. A bot will be returned if any part of
-its name matches the substring. For example, "xyz" matches both
-"xyzabc" and "abcxyz."}
+its name matches the substring. For example, \"xyz\" matches both
+\"xyzabc\" and \"abcxyz.\"}
 }
 \description{
 Returns bot information as follows:
@@ -27,10 +27,10 @@ Returns bot information as follows:
 \details{
 \itemize{
 \item If you provide the \code{nameContains} field, the response includes
-information for the \code{$LATEST} version of all bots whose name
+information for the \verb{$LATEST} version of all bots whose name
 contains the specified string.
-\item If you don't specify the \code{nameContains} field, the operation
-returns information about the \code{$LATEST} version of all of your bots.
+\item If you don\'t specify the \code{nameContains} field, the operation
+returns information about the \verb{$LATEST} version of all of your bots.
 }
 
 This operation requires permission for the \code{lex:GetBots} action.
@@ -45,11 +45,13 @@ This operation requires permission for the \code{lex:GetBots} action.
 }
 
 \examples{
+\dontrun{
 # This example shows how to get a list of all of the bots in your account.
-\donttest{svc$get_bots(
+svc$get_bots(
   maxResults = 5L,
   nextToken = ""
-)}
+)
+}
 
 }
 \keyword{internal}

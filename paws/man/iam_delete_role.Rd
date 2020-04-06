@@ -11,7 +11,7 @@ iam_delete_role(RoleName)
 
 This parameter allows (through its \href{http://wikipedia.org/wiki/regex}{regex pattern}) a string of characters
 consisting of upper and lowercase alphanumeric characters with no
-spaces. You can also include any of the following characters: \_+=,.@-}
+spaces. You can also include any of the following characters: \\_+=,.@-}
 }
 \description{
 Deletes the specified role. The role must not have any policies
@@ -31,10 +31,12 @@ running on the instance.
 }
 
 \examples{
+\dontrun{
 # The following command removes the role named Test-Role.
-\donttest{svc$delete_role(
+svc$delete_role(
   RoleName = "Test-Role"
-)}
+)
+}
 
 }
 \keyword{internal}

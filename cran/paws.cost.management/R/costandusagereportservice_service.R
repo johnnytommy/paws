@@ -43,17 +43,20 @@ NULL
 #' ```
 #'
 #' @examples
+#' \dontrun{
+#' svc <- costandusagereportservice()
 #' # The following example deletes the AWS Cost and Usage report named
 #' # ExampleReport.
-#' \donttest{svc <- costandusagereportservice()
 #' svc$delete_report_definition(
 #'   ReportName = "ExampleReport"
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
 #'  \link[=costandusagereportservice_delete_report_definition]{delete_report_definition} \tab Deletes the specified report \cr
 #'  \link[=costandusagereportservice_describe_report_definitions]{describe_report_definitions} \tab Lists the AWS Cost and Usage reports available to this account\cr
+#'  \link[=costandusagereportservice_modify_report_definition]{modify_report_definition} \tab Allows you to programatically update your report preferences \cr
 #'  \link[=costandusagereportservice_put_report_definition]{put_report_definition} \tab Creates a new report using the description that you provide 
 #' }
 #'
@@ -80,8 +83,7 @@ costandusagereportservice <- function(config = list()) {
   target_prefix = "AWSOrigamiServiceGatewayService"
 )
 
-.costandusagereportservice$handlers <- new_handlers("jsonrpc", "v4")
-
 .costandusagereportservice$service <- function(config = list()) {
-  new_service(.costandusagereportservice$metadata, .costandusagereportservice$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.costandusagereportservice$metadata, handlers, config)
 }

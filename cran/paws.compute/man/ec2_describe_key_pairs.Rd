@@ -4,7 +4,7 @@
 \alias{ec2_describe_key_pairs}
 \title{Describes the specified key pairs or all of your key pairs}
 \usage{
-ec2_describe_key_pairs(Filters, KeyNames, DryRun)
+ec2_describe_key_pairs(Filters, KeyNames, KeyPairIds, DryRun)
 }
 \arguments{
 \item{Filters}{The filters.
@@ -16,6 +16,8 @@ ec2_describe_key_pairs(Filters, KeyNames, DryRun)
 \item{KeyNames}{The key pair names.
 
 Default: Describes all your key pairs.}
+
+\item{KeyPairIds}{The IDs of the key pairs.}
 
 \item{DryRun}{Checks whether you have the required permissions for the action, without
 actually making the request, and provides an error response. If you have
@@ -42,18 +44,23 @@ in the \emph{Amazon Elastic Compute Cloud User Guide}.
   KeyNames = list(
     "string"
   ),
+  KeyPairIds = list(
+    "string"
+  ),
   DryRun = TRUE|FALSE
 )
 }
 }
 
 \examples{
+\dontrun{
 # This example displays the fingerprint for the specified key.
-\donttest{svc$describe_key_pairs(
+svc$describe_key_pairs(
   KeyNames = list(
     "my-key-pair"
   )
-)}
+)
+}
 
 }
 \keyword{internal}

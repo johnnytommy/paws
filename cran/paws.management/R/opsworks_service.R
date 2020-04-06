@@ -113,10 +113,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- opsworks()
+#' \dontrun{
+#' svc <- opsworks()
 #' svc$assign_instance(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -158,8 +160,8 @@ NULL
 #'  \link[=opsworks_describe_rds_db_instances]{describe_rds_db_instances} \tab Describes Amazon RDS instances \cr
 #'  \link[=opsworks_describe_service_errors]{describe_service_errors} \tab Describes AWS OpsWorks Stacks service errors \cr
 #'  \link[=opsworks_describe_stack_provisioning_parameters]{describe_stack_provisioning_parameters} \tab Requests a description of a stack's provisioning parameters \cr
-#'  \link[=opsworks_describe_stack_summary]{describe_stack_summary} \tab Describes the number of layers and apps in a specified stack, and the number of instances in each state, such as running_setup or online\cr
 #'  \link[=opsworks_describe_stacks]{describe_stacks} \tab Requests a description of one or more stacks \cr
+#'  \link[=opsworks_describe_stack_summary]{describe_stack_summary} \tab Describes the number of layers and apps in a specified stack, and the number of instances in each state, such as running_setup or online\cr
 #'  \link[=opsworks_describe_time_based_auto_scaling]{describe_time_based_auto_scaling} \tab Describes time-based auto scaling configurations for specified instances \cr
 #'  \link[=opsworks_describe_user_profiles]{describe_user_profiles} \tab Describe specified users \cr
 #'  \link[=opsworks_describe_volumes]{describe_volumes} \tab Describes an instance's Amazon EBS volumes \cr
@@ -219,8 +221,7 @@ opsworks <- function(config = list()) {
   target_prefix = "OpsWorks_20130218"
 )
 
-.opsworks$handlers <- new_handlers("jsonrpc", "v4")
-
 .opsworks$service <- function(config = list()) {
-  new_service(.opsworks$metadata, .opsworks$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.opsworks$metadata, handlers, config)
 }

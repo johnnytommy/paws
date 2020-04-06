@@ -4,10 +4,10 @@
 NULL
 
 #' Adds the specified SSL server certificate to the certificate list for
-#' the specified HTTPS listener
+#' the specified HTTPS or TLS listener
 #'
 #' Adds the specified SSL server certificate to the certificate list for
-#' the specified HTTPS listener.
+#' the specified HTTPS or TLS listener.
 #' 
 #' If the certificate in already in the certificate list, the call is
 #' successful but the certificate is not added again.
@@ -95,8 +95,9 @@ elbv2_add_listener_certificates <- function(ListenerArn, Certificates) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example adds the specified tags to the specified load balancer.
-#' \donttest{svc$add_tags(
+#' svc$add_tags(
 #'   ResourceArns = list(
 #'     "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-load-balancer/5..."
 #'   ),
@@ -110,7 +111,8 @@ elbv2_add_listener_certificates <- function(ListenerArn, Certificates) {
 #'       Value = "digital-media"
 #'     )
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -176,10 +178,10 @@ elbv2_add_tags <- function(ResourceArns, Tags) {
 #' @param DefaultActions &#91;required&#93; The actions for the default rule. The rule must include one forward
 #' action or one or more fixed-response actions.
 #' 
-#' If the action type is `forward`, you specify a target group. The
-#' protocol of the target group must be HTTP or HTTPS for an Application
-#' Load Balancer. The protocol of the target group must be TCP, TLS, UDP,
-#' or TCP\\_UDP for a Network Load Balancer.
+#' If the action type is `forward`, you specify one or more target groups.
+#' The protocol of the target group must be HTTP or HTTPS for an
+#' Application Load Balancer. The protocol of the target group must be TCP,
+#' TLS, UDP, or TCP\\_UDP for a Network Load Balancer.
 #' 
 #' \[HTTPS listeners\] If the action type is `authenticate-oidc`, you
 #' authenticate users through an identity provider that is OpenID Connect
@@ -252,6 +254,18 @@ elbv2_add_tags <- function(ResourceArns, Tags) {
 #'         MessageBody = "string",
 #'         StatusCode = "string",
 #'         ContentType = "string"
+#'       ),
+#'       ForwardConfig = list(
+#'         TargetGroups = list(
+#'           list(
+#'             TargetGroupArn = "string",
+#'             Weight = 123
+#'           )
+#'         ),
+#'         TargetGroupStickinessConfig = list(
+#'           Enabled = TRUE|FALSE,
+#'           DurationSeconds = 123
+#'         )
 #'       )
 #'     )
 #'   )
@@ -259,9 +273,10 @@ elbv2_add_tags <- function(ResourceArns, Tags) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example creates an HTTP listener for the specified load balancer
 #' # that forwards requests to the specified target group.
-#' \donttest{svc$create_listener(
+#' svc$create_listener(
 #'   DefaultActions = list(
 #'     list(
 #'       TargetGroupArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-t...",
@@ -271,7 +286,7 @@ elbv2_add_tags <- function(ResourceArns, Tags) {
 #'   LoadBalancerArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my...",
 #'   Port = 80L,
 #'   Protocol = "HTTP"
-#' )}
+#' )
 #' 
 #' # This example creates an HTTPS listener for the specified load balancer
 #' # that forwards requests to the specified target group. Note that you must
@@ -280,7 +295,7 @@ elbv2_add_tags <- function(ResourceArns, Tags) {
 #' # you can create a certificate using SSL/TLS tools, get the certificate
 #' # signed by a certificate authority (CA), and upload the certificate to
 #' # AWS Identity and Access Management (IAM).
-#' \donttest{svc$create_listener(
+#' svc$create_listener(
 #'   Certificates = list(
 #'     list(
 #'       CertificateArn = "arn:aws:iam::123456789012:server-certificate/my-server-cert"
@@ -296,7 +311,8 @@ elbv2_add_tags <- function(ResourceArns, Tags) {
 #'   Port = 443L,
 #'   Protocol = "HTTPS",
 #'   SslPolicy = "ELBSecurityPolicy-2015-05"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -374,7 +390,10 @@ elbv2_create_listener <- function(LoadBalancerArn, Protocol, Port, SslPolicy = N
 #' subnets.
 #' 
 #' \[Network Load Balancers\] You can specify subnets from one or more
-#' Availability Zones. You can specify one Elastic IP address per subnet.
+#' Availability Zones. You can specify one Elastic IP address per subnet if
+#' you need static IP addresses for your internet-facing load balancer. For
+#' internal load balancers, you can specify one private IP address per
+#' subnet from the IPv4 range of the subnet.
 #' @param SecurityGroups \[Application Load Balancers\] The IDs of the security groups for the
 #' load balancer.
 #' @param Scheme The nodes of an Internet-facing load balancer have public IP addresses.
@@ -385,7 +404,7 @@ elbv2_create_listener <- function(LoadBalancerArn, Protocol, Port, SslPolicy = N
 #' The nodes of an internal load balancer have only private IP addresses.
 #' The DNS name of an internal load balancer is publicly resolvable to the
 #' private IP addresses of the nodes. Therefore, internal load balancers
-#' can only route requests from clients with access to the VPC for the load
+#' can route requests only from clients with access to the VPC for the load
 #' balancer.
 #' 
 #' The default is an Internet-facing load balancer.
@@ -406,7 +425,8 @@ elbv2_create_listener <- function(LoadBalancerArn, Protocol, Port, SslPolicy = N
 #'   SubnetMappings = list(
 #'     list(
 #'       SubnetId = "string",
-#'       AllocationId = "string"
+#'       AllocationId = "string",
+#'       PrivateIPv4Address = "string"
 #'     )
 #'   ),
 #'   SecurityGroups = list(
@@ -425,19 +445,20 @@ elbv2_create_listener <- function(LoadBalancerArn, Protocol, Port, SslPolicy = N
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example creates an Internet-facing load balancer and enables the
 #' # Availability Zones for the specified subnets.
-#' \donttest{svc$create_load_balancer(
+#' svc$create_load_balancer(
 #'   Name = "my-load-balancer",
 #'   Subnets = list(
 #'     "subnet-b7d581c0",
 #'     "subnet-8360a9e7"
 #'   )
-#' )}
+#' )
 #' 
 #' # This example creates an internal load balancer and enables the
 #' # Availability Zones for the specified subnets.
-#' \donttest{svc$create_load_balancer(
+#' svc$create_load_balancer(
 #'   Name = "my-internal-load-balancer",
 #'   Scheme = "internal",
 #'   SecurityGroups = list(),
@@ -445,7 +466,8 @@ elbv2_create_listener <- function(LoadBalancerArn, Protocol, Port, SslPolicy = N
 #'     "subnet-b7d581c0",
 #'     "subnet-8360a9e7"
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -494,12 +516,13 @@ elbv2_create_load_balancer <- function(Name, Subnets = NULL, SubnetMappings = NU
 #' @param Priority &#91;required&#93; The rule priority. A listener can\'t have multiple rules with the same
 #' priority.
 #' @param Actions &#91;required&#93; The actions. Each rule must include exactly one of the following types
-#' of actions: `forward`, `fixed-response`, or `redirect`.
+#' of actions: `forward`, `fixed-response`, or `redirect`, and it must be
+#' the last action to be performed.
 #' 
-#' If the action type is `forward`, you specify a target group. The
-#' protocol of the target group must be HTTP or HTTPS for an Application
-#' Load Balancer. The protocol of the target group must be TCP, TLS, UDP,
-#' or TCP\\_UDP for a Network Load Balancer.
+#' If the action type is `forward`, you specify one or more target groups.
+#' The protocol of the target group must be HTTP or HTTPS for an
+#' Application Load Balancer. The protocol of the target group must be TCP,
+#' TLS, UDP, or TCP\\_UDP for a Network Load Balancer.
 #' 
 #' \[HTTPS listeners\] If the action type is `authenticate-oidc`, you
 #' authenticate users through an identity provider that is OpenID Connect
@@ -606,6 +629,18 @@ elbv2_create_load_balancer <- function(Name, Subnets = NULL, SubnetMappings = NU
 #'         MessageBody = "string",
 #'         StatusCode = "string",
 #'         ContentType = "string"
+#'       ),
+#'       ForwardConfig = list(
+#'         TargetGroups = list(
+#'           list(
+#'             TargetGroupArn = "string",
+#'             Weight = 123
+#'           )
+#'         ),
+#'         TargetGroupStickinessConfig = list(
+#'           Enabled = TRUE|FALSE,
+#'           DurationSeconds = 123
+#'         )
 #'       )
 #'     )
 #'   )
@@ -613,10 +648,11 @@ elbv2_create_load_balancer <- function(Name, Subnets = NULL, SubnetMappings = NU
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example creates a rule that forwards requests to the specified
 #' # target group if the URL contains the specified pattern (for example,
 #' # /img/*).
-#' \donttest{svc$create_rule(
+#' svc$create_rule(
 #'   Actions = list(
 #'     list(
 #'       TargetGroupArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-t...",
@@ -633,7 +669,8 @@ elbv2_create_load_balancer <- function(Name, Subnets = NULL, SubnetMappings = NU
 #'   ),
 #'   ListenerArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:listener/app/my-load-ba...",
 #'   Priority = 10L
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -700,7 +737,8 @@ elbv2_create_rule <- function(ListenerArn, Conditions, Priority, Actions) {
 #' you specify a port override when registering the target. If the target
 #' is a Lambda function, this parameter does not apply.
 #' @param VpcId The identifier of the virtual private cloud (VPC). If the target is a
-#' Lambda function, this parameter does not apply.
+#' Lambda function, this parameter does not apply. Otherwise, this
+#' parameter is required.
 #' @param HealthCheckProtocol The protocol the load balancer uses when performing health checks on
 #' targets. For Application Load Balancers, the default is HTTP. For
 #' Network Load Balancers, the default is TCP. The TCP protocol is
@@ -778,15 +816,17 @@ elbv2_create_rule <- function(ListenerArn, Conditions, Priority, Actions) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example creates a target group that you can use to route traffic to
 #' # targets using HTTP on port 80. This target group uses the default health
 #' # check configuration.
-#' \donttest{svc$create_target_group(
+#' svc$create_target_group(
 #'   Name = "my-targets",
 #'   Port = 80L,
 #'   Protocol = "HTTP",
 #'   VpcId = "vpc-3ac0fb5f"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -828,10 +868,12 @@ elbv2_create_target_group <- function(Name, Protocol = NULL, Port = NULL, VpcId 
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example deletes the specified listener.
-#' \donttest{svc$delete_listener(
+#' svc$delete_listener(
 #'   ListenerArn = "arn:aws:elasticloadbalancing:ua-west-2:123456789012:listener/app/my-load-ba..."
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -881,10 +923,12 @@ elbv2_delete_listener <- function(ListenerArn) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example deletes the specified load balancer.
-#' \donttest{svc$delete_load_balancer(
+#' svc$delete_load_balancer(
 #'   LoadBalancerArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my..."
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -923,10 +967,12 @@ elbv2_delete_load_balancer <- function(LoadBalancerArn) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example deletes the specified rule.
-#' \donttest{svc$delete_rule(
+#' svc$delete_rule(
 #'   RuleArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:listener-rule/app/my-load-b..."
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -968,10 +1014,12 @@ elbv2_delete_rule <- function(RuleArn) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example deletes the specified target group.
-#' \donttest{svc$delete_target_group(
+#' svc$delete_target_group(
 #'   TargetGroupArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-targe..."
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1022,16 +1070,18 @@ elbv2_delete_target_group <- function(TargetGroupArn) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example deregisters the specified instance from the specified
 #' # target group.
-#' \donttest{svc$deregister_targets(
+#' svc$deregister_targets(
 #'   TargetGroupArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-targe...",
 #'   Targets = list(
 #'     list(
 #'       Id = "i-0f76fade"
 #'     )
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1102,10 +1152,10 @@ elbv2_describe_account_limits <- function(Marker = NULL, PageSize = NULL) {
 .elbv2$operations$describe_account_limits <- elbv2_describe_account_limits
 
 #' Describes the default certificate and the certificate list for the
-#' specified HTTPS listener
+#' specified HTTPS or TLS listener
 #'
 #' Describes the default certificate and the certificate list for the
-#' specified HTTPS listener.
+#' specified HTTPS or TLS listener.
 #' 
 #' If the default certificate is also in the certificate list, it appears
 #' twice in the results (once with `IsDefault` set to true and once with
@@ -1186,12 +1236,14 @@ elbv2_describe_listener_certificates <- function(ListenerArn, Marker = NULL, Pag
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example describes the specified listener.
-#' \donttest{svc$describe_listeners(
+#' svc$describe_listeners(
 #'   ListenerArns = list(
 #'     "arn:aws:elasticloadbalancing:us-west-2:123456789012:listener/app/my-load-balancer/50dc6..."
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1238,10 +1290,12 @@ elbv2_describe_listeners <- function(LoadBalancerArn = NULL, ListenerArns = NULL
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example describes the attributes of the specified load balancer.
-#' \donttest{svc$describe_load_balancer_attributes(
+#' svc$describe_load_balancer_attributes(
 #'   LoadBalancerArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my..."
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1296,12 +1350,14 @@ elbv2_describe_load_balancer_attributes <- function(LoadBalancerArn) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example describes the specified load balancer.
-#' \donttest{svc$describe_load_balancers(
+#' svc$describe_load_balancers(
 #'   LoadBalancerArns = list(
 #'     "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-load-balancer/5..."
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1350,12 +1406,14 @@ elbv2_describe_load_balancers <- function(LoadBalancerArns = NULL, Names = NULL,
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example describes the specified rule.
-#' \donttest{svc$describe_rules(
+#' svc$describe_rules(
 #'   RuleArns = list(
 #'     "arn:aws:elasticloadbalancing:us-west-2:123456789012:listener-rule/app/my-load-balancer/..."
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1407,12 +1465,14 @@ elbv2_describe_rules <- function(ListenerArn = NULL, RuleArns = NULL, Marker = N
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example describes the specified policy used for SSL negotiation.
-#' \donttest{svc$describe_ssl_policies(
+#' svc$describe_ssl_policies(
 #'   Names = list(
 #'     "ELBSecurityPolicy-2015-05"
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1455,12 +1515,14 @@ elbv2_describe_ssl_policies <- function(Names = NULL, Marker = NULL, PageSize = 
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example describes the tags assigned to the specified load balancer.
-#' \donttest{svc$describe_tags(
+#' svc$describe_tags(
 #'   ResourceArns = list(
 #'     "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-load-balancer/5..."
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1505,10 +1567,12 @@ elbv2_describe_tags <- function(ResourceArns) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example describes the attributes of the specified target group.
-#' \donttest{svc$describe_target_group_attributes(
+#' svc$describe_target_group_attributes(
 #'   TargetGroupArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-targe..."
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1569,12 +1633,14 @@ elbv2_describe_target_group_attributes <- function(TargetGroupArn) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example describes the specified target group.
-#' \donttest{svc$describe_target_groups(
+#' svc$describe_target_groups(
 #'   TargetGroupArns = list(
 #'     "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-targets/73e2d6bc24d8..."
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1621,16 +1687,17 @@ elbv2_describe_target_groups <- function(LoadBalancerArn = NULL, TargetGroupArns
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example describes the health of the targets for the specified
 #' # target group. One target is healthy but the other is not specified in an
 #' # action, so it can't receive traffic from the load balancer.
-#' \donttest{svc$describe_target_health(
+#' svc$describe_target_health(
 #'   TargetGroupArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-targe..."
-#' )}
+#' )
 #' 
 #' # This example describes the health of the specified target. This target
 #' # is healthy.
-#' \donttest{svc$describe_target_health(
+#' svc$describe_target_health(
 #'   TargetGroupArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-targe...",
 #'   Targets = list(
 #'     list(
@@ -1638,7 +1705,8 @@ elbv2_describe_target_groups <- function(LoadBalancerArn = NULL, TargetGroupArns
 #'       Port = 80L
 #'     )
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1660,15 +1728,19 @@ elbv2_describe_target_health <- function(TargetGroupArn, Targets = NULL) {
 }
 .elbv2$operations$describe_target_health <- elbv2_describe_target_health
 
-#' Modifies the specified properties of the specified listener
+#' Replaces the specified properties of the specified listener
 #'
-#' Modifies the specified properties of the specified listener.
+#' Replaces the specified properties of the specified listener. Any
+#' properties that you do not specify remain unchanged.
 #' 
-#' Any properties that you do not specify retain their current values.
-#' However, changing the protocol from HTTPS to HTTP, or from TLS to TCP,
-#' removes the security policy and default certificate properties. If you
-#' change the protocol from HTTP to HTTPS, or from TCP to TLS, you must add
-#' the security policy and default certificate properties.
+#' Changing the protocol from HTTPS to HTTP, or from TLS to TCP, removes
+#' the security policy and default certificate properties. If you change
+#' the protocol from HTTP to HTTPS, or from TCP to TLS, you must add the
+#' security policy and default certificate properties.
+#' 
+#' To add an item to a list, remove an item from a list, or update an item
+#' in a list, you must provide the entire list. For example, to add an
+#' action, specify a list with the current actions plus the new action.
 #'
 #' @usage
 #' elbv2_modify_listener(ListenerArn, Port, Protocol, SslPolicy,
@@ -1691,10 +1763,10 @@ elbv2_describe_target_health <- function(TargetGroupArn, Targets = NULL) {
 #' @param DefaultActions The actions for the default rule. The rule must include one forward
 #' action or one or more fixed-response actions.
 #' 
-#' If the action type is `forward`, you specify a target group. The
-#' protocol of the target group must be HTTP or HTTPS for an Application
-#' Load Balancer. The protocol of the target group must be TCP, TLS, UDP,
-#' or TCP\\_UDP for a Network Load Balancer.
+#' If the action type is `forward`, you specify one or more target groups.
+#' The protocol of the target group must be HTTP or HTTPS for an
+#' Application Load Balancer. The protocol of the target group must be TCP,
+#' TLS, UDP, or TCP\\_UDP for a Network Load Balancer.
 #' 
 #' \[HTTPS listeners\] If the action type is `authenticate-oidc`, you
 #' authenticate users through an identity provider that is OpenID Connect
@@ -1767,6 +1839,18 @@ elbv2_describe_target_health <- function(TargetGroupArn, Targets = NULL) {
 #'         MessageBody = "string",
 #'         StatusCode = "string",
 #'         ContentType = "string"
+#'       ),
+#'       ForwardConfig = list(
+#'         TargetGroups = list(
+#'           list(
+#'             TargetGroupArn = "string",
+#'             Weight = 123
+#'           )
+#'         ),
+#'         TargetGroupStickinessConfig = list(
+#'           Enabled = TRUE|FALSE,
+#'           DurationSeconds = 123
+#'         )
 #'       )
 #'     )
 #'   )
@@ -1774,8 +1858,9 @@ elbv2_describe_target_health <- function(TargetGroupArn, Targets = NULL) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example changes the default action for the specified listener.
-#' \donttest{svc$modify_listener(
+#' svc$modify_listener(
 #'   DefaultActions = list(
 #'     list(
 #'       TargetGroupArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-n...",
@@ -1783,18 +1868,19 @@ elbv2_describe_target_health <- function(TargetGroupArn, Targets = NULL) {
 #'     )
 #'   ),
 #'   ListenerArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:listener/app/my-load-ba..."
-#' )}
+#' )
 #' 
 #' # This example changes the server certificate for the specified HTTPS
 #' # listener.
-#' \donttest{svc$modify_listener(
+#' svc$modify_listener(
 #'   Certificates = list(
 #'     list(
 #'       CertificateArn = "arn:aws:iam::123456789012:server-certificate/my-new-server-cert"
 #'     )
 #'   ),
 #'   ListenerArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:listener/app/my-load-ba..."
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1846,9 +1932,10 @@ elbv2_modify_listener <- function(ListenerArn, Port = NULL, Protocol = NULL, Ssl
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example enables deletion protection for the specified load
 #' # balancer.
-#' \donttest{svc$modify_load_balancer_attributes(
+#' svc$modify_load_balancer_attributes(
 #'   Attributes = list(
 #'     list(
 #'       Key = "deletion_protection.enabled",
@@ -1856,11 +1943,11 @@ elbv2_modify_listener <- function(ListenerArn, Port = NULL, Protocol = NULL, Ssl
 #'     )
 #'   ),
 #'   LoadBalancerArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my..."
-#' )}
+#' )
 #' 
 #' # This example changes the idle timeout value for the specified load
 #' # balancer.
-#' \donttest{svc$modify_load_balancer_attributes(
+#' svc$modify_load_balancer_attributes(
 #'   Attributes = list(
 #'     list(
 #'       Key = "idle_timeout.timeout_seconds",
@@ -1868,13 +1955,13 @@ elbv2_modify_listener <- function(ListenerArn, Port = NULL, Protocol = NULL, Ssl
 #'     )
 #'   ),
 #'   LoadBalancerArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my..."
-#' )}
+#' )
 #' 
 #' # This example enables access logs for the specified load balancer. Note
 #' # that the S3 bucket must exist in the same region as the load balancer
 #' # and must have a policy attached that grants access to the Elastic Load
 #' # Balancing service.
-#' \donttest{svc$modify_load_balancer_attributes(
+#' svc$modify_load_balancer_attributes(
 #'   Attributes = list(
 #'     list(
 #'       Key = "access_logs.s3.enabled",
@@ -1890,7 +1977,8 @@ elbv2_modify_listener <- function(ListenerArn, Port = NULL, Protocol = NULL, Ssl
 #'     )
 #'   ),
 #'   LoadBalancerArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my..."
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1912,12 +2000,14 @@ elbv2_modify_load_balancer_attributes <- function(LoadBalancerArn, Attributes) {
 }
 .elbv2$operations$modify_load_balancer_attributes <- elbv2_modify_load_balancer_attributes
 
-#' Modifies the specified rule
+#' Replaces the specified properties of the specified rule
 #'
-#' Modifies the specified rule.
+#' Replaces the specified properties of the specified rule. Any properties
+#' that you do not specify are unchanged.
 #' 
-#' Any existing properties that you do not modify retain their current
-#' values.
+#' To add an item to a list, remove an item from a list, or update an item
+#' in a list, you must provide the entire list. For example, to add an
+#' action, specify a list with the current actions plus the new action.
 #' 
 #' To modify the actions for the default rule, use ModifyListener.
 #'
@@ -1930,12 +2020,13 @@ elbv2_modify_load_balancer_attributes <- function(LoadBalancerArn, Attributes) {
 #' `source-ip`, and zero or more of the following conditions: `http-header`
 #' and `query-string`.
 #' @param Actions The actions. Each rule must include exactly one of the following types
-#' of actions: `forward`, `fixed-response`, or `redirect`.
+#' of actions: `forward`, `fixed-response`, or `redirect`, and it must be
+#' the last action to be performed.
 #' 
-#' If the action type is `forward`, you specify a target group. The
-#' protocol of the target group must be HTTP or HTTPS for an Application
-#' Load Balancer. The protocol of the target group must be TCP, TLS, UDP,
-#' or TCP\\_UDP for a Network Load Balancer.
+#' If the action type is `forward`, you specify one or more target groups.
+#' The protocol of the target group must be HTTP or HTTPS for an
+#' Application Load Balancer. The protocol of the target group must be TCP,
+#' TLS, UDP, or TCP\\_UDP for a Network Load Balancer.
 #' 
 #' \[HTTPS listeners\] If the action type is `authenticate-oidc`, you
 #' authenticate users through an identity provider that is OpenID Connect
@@ -2041,6 +2132,18 @@ elbv2_modify_load_balancer_attributes <- function(LoadBalancerArn, Attributes) {
 #'         MessageBody = "string",
 #'         StatusCode = "string",
 #'         ContentType = "string"
+#'       ),
+#'       ForwardConfig = list(
+#'         TargetGroups = list(
+#'           list(
+#'             TargetGroupArn = "string",
+#'             Weight = 123
+#'           )
+#'         ),
+#'         TargetGroupStickinessConfig = list(
+#'           Enabled = TRUE|FALSE,
+#'           DurationSeconds = 123
+#'         )
 #'       )
 #'     )
 #'   )
@@ -2048,8 +2151,9 @@ elbv2_modify_load_balancer_attributes <- function(LoadBalancerArn, Attributes) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example modifies the condition for the specified rule.
-#' \donttest{svc$modify_rule(
+#' svc$modify_rule(
 #'   Conditions = list(
 #'     list(
 #'       Field = "path-pattern",
@@ -2059,7 +2163,8 @@ elbv2_modify_load_balancer_attributes <- function(LoadBalancerArn, Attributes) {
 #'     )
 #'   ),
 #'   RuleArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:listener-rule/app/my-load-b..."
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -2101,8 +2206,7 @@ elbv2_modify_rule <- function(RuleArn, Conditions = NULL, Actions = NULL) {
 #' protocol of the target group is TCP, TLS, UDP, or TCP\\_UDP. The TLS,
 #' UDP, and TCP\\_UDP protocols are not supported for health checks.
 #' 
-#' If the protocol of the target group is TCP, you can\'t modify this
-#' setting.
+#' With Network Load Balancers, you can\'t modify this setting.
 #' @param HealthCheckPort The port the load balancer uses when performing health checks on
 #' targets.
 #' @param HealthCheckPath \[HTTP/HTTPS health checks\] The ping path that is the destination for
@@ -2113,13 +2217,11 @@ elbv2_modify_rule <- function(RuleArn, Conditions = NULL, Actions = NULL) {
 #' seconds. For Network Load Balancers, the supported values are 10 or 30
 #' seconds.
 #' 
-#' If the protocol of the target group is TCP, you can\'t modify this
-#' setting.
+#' With Network Load Balancers, you can\'t modify this setting.
 #' @param HealthCheckTimeoutSeconds \[HTTP/HTTPS health checks\] The amount of time, in seconds, during
 #' which no response means a failed health check.
 #' 
-#' If the protocol of the target group is TCP, you can\'t modify this
-#' setting.
+#' With Network Load Balancers, you can\'t modify this setting.
 #' @param HealthyThresholdCount The number of consecutive health checks successes required before
 #' considering an unhealthy target healthy.
 #' @param UnhealthyThresholdCount The number of consecutive health check failures required before
@@ -2128,8 +2230,7 @@ elbv2_modify_rule <- function(RuleArn, Conditions = NULL, Actions = NULL) {
 #' @param Matcher \[HTTP/HTTPS health checks\] The HTTP codes to use when checking for a
 #' successful response from a target.
 #' 
-#' If the protocol of the target group is TCP, you can\'t modify this
-#' setting.
+#' With Network Load Balancers, you can\'t modify this setting.
 #'
 #' @section Request syntax:
 #' ```
@@ -2150,13 +2251,15 @@ elbv2_modify_rule <- function(RuleArn, Conditions = NULL, Actions = NULL) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example changes the configuration of the health checks used to
 #' # evaluate the health of the targets for the specified target group.
-#' \donttest{svc$modify_target_group(
+#' svc$modify_target_group(
 #'   HealthCheckPort = "443",
 #'   HealthCheckProtocol = "HTTPS",
 #'   TargetGroupArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-https..."
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -2202,9 +2305,10 @@ elbv2_modify_target_group <- function(TargetGroupArn, HealthCheckProtocol = NULL
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example sets the deregistration delay timeout to the specified
 #' # value for the specified target group.
-#' \donttest{svc$modify_target_group_attributes(
+#' svc$modify_target_group_attributes(
 #'   Attributes = list(
 #'     list(
 #'       Key = "deregistration_delay.timeout_seconds",
@@ -2212,7 +2316,8 @@ elbv2_modify_target_group <- function(TargetGroupArn, HealthCheckProtocol = NULL
 #'     )
 #'   ),
 #'   TargetGroupArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-targe..."
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -2279,9 +2384,10 @@ elbv2_modify_target_group_attributes <- function(TargetGroupArn, Attributes) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example registers the specified instances with the specified target
 #' # group.
-#' \donttest{svc$register_targets(
+#' svc$register_targets(
 #'   TargetGroupArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-targe...",
 #'   Targets = list(
 #'     list(
@@ -2291,12 +2397,12 @@ elbv2_modify_target_group_attributes <- function(TargetGroupArn, Attributes) {
 #'       Id = "i-ceddcd4d"
 #'     )
 #'   )
-#' )}
+#' )
 #' 
 #' # This example registers the specified instance with the specified target
 #' # group using multiple ports. This enables you to register ECS containers
 #' # on the same instance as targets in the target group.
-#' \donttest{svc$register_targets(
+#' svc$register_targets(
 #'   TargetGroupArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-new-t...",
 #'   Targets = list(
 #'     list(
@@ -2308,7 +2414,8 @@ elbv2_modify_target_group_attributes <- function(TargetGroupArn, Attributes) {
 #'       Port = 766L
 #'     )
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -2331,10 +2438,10 @@ elbv2_register_targets <- function(TargetGroupArn, Targets) {
 .elbv2$operations$register_targets <- elbv2_register_targets
 
 #' Removes the specified certificate from the certificate list for the
-#' specified HTTPS listener
+#' specified HTTPS or TLS listener
 #'
 #' Removes the specified certificate from the certificate list for the
-#' specified HTTPS listener.
+#' specified HTTPS or TLS listener.
 #' 
 #' You can\'t remove the default certificate for a listener. To replace the
 #' default certificate, call ModifyListener.
@@ -2409,9 +2516,10 @@ elbv2_remove_listener_certificates <- function(ListenerArn, Certificates) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example removes the specified tags from the specified load
 #' # balancer.
-#' \donttest{svc$remove_tags(
+#' svc$remove_tags(
 #'   ResourceArns = list(
 #'     "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-load-balancer/5..."
 #'   ),
@@ -2419,7 +2527,8 @@ elbv2_remove_listener_certificates <- function(ListenerArn, Certificates) {
 #'     "project",
 #'     "department"
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -2509,15 +2618,17 @@ elbv2_set_ip_address_type <- function(LoadBalancerArn, IpAddressType) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example sets the priority of the specified rule.
-#' \donttest{svc$set_rule_priorities(
+#' svc$set_rule_priorities(
 #'   RulePriorities = list(
 #'     list(
 #'       Priority = 5L,
 #'       RuleArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:listener-rule/app/my-lo..."
 #'     )
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -2565,14 +2676,16 @@ elbv2_set_rule_priorities <- function(RulePriorities) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example associates the specified security group with the specified
 #' # load balancer.
-#' \donttest{svc$set_security_groups(
+#' svc$set_security_groups(
 #'   LoadBalancerArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my...",
 #'   SecurityGroups = list(
 #'     "sg-5943793c"
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -2594,14 +2707,16 @@ elbv2_set_security_groups <- function(LoadBalancerArn, SecurityGroups) {
 }
 .elbv2$operations$set_security_groups <- elbv2_set_security_groups
 
-#' Enables the Availability Zone for the specified public subnets for the
-#' specified Application Load Balancer
+#' Enables the Availability Zones for the specified public subnets for the
+#' specified load balancer
 #'
-#' Enables the Availability Zone for the specified public subnets for the
-#' specified Application Load Balancer. The specified subnets replace the
-#' previously enabled subnets.
+#' Enables the Availability Zones for the specified public subnets for the
+#' specified load balancer. The specified subnets replace the previously
+#' enabled subnets.
 #' 
-#' You can\'t change the subnets for a Network Load Balancer.
+#' When you specify subnets for a Network Load Balancer, you must include
+#' all subnets that were enabled previously, with their existing
+#' configurations, plus any additional subnets.
 #'
 #' @usage
 #' elbv2_set_subnets(LoadBalancerArn, Subnets, SubnetMappings)
@@ -2610,11 +2725,18 @@ elbv2_set_security_groups <- function(LoadBalancerArn, SecurityGroups) {
 #' @param Subnets The IDs of the public subnets. You must specify subnets from at least
 #' two Availability Zones. You can specify only one subnet per Availability
 #' Zone. You must specify either subnets or subnet mappings.
-#' @param SubnetMappings The IDs of the public subnets. You must specify subnets from at least
-#' two Availability Zones. You can specify only one subnet per Availability
-#' Zone. You must specify either subnets or subnet mappings.
+#' @param SubnetMappings The IDs of the public subnets. You can specify only one subnet per
+#' Availability Zone. You must specify either subnets or subnet mappings.
 #' 
-#' You cannot specify Elastic IP addresses for your subnets.
+#' \[Application Load Balancers\] You must specify subnets from at least
+#' two Availability Zones. You cannot specify Elastic IP addresses for your
+#' subnets.
+#' 
+#' \[Network Load Balancers\] You can specify subnets from one or more
+#' Availability Zones. If you need static IP addresses for your
+#' internet-facing load balancer, you can specify one Elastic IP address
+#' per subnet. For internal load balancers, you can specify one private IP
+#' address per subnet from the IPv4 range of the subnet.
 #'
 #' @section Request syntax:
 #' ```
@@ -2626,22 +2748,25 @@ elbv2_set_security_groups <- function(LoadBalancerArn, SecurityGroups) {
 #'   SubnetMappings = list(
 #'     list(
 #'       SubnetId = "string",
-#'       AllocationId = "string"
+#'       AllocationId = "string",
+#'       PrivateIPv4Address = "string"
 #'     )
 #'   )
 #' )
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example enables the Availability Zones for the specified subnets
 #' # for the specified load balancer.
-#' \donttest{svc$set_subnets(
+#' svc$set_subnets(
 #'   LoadBalancerArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my...",
 #'   Subnets = list(
 #'     "subnet-8360a9e7",
 #'     "subnet-b7d581c0"
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'

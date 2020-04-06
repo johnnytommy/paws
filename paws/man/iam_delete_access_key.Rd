@@ -11,7 +11,7 @@ iam_delete_access_key(UserName, AccessKeyId)
 
 This parameter allows (through its \href{http://wikipedia.org/wiki/regex}{regex pattern}) a string of characters
 consisting of upper and lowercase alphanumeric characters with no
-spaces. You can also include any of the following characters: \_+=,.@-}
+spaces. You can also include any of the following characters: \\_+=,.@-}
 
 \item{AccessKeyId}{[required] The access key ID for the access key ID and secret access key you want
 to delete.
@@ -38,12 +38,14 @@ if the AWS account has no associated users.
 }
 
 \examples{
+\dontrun{
 # The following command deletes one access key (access key ID and secret
 # access key) assigned to the IAM user named Bob.
-\donttest{svc$delete_access_key(
+svc$delete_access_key(
   AccessKeyId = "AKIDPMS9RO4H3FEXAMPLE",
   UserName = "Bob"
-)}
+)
+}
 
 }
 \keyword{internal}

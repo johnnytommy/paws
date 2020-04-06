@@ -13,13 +13,13 @@ is embedded in.
 
 This parameter allows (through its \href{http://wikipedia.org/wiki/regex}{regex pattern}) a string of characters
 consisting of upper and lowercase alphanumeric characters with no
-spaces. You can also include any of the following characters: \_+=,.@-}
+spaces. You can also include any of the following characters: \\_+=,.@-}
 
 \item{PolicyName}{[required] The name of the inline policy to delete from the specified IAM role.
 
 This parameter allows (through its \href{http://wikipedia.org/wiki/regex}{regex pattern}) a string of characters
 consisting of upper and lowercase alphanumeric characters with no
-spaces. You can also include any of the following characters: \_+=,.@-}
+spaces. You can also include any of the following characters: \\_+=,.@-}
 }
 \description{
 Deletes the specified inline policy that is embedded in the specified
@@ -40,12 +40,14 @@ in the \emph{IAM User Guide}.
 }
 
 \examples{
+\dontrun{
 # The following command removes the policy named ExamplePolicy from the
 # role named Test-Role.
-\donttest{svc$delete_role_policy(
+svc$delete_role_policy(
   PolicyName = "ExamplePolicy",
   RoleName = "Test-Role"
-)}
+)
+}
 
 }
 \keyword{internal}

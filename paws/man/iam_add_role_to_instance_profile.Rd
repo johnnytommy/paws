@@ -11,13 +11,13 @@ iam_add_role_to_instance_profile(InstanceProfileName, RoleName)
 
 This parameter allows (through its \href{http://wikipedia.org/wiki/regex}{regex pattern}) a string of characters
 consisting of upper and lowercase alphanumeric characters with no
-spaces. You can also include any of the following characters: \_+=,.@-}
+spaces. You can also include any of the following characters: \\_+=,.@-}
 
 \item{RoleName}{[required] The name of the role to add.
 
 This parameter allows (through its \href{http://wikipedia.org/wiki/regex}{regex pattern}) a string of characters
 consisting of upper and lowercase alphanumeric characters with no
-spaces. You can also include any of the following characters: \_+=,.@-}
+spaces. You can also include any of the following characters: \\_+=,.@-}
 }
 \description{
 Adds the specified IAM role to the specified instance profile. An
@@ -45,12 +45,14 @@ For more information about instance profiles, go to \href{https://docs.aws.amazo
 }
 
 \examples{
+\dontrun{
 # The following command adds the role named S3Access to the instance
 # profile named Webserver:
-\donttest{svc$add_role_to_instance_profile(
+svc$add_role_to_instance_profile(
   InstanceProfileName = "Webserver",
   RoleName = "S3Access"
-)}
+)
+}
 
 }
 \keyword{internal}

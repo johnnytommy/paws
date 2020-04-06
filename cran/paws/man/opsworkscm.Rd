@@ -2,7 +2,7 @@
 % Please edit documentation in R/paws.R
 \name{opsworkscm}
 \alias{opsworkscm}
-\title{AWS OpsWorks for Chef Automate}
+\title{AWS OpsWorks CM}
 \usage{
 opsworkscm(config = list())
 }
@@ -10,8 +10,6 @@ opsworkscm(config = list())
 \item{config}{Optional configuration of credentials, endpoint, and/or region.}
 }
 \description{
-AWS OpsWorks CM
-
 AWS OpsWorks for configuration management (CM) is a service that runs
 and manages configuration management servers. You can use AWS OpsWorks
 CM to create and manage AWS OpsWorks for Chef Automate and AWS OpsWorks
@@ -34,12 +32,12 @@ and \code{Puppet}.
 \item \strong{Backup}: This is an application-level backup of the data that the
 configuration manager stores. AWS OpsWorks CM creates an S3 bucket
 for backups when you launch the first server. A backup maintains a
-snapshot of a server's configuration-related attributes at the time
+snapshot of a server\'s configuration-related attributes at the time
 the backup starts.
 \item \strong{Events}: Events are always related to a server. Events are
 written during server creation, when health checks run, when backups
 are created, when system maintenance is performed, etc. When you
-delete a server, the server's events are also deleted.
+delete a server, the server\'s events are also deleted.
 \item \strong{Account attributes}: Every account has attributes that are
 assigned in the AWS OpsWorks CM database. These attributes store
 information about configuration limits (servers, backups, etc.) and
@@ -101,17 +99,22 @@ requests per second.
 \link[=opsworkscm_describe_servers]{describe_servers} \tab Lists all configuration management servers that are identified with your account \cr
 \link[=opsworkscm_disassociate_node]{disassociate_node} \tab Disassociates a node from an AWS OpsWorks CM server, and removes the node from the server's managed nodes \cr
 \link[=opsworkscm_export_server_engine_attribute]{export_server_engine_attribute} \tab Exports a specified server engine attribute as a base64-encoded string \cr
-\link[=opsworkscm_restore_server]{restore_server} \tab Restores a backup to a server that is in a CONNECTION_LOST, HEALTHY, RUNNING, UNHEALTHY, or TERMINATED state\cr
+\link[=opsworkscm_list_tags_for_resource]{list_tags_for_resource} \tab Returns a list of tags that are applied to the specified AWS OpsWorks for Chef Automate or AWS OpsWorks for Puppet Enterprise servers or backups\cr
+\link[=opsworkscm_restore_server]{restore_server} \tab Restores a backup to a server that is in a CONNECTION_LOST, HEALTHY, RUNNING, UNHEALTHY, or TERMINATED state \cr
 \link[=opsworkscm_start_maintenance]{start_maintenance} \tab Manually starts server maintenance \cr
+\link[=opsworkscm_tag_resource]{tag_resource} \tab Applies tags to an AWS OpsWorks for Chef Automate or AWS OpsWorks for Puppet Enterprise server, or to server backups \cr
+\link[=opsworkscm_untag_resource]{untag_resource} \tab Removes specified tags from an AWS OpsWorks-CM server or backup \cr
 \link[=opsworkscm_update_server]{update_server} \tab Updates settings for a server \cr
 \link[=opsworkscm_update_server_engine_attributes]{update_server_engine_attributes} \tab Updates engine-specific attributes on a specified server
 }
 }
 
 \examples{
-\donttest{svc <- opsworkscm()
+\dontrun{
+svc <- opsworkscm()
 svc$associate_node(
   Foo = 123
-)}
+)
+}
 
 }

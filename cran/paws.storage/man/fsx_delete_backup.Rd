@@ -23,7 +23,7 @@ gone.
 The \code{DeleteBackup} call returns instantly. The backup will not show up
 in later \code{DescribeBackups} calls.
 
-The data in a deleted backup is also deleted and can't be recovered by
+The data in a deleted backup is also deleted and can\'t be recovered by
 any means.
 }
 \section{Request syntax}{
@@ -35,10 +35,12 @@ any means.
 }
 
 \examples{
+\dontrun{
 # This operation deletes an Amazon FSx file system backup.
-\donttest{svc$delete_backup(
+svc$delete_backup(
   BackupId = "backup-03e3c82e0183b7b6b"
-)}
+)
+}
 
 }
 \keyword{internal}

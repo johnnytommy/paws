@@ -35,7 +35,7 @@ DescribeMountTargets operation, which returns a list of mount target
 descriptions for the given file system.
 
 The operation also requires permissions for the following Amazon EC2
-action on the mount target's network interface:
+action on the mount target\'s network interface:
 \itemize{
 \item \code{ec2:DeleteNetworkInterface}
 }
@@ -48,10 +48,12 @@ action on the mount target's network interface:
 }
 
 \examples{
+\dontrun{
 # This operation deletes a mount target.
-\donttest{svc$delete_mount_target(
+svc$delete_mount_target(
   MountTargetId = "fsmt-12340abc"
-)}
+)
+}
 
 }
 \keyword{internal}

@@ -11,7 +11,7 @@ iam_attach_role_policy(RoleName, PolicyArn)
 
 This parameter allows (through its \href{http://wikipedia.org/wiki/regex}{regex pattern}) a string of characters
 consisting of upper and lowercase alphanumeric characters with no
-spaces. You can also include any of the following characters: \_+=,.@-}
+spaces. You can also include any of the following characters: \\_+=,.@-}
 
 \item{PolicyArn}{[required] The Amazon Resource Name (ARN) of the IAM policy you want to attach.
 
@@ -21,12 +21,12 @@ in the \emph{AWS General Reference}.}
 \description{
 Attaches the specified managed policy to the specified IAM role. When
 you attach a managed policy to a role, the managed policy becomes part
-of the role's permission (access) policy.
+of the role\'s permission (access) policy.
 }
 \details{
-You cannot use a managed policy as the role's trust policy. The role's
+You cannot use a managed policy as the role\'s trust policy. The role\'s
 trust policy is created at the same time as the role, using CreateRole.
-You can update a role's trust policy using UpdateAssumeRolePolicy.
+You can update a role\'s trust policy using UpdateAssumeRolePolicy.
 
 Use this API to attach a \emph{managed} policy to a role. To embed an inline
 policy in a role, use PutRolePolicy. For more information about
@@ -42,12 +42,14 @@ in the \emph{IAM User Guide}.
 }
 
 \examples{
+\dontrun{
 # The following command attaches the AWS managed policy named
 # ReadOnlyAccess to the IAM role named ReadOnlyRole.
-\donttest{svc$attach_role_policy(
+svc$attach_role_policy(
   PolicyArn = "arn:aws:iam::aws:policy/ReadOnlyAccess",
   RoleName = "ReadOnlyRole"
-)}
+)
+}
 
 }
 \keyword{internal}

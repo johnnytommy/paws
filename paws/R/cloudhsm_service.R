@@ -44,10 +44,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- cloudhsm()
+#' \dontrun{
+#' svc <- cloudhsm()
 #' svc$add_tags_to_resource(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -96,8 +98,7 @@ cloudhsm <- function(config = list()) {
   target_prefix = "CloudHsmFrontendService"
 )
 
-.cloudhsm$handlers <- new_handlers("jsonrpc", "v4")
-
 .cloudhsm$service <- function(config = list()) {
-  new_service(.cloudhsm$metadata, .cloudhsm$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.cloudhsm$metadata, handlers, config)
 }

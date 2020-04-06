@@ -188,9 +188,10 @@ NULL
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example reads multiple items from the Music table using a batch of
 #' # three GetItem requests.  Only the AlbumTitle attribute is returned.
-#' \donttest{svc$batch_get_item(
+#' svc$batch_get_item(
 #'   RequestItems = list(
 #'     Music = list(
 #'       Keys = list(
@@ -222,7 +223,8 @@ NULL
 #'       ProjectionExpression = "AlbumTitle"
 #'     )
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -431,9 +433,10 @@ dynamodb_batch_get_item <- function(RequestItems, ReturnConsumedCapacity = NULL)
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example adds three new items to the Music table using a batch of
 #' # three PutItem requests.
-#' \donttest{svc$batch_write_item(
+#' svc$batch_write_item(
 #'   RequestItems = list(
 #'     Music = list(
 #'       list(
@@ -483,7 +486,8 @@ dynamodb_batch_get_item <- function(RequestItems, ReturnConsumedCapacity = NULL)
 #'       )
 #'     )
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -579,6 +583,10 @@ dynamodb_create_backup <- function(TableName, BackupName) {
 #' Creates a global table from an existing table. A global table creates a
 #' replication relationship between two or more DynamoDB tables with the
 #' same table name in the provided Regions.
+#' 
+#' This method only applies to [Version
+#' 2017.11.29](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.V1.html)
+#' of global tables.
 #' 
 #' If you want to add a new replica table to a global table, each of the
 #' following conditions must be true:
@@ -792,11 +800,14 @@ dynamodb_create_global_table <- function(GlobalTableName, ReplicationGroup) {
 #' @param BillingMode Controls how you are charged for read and write throughput and how you
 #' manage capacity. This setting can be changed later.
 #' 
-#' -   `PROVISIONED` - Sets the billing mode to `PROVISIONED`. We recommend
-#'     using `PROVISIONED` for predictable workloads.
+#' -   `PROVISIONED` - We recommend using `PROVISIONED` for predictable
+#'     workloads. `PROVISIONED` sets the billing mode to [Provisioned
+#'     Mode](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadWriteCapacityMode.html#HowItWorks.ProvisionedThroughput.Manual).
 #' 
-#' -   `PAY_PER_REQUEST` - Sets the billing mode to `PAY_PER_REQUEST`. We
-#'     recommend using `PAY_PER_REQUEST` for unpredictable workloads.
+#' -   `PAY_PER_REQUEST` - We recommend using `PAY_PER_REQUEST` for
+#'     unpredictable workloads. `PAY_PER_REQUEST` sets the billing mode to
+#'     [On-Demand
+#'     Mode](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadWriteCapacityMode.html#HowItWorks.OnDemand).
 #' @param ProvisionedThroughput Represents the provisioned throughput settings for a specified table or
 #' index. The settings can be modified using the `UpdateTable` operation.
 #' 
@@ -911,8 +922,9 @@ dynamodb_create_global_table <- function(GlobalTableName, ReplicationGroup) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example creates a table named Music.
-#' \donttest{svc$create_table(
+#' svc$create_table(
 #'   AttributeDefinitions = list(
 #'     list(
 #'       AttributeName = "Artist",
@@ -938,7 +950,8 @@ dynamodb_create_global_table <- function(GlobalTableName, ReplicationGroup) {
 #'     WriteCapacityUnits = 5L
 #'   ),
 #'   TableName = "Music"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1247,8 +1260,9 @@ dynamodb_delete_backup <- function(BackupArn) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example deletes an item from the Music table.
-#' \donttest{svc$delete_item(
+#' svc$delete_item(
 #'   Key = list(
 #'     Artist = list(
 #'       S = "No One You Know"
@@ -1258,7 +1272,8 @@ dynamodb_delete_backup <- function(BackupArn) {
 #'     )
 #'   ),
 #'   TableName = "Music"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1316,10 +1331,12 @@ dynamodb_delete_item <- function(TableName, Key, Expected = NULL, ConditionalOpe
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example deletes the Music table.
-#' \donttest{svc$delete_table(
+#' svc$delete_table(
 #'   TableName = "Music"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1431,6 +1448,46 @@ dynamodb_describe_continuous_backups <- function(TableName) {
 }
 .dynamodb$operations$describe_continuous_backups <- dynamodb_describe_continuous_backups
 
+#' Returns information about contributor insights, for a given table or
+#' global secondary index
+#'
+#' Returns information about contributor insights, for a given table or
+#' global secondary index.
+#'
+#' @usage
+#' dynamodb_describe_contributor_insights(TableName, IndexName)
+#'
+#' @param TableName &#91;required&#93; The name of the table to describe.
+#' @param IndexName The name of the global secondary index to describe, if applicable.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$describe_contributor_insights(
+#'   TableName = "string",
+#'   IndexName = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname dynamodb_describe_contributor_insights
+dynamodb_describe_contributor_insights <- function(TableName, IndexName = NULL) {
+  op <- new_operation(
+    name = "DescribeContributorInsights",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .dynamodb$describe_contributor_insights_input(TableName = TableName, IndexName = IndexName)
+  output <- .dynamodb$describe_contributor_insights_output()
+  config <- get_config()
+  svc <- .dynamodb$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.dynamodb$operations$describe_contributor_insights <- dynamodb_describe_contributor_insights
+
 #' Returns the regional endpoint information
 #'
 #' Returns the regional endpoint information.
@@ -1466,6 +1523,10 @@ dynamodb_describe_endpoints <- function() {
 #' Returns information about the specified global table
 #'
 #' Returns information about the specified global table.
+#' 
+#' This method only applies to [Version
+#' 2017.11.29](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.V1.html)
+#' of global tables.
 #'
 #' @usage
 #' dynamodb_describe_global_table(GlobalTableName)
@@ -1502,6 +1563,10 @@ dynamodb_describe_global_table <- function(GlobalTableName) {
 #' Describes Region-specific settings for a global table
 #'
 #' Describes Region-specific settings for a global table.
+#' 
+#' This method only applies to [Version
+#' 2017.11.29](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.V1.html)
+#' of global tables.
 #'
 #' @usage
 #' dynamodb_describe_global_table_settings(GlobalTableName)
@@ -1611,9 +1676,11 @@ dynamodb_describe_global_table_settings <- function(GlobalTableName) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example returns the maximum read and write capacity units
 #' # per table, and for the AWS account, in the current AWS region.
-#' \donttest{svc$describe_limits()}
+#' svc$describe_limits()
+#' }
 #'
 #' @keywords internal
 #'
@@ -1662,10 +1729,12 @@ dynamodb_describe_limits <- function() {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example describes the Music table.
-#' \donttest{svc$describe_table(
+#' svc$describe_table(
 #'   TableName = "Music"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1686,6 +1755,48 @@ dynamodb_describe_table <- function(TableName) {
   return(response)
 }
 .dynamodb$operations$describe_table <- dynamodb_describe_table
+
+#' Describes auto scaling settings across replicas of the global table at
+#' once
+#'
+#' Describes auto scaling settings across replicas of the global table at
+#' once.
+#' 
+#' This method only applies to [Version
+#' 2019.11.21](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.V2.html)
+#' of global tables.
+#'
+#' @usage
+#' dynamodb_describe_table_replica_auto_scaling(TableName)
+#'
+#' @param TableName &#91;required&#93; The name of the table.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$describe_table_replica_auto_scaling(
+#'   TableName = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname dynamodb_describe_table_replica_auto_scaling
+dynamodb_describe_table_replica_auto_scaling <- function(TableName) {
+  op <- new_operation(
+    name = "DescribeTableReplicaAutoScaling",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .dynamodb$describe_table_replica_auto_scaling_input(TableName = TableName)
+  output <- .dynamodb$describe_table_replica_auto_scaling_output()
+  config <- get_config()
+  svc <- .dynamodb$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.dynamodb$operations$describe_table_replica_auto_scaling <- dynamodb_describe_table_replica_auto_scaling
 
 #' Gives a description of the Time to Live (TTL) status on the specified
 #' table
@@ -1847,10 +1958,11 @@ dynamodb_describe_time_to_live <- function(TableName) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example retrieves an item from the Music table. The table has a
 #' # partition key and a sort key (Artist and SongTitle), so you must specify
 #' # both of these attributes.
-#' \donttest{svc$get_item(
+#' svc$get_item(
 #'   Key = list(
 #'     Artist = list(
 #'       S = "Acme Band"
@@ -1860,7 +1972,8 @@ dynamodb_describe_time_to_live <- function(TableName) {
 #'     )
 #'   ),
 #'   TableName = "Music"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -1956,9 +2069,55 @@ dynamodb_list_backups <- function(TableName = NULL, Limit = NULL, TimeRangeLower
 }
 .dynamodb$operations$list_backups <- dynamodb_list_backups
 
+#' Returns a list of ContributorInsightsSummary for a table and all its
+#' global secondary indexes
+#'
+#' Returns a list of ContributorInsightsSummary for a table and all its
+#' global secondary indexes.
+#'
+#' @usage
+#' dynamodb_list_contributor_insights(TableName, NextToken, MaxResults)
+#'
+#' @param TableName The name of the table.
+#' @param NextToken A token to for the desired page, if there is one.
+#' @param MaxResults Maximum number of results to return per page.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$list_contributor_insights(
+#'   TableName = "string",
+#'   NextToken = "string",
+#'   MaxResults = 123
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname dynamodb_list_contributor_insights
+dynamodb_list_contributor_insights <- function(TableName = NULL, NextToken = NULL, MaxResults = NULL) {
+  op <- new_operation(
+    name = "ListContributorInsights",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .dynamodb$list_contributor_insights_input(TableName = TableName, NextToken = NextToken, MaxResults = MaxResults)
+  output <- .dynamodb$list_contributor_insights_output()
+  config <- get_config()
+  svc <- .dynamodb$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.dynamodb$operations$list_contributor_insights <- dynamodb_list_contributor_insights
+
 #' Lists all global tables that have a replica in the specified Region
 #'
 #' Lists all global tables that have a replica in the specified Region.
+#' 
+#' This method only applies to [Version
+#' 2017.11.29](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.V1.html)
+#' of global tables.
 #'
 #' @usage
 #' dynamodb_list_global_tables(ExclusiveStartGlobalTableName, Limit,
@@ -2022,9 +2181,11 @@ dynamodb_list_global_tables <- function(ExclusiveStartGlobalTableName = NULL, Li
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example lists all of the tables associated with the current AWS
 #' # account and endpoint.
-#' \donttest{svc$list_tables()}
+#' svc$list_tables()
+#' }
 #'
 #' @keywords internal
 #'
@@ -2394,8 +2555,9 @@ dynamodb_list_tags_of_resource <- function(ResourceArn, NextToken = NULL) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example adds a new item to the Music table.
-#' \donttest{svc$put_item(
+#' svc$put_item(
 #'   Item = list(
 #'     AlbumTitle = list(
 #'       S = "Somewhat Famous"
@@ -2409,7 +2571,8 @@ dynamodb_list_tags_of_resource <- function(ResourceArn, NextToken = NULL) {
 #'   ),
 #'   ReturnConsumedCapacity = "TOTAL",
 #'   TableName = "Music"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -2889,11 +3052,12 @@ dynamodb_put_item <- function(TableName, Item, Expected = NULL, ReturnValues = N
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example queries items in the Music table. The table has a partition
 #' # key and sort key (Artist and SongTitle), but this query only specifies
 #' # the partition key value. It returns song titles by the artist named "No
 #' # One You Know".
-#' \donttest{svc$query(
+#' svc$query(
 #'   ExpressionAttributeValues = list(
 #'     `:v1` = list(
 #'       S = "No One You Know"
@@ -2902,7 +3066,8 @@ dynamodb_put_item <- function(TableName, Item, Expected = NULL, ReturnValues = N
 #'   KeyConditionExpression = "Artist = :v1",
 #'   ProjectionExpression = "SongTitle",
 #'   TableName = "Music"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -2948,30 +3113,83 @@ dynamodb_query <- function(TableName, IndexName = NULL, Select = NULL, Attribute
 #' -   Time to Live (TTL) settings
 #'
 #' @usage
-#' dynamodb_restore_table_from_backup(TargetTableName, BackupArn)
+#' dynamodb_restore_table_from_backup(TargetTableName, BackupArn,
+#'   BillingModeOverride, GlobalSecondaryIndexOverride,
+#'   LocalSecondaryIndexOverride, ProvisionedThroughputOverride)
 #'
 #' @param TargetTableName &#91;required&#93; The name of the new table to which the backup must be restored.
 #' @param BackupArn &#91;required&#93; The Amazon Resource Name (ARN) associated with the backup.
+#' @param BillingModeOverride The billing mode of the restored table.
+#' @param GlobalSecondaryIndexOverride List of global secondary indexes for the restored table. The indexes
+#' provided should match existing secondary indexes. You can choose to
+#' exclude some or all of the indexes at the time of restore.
+#' @param LocalSecondaryIndexOverride List of local secondary indexes for the restored table. The indexes
+#' provided should match existing secondary indexes. You can choose to
+#' exclude some or all of the indexes at the time of restore.
+#' @param ProvisionedThroughputOverride Provisioned throughput settings for the restored table.
 #'
 #' @section Request syntax:
 #' ```
 #' svc$restore_table_from_backup(
 #'   TargetTableName = "string",
-#'   BackupArn = "string"
+#'   BackupArn = "string",
+#'   BillingModeOverride = "PROVISIONED"|"PAY_PER_REQUEST",
+#'   GlobalSecondaryIndexOverride = list(
+#'     list(
+#'       IndexName = "string",
+#'       KeySchema = list(
+#'         list(
+#'           AttributeName = "string",
+#'           KeyType = "HASH"|"RANGE"
+#'         )
+#'       ),
+#'       Projection = list(
+#'         ProjectionType = "ALL"|"KEYS_ONLY"|"INCLUDE",
+#'         NonKeyAttributes = list(
+#'           "string"
+#'         )
+#'       ),
+#'       ProvisionedThroughput = list(
+#'         ReadCapacityUnits = 123,
+#'         WriteCapacityUnits = 123
+#'       )
+#'     )
+#'   ),
+#'   LocalSecondaryIndexOverride = list(
+#'     list(
+#'       IndexName = "string",
+#'       KeySchema = list(
+#'         list(
+#'           AttributeName = "string",
+#'           KeyType = "HASH"|"RANGE"
+#'         )
+#'       ),
+#'       Projection = list(
+#'         ProjectionType = "ALL"|"KEYS_ONLY"|"INCLUDE",
+#'         NonKeyAttributes = list(
+#'           "string"
+#'         )
+#'       )
+#'     )
+#'   ),
+#'   ProvisionedThroughputOverride = list(
+#'     ReadCapacityUnits = 123,
+#'     WriteCapacityUnits = 123
+#'   )
 #' )
 #' ```
 #'
 #' @keywords internal
 #'
 #' @rdname dynamodb_restore_table_from_backup
-dynamodb_restore_table_from_backup <- function(TargetTableName, BackupArn) {
+dynamodb_restore_table_from_backup <- function(TargetTableName, BackupArn, BillingModeOverride = NULL, GlobalSecondaryIndexOverride = NULL, LocalSecondaryIndexOverride = NULL, ProvisionedThroughputOverride = NULL) {
   op <- new_operation(
     name = "RestoreTableFromBackup",
     http_method = "POST",
     http_path = "/",
     paginator = list()
   )
-  input <- .dynamodb$restore_table_from_backup_input(TargetTableName = TargetTableName, BackupArn = BackupArn)
+  input <- .dynamodb$restore_table_from_backup_input(TargetTableName = TargetTableName, BackupArn = BackupArn, BillingModeOverride = BillingModeOverride, GlobalSecondaryIndexOverride = GlobalSecondaryIndexOverride, LocalSecondaryIndexOverride = LocalSecondaryIndexOverride, ProvisionedThroughputOverride = ProvisionedThroughputOverride)
   output <- .dynamodb$restore_table_from_backup_output()
   config <- get_config()
   svc <- .dynamodb$service(config)
@@ -3026,7 +3244,9 @@ dynamodb_restore_table_from_backup <- function(TargetTableName, BackupArn) {
 #'
 #' @usage
 #' dynamodb_restore_table_to_point_in_time(SourceTableName,
-#'   TargetTableName, UseLatestRestorableTime, RestoreDateTime)
+#'   TargetTableName, UseLatestRestorableTime, RestoreDateTime,
+#'   BillingModeOverride, GlobalSecondaryIndexOverride,
+#'   LocalSecondaryIndexOverride, ProvisionedThroughputOverride)
 #'
 #' @param SourceTableName &#91;required&#93; Name of the source table that is being restored.
 #' @param TargetTableName &#91;required&#93; The name of the new table to which it must be restored to.
@@ -3034,6 +3254,14 @@ dynamodb_restore_table_from_backup <- function(TargetTableName, BackupArn) {
 #' `LatestRestorableDateTime` is typically 5 minutes before the current
 #' time.
 #' @param RestoreDateTime Time in the past to restore the table to.
+#' @param BillingModeOverride The billing mode of the restored table.
+#' @param GlobalSecondaryIndexOverride List of global secondary indexes for the restored table. The indexes
+#' provided should match existing secondary indexes. You can choose to
+#' exclude some or all of the indexes at the time of restore.
+#' @param LocalSecondaryIndexOverride List of local secondary indexes for the restored table. The indexes
+#' provided should match existing secondary indexes. You can choose to
+#' exclude some or all of the indexes at the time of restore.
+#' @param ProvisionedThroughputOverride Provisioned throughput settings for the restored table.
 #'
 #' @section Request syntax:
 #' ```
@@ -3043,6 +3271,49 @@ dynamodb_restore_table_from_backup <- function(TargetTableName, BackupArn) {
 #'   UseLatestRestorableTime = TRUE|FALSE,
 #'   RestoreDateTime = as.POSIXct(
 #'     "2015-01-01"
+#'   ),
+#'   BillingModeOverride = "PROVISIONED"|"PAY_PER_REQUEST",
+#'   GlobalSecondaryIndexOverride = list(
+#'     list(
+#'       IndexName = "string",
+#'       KeySchema = list(
+#'         list(
+#'           AttributeName = "string",
+#'           KeyType = "HASH"|"RANGE"
+#'         )
+#'       ),
+#'       Projection = list(
+#'         ProjectionType = "ALL"|"KEYS_ONLY"|"INCLUDE",
+#'         NonKeyAttributes = list(
+#'           "string"
+#'         )
+#'       ),
+#'       ProvisionedThroughput = list(
+#'         ReadCapacityUnits = 123,
+#'         WriteCapacityUnits = 123
+#'       )
+#'     )
+#'   ),
+#'   LocalSecondaryIndexOverride = list(
+#'     list(
+#'       IndexName = "string",
+#'       KeySchema = list(
+#'         list(
+#'           AttributeName = "string",
+#'           KeyType = "HASH"|"RANGE"
+#'         )
+#'       ),
+#'       Projection = list(
+#'         ProjectionType = "ALL"|"KEYS_ONLY"|"INCLUDE",
+#'         NonKeyAttributes = list(
+#'           "string"
+#'         )
+#'       )
+#'     )
+#'   ),
+#'   ProvisionedThroughputOverride = list(
+#'     ReadCapacityUnits = 123,
+#'     WriteCapacityUnits = 123
 #'   )
 #' )
 #' ```
@@ -3050,14 +3321,14 @@ dynamodb_restore_table_from_backup <- function(TargetTableName, BackupArn) {
 #' @keywords internal
 #'
 #' @rdname dynamodb_restore_table_to_point_in_time
-dynamodb_restore_table_to_point_in_time <- function(SourceTableName, TargetTableName, UseLatestRestorableTime = NULL, RestoreDateTime = NULL) {
+dynamodb_restore_table_to_point_in_time <- function(SourceTableName, TargetTableName, UseLatestRestorableTime = NULL, RestoreDateTime = NULL, BillingModeOverride = NULL, GlobalSecondaryIndexOverride = NULL, LocalSecondaryIndexOverride = NULL, ProvisionedThroughputOverride = NULL) {
   op <- new_operation(
     name = "RestoreTableToPointInTime",
     http_method = "POST",
     http_path = "/",
     paginator = list()
   )
-  input <- .dynamodb$restore_table_to_point_in_time_input(SourceTableName = SourceTableName, TargetTableName = TargetTableName, UseLatestRestorableTime = UseLatestRestorableTime, RestoreDateTime = RestoreDateTime)
+  input <- .dynamodb$restore_table_to_point_in_time_input(SourceTableName = SourceTableName, TargetTableName = TargetTableName, UseLatestRestorableTime = UseLatestRestorableTime, RestoreDateTime = RestoreDateTime, BillingModeOverride = BillingModeOverride, GlobalSecondaryIndexOverride = GlobalSecondaryIndexOverride, LocalSecondaryIndexOverride = LocalSecondaryIndexOverride, ProvisionedThroughputOverride = ProvisionedThroughputOverride)
   output <- .dynamodb$restore_table_to_point_in_time_output()
   config <- get_config()
   svc <- .dynamodb$service(config)
@@ -3418,10 +3689,11 @@ dynamodb_restore_table_to_point_in_time <- function(SourceTableName, TargetTable
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example scans the entire Music table, and then narrows the results
 #' # to songs by the artist "No One You Know". For each item, only the album
 #' # title and song title are returned.
-#' \donttest{svc$scan(
+#' svc$scan(
 #'   ExpressionAttributeNames = list(
 #'     `#AT` = "AlbumTitle",
 #'     `#ST` = "SongTitle"
@@ -3434,7 +3706,8 @@ dynamodb_restore_table_to_point_in_time <- function(SourceTableName, TargetTable
 #'   FilterExpression = "Artist = :a",
 #'   ProjectionExpression = "#ST, #AT",
 #'   TableName = "Music"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -3519,16 +3792,6 @@ dynamodb_tag_resource <- function(ResourceArn, Tags) {
 #' Region. A call to `TransactGetItems` cannot retrieve items from tables
 #' in more than one AWS account or Region. The aggregate size of the items
 #' in the transaction cannot exceed 4 MB.
-#' 
-#' All AWS Regions and AWS GovCloud (US) support up to 25 items per
-#' transaction with up to 4 MB of data, except the following AWS Regions:
-#' 
-#' -   China (Beijing)
-#' 
-#' -   China (Ningxia)
-#' 
-#' The China (Beijing) and China (Ningxia) Regions support up to 10 items
-#' per transaction with up to 4 MB of data.
 #' 
 #' DynamoDB rejects the entire `TransactGetItems` request if any of the
 #' following is true:
@@ -3624,16 +3887,6 @@ dynamodb_transact_get_items <- function(TransactItems, ReturnConsumedCapacity = 
 #' target the same item. For example, you cannot both `ConditionCheck` and
 #' `Update` the same item. The aggregate size of the items in the
 #' transaction cannot exceed 4 MB.
-#' 
-#' All AWS Regions and AWS GovCloud (US) support up to 25 items per
-#' transaction with up to 4 MB of data, except the following AWS Regions:
-#' 
-#' -   China (Beijing)
-#' 
-#' -   China (Ningxia)
-#' 
-#' The China (Beijing) and China (Ningxia) Regions support up to 10 items
-#' per transaction with up to 4 MB of data.
 #' 
 #' The actions are completed atomically so that either all of them succeed,
 #' or all of them fail. They are defined by the following objects:
@@ -4080,6 +4333,49 @@ dynamodb_update_continuous_backups <- function(TableName, PointInTimeRecoverySpe
 }
 .dynamodb$operations$update_continuous_backups <- dynamodb_update_continuous_backups
 
+#' Updates the status for contributor insights for a specific table or
+#' index
+#'
+#' Updates the status for contributor insights for a specific table or
+#' index.
+#'
+#' @usage
+#' dynamodb_update_contributor_insights(TableName, IndexName,
+#'   ContributorInsightsAction)
+#'
+#' @param TableName &#91;required&#93; The name of the table.
+#' @param IndexName The global secondary index name, if applicable.
+#' @param ContributorInsightsAction &#91;required&#93; Represents the contributor insights action.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$update_contributor_insights(
+#'   TableName = "string",
+#'   IndexName = "string",
+#'   ContributorInsightsAction = "ENABLE"|"DISABLE"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname dynamodb_update_contributor_insights
+dynamodb_update_contributor_insights <- function(TableName, IndexName = NULL, ContributorInsightsAction) {
+  op <- new_operation(
+    name = "UpdateContributorInsights",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .dynamodb$update_contributor_insights_input(TableName = TableName, IndexName = IndexName, ContributorInsightsAction = ContributorInsightsAction)
+  output <- .dynamodb$update_contributor_insights_output()
+  config <- get_config()
+  svc <- .dynamodb$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.dynamodb$operations$update_contributor_insights <- dynamodb_update_contributor_insights
+
 #' Adds or removes replicas in the specified global table
 #'
 #' Adds or removes replicas in the specified global table. The global table
@@ -4160,6 +4456,15 @@ dynamodb_update_global_table <- function(GlobalTableName, ReplicaUpdates) {
 #' @param GlobalTableBillingMode The billing mode of the global table. If `GlobalTableBillingMode` is not
 #' specified, the global table defaults to `PROVISIONED` capacity billing
 #' mode.
+#' 
+#' -   `PROVISIONED` - We recommend using `PROVISIONED` for predictable
+#'     workloads. `PROVISIONED` sets the billing mode to [Provisioned
+#'     Mode](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadWriteCapacityMode.html#HowItWorks.ProvisionedThroughput.Manual).
+#' 
+#' -   `PAY_PER_REQUEST` - We recommend using `PAY_PER_REQUEST` for
+#'     unpredictable workloads. `PAY_PER_REQUEST` sets the billing mode to
+#'     [On-Demand
+#'     Mode](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadWriteCapacityMode.html#HowItWorks.OnDemand).
 #' @param GlobalTableProvisionedWriteCapacityUnits The maximum number of writes consumed per second before DynamoDB returns
 #' a `ThrottlingException.`
 #' @param GlobalTableProvisionedWriteCapacityAutoScalingSettingsUpdate Auto scaling settings for managing provisioned write capacity for the
@@ -4648,10 +4953,11 @@ dynamodb_update_global_table_settings <- function(GlobalTableName, GlobalTableBi
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example updates an item in the Music table. It adds a new attribute
 #' # (Year) and modifies the AlbumTitle attribute.  All of the attributes in
 #' # the item, as they appear after the update, are returned in the response.
-#' \donttest{svc$update_item(
+#' svc$update_item(
 #'   ExpressionAttributeNames = list(
 #'     `#AT` = "AlbumTitle",
 #'     `#Y` = "Year"
@@ -4675,7 +4981,8 @@ dynamodb_update_global_table_settings <- function(GlobalTableName, GlobalTableBi
 #'   ReturnValues = "ALL_NEW",
 #'   TableName = "Music",
 #'   UpdateExpression = "SET #Y = :y, #AT = :t"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -4724,7 +5031,7 @@ dynamodb_update_item <- function(TableName, Key, AttributeUpdates = NULL, Expect
 #' @usage
 #' dynamodb_update_table(AttributeDefinitions, TableName, BillingMode,
 #'   ProvisionedThroughput, GlobalSecondaryIndexUpdates, StreamSpecification,
-#'   SSESpecification)
+#'   SSESpecification, ReplicaUpdates)
 #'
 #' @param AttributeDefinitions An array of attributes that describe the key schema for the table and
 #' indexes. If you are adding a new global secondary index to the table,
@@ -4737,11 +5044,14 @@ dynamodb_update_item <- function(TableName, Key, AttributeUpdates = NULL, Expect
 #' write capacity of your table and global secondary indexes over the past
 #' 30 minutes.
 #' 
-#' -   `PROVISIONED` - Sets the billing mode to `PROVISIONED`. We recommend
-#'     using `PROVISIONED` for predictable workloads.
+#' -   `PROVISIONED` - We recommend using `PROVISIONED` for predictable
+#'     workloads. `PROVISIONED` sets the billing mode to [Provisioned
+#'     Mode](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadWriteCapacityMode.html#HowItWorks.ProvisionedThroughput.Manual).
 #' 
-#' -   `PAY_PER_REQUEST` - Sets the billing mode to `PAY_PER_REQUEST`. We
-#'     recommend using `PAY_PER_REQUEST` for unpredictable workloads.
+#' -   `PAY_PER_REQUEST` - We recommend using `PAY_PER_REQUEST` for
+#'     unpredictable workloads. `PAY_PER_REQUEST` sets the billing mode to
+#'     [On-Demand
+#'     Mode](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadWriteCapacityMode.html#HowItWorks.OnDemand).
 #' @param ProvisionedThroughput The new provisioned throughput settings for the specified table or
 #' index.
 #' @param GlobalSecondaryIndexUpdates An array of one or more global secondary indexes for the table. For each
@@ -4754,6 +5064,9 @@ dynamodb_update_item <- function(TableName, Key, AttributeUpdates = NULL, Expect
 #' 
 #' -   `Delete` - remove a global secondary index from the table.
 #' 
+#' You can create or delete only one global secondary index per
+#' `UpdateTable` operation.
+#' 
 #' For more information, see [Managing Global Secondary
 #' Indexes](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GSI.OnlineOps.html)
 #' in the *Amazon DynamoDB Developer Guide*.
@@ -4763,6 +5076,12 @@ dynamodb_update_item <- function(TableName, Key, AttributeUpdates = NULL, Expect
 #' a table that already has a stream, or if you try to disable a stream on
 #' a table that doesn\'t have a stream.
 #' @param SSESpecification The new server-side encryption settings for the specified table.
+#' @param ReplicaUpdates A list of replica update actions (create, delete, or update) for the
+#' table.
+#' 
+#' This property only applies to [Version
+#' 2019.11.21](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.V2.html)
+#' of global tables.
 #'
 #' @section Request syntax:
 #' ```
@@ -4820,32 +5139,71 @@ dynamodb_update_item <- function(TableName, Key, AttributeUpdates = NULL, Expect
 #'     Enabled = TRUE|FALSE,
 #'     SSEType = "AES256"|"KMS",
 #'     KMSMasterKeyId = "string"
+#'   ),
+#'   ReplicaUpdates = list(
+#'     list(
+#'       Create = list(
+#'         RegionName = "string",
+#'         KMSMasterKeyId = "string",
+#'         ProvisionedThroughputOverride = list(
+#'           ReadCapacityUnits = 123
+#'         ),
+#'         GlobalSecondaryIndexes = list(
+#'           list(
+#'             IndexName = "string",
+#'             ProvisionedThroughputOverride = list(
+#'               ReadCapacityUnits = 123
+#'             )
+#'           )
+#'         )
+#'       ),
+#'       Update = list(
+#'         RegionName = "string",
+#'         KMSMasterKeyId = "string",
+#'         ProvisionedThroughputOverride = list(
+#'           ReadCapacityUnits = 123
+#'         ),
+#'         GlobalSecondaryIndexes = list(
+#'           list(
+#'             IndexName = "string",
+#'             ProvisionedThroughputOverride = list(
+#'               ReadCapacityUnits = 123
+#'             )
+#'           )
+#'         )
+#'       ),
+#'       Delete = list(
+#'         RegionName = "string"
+#'       )
+#'     )
 #'   )
 #' )
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # This example increases the provisioned read and write capacity on the
 #' # Music table.
-#' \donttest{svc$update_table(
+#' svc$update_table(
 #'   ProvisionedThroughput = list(
 #'     ReadCapacityUnits = 10L,
 #'     WriteCapacityUnits = 10L
 #'   ),
 #'   TableName = "MusicCollection"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
 #' @rdname dynamodb_update_table
-dynamodb_update_table <- function(AttributeDefinitions = NULL, TableName, BillingMode = NULL, ProvisionedThroughput = NULL, GlobalSecondaryIndexUpdates = NULL, StreamSpecification = NULL, SSESpecification = NULL) {
+dynamodb_update_table <- function(AttributeDefinitions = NULL, TableName, BillingMode = NULL, ProvisionedThroughput = NULL, GlobalSecondaryIndexUpdates = NULL, StreamSpecification = NULL, SSESpecification = NULL, ReplicaUpdates = NULL) {
   op <- new_operation(
     name = "UpdateTable",
     http_method = "POST",
     http_path = "/",
     paginator = list()
   )
-  input <- .dynamodb$update_table_input(AttributeDefinitions = AttributeDefinitions, TableName = TableName, BillingMode = BillingMode, ProvisionedThroughput = ProvisionedThroughput, GlobalSecondaryIndexUpdates = GlobalSecondaryIndexUpdates, StreamSpecification = StreamSpecification, SSESpecification = SSESpecification)
+  input <- .dynamodb$update_table_input(AttributeDefinitions = AttributeDefinitions, TableName = TableName, BillingMode = BillingMode, ProvisionedThroughput = ProvisionedThroughput, GlobalSecondaryIndexUpdates = GlobalSecondaryIndexUpdates, StreamSpecification = StreamSpecification, SSESpecification = SSESpecification, ReplicaUpdates = ReplicaUpdates)
   output <- .dynamodb$update_table_output()
   config <- get_config()
   svc <- .dynamodb$service(config)
@@ -4854,6 +5212,127 @@ dynamodb_update_table <- function(AttributeDefinitions = NULL, TableName, Billin
   return(response)
 }
 .dynamodb$operations$update_table <- dynamodb_update_table
+
+#' Updates auto scaling settings on your global tables at once
+#'
+#' Updates auto scaling settings on your global tables at once.
+#' 
+#' This method only applies to [Version
+#' 2019.11.21](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.V2.html)
+#' of global tables.
+#'
+#' @usage
+#' dynamodb_update_table_replica_auto_scaling(GlobalSecondaryIndexUpdates,
+#'   TableName, ProvisionedWriteCapacityAutoScalingUpdate, ReplicaUpdates)
+#'
+#' @param GlobalSecondaryIndexUpdates Represents the auto scaling settings of the global secondary indexes of
+#' the replica to be updated.
+#' @param TableName &#91;required&#93; The name of the global table to be updated.
+#' @param ProvisionedWriteCapacityAutoScalingUpdate 
+#' @param ReplicaUpdates Represents the auto scaling settings of replicas of the table that will
+#' be modified.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$update_table_replica_auto_scaling(
+#'   GlobalSecondaryIndexUpdates = list(
+#'     list(
+#'       IndexName = "string",
+#'       ProvisionedWriteCapacityAutoScalingUpdate = list(
+#'         MinimumUnits = 123,
+#'         MaximumUnits = 123,
+#'         AutoScalingDisabled = TRUE|FALSE,
+#'         AutoScalingRoleArn = "string",
+#'         ScalingPolicyUpdate = list(
+#'           PolicyName = "string",
+#'           TargetTrackingScalingPolicyConfiguration = list(
+#'             DisableScaleIn = TRUE|FALSE,
+#'             ScaleInCooldown = 123,
+#'             ScaleOutCooldown = 123,
+#'             TargetValue = 123.0
+#'           )
+#'         )
+#'       )
+#'     )
+#'   ),
+#'   TableName = "string",
+#'   ProvisionedWriteCapacityAutoScalingUpdate = list(
+#'     MinimumUnits = 123,
+#'     MaximumUnits = 123,
+#'     AutoScalingDisabled = TRUE|FALSE,
+#'     AutoScalingRoleArn = "string",
+#'     ScalingPolicyUpdate = list(
+#'       PolicyName = "string",
+#'       TargetTrackingScalingPolicyConfiguration = list(
+#'         DisableScaleIn = TRUE|FALSE,
+#'         ScaleInCooldown = 123,
+#'         ScaleOutCooldown = 123,
+#'         TargetValue = 123.0
+#'       )
+#'     )
+#'   ),
+#'   ReplicaUpdates = list(
+#'     list(
+#'       RegionName = "string",
+#'       ReplicaGlobalSecondaryIndexUpdates = list(
+#'         list(
+#'           IndexName = "string",
+#'           ProvisionedReadCapacityAutoScalingUpdate = list(
+#'             MinimumUnits = 123,
+#'             MaximumUnits = 123,
+#'             AutoScalingDisabled = TRUE|FALSE,
+#'             AutoScalingRoleArn = "string",
+#'             ScalingPolicyUpdate = list(
+#'               PolicyName = "string",
+#'               TargetTrackingScalingPolicyConfiguration = list(
+#'                 DisableScaleIn = TRUE|FALSE,
+#'                 ScaleInCooldown = 123,
+#'                 ScaleOutCooldown = 123,
+#'                 TargetValue = 123.0
+#'               )
+#'             )
+#'           )
+#'         )
+#'       ),
+#'       ReplicaProvisionedReadCapacityAutoScalingUpdate = list(
+#'         MinimumUnits = 123,
+#'         MaximumUnits = 123,
+#'         AutoScalingDisabled = TRUE|FALSE,
+#'         AutoScalingRoleArn = "string",
+#'         ScalingPolicyUpdate = list(
+#'           PolicyName = "string",
+#'           TargetTrackingScalingPolicyConfiguration = list(
+#'             DisableScaleIn = TRUE|FALSE,
+#'             ScaleInCooldown = 123,
+#'             ScaleOutCooldown = 123,
+#'             TargetValue = 123.0
+#'           )
+#'         )
+#'       )
+#'     )
+#'   )
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname dynamodb_update_table_replica_auto_scaling
+dynamodb_update_table_replica_auto_scaling <- function(GlobalSecondaryIndexUpdates = NULL, TableName, ProvisionedWriteCapacityAutoScalingUpdate = NULL, ReplicaUpdates = NULL) {
+  op <- new_operation(
+    name = "UpdateTableReplicaAutoScaling",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .dynamodb$update_table_replica_auto_scaling_input(GlobalSecondaryIndexUpdates = GlobalSecondaryIndexUpdates, TableName = TableName, ProvisionedWriteCapacityAutoScalingUpdate = ProvisionedWriteCapacityAutoScalingUpdate, ReplicaUpdates = ReplicaUpdates)
+  output <- .dynamodb$update_table_replica_auto_scaling_output()
+  config <- get_config()
+  svc <- .dynamodb$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.dynamodb$operations$update_table_replica_auto_scaling <- dynamodb_update_table_replica_auto_scaling
 
 #' The UpdateTimeToLive method enables or disables Time to Live (TTL) for
 #' the specified table

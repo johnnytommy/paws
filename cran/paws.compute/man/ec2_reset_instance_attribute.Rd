@@ -9,7 +9,7 @@ ec2_reset_instance_attribute(Attribute, DryRun, InstanceId)
 \arguments{
 \item{Attribute}{[required] The attribute to reset.
 
-You can only reset the following attributes: \code{kernel} \| \code{ramdisk} \|
+You can only reset the following attributes: \code{kernel} \\| \code{ramdisk} \\|
 \code{sourceDestCheck}. To change an instance attribute, use
 ModifyInstanceAttribute.}
 
@@ -42,12 +42,14 @@ in the \emph{Amazon Virtual Private Cloud User Guide}.
 }
 
 \examples{
+\dontrun{
 # This example resets the sourceDestCheck attribute for the specified
 # instance.
-\donttest{svc$reset_instance_attribute(
+svc$reset_instance_attribute(
   Attribute = "sourceDestCheck",
   InstanceId = "i-1234567890abcdef0"
-)}
+)
+}
 
 }
 \keyword{internal}

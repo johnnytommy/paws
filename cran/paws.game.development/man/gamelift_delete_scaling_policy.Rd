@@ -7,10 +7,11 @@
 gamelift_delete_scaling_policy(Name, FleetId)
 }
 \arguments{
-\item{Name}{[required] Descriptive label that is associated with a scaling policy. Policy names
-do not need to be unique.}
+\item{Name}{[required] A descriptive label that is associated with a scaling policy. Policy
+names do not need to be unique.}
 
-\item{FleetId}{[required] Unique identifier for a fleet to be deleted.}
+\item{FleetId}{[required] A unique identifier for a fleet to be deleted. You can use either the
+fleet ID or ARN value.}
 }
 \description{
 Deletes a fleet scaling policy. This action means that the policy is no
@@ -26,12 +27,16 @@ operation suspends all policies for the fleet.
 \item UpdateFleetCapacity
 \item DescribeEC2InstanceLimits
 \item Manage scaling policies:
+\itemize{
 \item PutScalingPolicy (auto-scaling)
 \item DescribeScalingPolicies (auto-scaling)
 \item DeleteScalingPolicy (auto-scaling)
+}
 \item Manage fleet actions:
+\itemize{
 \item StartFleetActions
 \item StopFleetActions
+}
 }
 }
 \section{Request syntax}{

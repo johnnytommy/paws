@@ -74,9 +74,11 @@ operations.
 }
 
 \examples{
-\donttest{svc <- robomaker()
+\dontrun{
+svc <- robomaker()
 svc$batch_describe_simulation_job(
   Foo = 123
-)}
+)
+}
 
 }

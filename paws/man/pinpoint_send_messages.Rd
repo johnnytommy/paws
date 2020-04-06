@@ -79,6 +79,7 @@ Creates and sends a direct message.
         Url = "string"
       ),
       APNSMessage = list(
+        APNSPushType = "string",
         Action = "OPEN_APP"|"DEEP_LINK"|"URL",
         Badge = 123,
         Body = "string",
@@ -225,6 +226,24 @@ Creates and sends a direct message.
           )
         ),
         VoiceId = "string"
+      )
+    ),
+    TemplateConfiguration = list(
+      EmailTemplate = list(
+        Name = "string",
+        Version = "string"
+      ),
+      PushTemplate = list(
+        Name = "string",
+        Version = "string"
+      ),
+      SMSTemplate = list(
+        Name = "string",
+        Version = "string"
+      ),
+      VoiceTemplate = list(
+        Name = "string",
+        Version = "string"
       )
     ),
     TraceId = "string"

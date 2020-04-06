@@ -11,7 +11,7 @@ efs_put_lifecycle_configuration(FileSystemId, LifecyclePolicies)
 \item{FileSystemId}{[required] The ID of the file system for which you are creating the
 \code{LifecycleConfiguration} object (String).}
 
-\item{LifecyclePolicies}{[required] An array of \code{LifecyclePolicy} objects that define the file system's
+\item{LifecyclePolicies}{[required] An array of \code{LifecyclePolicy} objects that define the file system\'s
 \code{LifecycleConfiguration} object. A \code{LifecycleConfiguration} object tells
 lifecycle management when to transition files from the Standard storage
 class to the Infrequent Access storage class.}
@@ -53,7 +53,7 @@ when you created the encrypted file system.
   FileSystemId = "string",
   LifecyclePolicies = list(
     list(
-      TransitionToIA = "AFTER_14_DAYS"|"AFTER_30_DAYS"|"AFTER_60_DAYS"|"AFTER_90_DAYS"
+      TransitionToIA = "AFTER_7_DAYS"|"AFTER_14_DAYS"|"AFTER_30_DAYS"|"AFTER_60_DAYS"|"AFTER_90_DAYS"
     )
   )
 )
@@ -61,19 +61,21 @@ when you created the encrypted file system.
 }
 
 \examples{
+\dontrun{
 # This operation enables lifecycle management on a file system by creating
 # a new LifecycleConfiguration object. A LifecycleConfiguration object
 # defines when files in an Amazon EFS file system are automatically
 # transitioned to the lower-cost EFS Infrequent Access (IA) storage class.
 # A LifecycleConfiguration applies to all files in a file system.
-\donttest{svc$put_lifecycle_configuration(
+svc$put_lifecycle_configuration(
   FileSystemId = "fs-01234567",
   LifecyclePolicies = list(
     list(
       TransitionToIA = "AFTER_30_DAYS"
     )
   )
-)}
+)
+}
 
 }
 \keyword{internal}

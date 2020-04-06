@@ -10,7 +10,7 @@ ses_clone_receipt_rule_set(RuleSetName, OriginalRuleSetName)
 \item{RuleSetName}{[required] The name of the rule set to create. The name must:
 \itemize{
 \item This value can only contain ASCII letters (a-z, A-Z), numbers (0-9),
-underscores (\_), or dashes (-).
+underscores (\\_), or dashes (-).
 \item Start and end with a letter or number.
 \item Contain less than 64 characters.
 }}
@@ -36,12 +36,14 @@ You can execute this operation no more than once per second.
 }
 
 \examples{
+\dontrun{
 # The following example creates a receipt rule set by cloning an existing
 # one:
-\donttest{svc$clone_receipt_rule_set(
+svc$clone_receipt_rule_set(
   OriginalRuleSetName = "RuleSetToClone",
   RuleSetName = "RuleSetToCreate"
-)}
+)
+}
 
 }
 \keyword{internal}

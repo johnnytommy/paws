@@ -8,7 +8,7 @@ request}
 gamelift_describe_game_session_placement(PlacementId)
 }
 \arguments{
-\item{PlacementId}{[required] Unique identifier for a game session placement to retrieve.}
+\item{PlacementId}{[required] A unique identifier for a game session placement to retrieve.}
 }
 \description{
 Retrieves properties and current status of a game session placement
@@ -24,9 +24,11 @@ ID. If successful, a GameSessionPlacement object is returned.
 \item UpdateGameSession
 \item GetGameSessionLogUrl
 \item Game session placements
+\itemize{
 \item StartGameSessionPlacement
 \item DescribeGameSessionPlacement
 \item StopGameSessionPlacement
+}
 }
 }
 \section{Request syntax}{

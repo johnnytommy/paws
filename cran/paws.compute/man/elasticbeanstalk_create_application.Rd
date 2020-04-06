@@ -23,7 +23,7 @@ application from accumulating too many versions.}
 \item{Tags}{Specifies the tags applied to the application.
 
 Elastic Beanstalk applies these tags only to the application.
-Environments that you create in the application don't inherit the tags.}
+Environments that you create in the application don\'t inherit the tags.}
 }
 \description{
 Creates an application that has one configuration template named
@@ -59,11 +59,13 @@ Creates an application that has one configuration template named
 }
 
 \examples{
+\dontrun{
 # The following operation creates a new application named my-app:
-\donttest{svc$create_application(
+svc$create_application(
   ApplicationName = "my-app",
   Description = "my application"
-)}
+)
+}
 
 }
 \keyword{internal}

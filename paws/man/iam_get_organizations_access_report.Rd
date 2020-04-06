@@ -34,7 +34,7 @@ time key, the results are sorted numerically by the date and time.}
 \description{
 Retrieves the service last accessed data report for AWS Organizations
 that was previously generated using the
-\code{<a>GenerateOrganizationsAccessReport</a>} operation. This operation
+\verb{<a>GenerateOrganizationsAccessReport</a>} operation. This operation
 retrieves the status of your report job and the report contents.
 }
 \details{
@@ -68,11 +68,13 @@ By default, the list is sorted by service namespace.
 }
 
 \examples{
+\dontrun{
 # The following operation gets details about the report with the job ID:
 # examplea-1234-b567-cde8-90fg123abcd4
-\donttest{svc$get_organizations_access_report(
+svc$get_organizations_access_report(
   JobId = "examplea-1234-b567-cde8-90fg123abcd4"
-)}
+)
+}
 
 }
 \keyword{internal}

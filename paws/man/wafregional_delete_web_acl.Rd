@@ -13,7 +13,7 @@ returned by CreateWebACL and by ListWebACLs.}
 \item{ChangeToken}{[required] The value returned by the most recent call to GetChangeToken.}
 }
 \description{
-Permanently deletes a WebACL. You can't delete a \code{WebACL} if it still
+Permanently deletes a WebACL. You can\'t delete a \code{WebACL} if it still
 contains any \code{Rules}.
 }
 \details{
@@ -35,12 +35,14 @@ see UpdateWebACL.
 }
 
 \examples{
+\dontrun{
 # The following example deletes a web ACL with the ID
 # example-46da-4444-5555-example.
-\donttest{svc$delete_web_acl(
+svc$delete_web_acl(
   ChangeToken = "abcd12f2-46da-4fdb-b8d5-fbd4c466928f",
   WebACLId = "example-46da-4444-5555-example"
-)}
+)
+}
 
 }
 \keyword{internal}

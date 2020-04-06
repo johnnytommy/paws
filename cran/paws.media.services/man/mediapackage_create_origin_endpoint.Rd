@@ -4,11 +4,14 @@
 \alias{mediapackage_create_origin_endpoint}
 \title{Creates a new OriginEndpoint record}
 \usage{
-mediapackage_create_origin_endpoint(ChannelId, CmafPackage, DashPackage,
-  Description, HlsPackage, Id, ManifestName, MssPackage,
-  StartoverWindowSeconds, Tags, TimeDelaySeconds, Whitelist)
+mediapackage_create_origin_endpoint(Authorization, ChannelId,
+  CmafPackage, DashPackage, Description, HlsPackage, Id, ManifestName,
+  MssPackage, Origination, StartoverWindowSeconds, Tags, TimeDelaySeconds,
+  Whitelist)
 }
 \arguments{
+\item{Authorization}{}
+
 \item{ChannelId}{[required] The ID of the Channel that the OriginEndpoint will be associated with.
 This cannot be changed after the OriginEndpoint is created.}
 
@@ -27,6 +30,10 @@ and it cannot be changed after the OriginEndpoint is created.}
 
 \item{MssPackage}{}
 
+\item{Origination}{Control whether origination of video is allowed for this OriginEndpoint. If set to ALLOW, the OriginEndpoint
+may by requested, pursuant to any other form of access control. If set to DENY, the OriginEndpoint may not be
+requested. This can be helpful for Live to VOD harvesting, or for temporarily disabling origination}
+
 \item{StartoverWindowSeconds}{Maximum duration (seconds) of content to retain for startover playback.
 If not specified, startover playback will be disabled for the OriginEndpoint.}
 
@@ -42,6 +49,10 @@ Creates a new OriginEndpoint record.
 }
 \section{Request syntax}{
 \preformatted{svc$create_origin_endpoint(
+  Authorization = list(
+    CdnIdentifierSecret = "string",
+    SecretsRoleArn = "string"
+  ),
   ChannelId = "string",
   CmafPackage = list(
     Encryption = list(
@@ -169,6 +180,7 @@ Creates a new OriginEndpoint record.
       StreamOrder = "ORIGINAL"|"VIDEO_BITRATE_ASCENDING"|"VIDEO_BITRATE_DESCENDING"
     )
   ),
+  Origination = "ALLOW"|"DENY",
   StartoverWindowSeconds = 123,
   Tags = list(
     "string"

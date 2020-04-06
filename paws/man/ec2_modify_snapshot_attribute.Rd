@@ -28,10 +28,11 @@ Otherwise, it is \code{UnauthorizedOperation}.}
 }
 \description{
 Adds or removes permission settings for the specified snapshot. You may
-add or remove specified AWS account IDs from a snapshot's list of
+add or remove specified AWS account IDs from a snapshot\'s list of
 create volume permissions, but you cannot do both in a single operation.
 If you need to both add and remove account IDs for a snapshot, you must
-use multiple operations.
+use multiple operations. You can make up to 500 modifications to a
+snapshot in a single operation.
 }
 \details{
 Encrypted snapshots and snapshots with AWS Marketplace product codes
@@ -72,27 +73,29 @@ in the \emph{Amazon Elastic Compute Cloud User Guide}.
 }
 
 \examples{
-# This example modifies snapshot ``snap-1234567890abcdef0`` to remove the
+\dontrun{
+# This example modifies snapshot `snap-1234567890abcdef0` to remove the
 # create volume permission for a user with the account ID
-# ``123456789012``. If the command succeeds, no output is returned.
-\donttest{svc$modify_snapshot_attribute(
+# `123456789012`. If the command succeeds, no output is returned.
+svc$modify_snapshot_attribute(
   Attribute = "createVolumePermission",
   OperationType = "remove",
   SnapshotId = "snap-1234567890abcdef0",
   UserIds = list(
     "123456789012"
   )
-)}
+)
 
-# This example makes the snapshot ``snap-1234567890abcdef0`` public.
-\donttest{svc$modify_snapshot_attribute(
+# This example makes the snapshot `snap-1234567890abcdef0` public.
+svc$modify_snapshot_attribute(
   Attribute = "createVolumePermission",
   GroupNames = list(
     "all"
   ),
   OperationType = "add",
   SnapshotId = "snap-1234567890abcdef0"
-)}
+)
+}
 
 }
 \keyword{internal}

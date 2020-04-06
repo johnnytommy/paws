@@ -9,12 +9,13 @@ gamelift_search_game_sessions(FleetId, AliasId, FilterExpression,
   SortExpression, Limit, NextToken)
 }
 \arguments{
-\item{FleetId}{Unique identifier for a fleet to search for active game sessions. Each
-request must reference either a fleet ID or alias ID, but not both.}
+\item{FleetId}{A unique identifier for a fleet to search for active game sessions. You
+can use either the fleet ID or ARN value. Each request must reference
+either a fleet ID or alias ID, but not both.}
 
-\item{AliasId}{Unique identifier for an alias associated with the fleet to search for
-active game sessions. Each request must reference either a fleet ID or
-alias ID, but not both.}
+\item{AliasId}{A unique identifier for an alias associated with the fleet to search for
+active game sessions. You can use either the alias ID or ARN value. Each
+request must reference either a fleet ID or alias ID, but not both.}
 
 \item{FilterExpression}{String containing the search criteria for the session search. If no
 filter expression is included, the request returns results for all game
@@ -23,30 +24,30 @@ sessions in the fleet that are in \code{ACTIVE} status.
 A filter expression can contain one or multiple conditions. Each
 condition consists of the following:
 \itemize{
-\item \strong{Operand} \-- Name of a game session attribute. Valid values are
+\item \strong{Operand} \\-- Name of a game session attribute. Valid values are
 \code{gameSessionName}, \code{gameSessionId}, \code{gameSessionProperties},
 \code{maximumSessions}, \code{creationTimeMillis}, \code{playerSessionCount},
 \code{hasAvailablePlayerSessions}.
-\item \strong{Comparator} \-- Valid comparators are: \code{=}, \code{&lt;&gt;}, \code{&lt;},
-\code{&gt;}, \code{&lt;=}, \code{&gt;=}.
-\item \strong{Value} \-- Value to be searched for. Values may be numbers,
+\item \strong{Comparator} \\-- Valid comparators are: \code{=}, \verb{&lt;&gt;}, \verb{&lt;},
+\verb{&gt;}, \verb{&lt;=}, \verb{&gt;=}.
+\item \strong{Value} \\-- Value to be searched for. Values may be numbers,
 boolean values (true/false) or strings depending on the operand.
 String values are case sensitive and must be enclosed in single
 quotes. Special characters must be escaped. Boolean and string
-values can only be used with the comparators \code{=} and \code{&lt;&gt;}. For
+values can only be used with the comparators \code{=} and \verb{&lt;&gt;}. For
 example, the following filter expression searches on
 \code{gameSessionName}:
-"\code{FilterExpression\": \"gameSessionName = \'Matt\\\'s Awesome Game 1\'\"}.
+\"\verb{FilterExpression\\": \\"gameSessionName = \\'Matt\\\\\\'s Awesome Game 1\\'\\"}.
 }
 
 To chain multiple conditions in a single expression, use the logical
 keywords \code{AND}, \code{OR}, and \code{NOT} and parentheses as needed. For example:
-\code{x AND y AND NOT z}, \code{NOT (x OR y)}.
+\verb{x AND y AND NOT z}, \verb{NOT (x OR y)}.
 
 Session search evaluates conditions from left to right using the
 following precedence rules:
 \enumerate{
-\item \code{=}, \code{&lt;&gt;}, \code{&lt;}, \code{&gt;}, \code{&lt;=}, \code{&gt;=}
+\item \code{=}, \verb{&lt;&gt;}, \verb{&lt;}, \verb{&gt;}, \verb{&lt;=}, \verb{&gt;=}
 \item Parentheses
 \item NOT
 \item AND
@@ -61,11 +62,11 @@ least ten players that have an open player slot:
 included, the request returns results in random order. A sort expression
 consists of the following elements:
 \itemize{
-\item \strong{Operand} \-- Name of a game session attribute. Valid values are
+\item \strong{Operand} \\-- Name of a game session attribute. Valid values are
 \code{gameSessionName}, \code{gameSessionId}, \code{gameSessionProperties},
 \code{maximumSessions}, \code{creationTimeMillis}, \code{playerSessionCount},
 \code{hasAvailablePlayerSessions}.
-\item \strong{Order} \-- Valid sort orders are \code{ASC} (ascending) and \code{DESC}
+\item \strong{Order} \\-- Valid sort orders are \code{ASC} (ascending) and \code{DESC}
 (descending).
 }
 
@@ -73,10 +74,10 @@ For example, this sort expression returns the oldest active sessions
 first: \code{"SortExpression": "creationTimeMillis ASC"}. Results with a null
 value for the sort operand are returned at the end of the list.}
 
-\item{Limit}{Maximum number of results to return. Use this parameter with \code{NextToken}
-to get results as a set of sequential pages. The maximum number of
-results returned is 20, even if this value is not set or is set higher
-than 20.}
+\item{Limit}{The maximum number of results to return. Use this parameter with
+\code{NextToken} to get results as a set of sequential pages. The maximum
+number of results returned is 20, even if this value is not set or is
+set higher than 20.}
 
 \item{NextToken}{Token that indicates the start of the next sequential page of results.
 Use the token that is returned with a previous call to this action. To
@@ -89,29 +90,29 @@ following game session attributes:
 }
 \details{
 \itemize{
-\item \strong{gameSessionId} \-- Unique identifier for the game session. You
+\item \strong{gameSessionId} \\-- A unique identifier for the game session. You
 can use either a \code{GameSessionId} or \code{GameSessionArn} value.
-\item \strong{gameSessionName} \-- Name assigned to a game session. This value
+\item \strong{gameSessionName} \\-- Name assigned to a game session. This value
 is set when requesting a new game session with CreateGameSession or
 updating with UpdateGameSession. Game session names do not need to
 be unique to a game session.
-\item \strong{gameSessionProperties} \-- Custom data defined in a game
-session's \code{GameProperty} parameter. \code{GameProperty} values are
+\item \strong{gameSessionProperties} \\-- Custom data defined in a game
+session\'s \code{GameProperty} parameter. \code{GameProperty} values are
 stored as key:value pairs; the filter expression must indicate the
 key and a string to search the data values for. For example, to
 search for game sessions with custom data containing the key:value
-pair "gameMode:brawl", specify the following:
+pair \"gameMode:brawl\", specify the following:
 \code{gameSessionProperties.gameMode = "brawl"}. All custom data values
 are searched as strings.
-\item \strong{maximumSessions} \-- Maximum number of player sessions allowed
+\item \strong{maximumSessions} \\-- Maximum number of player sessions allowed
 for a game session. This value is set when requesting a new game
 session with CreateGameSession or updating with UpdateGameSession.
-\item \strong{creationTimeMillis} \-- Value indicating when a game session was
+\item \strong{creationTimeMillis} \\-- Value indicating when a game session was
 created. It is expressed in Unix time as milliseconds.
-\item \strong{playerSessionCount} \-- Number of players currently connected to
+\item \strong{playerSessionCount} \\-- Number of players currently connected to
 a game session. This value changes rapidly as players join the
 session or drop out.
-\item \strong{hasAvailablePlayerSessions} \-- Boolean value indicating whether
+\item \strong{hasAvailablePlayerSessions} \\-- Boolean value indicating whether
 a game session has reached its maximum number of players. It is
 highly recommended that all search requests include this filter
 attribute to optimize search performance and return only sessions
@@ -143,9 +144,11 @@ active, use DescribeGameSessionDetails.
 \item UpdateGameSession
 \item GetGameSessionLogUrl
 \item Game session placements
+\itemize{
 \item StartGameSessionPlacement
 \item DescribeGameSessionPlacement
 \item StopGameSessionPlacement
+}
 }
 }
 \section{Request syntax}{

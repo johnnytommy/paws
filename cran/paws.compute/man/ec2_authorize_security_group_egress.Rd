@@ -17,7 +17,7 @@ Otherwise, it is \code{UnauthorizedOperation}.}
 
 \item{GroupId}{[required] The ID of the security group.}
 
-\item{IpPermissions}{The sets of IP permissions. You can't specify a destination security
+\item{IpPermissions}{The sets of IP permissions. You can\'t specify a destination security
 group and a CIDR IP address range in the same set of permissions.}
 
 \item{CidrIp}{Not supported. Use a set of IP permissions to specify the CIDR.}
@@ -105,9 +105,10 @@ For more information about VPC security group limits, see \href{https://docs.aws
 }
 
 \examples{
+\dontrun{
 # This example adds a rule that grants access to the specified address
 # ranges on TCP port 80.
-\donttest{svc$authorize_security_group_egress(
+svc$authorize_security_group_egress(
   GroupId = "sg-1a2b3c4d",
   IpPermissions = list(
     list(
@@ -121,11 +122,11 @@ For more information about VPC security group limits, see \href{https://docs.aws
       ToPort = 80L
     )
   )
-)}
+)
 
 # This example adds a rule that grants access to the specified security
 # group on TCP port 80.
-\donttest{svc$authorize_security_group_egress(
+svc$authorize_security_group_egress(
   GroupId = "sg-1a2b3c4d",
   IpPermissions = list(
     list(
@@ -139,7 +140,8 @@ For more information about VPC security group limits, see \href{https://docs.aws
       )
     )
   )
-)}
+)
+}
 
 }
 \keyword{internal}

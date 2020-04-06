@@ -9,7 +9,7 @@ snowball_describe_addresses(MaxResults, NextToken)
 \arguments{
 \item{MaxResults}{The number of \code{ADDRESS} objects to return.}
 
-\item{NextToken}{HTTP requests are stateless. To identify what object comes "next" in
+\item{NextToken}{HTTP requests are stateless. To identify what object comes \"next\" in
 the list of \code{ADDRESS} objects, you have the option of specifying a value
 for \code{NextToken} as the starting point for your list of returned
 addresses.}
@@ -28,11 +28,13 @@ associated with this account in all US regions.
 }
 
 \examples{
+\dontrun{
 # This operation describes all the addresses that you've created for AWS
 # Snowball. Calling this API in one of the US regions will return
 # addresses from the list of all addresses associated with this account in
 # all US regions.
-\donttest{svc$describe_addresses()}
+svc$describe_addresses()
+}
 
 }
 \keyword{internal}

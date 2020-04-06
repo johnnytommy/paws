@@ -27,10 +27,12 @@ connection before you can delete the customer gateway.
 }
 
 \examples{
+\dontrun{
 # This example deletes the specified customer gateway.
-\donttest{svc$delete_customer_gateway(
+svc$delete_customer_gateway(
   CustomerGatewayId = "cgw-0e11f167"
-)}
+)
+}
 
 }
 \keyword{internal}

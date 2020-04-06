@@ -15,9 +15,9 @@ specify a CMK in a different AWS account, you must use the key ARN.
 
 For example:
 \itemize{
-\item Key ID: \code{1234abcd-12ab-34cd-56ef-1234567890ab}
+\item Key ID: \verb{1234abcd-12ab-34cd-56ef-1234567890ab}
 \item Key ARN:
-\code{arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab}
+\verb{arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab}
 }
 
 To get the key ID and key ARN for a CMK, use ListKeys or DescribeKey.}
@@ -41,11 +41,13 @@ the key ARN in the value of the \code{KeyId} parameter.
 }
 
 \examples{
+\dontrun{
 # The following example revokes a grant.
-\donttest{svc$revoke_grant(
+svc$revoke_grant(
   GrantId = "0c237476b39f8bc44e45212e08498fbe3151305030726c0590dd8d3e9f3d6a60",
   KeyId = "1234abcd-12ab-34cd-56ef-1234567890ab"
-)}
+)
+}
 
 }
 \keyword{internal}

@@ -7,7 +7,7 @@
 devicefarm_get_upload(arn)
 }
 \arguments{
-\item{arn}{[required] The upload's ARN.}
+\item{arn}{[required] The upload\'s ARN.}
 }
 \description{
 Gets information about an upload.
@@ -20,10 +20,12 @@ Gets information about an upload.
 }
 
 \examples{
+\dontrun{
 # The following example gets information about a specific upload.
-\donttest{svc$get_upload(
+svc$get_upload(
   arn = "arn:aws:devicefarm:us-west-2:123456789101:upload:EXAMPLE-GUID-123-456"
-)}
+)
+}
 
 }
 \keyword{internal}

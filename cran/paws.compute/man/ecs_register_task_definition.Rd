@@ -8,7 +8,7 @@ containerDefinitions}
 ecs_register_task_definition(family, taskRoleArn, executionRoleArn,
   networkMode, containerDefinitions, volumes, placementConstraints,
   requiresCompatibilities, cpu, memory, tags, pidMode, ipcMode,
-  proxyConfiguration)
+  proxyConfiguration, inferenceAccelerators)
 }
 \arguments{
 \item{family}{[required] You must specify a \code{family} for a task definition, which allows you to
@@ -60,7 +60,7 @@ Docker for Windows uses different network modes than Docker for Linux.
 When you register a task definition with Windows containers, you must
 not specify a network mode. If you use the console to register a task
 definition with Windows containers, you must choose the
-\code{&lt;default&gt;} network mode object.
+\verb{&lt;default&gt;} network mode object.
 
 For more information, see \href{https://docs.docker.com/engine/reference/run/#network-settings}{Network settings}
 in the \emph{Docker run reference}.}
@@ -80,7 +80,7 @@ defaults to \code{EC2}.}
 
 \item{cpu}{The number of CPU units used by the task. It can be expressed as an
 integer using CPU units, for example \code{1024}, or as a string using vCPUs,
-for example \code{1 vCPU} or \code{1 vcpu}, in a task definition. String values
+for example \verb{1 vCPU} or \verb{1 vcpu}, in a task definition. String values
 are converted to an integer indicating the CPU units when the task
 definition is registered.
 
@@ -110,7 +110,7 @@ GB), 2048 (2 GB)
 
 \item{memory}{The amount of memory (in MiB) used by the task. It can be expressed as
 an integer using MiB, for example \code{1024}, or as a string using GB, for
-example \code{1GB} or \code{1 GB}, in a task definition. String values are
+example \verb{1GB} or \verb{1 GB}, in a task definition. String values are
 converted to an integer indicating the MiB when the task definition is
 registered.
 
@@ -138,17 +138,36 @@ Available \code{cpu} values: 4096 (4 vCPU)
 
 \item{tags}{The metadata that you apply to the task definition to help you
 categorize and organize them. Each tag consists of a key and an optional
-value, both of which you define. Tag keys can have a maximum character
-length of 128 characters, and tag values can have a maximum length of
-256 characters.}
+value, both of which you define.
+
+The following basic restrictions apply to tags:
+\itemize{
+\item Maximum number of tags per resource - 50
+\item For each resource, each tag key must be unique, and each tag key can
+have only one value.
+\item Maximum key length - 128 Unicode characters in UTF-8
+\item Maximum value length - 256 Unicode characters in UTF-8
+\item If your tagging schema is used across multiple services and
+resources, remember that other services may have restrictions on
+allowed characters. Generally allowed characters are: letters,
+numbers, and spaces representable in UTF-8, and the following
+characters: + - = . \\_ : / @.
+\item Tag keys and values are case-sensitive.
+\item Do not use \verb{aws:}, \verb{AWS:}, or any upper or lowercase combination of
+such as a prefix for either keys or values as it is reserved for AWS
+use. You cannot edit or delete tag keys or values with this prefix.
+Tags with this prefix do not count against your tags per resource
+limit.
+}}
 
 \item{pidMode}{The process namespace to use for the containers in the task. The valid
 values are \code{host} or \code{task}. If \code{host} is specified, then all containers
 within the tasks that specified the \code{host} PID mode on the same
-container instance share the same IPC resources with the host Amazon EC2
-instance. If \code{task} is specified, all containers within the specified
-task share the same process namespace. If no value is specified, the
-default is a private namespace. For more information, see \href{https://docs.docker.com/engine/reference/run/#pid-settings---pid}{PID settings}
+container instance share the same process namespace with the host Amazon
+EC2 instance. If \code{task} is specified, all containers within the
+specified task share the same process namespace. If no value is
+specified, the default is a private namespace. For more information, see
+\href{https://docs.docker.com/engine/reference/run/#pid-settings---pid}{PID settings}
 in the \emph{Docker run reference}.
 
 If the \code{host} PID mode is used, be aware that there is a heightened risk
@@ -188,6 +207,9 @@ This parameter is not supported for Windows containers or tasks using
 the Fargate launch type.}
 
 \item{proxyConfiguration}{}
+
+\item{inferenceAccelerators}{The Elastic Inference accelerators to use for the containers in the
+task.}
 }
 \description{
 Registers a new task definition from the supplied \code{family} and
@@ -293,7 +315,9 @@ in the \emph{Amazon Elastic Container Service Developer Guide}.
               "string"
             )
           )
-        )
+        ),
+        maxSwap = 123,
+        swappiness = 123
       ),
       secrets = list(
         list(
@@ -343,7 +367,7 @@ in the \emph{Amazon Elastic Container Service Developer Guide}.
         )
       ),
       logConfiguration = list(
-        logDriver = "json-file"|"syslog"|"journald"|"gelf"|"fluentd"|"awslogs"|"splunk",
+        logDriver = "json-file"|"syslog"|"journald"|"gelf"|"fluentd"|"awslogs"|"splunk"|"awsfirelens",
         options = list(
           "string"
         ),
@@ -372,7 +396,13 @@ in the \emph{Amazon Elastic Container Service Developer Guide}.
       resourceRequirements = list(
         list(
           value = "string",
-          type = "GPU"
+          type = "GPU"|"InferenceAccelerator"
+        )
+      ),
+      firelensConfiguration = list(
+        type = "fluentd"|"fluentbit",
+        options = list(
+          "string"
         )
       )
     )
@@ -424,14 +454,21 @@ in the \emph{Amazon Elastic Container Service Developer Guide}.
         value = "string"
       )
     )
+  ),
+  inferenceAccelerators = list(
+    list(
+      deviceName = "string",
+      deviceType = "string"
+    )
   )
 )
 }
 }
 
 \examples{
+\dontrun{
 # This example registers a task definition to the specified family.
-\donttest{svc$register_task_definition(
+svc$register_task_definition(
   containerDefinitions = list(
     list(
       name = "sleep",
@@ -448,7 +485,8 @@ in the \emph{Amazon Elastic Container Service Developer Guide}.
   family = "sleep360",
   taskRoleArn = "",
   volumes = list()
-)}
+)
+}
 
 }
 \keyword{internal}

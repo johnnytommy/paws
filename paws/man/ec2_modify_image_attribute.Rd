@@ -22,7 +22,7 @@ ec2_modify_image_attribute(Attribute, Description, ImageId,
 parameter is \code{launchPermission}.}
 
 \item{ProductCodes}{The DevPay product codes. After you add a product code to an AMI, it
-can't be removed.}
+can\'t be removed.}
 
 \item{UserGroups}{The user groups. This parameter can be used only when the \code{Attribute}
 parameter is \code{launchPermission}.}
@@ -90,8 +90,9 @@ instance.
 }
 
 \examples{
+\dontrun{
 # This example makes the specified AMI public.
-\donttest{svc$modify_image_attribute(
+svc$modify_image_attribute(
   ImageId = "ami-5731123e",
   LaunchPermission = list(
     Add = list(
@@ -100,11 +101,11 @@ instance.
       )
     )
   )
-)}
+)
 
 # This example grants launch permissions for the specified AMI to the
 # specified AWS account.
-\donttest{svc$modify_image_attribute(
+svc$modify_image_attribute(
   ImageId = "ami-5731123e",
   LaunchPermission = list(
     Add = list(
@@ -113,7 +114,8 @@ instance.
       )
     )
   )
-)}
+)
+}
 
 }
 \keyword{internal}

@@ -38,10 +38,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- iotthingsgraph()
+#' \dontrun{
+#' svc <- iotthingsgraph()
 #' svc$associate_entity_to_thing(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -105,8 +107,7 @@ iotthingsgraph <- function(config = list()) {
   target_prefix = "IotThingsGraphFrontEndService"
 )
 
-.iotthingsgraph$handlers <- new_handlers("jsonrpc", "v4")
-
 .iotthingsgraph$service <- function(config = list()) {
-  new_service(.iotthingsgraph$metadata, .iotthingsgraph$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.iotthingsgraph$metadata, handlers, config)
 }

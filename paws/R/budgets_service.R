@@ -74,10 +74,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- budgets()
+#' \dontrun{
+#' svc <- budgets()
 #' svc$create_budget(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -120,8 +122,7 @@ budgets <- function(config = list()) {
   target_prefix = "AWSBudgetServiceGateway"
 )
 
-.budgets$handlers <- new_handlers("jsonrpc", "v4")
-
 .budgets$service <- function(config = list()) {
-  new_service(.budgets$metadata, .budgets$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.budgets$metadata, handlers, config)
 }

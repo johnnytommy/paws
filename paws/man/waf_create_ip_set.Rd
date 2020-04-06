@@ -9,7 +9,7 @@ originate from}
 waf_create_ip_set(Name, ChangeToken)
 }
 \arguments{
-\item{Name}{[required] A friendly name or description of the IPSet. You can't change \code{Name}
+\item{Name}{[required] A friendly name or description of the IPSet. You can\'t change \code{Name}
 after you create the \code{IPSet}.}
 
 \item{ChangeToken}{[required] The value returned by the most recent call to GetChangeToken.}
@@ -17,7 +17,7 @@ after you create the \code{IPSet}.}
 \description{
 Creates an IPSet, which you use to specify which web requests that you
 want to allow or block based on the IP addresses that the requests
-originate from. For example, if you're receiving a lot of requests from
+originate from. For example, if you\'re receiving a lot of requests from
 one or more individual IP addresses or one or more ranges of IP
 addresses and you want to block the requests, you can create an \code{IPSet}
 that contains those IP addresses and then configure AWS WAF to block the
@@ -47,11 +47,13 @@ HTTP requests, see the \href{https://docs.aws.amazon.com/waf/latest/developergui
 }
 
 \examples{
+\dontrun{
 # The following example creates an IP match set named MyIPSetFriendlyName.
-\donttest{svc$create_ip_set(
+svc$create_ip_set(
   ChangeToken = "abcd12f2-46da-4fdb-b8d5-fbd4c466928f",
   Name = "MyIPSetFriendlyName"
-)}
+)
+}
 
 }
 \keyword{internal}

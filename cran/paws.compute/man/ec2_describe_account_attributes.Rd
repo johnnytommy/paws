@@ -24,8 +24,10 @@ supported account attributes:
 instances into EC2-Classic and EC2-VPC, or only into EC2-VPC.
 \item \code{default-vpc}: The ID of the default VPC for your account, or
 \code{none}.
-\item \code{max-instances}: The maximum number of On-Demand Instances that you
-can run.
+\item \code{max-instances}: This attribute is no longer supported. The returned
+value does not reflect your actual vCPU limit for running On-Demand
+Instances. For more information, see \href{https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-on-demand-instances.html#ec2-on-demand-instances-limits}{On-Demand Instance Limits}
+in the \emph{Amazon Elastic Compute Cloud User Guide}.
 \item \code{vpc-max-security-groups-per-interface}: The maximum number of
 security groups that you can assign to a network interface.
 \item \code{max-elastic-ips}: The maximum number of Elastic IP addresses that
@@ -45,16 +47,18 @@ that you can allocate for use with EC2-VPC.
 }
 
 \examples{
+\dontrun{
 # This example describes the supported-platforms attribute for your AWS
 # account.
-\donttest{svc$describe_account_attributes(
+svc$describe_account_attributes(
   AttributeNames = list(
     "supported-platforms"
   )
-)}
+)
 
 # This example describes the attributes for your AWS account.
-\donttest{svc$describe_account_attributes()}
+svc$describe_account_attributes()
+}
 
 }
 \keyword{internal}

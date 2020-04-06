@@ -5,17 +5,23 @@
 \title{Re-ranks a list of recommended items for the given user}
 \usage{
 personalizeruntime_get_personalized_ranking(campaignArn, inputList,
-  userId)
+  userId, context)
 }
 \arguments{
 \item{campaignArn}{[required] The Amazon Resource Name (ARN) of the campaign to use for generating the
 personalized ranking.}
 
-\item{inputList}{[required] A list of items (itemId's) to rank. If an item was not included in the
-training dataset, the item is appended to the end of the reranked list.}
+\item{inputList}{[required] A list of items (itemId\'s) to rank. If an item was not included in the
+training dataset, the item is appended to the end of the reranked list.
+The maximum is 500.}
 
 \item{userId}{[required] The user for which you want the campaign to provide a personalized
 ranking.}
+
+\item{context}{The contextual metadata to use when getting recommendations. Contextual
+metadata includes any interaction information that might be relevant
+when getting a user\'s recommendations, such as the user\'s current
+location or device type. For more information, see Contextual Metadata.}
 }
 \description{
 Re-ranks a list of recommended items for the given user. The first item
@@ -24,7 +30,7 @@ user.
 }
 \details{
 The solution backing the campaign must have been created using a recipe
-of type PERSONALIZED\_RANKING.
+of type PERSONALIZED\\_RANKING.
 }
 \section{Request syntax}{
 \preformatted{svc$get_personalized_ranking(
@@ -32,7 +38,10 @@ of type PERSONALIZED\_RANKING.
   inputList = list(
     "string"
   ),
-  userId = "string"
+  userId = "string",
+  context = list(
+    "string"
+  )
 )
 }
 }

@@ -87,6 +87,7 @@ compute resources. To use a new AMI for your AWS Batch jobs:
   state = "ENABLED"|"DISABLED",
   computeResources = list(
     type = "EC2"|"SPOT",
+    allocationStrategy = "BEST_FIT"|"BEST_FIT_PROGRESSIVE"|"SPOT_CAPACITY_OPTIMIZED",
     minvCpus = 123,
     maxvCpus = 123,
     desiredvCpus = 123,
@@ -120,10 +121,11 @@ compute resources. To use a new AMI for your AWS Batch jobs:
 }
 
 \examples{
+\dontrun{
 # This example creates a managed compute environment with specific C4
 # instance types that are launched on demand. The compute environment is
 # called C4OnDemand.
-\donttest{svc$create_compute_environment(
+svc$create_compute_environment(
   type = "MANAGED",
   computeEnvironmentName = "C4OnDemand",
   computeResources = list(
@@ -154,13 +156,13 @@ compute resources. To use a new AMI for your AWS Batch jobs:
   ),
   serviceRole = "arn:aws:iam::012345678910:role/AWSBatchServiceRole",
   state = "ENABLED"
-)}
+)
 
 # This example creates a managed compute environment with the M4 instance
 # type that is launched when the Spot bid price is at or below 20\% of the
 # On-Demand price for the instance type. The compute environment is called
 # M4Spot.
-\donttest{svc$create_compute_environment(
+svc$create_compute_environment(
   type = "MANAGED",
   computeEnvironmentName = "M4Spot",
   computeResources = list(
@@ -189,7 +191,8 @@ compute resources. To use a new AMI for your AWS Batch jobs:
   ),
   serviceRole = "arn:aws:iam::012345678910:role/AWSBatchServiceRole",
   state = "ENABLED"
-)}
+)
+}
 
 }
 \keyword{internal}

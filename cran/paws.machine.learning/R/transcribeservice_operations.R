@@ -21,11 +21,11 @@ NULL
 #' custom vocabulary. The URI must be in the same region as the API
 #' endpoint that you are calling. The general form is
 #' 
-#' ` https://s3-&lt;aws-region&gt;.amazonaws.com/&lt;bucket-name&gt;/&lt;keyprefix&gt;/&lt;objectkey&gt; `
+#' ` https://s3.&lt;aws-region&gt;.amazonaws.com/&lt;bucket-name&gt;/&lt;keyprefix&gt;/&lt;objectkey&gt; `
 #' 
 #' For example:
 #' 
-#' `https://s3-us-east-1.amazonaws.com/examplebucket/vocab.txt`
+#' `https://s3.us-east-1.amazonaws.com/examplebucket/vocab.txt`
 #' 
 #' For more information about S3 object names, see [Object
 #' Keys](http://docs.aws.amazon.com/AmazonS3/latest/dev/UsingMetadata.html#object-keys)
@@ -38,7 +38,7 @@ NULL
 #' ```
 #' svc$create_vocabulary(
 #'   VocabularyName = "string",
-#'   LanguageCode = "en-US"|"es-US"|"en-AU"|"fr-CA"|"en-GB"|"de-DE"|"pt-BR"|"fr-FR"|"it-IT"|"ko-KR"|"es-ES"|"en-IN"|"hi-IN"|"ar-SA",
+#'   LanguageCode = "en-US"|"es-US"|"en-AU"|"fr-CA"|"en-GB"|"de-DE"|"pt-BR"|"fr-FR"|"it-IT"|"ko-KR"|"es-ES"|"en-IN"|"hi-IN"|"ar-SA"|"ru-RU"|"zh-CN"|"nl-NL"|"id-ID"|"ta-IN"|"fa-IR"|"en-IE"|"en-AB"|"en-WL"|"pt-PT"|"te-IN"|"tr-TR"|"de-CH"|"he-IL"|"ms-MY"|"ja-JP"|"ar-AE",
 #'   Phrases = list(
 #'     "string"
 #'   ),
@@ -65,6 +65,72 @@ transcribeservice_create_vocabulary <- function(VocabularyName, LanguageCode, Ph
   return(response)
 }
 .transcribeservice$operations$create_vocabulary <- transcribeservice_create_vocabulary
+
+#' Creates a new vocabulary filter that you can use to filter words, such
+#' as profane words, from the output of a transcription job
+#'
+#' Creates a new vocabulary filter that you can use to filter words, such
+#' as profane words, from the output of a transcription job.
+#'
+#' @usage
+#' transcribeservice_create_vocabulary_filter(VocabularyFilterName,
+#'   LanguageCode, Words, VocabularyFilterFileUri)
+#'
+#' @param VocabularyFilterName &#91;required&#93; The vocabulary filter name. The name must be unique within the account
+#' that contains it.
+#' @param LanguageCode &#91;required&#93; The language code of the words in the vocabulary filter. All words in
+#' the filter must be in the same language. The vocabulary filter can only
+#' be used with transcription jobs in the specified language.
+#' @param Words The words to use in the vocabulary filter. Only use characters from the
+#' character set defined for custom vocabularies. For a list of character
+#' sets, see [Character Sets for Custom
+#' Vocabularies](https://docs.aws.amazon.com/transcribe/latest/dg/how-vocabulary.html#charsets).
+#' 
+#' If you provide a list of words in the `Words` parameter, you can\'t use
+#' the `VocabularyFilterFileUri` parameter.
+#' @param VocabularyFilterFileUri The Amazon S3 location of a text file used as input to create the
+#' vocabulary filter. Only use characters from the character set defined
+#' for custom vocabularies. For a list of character sets, see [Character
+#' Sets for Custom
+#' Vocabularies](https://docs.aws.amazon.com/transcribe/latest/dg/how-vocabulary.html#charsets).
+#' 
+#' The specified file must be less than 50 KB of UTF-8 characters.
+#' 
+#' If you provide the location of a list of words in the
+#' `VocabularyFilterFileUri` parameter, you can\'t use the `Words`
+#' parameter.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$create_vocabulary_filter(
+#'   VocabularyFilterName = "string",
+#'   LanguageCode = "en-US"|"es-US"|"en-AU"|"fr-CA"|"en-GB"|"de-DE"|"pt-BR"|"fr-FR"|"it-IT"|"ko-KR"|"es-ES"|"en-IN"|"hi-IN"|"ar-SA"|"ru-RU"|"zh-CN"|"nl-NL"|"id-ID"|"ta-IN"|"fa-IR"|"en-IE"|"en-AB"|"en-WL"|"pt-PT"|"te-IN"|"tr-TR"|"de-CH"|"he-IL"|"ms-MY"|"ja-JP"|"ar-AE",
+#'   Words = list(
+#'     "string"
+#'   ),
+#'   VocabularyFilterFileUri = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname transcribeservice_create_vocabulary_filter
+transcribeservice_create_vocabulary_filter <- function(VocabularyFilterName, LanguageCode, Words = NULL, VocabularyFilterFileUri = NULL) {
+  op <- new_operation(
+    name = "CreateVocabularyFilter",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .transcribeservice$create_vocabulary_filter_input(VocabularyFilterName = VocabularyFilterName, LanguageCode = LanguageCode, Words = Words, VocabularyFilterFileUri = VocabularyFilterFileUri)
+  output <- .transcribeservice$create_vocabulary_filter_output()
+  config <- get_config()
+  svc <- .transcribeservice$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.transcribeservice$operations$create_vocabulary_filter <- transcribeservice_create_vocabulary_filter
 
 #' Deletes a previously submitted transcription job along with any other
 #' generated results such as the transcription, models, and so on
@@ -139,6 +205,42 @@ transcribeservice_delete_vocabulary <- function(VocabularyName) {
   return(response)
 }
 .transcribeservice$operations$delete_vocabulary <- transcribeservice_delete_vocabulary
+
+#' Removes a vocabulary filter
+#'
+#' Removes a vocabulary filter.
+#'
+#' @usage
+#' transcribeservice_delete_vocabulary_filter(VocabularyFilterName)
+#'
+#' @param VocabularyFilterName &#91;required&#93; The name of the vocabulary filter to remove.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$delete_vocabulary_filter(
+#'   VocabularyFilterName = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname transcribeservice_delete_vocabulary_filter
+transcribeservice_delete_vocabulary_filter <- function(VocabularyFilterName) {
+  op <- new_operation(
+    name = "DeleteVocabularyFilter",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .transcribeservice$delete_vocabulary_filter_input(VocabularyFilterName = VocabularyFilterName)
+  output <- .transcribeservice$delete_vocabulary_filter_output()
+  config <- get_config()
+  svc <- .transcribeservice$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.transcribeservice$operations$delete_vocabulary_filter <- transcribeservice_delete_vocabulary_filter
 
 #' Returns information about a transcription job
 #'
@@ -216,6 +318,42 @@ transcribeservice_get_vocabulary <- function(VocabularyName) {
 }
 .transcribeservice$operations$get_vocabulary <- transcribeservice_get_vocabulary
 
+#' Returns information about a vocabulary filter
+#'
+#' Returns information about a vocabulary filter.
+#'
+#' @usage
+#' transcribeservice_get_vocabulary_filter(VocabularyFilterName)
+#'
+#' @param VocabularyFilterName &#91;required&#93; The name of the vocabulary filter for which to return information.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$get_vocabulary_filter(
+#'   VocabularyFilterName = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname transcribeservice_get_vocabulary_filter
+transcribeservice_get_vocabulary_filter <- function(VocabularyFilterName) {
+  op <- new_operation(
+    name = "GetVocabularyFilter",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .transcribeservice$get_vocabulary_filter_input(VocabularyFilterName = VocabularyFilterName)
+  output <- .transcribeservice$get_vocabulary_filter_output()
+  config <- get_config()
+  svc <- .transcribeservice$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.transcribeservice$operations$get_vocabulary_filter <- transcribeservice_get_vocabulary_filter
+
 #' Lists transcription jobs with the specified status
 #'
 #' Lists transcription jobs with the specified status.
@@ -238,7 +376,7 @@ transcribeservice_get_vocabulary <- function(VocabularyName) {
 #' @section Request syntax:
 #' ```
 #' svc$list_transcription_jobs(
-#'   Status = "IN_PROGRESS"|"FAILED"|"COMPLETED",
+#'   Status = "QUEUED"|"IN_PROGRESS"|"FAILED"|"COMPLETED",
 #'   JobNameContains = "string",
 #'   NextToken = "string",
 #'   MaxResults = 123
@@ -316,6 +454,51 @@ transcribeservice_list_vocabularies <- function(NextToken = NULL, MaxResults = N
 }
 .transcribeservice$operations$list_vocabularies <- transcribeservice_list_vocabularies
 
+#' Gets information about vocabulary filters
+#'
+#' Gets information about vocabulary filters.
+#'
+#' @usage
+#' transcribeservice_list_vocabulary_filters(NextToken, MaxResults,
+#'   NameContains)
+#'
+#' @param NextToken If the result of the previous request to `ListVocabularyFilters` was
+#' truncated, include the `NextToken` to fetch the next set of collections.
+#' @param MaxResults The maximum number of filters to return in the response. If there are
+#' fewer results in the list, this response contains only the actual
+#' results.
+#' @param NameContains Filters the response so that it only contains vocabulary filters whose
+#' name contains the specified string.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$list_vocabulary_filters(
+#'   NextToken = "string",
+#'   MaxResults = 123,
+#'   NameContains = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname transcribeservice_list_vocabulary_filters
+transcribeservice_list_vocabulary_filters <- function(NextToken = NULL, MaxResults = NULL, NameContains = NULL) {
+  op <- new_operation(
+    name = "ListVocabularyFilters",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .transcribeservice$list_vocabulary_filters_input(NextToken = NextToken, MaxResults = MaxResults, NameContains = NameContains)
+  output <- .transcribeservice$list_vocabulary_filters_output()
+  config <- get_config()
+  svc <- .transcribeservice$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.transcribeservice$operations$list_vocabulary_filters <- transcribeservice_list_vocabulary_filters
+
 #' Starts an asynchronous job to transcribe speech to text
 #'
 #' Starts an asynchronous job to transcribe speech to text.
@@ -323,14 +506,21 @@ transcribeservice_list_vocabularies <- function(NextToken = NULL, MaxResults = N
 #' @usage
 #' transcribeservice_start_transcription_job(TranscriptionJobName,
 #'   LanguageCode, MediaSampleRateHertz, MediaFormat, Media,
-#'   OutputBucketName, Settings)
+#'   OutputBucketName, OutputEncryptionKMSKeyId, Settings,
+#'   JobExecutionSettings)
 #'
 #' @param TranscriptionJobName &#91;required&#93; The name of the job. Note that you can\'t use the strings \".\" or
 #' \"..\" by themselves as the job name. The name must also be unique
 #' within an AWS account.
 #' @param LanguageCode &#91;required&#93; The language code for the language used in the input media file.
 #' @param MediaSampleRateHertz The sample rate, in Hertz, of the audio track in the input media file.
-#' @param MediaFormat &#91;required&#93; The format of the input media file.
+#' 
+#' If you do not specify the media sample rate, Amazon Transcribe
+#' determines the sample rate. If you specify the sample rate, it must
+#' match the sample rate detected by Amazon Transcribe. In most cases, you
+#' should leave the `MediaSampleRateHertz` field blank and let Amazon
+#' Transcribe determine the sample rate.
+#' @param MediaFormat The format of the input media file.
 #' @param Media &#91;required&#93; An object that describes the input media for a transcription job.
 #' @param OutputBucketName The location where the transcription is stored.
 #' 
@@ -340,35 +530,77 @@ transcribeservice_list_vocabularies <- function(NextToken = NULL, MaxResults = N
 #' the `TranscriptFileUri` field. The S3 bucket must have permissions that
 #' allow Amazon Transcribe to put files in the bucket. For more
 #' information, see [Permissions Required for IAM User
-#' Roles](https://docs.aws.amazon.com/transcribe/latest/dg/access-control-managing-permissions.html#auth-role-iam-user).
+#' Roles](https://docs.aws.amazon.com/transcribe/latest/dg/security_iam_id-based-policy-examples.html#auth-role-iam-user).
 #' 
-#' Amazon Transcribe uses the default Amazon S3 key for server-side
-#' encryption of transcripts that are placed in your S3 bucket. You can\'t
-#' specify your own encryption key.
+#' You can specify an AWS Key Management Service (KMS) key to encrypt the
+#' output of your transcription using the `OutputEncryptionKMSKeyId`
+#' parameter. If you don\'t specify a KMS key, Amazon Transcribe uses the
+#' default Amazon S3 key for server-side encryption of transcripts that are
+#' placed in your S3 bucket.
 #' 
 #' If you don\'t set the `OutputBucketName`, Amazon Transcribe generates a
 #' pre-signed URL, a shareable URL that provides secure access to your
 #' transcription, and returns it in the `TranscriptFileUri` field. Use this
 #' URL to download the transcription.
+#' @param OutputEncryptionKMSKeyId The Amazon Resource Name (ARN) of the AWS Key Management Service (KMS)
+#' key used to encrypt the output of the transcription job. The user
+#' calling the `StartTranscriptionJob` operation must have permission to
+#' use the specified KMS key.
+#' 
+#' You can use either of the following to identify a KMS key in the current
+#' account:
+#' 
+#' -   KMS Key ID: \"1234abcd-12ab-34cd-56ef-1234567890ab\"
+#' 
+#' -   KMS Key Alias: \"alias/ExampleAlias\"
+#' 
+#' You can use either of the following to identify a KMS key in the current
+#' account or another account:
+#' 
+#' -   Amazon Resource Name (ARN) of a KMS Key:
+#'     \"arn:aws:kms:region:account
+#'     ID:key/1234abcd-12ab-34cd-56ef-1234567890ab\"
+#' 
+#' -   ARN of a KMS Key Alias: \"arn:aws:kms:region:account
+#'     ID:alias/ExampleAlias\"
+#' 
+#' If you don\'t specify an encryption key, the output of the transcription
+#' job is encrypted with the default Amazon S3 key (SSE-S3).
+#' 
+#' If you specify a KMS key to encrypt your output, you must also specify
+#' an output location in the `OutputBucketName` parameter.
 #' @param Settings A `Settings` object that provides optional settings for a transcription
 #' job.
+#' @param JobExecutionSettings Provides information about how a transcription job is executed. Use this
+#' field to indicate that the job can be queued for deferred execution if
+#' the concurrency limit is reached and there are no slots available to
+#' immediately run the job.
 #'
 #' @section Request syntax:
 #' ```
 #' svc$start_transcription_job(
 #'   TranscriptionJobName = "string",
-#'   LanguageCode = "en-US"|"es-US"|"en-AU"|"fr-CA"|"en-GB"|"de-DE"|"pt-BR"|"fr-FR"|"it-IT"|"ko-KR"|"es-ES"|"en-IN"|"hi-IN"|"ar-SA",
+#'   LanguageCode = "en-US"|"es-US"|"en-AU"|"fr-CA"|"en-GB"|"de-DE"|"pt-BR"|"fr-FR"|"it-IT"|"ko-KR"|"es-ES"|"en-IN"|"hi-IN"|"ar-SA"|"ru-RU"|"zh-CN"|"nl-NL"|"id-ID"|"ta-IN"|"fa-IR"|"en-IE"|"en-AB"|"en-WL"|"pt-PT"|"te-IN"|"tr-TR"|"de-CH"|"he-IL"|"ms-MY"|"ja-JP"|"ar-AE",
 #'   MediaSampleRateHertz = 123,
 #'   MediaFormat = "mp3"|"mp4"|"wav"|"flac",
 #'   Media = list(
 #'     MediaFileUri = "string"
 #'   ),
 #'   OutputBucketName = "string",
+#'   OutputEncryptionKMSKeyId = "string",
 #'   Settings = list(
 #'     VocabularyName = "string",
 #'     ShowSpeakerLabels = TRUE|FALSE,
 #'     MaxSpeakerLabels = 123,
-#'     ChannelIdentification = TRUE|FALSE
+#'     ChannelIdentification = TRUE|FALSE,
+#'     ShowAlternatives = TRUE|FALSE,
+#'     MaxAlternatives = 123,
+#'     VocabularyFilterName = "string",
+#'     VocabularyFilterMethod = "remove"|"mask"
+#'   ),
+#'   JobExecutionSettings = list(
+#'     AllowDeferredExecution = TRUE|FALSE,
+#'     DataAccessRoleArn = "string"
 #'   )
 #' )
 #' ```
@@ -376,14 +608,14 @@ transcribeservice_list_vocabularies <- function(NextToken = NULL, MaxResults = N
 #' @keywords internal
 #'
 #' @rdname transcribeservice_start_transcription_job
-transcribeservice_start_transcription_job <- function(TranscriptionJobName, LanguageCode, MediaSampleRateHertz = NULL, MediaFormat, Media, OutputBucketName = NULL, Settings = NULL) {
+transcribeservice_start_transcription_job <- function(TranscriptionJobName, LanguageCode, MediaSampleRateHertz = NULL, MediaFormat = NULL, Media, OutputBucketName = NULL, OutputEncryptionKMSKeyId = NULL, Settings = NULL, JobExecutionSettings = NULL) {
   op <- new_operation(
     name = "StartTranscriptionJob",
     http_method = "POST",
     http_path = "/",
     paginator = list()
   )
-  input <- .transcribeservice$start_transcription_job_input(TranscriptionJobName = TranscriptionJobName, LanguageCode = LanguageCode, MediaSampleRateHertz = MediaSampleRateHertz, MediaFormat = MediaFormat, Media = Media, OutputBucketName = OutputBucketName, Settings = Settings)
+  input <- .transcribeservice$start_transcription_job_input(TranscriptionJobName = TranscriptionJobName, LanguageCode = LanguageCode, MediaSampleRateHertz = MediaSampleRateHertz, MediaFormat = MediaFormat, Media = Media, OutputBucketName = OutputBucketName, OutputEncryptionKMSKeyId = OutputEncryptionKMSKeyId, Settings = Settings, JobExecutionSettings = JobExecutionSettings)
   output <- .transcribeservice$start_transcription_job_output()
   config <- get_config()
   svc <- .transcribeservice$service(config)
@@ -410,11 +642,11 @@ transcribeservice_start_transcription_job <- function(TranscriptionJobName, Lang
 #' custom vocabulary. The URI must be in the same region as the API
 #' endpoint that you are calling. The general form is
 #' 
-#' ` https://s3-&lt;aws-region&gt;.amazonaws.com/&lt;bucket-name&gt;/&lt;keyprefix&gt;/&lt;objectkey&gt; `
+#' ` https://s3.&lt;aws-region&gt;.amazonaws.com/&lt;bucket-name&gt;/&lt;keyprefix&gt;/&lt;objectkey&gt; `
 #' 
 #' For example:
 #' 
-#' `https://s3-us-east-1.amazonaws.com/examplebucket/vocab.txt`
+#' `https://s3.us-east-1.amazonaws.com/examplebucket/vocab.txt`
 #' 
 #' For more information about S3 object names, see [Object
 #' Keys](http://docs.aws.amazon.com/AmazonS3/latest/dev/UsingMetadata.html#object-keys)
@@ -427,7 +659,7 @@ transcribeservice_start_transcription_job <- function(TranscriptionJobName, Lang
 #' ```
 #' svc$update_vocabulary(
 #'   VocabularyName = "string",
-#'   LanguageCode = "en-US"|"es-US"|"en-AU"|"fr-CA"|"en-GB"|"de-DE"|"pt-BR"|"fr-FR"|"it-IT"|"ko-KR"|"es-ES"|"en-IN"|"hi-IN"|"ar-SA",
+#'   LanguageCode = "en-US"|"es-US"|"en-AU"|"fr-CA"|"en-GB"|"de-DE"|"pt-BR"|"fr-FR"|"it-IT"|"ko-KR"|"es-ES"|"en-IN"|"hi-IN"|"ar-SA"|"ru-RU"|"zh-CN"|"nl-NL"|"id-ID"|"ta-IN"|"fa-IR"|"en-IE"|"en-AB"|"en-WL"|"pt-PT"|"te-IN"|"tr-TR"|"de-CH"|"he-IL"|"ms-MY"|"ja-JP"|"ar-AE",
 #'   Phrases = list(
 #'     "string"
 #'   ),
@@ -454,3 +686,62 @@ transcribeservice_update_vocabulary <- function(VocabularyName, LanguageCode, Ph
   return(response)
 }
 .transcribeservice$operations$update_vocabulary <- transcribeservice_update_vocabulary
+
+#' Updates a vocabulary filter with a new list of filtered words
+#'
+#' Updates a vocabulary filter with a new list of filtered words.
+#'
+#' @usage
+#' transcribeservice_update_vocabulary_filter(VocabularyFilterName, Words,
+#'   VocabularyFilterFileUri)
+#'
+#' @param VocabularyFilterName &#91;required&#93; The name of the vocabulary filter to update.
+#' @param Words The words to use in the vocabulary filter. Only use characters from the
+#' character set defined for custom vocabularies. For a list of character
+#' sets, see [Character Sets for Custom
+#' Vocabularies](https://docs.aws.amazon.com/transcribe/latest/dg/how-vocabulary.html#charsets).
+#' 
+#' If you provide a list of words in the `Words` parameter, you can\'t use
+#' the `VocabularyFilterFileUri` parameter.
+#' @param VocabularyFilterFileUri The Amazon S3 location of a text file used as input to create the
+#' vocabulary filter. Only use characters from the character set defined
+#' for custom vocabularies. For a list of character sets, see [Character
+#' Sets for Custom
+#' Vocabularies](https://docs.aws.amazon.com/transcribe/latest/dg/how-vocabulary.html#charsets).
+#' 
+#' The specified file must be less than 50 KB of UTF-8 characters.
+#' 
+#' If you provide the location of a list of words in the
+#' `VocabularyFilterFileUri` parameter, you can\'t use the `Words`
+#' parameter.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$update_vocabulary_filter(
+#'   VocabularyFilterName = "string",
+#'   Words = list(
+#'     "string"
+#'   ),
+#'   VocabularyFilterFileUri = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname transcribeservice_update_vocabulary_filter
+transcribeservice_update_vocabulary_filter <- function(VocabularyFilterName, Words = NULL, VocabularyFilterFileUri = NULL) {
+  op <- new_operation(
+    name = "UpdateVocabularyFilter",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .transcribeservice$update_vocabulary_filter_input(VocabularyFilterName = VocabularyFilterName, Words = Words, VocabularyFilterFileUri = VocabularyFilterFileUri)
+  output <- .transcribeservice$update_vocabulary_filter_output()
+  config <- get_config()
+  svc <- .transcribeservice$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.transcribeservice$operations$update_vocabulary_filter <- transcribeservice_update_vocabulary_filter

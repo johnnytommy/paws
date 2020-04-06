@@ -17,8 +17,8 @@ rekognition_search_faces(CollectionId, FaceId, MaxFaces,
 number of faces with the highest confidence in the match.}
 
 \item{FaceMatchThreshold}{Optional value specifying the minimum confidence in the face match to
-return. For example, don't return any matches where confidence in
-matches is less than 70\%.}
+return. For example, don\'t return any matches where confidence in
+matches is less than 70\%. The default value is 80\%.}
 }
 \description{
 For a given input face ID, searches for matching faces in the collection
@@ -54,14 +54,16 @@ This operation requires permissions to perform the
 }
 
 \examples{
+\dontrun{
 # This operation searches for matching faces in the collection the
 # supplied face belongs to.
-\donttest{svc$search_faces(
+svc$search_faces(
   CollectionId = "myphotos",
   FaceId = "70008e50-75e4-55d0-8e80-363fb73b3a14",
   FaceMatchThreshold = 90L,
   MaxFaces = 10L
-)}
+)
+}
 
 }
 \keyword{internal}

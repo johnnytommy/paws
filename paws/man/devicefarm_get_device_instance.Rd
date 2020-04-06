@@ -2,17 +2,17 @@
 % Please edit documentation in R/devicefarm_operations.R
 \name{devicefarm_get_device_instance}
 \alias{devicefarm_get_device_instance}
-\title{Returns information about a device instance belonging to a private
+\title{Returns information about a device instance that belongs to a private
 device fleet}
 \usage{
 devicefarm_get_device_instance(arn)
 }
 \arguments{
-\item{arn}{[required] The Amazon Resource Name (ARN) of the instance you're requesting
+\item{arn}{[required] The Amazon Resource Name (ARN) of the instance you\'re requesting
 information about.}
 }
 \description{
-Returns information about a device instance belonging to a private
+Returns information about a device instance that belongs to a private
 device fleet.
 }
 \section{Request syntax}{

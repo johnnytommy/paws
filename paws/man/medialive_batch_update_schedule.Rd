@@ -24,11 +24,27 @@ Update a channel schedule
       list(
         ActionName = "string",
         ScheduleActionSettings = list(
+          HlsId3SegmentTaggingSettings = list(
+            Tag = "string"
+          ),
           HlsTimedMetadataSettings = list(
             Id3 = "string"
           ),
           InputSwitchSettings = list(
-            InputAttachmentNameReference = "string"
+            InputAttachmentNameReference = "string",
+            InputClippingSettings = list(
+              InputTimecodeSource = "ZEROBASED"|"EMBEDDED",
+              StartTimecode = list(
+                Timecode = "string"
+              ),
+              StopTimecode = list(
+                LastFrameClippingBehavior = "EXCLUDE_LAST_FRAME"|"INCLUDE_LAST_FRAME",
+                Timecode = "string"
+              )
+            ),
+            UrlPath = list(
+              "string"
+            )
           ),
           PauseStateSettings = list(
             Pipelines = list(
@@ -98,7 +114,8 @@ Update a channel schedule
           FollowModeScheduleActionStartSettings = list(
             FollowPoint = "END"|"START",
             ReferenceActionName = "string"
-          )
+          ),
+          ImmediateModeScheduleActionStartSettings = list()
         )
       )
     )

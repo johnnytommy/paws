@@ -11,7 +11,7 @@ storagegateway_update_vtl_device_type(VTLDeviceARN, DeviceType)
 
 \item{DeviceType}{[required] The type of medium changer you want to select.
 
-Valid Values: "STK-L700", "AWS-Gateway-VTL"}
+Valid Values: \"STK-L700\", \"AWS-Gateway-VTL\"}
 }
 \description{
 Updates the type of medium changer in a tape gateway. When you activate
@@ -29,12 +29,14 @@ the tape gateway type.
 }
 
 \examples{
+\dontrun{
 # Updates the type of medium changer in a gateway-VTL after a gateway-VTL
 # is activated.
-\donttest{svc$update_vtl_device_type(
+svc$update_vtl_device_type(
   DeviceType = "Medium Changer",
   VTLDeviceARN = "arn:aws:storagegateway:us-east-1:999999999999:gateway/sgw-12A3456B/device/..."
-)}
+)
+}
 
 }
 \keyword{internal}

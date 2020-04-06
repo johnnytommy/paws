@@ -27,6 +27,18 @@ NULL
 #' with the master account is created only in the us-west-2 Region.
 #' Security Hub must be enabled for the member account in the same Region
 #' that the invite was sent from.
+#' 
+#' The following throttling limits apply to using Security Hub API
+#' operations:
+#' 
+#' -   `GetFindings` - RateLimit of 3 requests per second, and a BurstLimit
+#'     of 6 requests per second.
+#' 
+#' -   `UpdateFindings` - RateLimit of 1 request per second, and a
+#'     BurstLimit of 5 requests per second.
+#' 
+#' -   All other operations - RateLimit of 10 request per second, and a
+#'     BurstLimit of 30 requests per second.
 #'
 #' @param
 #' config
@@ -51,10 +63,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- securityhub()
+#' \dontrun{
+#' svc <- securityhub()
 #' svc$accept_invitation(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -121,8 +135,7 @@ securityhub <- function(config = list()) {
   target_prefix = ""
 )
 
-.securityhub$handlers <- new_handlers("restjson", "v4")
-
 .securityhub$service <- function(config = list()) {
-  new_service(.securityhub$metadata, .securityhub$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.securityhub$metadata, handlers, config)
 }

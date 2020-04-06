@@ -38,10 +38,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- worklink()
+#' \dontrun{
+#' svc <- worklink()
 #' svc$associate_domain(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -100,8 +102,7 @@ worklink <- function(config = list()) {
   target_prefix = ""
 )
 
-.worklink$handlers <- new_handlers("restjson", "v4")
-
 .worklink$service <- function(config = list()) {
-  new_service(.worklink$metadata, .worklink$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.worklink$metadata, handlers, config)
 }

@@ -12,7 +12,7 @@ iam_get_login_profile(UserName)
 
 This parameter allows (through its \href{http://wikipedia.org/wiki/regex}{regex pattern}) a string of characters
 consisting of upper and lowercase alphanumeric characters with no
-spaces. You can also include any of the following characters: \_+=,.@-}
+spaces. You can also include any of the following characters: \\_+=,.@-}
 }
 \description{
 Retrieves the user name and password-creation date for the specified IAM
@@ -27,11 +27,13 @@ returns a 404 (\code{NoSuchEntity}) error.
 }
 
 \examples{
+\dontrun{
 # The following command gets information about the password for the IAM
 # user named Anika.
-\donttest{svc$get_login_profile(
+svc$get_login_profile(
   UserName = "Anika"
-)}
+)
+}
 
 }
 \keyword{internal}

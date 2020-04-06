@@ -9,8 +9,8 @@ verification status}
 ses_list_identities(IdentityType, NextToken, MaxItems)
 }
 \arguments{
-\item{IdentityType}{The type of the identities to list. Possible values are "EmailAddress"
-and "Domain". If this parameter is omitted, then all identities will
+\item{IdentityType}{The type of the identities to list. Possible values are \"EmailAddress\"
+and \"Domain\". If this parameter is omitted, then all identities will
 be listed.}
 
 \item{NextToken}{The token to use for pagination.}
@@ -36,13 +36,15 @@ You can execute this operation no more than once per second.
 }
 
 \examples{
+\dontrun{
 # The following example lists the email address identities that have been
 # submitted for verification with Amazon SES:
-\donttest{svc$list_identities(
+svc$list_identities(
   IdentityType = "EmailAddress",
   MaxItems = 123L,
   NextToken = ""
-)}
+)
+}
 
 }
 \keyword{internal}

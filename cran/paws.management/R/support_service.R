@@ -56,10 +56,10 @@ NULL
 #' 
 #' For authentication of requests, AWS Support uses [Signature Version 4
 #' Signing
-#' Process](http://docs.aws.amazon.com/general/latest/gr/signature-version-4.html).
+#' Process](https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html).
 #' 
 #' See [About the AWS Support
-#' API](http://docs.aws.amazon.com/awssupport/latest/user/Welcome.html) in
+#' API](https://docs.aws.amazon.com/awssupport/latest/user/Welcome.html) in
 #' the *AWS Support User Guide* for information about how to use this
 #' service to create and manage your support cases, and how to call Trusted
 #' Advisor for results of checks on your resources.
@@ -87,10 +87,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- support()
+#' \dontrun{
+#' svc <- support()
 #' svc$add_attachments_to_set(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -104,8 +106,8 @@ NULL
 #'  \link[=support_describe_severity_levels]{describe_severity_levels} \tab Returns the list of severity levels that you can assign to an AWS Support case \cr
 #'  \link[=support_describe_trusted_advisor_check_refresh_statuses]{describe_trusted_advisor_check_refresh_statuses} \tab Returns the refresh status of the Trusted Advisor checks that have the specified check IDs \cr
 #'  \link[=support_describe_trusted_advisor_check_result]{describe_trusted_advisor_check_result} \tab Returns the results of the Trusted Advisor check that has the specified check ID \cr
-#'  \link[=support_describe_trusted_advisor_check_summaries]{describe_trusted_advisor_check_summaries} \tab Returns the summaries of the results of the Trusted Advisor checks that have the specified check IDs \cr
 #'  \link[=support_describe_trusted_advisor_checks]{describe_trusted_advisor_checks} \tab Returns information about all available Trusted Advisor checks, including name, ID, category, description, and metadata \cr
+#'  \link[=support_describe_trusted_advisor_check_summaries]{describe_trusted_advisor_check_summaries} \tab Returns the summaries of the results of the Trusted Advisor checks that have the specified check IDs \cr
 #'  \link[=support_refresh_trusted_advisor_check]{refresh_trusted_advisor_check} \tab Requests a refresh of the Trusted Advisor check that has the specified check ID \cr
 #'  \link[=support_resolve_case]{resolve_case} \tab Takes a caseId and returns the initial state of the case along with the state of the case after the call to ResolveCase completed
 #' }
@@ -133,8 +135,7 @@ support <- function(config = list()) {
   target_prefix = "AWSSupport_20130415"
 )
 
-.support$handlers <- new_handlers("jsonrpc", "v4")
-
 .support$service <- function(config = list()) {
-  new_service(.support$metadata, .support$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.support$metadata, handlers, config)
 }

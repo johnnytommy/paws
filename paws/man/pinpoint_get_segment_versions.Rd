@@ -3,8 +3,8 @@
 \name{pinpoint_get_segment_versions}
 \alias{pinpoint_get_segment_versions}
 \title{Retrieves information about the configuration, dimension, and other
-settings for all versions of a specific segment that's associated with
-an application}
+settings for all the versions of a specific segment that's associated
+with an application}
 \usage{
 pinpoint_get_segment_versions(ApplicationId, PageSize, SegmentId, Token)
 }
@@ -12,8 +12,9 @@ pinpoint_get_segment_versions(ApplicationId, PageSize, SegmentId, Token)
 \item{ApplicationId}{[required] The unique identifier for the application. This identifier is displayed
 as the \strong{Project ID} on the Amazon Pinpoint console.}
 
-\item{PageSize}{The maximum number of items to include on each page in a paginated
-response.}
+\item{PageSize}{The maximum number of items to include in each page of a paginated
+response. This parameter is currently not supported for application,
+campaign, and journey metrics.}
 
 \item{SegmentId}{[required] The unique identifier for the segment.}
 
@@ -22,8 +23,8 @@ paginated response.}
 }
 \description{
 Retrieves information about the configuration, dimension, and other
-settings for all versions of a specific segment that's associated with
-an application.
+settings for all the versions of a specific segment that\'s associated
+with an application.
 }
 \section{Request syntax}{
 \preformatted{svc$get_segment_versions(

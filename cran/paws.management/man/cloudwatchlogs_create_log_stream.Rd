@@ -16,13 +16,14 @@ Creates a log stream for the specified log group.
 }
 \details{
 There is no limit on the number of log streams that you can create for a
-log group.
+log group. There is a limit of 50 TPS on \code{CreateLogStream} operations,
+after which transactions are throttled.
 
 You must use the following guidelines when naming a log stream:
 \itemize{
 \item Log stream names must be unique within the log group.
 \item Log stream names can be between 1 and 512 characters long.
-\item The ':' (colon) and '*' (asterisk) characters are not allowed.
+\item The \':\' (colon) and \'*\' (asterisk) characters are not allowed.
 }
 }
 \section{Request syntax}{

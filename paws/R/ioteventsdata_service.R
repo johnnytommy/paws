@@ -33,10 +33,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- ioteventsdata()
+#' \dontrun{
+#' svc <- ioteventsdata()
 #' svc$batch_put_message(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -69,8 +71,7 @@ ioteventsdata <- function(config = list()) {
   target_prefix = ""
 )
 
-.ioteventsdata$handlers <- new_handlers("restjson", "v4")
-
 .ioteventsdata$service <- function(config = list()) {
-  new_service(.ioteventsdata$metadata, .ioteventsdata$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.ioteventsdata$metadata, handlers, config)
 }

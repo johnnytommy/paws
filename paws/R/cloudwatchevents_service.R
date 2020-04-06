@@ -50,10 +50,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- cloudwatchevents()
+#' \dontrun{
+#' svc <- cloudwatchevents()
 #' svc$activate_event_source(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -113,8 +115,7 @@ cloudwatchevents <- function(config = list()) {
   target_prefix = "AWSEvents"
 )
 
-.cloudwatchevents$handlers <- new_handlers("jsonrpc", "v4")
-
 .cloudwatchevents$service <- function(config = list()) {
-  new_service(.cloudwatchevents$metadata, .cloudwatchevents$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.cloudwatchevents$metadata, handlers, config)
 }

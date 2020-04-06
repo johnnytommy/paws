@@ -13,8 +13,8 @@ lambda_get_alias(FunctionName, Name)
 \itemize{
 \item \strong{Function name} - \code{MyFunction}.
 \item \strong{Function ARN} -
-\code{arn:aws:lambda:us-west-2:123456789012:function:MyFunction}.
-\item \strong{Partial ARN} - \code{123456789012:function:MyFunction}.
+\verb{arn:aws:lambda:us-west-2:123456789012:function:MyFunction}.
+\item \strong{Partial ARN} - \verb{123456789012:function:MyFunction}.
 }
 
 The length constraint applies only to the full ARN. If you specify only
@@ -35,11 +35,13 @@ Returns details about a Lambda function
 }
 
 \examples{
+\dontrun{
 # This operation retrieves a Lambda function alias
-\donttest{svc$get_alias(
+svc$get_alias(
   FunctionName = "myFunction",
   Name = "myFunctionAlias"
-)}
+)
+}
 
 }
 \keyword{internal}

@@ -10,11 +10,11 @@ ec2_modify_subnet_attribute(AssignIpv6AddressOnCreation,
 \arguments{
 \item{AssignIpv6AddressOnCreation}{Specify \code{true} to indicate that network interfaces created in the
 specified subnet should be assigned an IPv6 address. This includes a
-network interface that's created when launching an instance into the
+network interface that\'s created when launching an instance into the
 subnet (the instance therefore receives an IPv6 address).
 
 If you enable the IPv6 addressing feature for your subnet, your network
-interface or instance only receives an IPv6 address if it's created
+interface or instance only receives an IPv6 address if it\'s created
 using version \code{2016-11-15} or later of the Amazon EC2 API.}
 
 \item{MapPublicIpOnLaunch}{Specify \code{true} to indicate that ENIs attached to instances created in
@@ -40,14 +40,16 @@ time.
 }
 
 \examples{
+\dontrun{
 # This example modifies the specified subnet so that all instances
 # launched into this subnet are assigned a public IP address.
-\donttest{svc$modify_subnet_attribute(
+svc$modify_subnet_attribute(
   MapPublicIpOnLaunch = list(
     Value = TRUE
   ),
   SubnetId = "subnet-1a2b3c4d"
-)}
+)
+}
 
 }
 \keyword{internal}

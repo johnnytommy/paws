@@ -17,12 +17,13 @@ Otherwise, it is \code{UnauthorizedOperation}.}
 
 \item{Filters}{One or more filters.
 \itemize{
-\item \code{service-name}: The name of the service.
-\item \code{vpc-id}: The ID of the VPC in which the endpoint resides.
-\item \code{vpc-endpoint-id}: The ID of the endpoint.
-\item \code{vpc-endpoint-state}: The state of the endpoint. (\code{pending} \|
-\code{available} \| \code{deleting} \| \code{deleted})
-\item \code{tag}:\<key\> - The key/value combination of a tag assigned to the
+\item \code{service-name} - The name of the service.
+\item \code{vpc-id} - The ID of the VPC in which the endpoint resides.
+\item \code{vpc-endpoint-id} - The ID of the endpoint.
+\item \code{vpc-endpoint-state} - The state of the endpoint
+(\code{pendingAcceptance} \\| \code{pending} \\| \code{available} \\| \code{deleting} \\|
+\code{deleted} \\| \code{rejected} \\| \code{failed}).
+\item \code{tag}:\\<key\\> - The key/value combination of a tag assigned to the
 resource. Use the tag key in the filter name and the tag value as
 the filter value. For example, to find all resources that have a tag
 with the key \code{Owner} and the value \code{TeamA}, specify \code{tag:Owner} for
@@ -36,7 +37,7 @@ regardless of the tag value.
 returns a token that you can specify in a subsequent call to get the
 next set of results.
 
-Constraint: If the value is greater than 1000, we return only 1000
+Constraint: If the value is greater than 1,000, we return only 1,000
 items.}
 
 \item{NextToken}{The token for the next set of items to return. (You received this token

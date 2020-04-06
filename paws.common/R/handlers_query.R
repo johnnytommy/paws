@@ -12,11 +12,11 @@ query_build <- function(request) {
   if (!is_presigned(request)) {
     request$http_request$method <- "POST"
     request$http_request$header["Content-Type"] <- "application/x-www-form-urlencoded; charset=utf-8"
-    request$body <- encode(body)
+    request$body <- build_query_string(body)
     request$http_request$body <- request$body
   } else {
     request$http_request$method <- "GET"
-    request$http_request$url$raw_query <- encode(body)
+    request$http_request$url$raw_query <- build_query_string(body)
   }
 
   return(request)
@@ -39,29 +39,30 @@ query_unmarshal_meta <- function(request) {
 
 # Unmarshal errors from a Query protocol response.
 query_unmarshal_error <- function(request) {
-  
   data <- tryCatch(
     decode_xml(request$http_response$body),
     error = function(e) NULL
   )
-  
+
   if (is.null(data)) {
     request$error <- Error("SerializationError",
-                           "failed to read from query HTTP response body")
+                           "failed to read from query HTTP response body",
+                           request$http_response$status_code)
     return(request)
   }
-  
+
   error <- tryCatch(
-    xml_unmarshal_error(data),
+    xml_unmarshal_error(data, request$http_response$status_code),
     error = function(e) NULL
   )
-  
+
   if (is.null(error)) {
     request$error <- Error("SerializationError",
-                           "failed to decode query XML error response")
+                           "failed to decode query XML error response",
+                           request$http_response$status_code)
     return(request)
   }
-  
+
   request$error <- error
   return(request)
 }

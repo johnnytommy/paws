@@ -4,16 +4,16 @@
 \alias{ec2_describe_placement_groups}
 \title{Describes the specified placement groups or all of your placement groups}
 \usage{
-ec2_describe_placement_groups(Filters, DryRun, GroupNames)
+ec2_describe_placement_groups(Filters, DryRun, GroupNames, GroupIds)
 }
 \arguments{
 \item{Filters}{The filters.
 \itemize{
 \item \code{group-name} - The name of the placement group.
-\item \code{state} - The state of the placement group (\code{pending} \| \code{available}
-\| \code{deleting} \| \code{deleted}).
-\item \code{strategy} - The strategy of the placement group (\code{cluster} \|
-\code{spread} \| \code{partition}).
+\item \code{state} - The state of the placement group (\code{pending} \\| \code{available}
+\\| \code{deleting} \\| \code{deleted}).
+\item \code{strategy} - The strategy of the placement group (\code{cluster} \\|
+\code{spread} \\| \code{partition}).
 }}
 
 \item{DryRun}{Checks whether you have the required permissions for the action, without
@@ -25,6 +25,8 @@ Otherwise, it is \code{UnauthorizedOperation}.}
 
 Default: Describes all your placement groups, or only those otherwise
 specified.}
+
+\item{GroupIds}{The IDs of the placement groups.}
 }
 \description{
 Describes the specified placement groups or all of your placement
@@ -43,6 +45,9 @@ in the \emph{Amazon Elastic Compute Cloud User Guide}.
   ),
   DryRun = TRUE|FALSE,
   GroupNames = list(
+    "string"
+  ),
+  GroupIds = list(
     "string"
   )
 )

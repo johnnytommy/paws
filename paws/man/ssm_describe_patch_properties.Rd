@@ -35,35 +35,41 @@ DescribePatchBaselines.
 \details{
 The following section lists the properties that can be used in filters
 for each major operating system type:
+\subsection{WINDOWS}{
 
-WINDOWS
+Valid properties: PRODUCT, PRODUCT\\_FAMILY, CLASSIFICATION,
+MSRC\\_SEVERITY
+}
 
-:   Valid properties: PRODUCT, PRODUCT\_FAMILY, CLASSIFICATION,
-MSRC\_SEVERITY
+\subsection{AMAZON\\_LINUX}{
 
-AMAZON\_LINUX
+Valid properties: PRODUCT, CLASSIFICATION, SEVERITY
+}
 
-:   Valid properties: PRODUCT, CLASSIFICATION, SEVERITY
+\subsection{AMAZON\\_LINUX\\_2}{
 
-AMAZON\_LINUX\_2
+Valid properties: PRODUCT, CLASSIFICATION, SEVERITY
+}
 
-:   Valid properties: PRODUCT, CLASSIFICATION, SEVERITY
+\subsection{UBUNTU}{
 
-UBUNTU
+Valid properties: PRODUCT, PRIORITY
+}
 
-:   Valid properties: PRODUCT, PRIORITY
+\subsection{REDHAT\\_ENTERPRISE\\_LINUX}{
 
-REDHAT\_ENTERPRISE\_LINUX
+Valid properties: PRODUCT, CLASSIFICATION, SEVERITY
+}
 
-:   Valid properties: PRODUCT, CLASSIFICATION, SEVERITY
+\subsection{SUSE}{
 
-SUSE
+Valid properties: PRODUCT, CLASSIFICATION, SEVERITY
+}
 
-:   Valid properties: PRODUCT, CLASSIFICATION, SEVERITY
+\subsection{CENTOS}{
 
-CENTOS
-
-:   Valid properties: PRODUCT, CLASSIFICATION, SEVERITY
+Valid properties: PRODUCT, CLASSIFICATION, SEVERITY
+}
 }
 \section{Request syntax}{
 \preformatted{svc$describe_patch_properties(

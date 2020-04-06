@@ -167,7 +167,7 @@ name in an expression.
 misinterpreted in an expression.
 }
 
-Use the \strong{\#} character in an expression to dereference an attribute
+Use the \strong{\\#} character in an expression to dereference an attribute
 name. For example, consider the following attribute name:
 \itemize{
 \item \code{Percentile}
@@ -179,13 +179,13 @@ words, see \href{https://docs.aws.amazon.com/amazondynamodb/latest/developerguid
 in the \emph{Amazon DynamoDB Developer Guide}). To work around this, you
 could specify the following for \code{ExpressionAttributeNames}:
 \itemize{
-\item \code{\{"#P":"Percentile"\}}
+\item \verb{\\\{"#P":"Percentile"\\\}}
 }
 
 You could then use this substitution in an expression, as in this
 example:
 \itemize{
-\item \code{#P = :val}
+\item \verb{#P = :val}
 }
 
 Tokens that begin with the \strong{:} character are \emph{expression attribute
@@ -204,11 +204,11 @@ the value of the \code{ProductStatus} attribute was one of the following:
 
 You would first need to specify \code{ExpressionAttributeValues} as follows:
 
-\code{\{ ":avail":\{"S":"Available"\}, ":back":\{"S":"Backordered"\}, ":disc":\{"S":"Discontinued"\} \}}
+\verb{\\\{ ":avail":\\\{"S":"Available"\\\}, ":back":\\\{"S":"Backordered"\\\}, ":disc":\\\{"S":"Discontinued"\\\} \\\}}
 
 You could then use these values in an expression, such as this:
 
-\code{ProductStatus IN (:avail, :back, :disc)}
+\verb{ProductStatus IN (:avail, :back, :disc)}
 
 For more information on expression attribute values, see \href{https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.SpecifyingConditions.html}{Condition Expressions}
 in the \emph{Amazon DynamoDB Developer Guide}.}
@@ -362,10 +362,11 @@ can set the \code{ConsistentRead} parameter to \code{true}.
 }
 
 \examples{
+\dontrun{
 # This example scans the entire Music table, and then narrows the results
 # to songs by the artist "No One You Know". For each item, only the album
 # title and song title are returned.
-\donttest{svc$scan(
+svc$scan(
   ExpressionAttributeNames = list(
     `#AT` = "AlbumTitle",
     `#ST` = "SongTitle"
@@ -378,7 +379,8 @@ can set the \code{ConsistentRead} parameter to \code{true}.
   FilterExpression = "Artist = :a",
   ProjectionExpression = "#ST, #AT",
   TableName = "Music"
-)}
+)
+}
 
 }
 \keyword{internal}

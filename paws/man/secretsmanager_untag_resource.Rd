@@ -24,7 +24,7 @@ specifying a complete ARN. This confusion can cause unexpected results.
 To avoid this situation, we recommend that you don't create secret names
 that end with a hyphen followed by six characters.}
 
-\item{TagKeys}{[required] A list of tag key names to remove from the secret. You don't specify
+\item{TagKeys}{[required] A list of tag key names to remove from the secret. You don\'t specify
 the value. Both the key and its associated value are removed.
 
 This parameter to the API requires a JSON text string argument. For
@@ -69,17 +69,19 @@ TagResource.
 }
 
 \examples{
+\dontrun{
 # The following example shows how to remove two tags from a secret's
 # metadata. For each, both the tag and the associated value are removed.
 # There is no output from this API. To see the result, use the
 # DescribeSecret operation.
-\donttest{svc$untag_resource(
+svc$untag_resource(
   SecretId = "MyTestDatabaseSecret",
   TagKeys = list(
     "FirstTag",
     "SecondTag"
   )
-)}
+)
+}
 
 }
 \keyword{internal}

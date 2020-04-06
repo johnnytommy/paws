@@ -9,8 +9,8 @@ requests}
 waf_create_sql_injection_match_set(Name, ChangeToken)
 }
 \arguments{
-\item{Name}{[required] A friendly name or description for the SqlInjectionMatchSet that you're
-creating. You can't change \code{Name} after you create the
+\item{Name}{[required] A friendly name or description for the SqlInjectionMatchSet that you\'re
+creating. You can\'t change \code{Name} after you create the
 \code{SqlInjectionMatchSet}.}
 
 \item{ChangeToken}{[required] The value returned by the most recent call to GetChangeToken.}
@@ -47,12 +47,14 @@ HTTP requests, see the \href{https://docs.aws.amazon.com/waf/latest/developergui
 }
 
 \examples{
+\dontrun{
 # The following example creates a SQL injection match set named
 # MySQLInjectionMatchSet.
-\donttest{svc$create_sql_injection_match_set(
+svc$create_sql_injection_match_set(
   ChangeToken = "abcd12f2-46da-4fdb-b8d5-fbd4c466928f",
   Name = "MySQLInjectionMatchSet"
-)}
+)
+}
 
 }
 \keyword{internal}

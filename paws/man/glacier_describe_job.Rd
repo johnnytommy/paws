@@ -12,9 +12,9 @@ glacier_describe_job(accountId, vaultName, jobId)
 \arguments{
 \item{accountId}{[required] The \code{AccountId} value is the AWS account ID of the account that owns the
 vault. You can either specify an AWS account ID or optionally a single
-'\code{-}' (hyphen), in which case Amazon S3 Glacier uses the AWS account
+\'\code{-}\' (hyphen), in which case Amazon S3 Glacier uses the AWS account
 ID associated with the credentials used to sign the request. If you use
-an account ID, do not include any hyphens ('-') in the ID.}
+an account ID, do not include any hyphens (\'-\') in the ID.}
 
 \item{vaultName}{[required] The name of the vault.}
 
@@ -37,7 +37,7 @@ A job ID will not expire for at least 24 hours after Glacier completes
 the job.
 
 An AWS account has full permission to perform all operations (actions).
-However, AWS Identity and Access Management (IAM) users don't have any
+However, AWS Identity and Access Management (IAM) users don\'t have any
 permissions by default. You must grant them explicit permission to
 perform specific actions. For more information, see \href{https://docs.aws.amazon.com/amazonglacier/latest/dev/using-iam-with-amazon-glacier.html}{Access Control Using AWS Identity and Access Management (IAM)}.
 
@@ -55,13 +55,15 @@ in the \emph{Amazon Glacier Developer Guide}.
 }
 
 \examples{
+\dontrun{
 # The example returns information about the previously initiated job
 # specified by the job ID.
-\donttest{svc$describe_job(
+svc$describe_job(
   accountId = "-",
   jobId = "zbxcm3Z_3z5UkoroF7SuZKrxgGoDc3RloGduS7Eg-RO47Yc6FxsdGBgf_Q2DK5Ejh18CnTS5XW4_XqlNH...",
   vaultName = "my-vault"
-)}
+)
+}
 
 }
 \keyword{internal}

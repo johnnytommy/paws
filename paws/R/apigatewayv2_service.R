@@ -30,10 +30,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- apigatewayv2()
+#' \dontrun{
+#' svc <- apigatewayv2()
 #' svc$create_api(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -51,6 +53,7 @@ NULL
 #'  \link[=apigatewayv2_delete_api]{delete_api} \tab Deletes an Api resource \cr
 #'  \link[=apigatewayv2_delete_api_mapping]{delete_api_mapping} \tab Deletes an API mapping \cr
 #'  \link[=apigatewayv2_delete_authorizer]{delete_authorizer} \tab Deletes an Authorizer \cr
+#'  \link[=apigatewayv2_delete_cors_configuration]{delete_cors_configuration} \tab Deletes a CORS configuration \cr
 #'  \link[=apigatewayv2_delete_deployment]{delete_deployment} \tab Deletes a Deployment \cr
 #'  \link[=apigatewayv2_delete_domain_name]{delete_domain_name} \tab Deletes a domain name \cr
 #'  \link[=apigatewayv2_delete_integration]{delete_integration} \tab Deletes an Integration \cr
@@ -58,10 +61,11 @@ NULL
 #'  \link[=apigatewayv2_delete_model]{delete_model} \tab Deletes a Model \cr
 #'  \link[=apigatewayv2_delete_route]{delete_route} \tab Deletes a Route \cr
 #'  \link[=apigatewayv2_delete_route_response]{delete_route_response} \tab Deletes a RouteResponse \cr
+#'  \link[=apigatewayv2_delete_route_settings]{delete_route_settings} \tab Deletes the RouteSettings for a stage \cr
 #'  \link[=apigatewayv2_delete_stage]{delete_stage} \tab Deletes a Stage \cr
 #'  \link[=apigatewayv2_get_api]{get_api} \tab Gets an Api resource \cr
-#'  \link[=apigatewayv2_get_api_mapping]{get_api_mapping} \tab The API mapping \cr
-#'  \link[=apigatewayv2_get_api_mappings]{get_api_mappings} \tab The API mappings \cr
+#'  \link[=apigatewayv2_get_api_mapping]{get_api_mapping} \tab Gets an API mapping \cr
+#'  \link[=apigatewayv2_get_api_mappings]{get_api_mappings} \tab Gets API mappings \cr
 #'  \link[=apigatewayv2_get_apis]{get_apis} \tab Gets a collection of Api resources \cr
 #'  \link[=apigatewayv2_get_authorizer]{get_authorizer} \tab Gets an Authorizer \cr
 #'  \link[=apigatewayv2_get_authorizers]{get_authorizers} \tab Gets the Authorizers for an API \cr
@@ -74,17 +78,19 @@ NULL
 #'  \link[=apigatewayv2_get_integration_responses]{get_integration_responses} \tab Gets the IntegrationResponses for an Integration\cr
 #'  \link[=apigatewayv2_get_integrations]{get_integrations} \tab Gets the Integrations for an API \cr
 #'  \link[=apigatewayv2_get_model]{get_model} \tab Gets a Model \cr
-#'  \link[=apigatewayv2_get_model_template]{get_model_template} \tab Gets a model template \cr
 #'  \link[=apigatewayv2_get_models]{get_models} \tab Gets the Models for an API \cr
+#'  \link[=apigatewayv2_get_model_template]{get_model_template} \tab Gets a model template \cr
 #'  \link[=apigatewayv2_get_route]{get_route} \tab Gets a Route \cr
 #'  \link[=apigatewayv2_get_route_response]{get_route_response} \tab Gets a RouteResponse \cr
 #'  \link[=apigatewayv2_get_route_responses]{get_route_responses} \tab Gets the RouteResponses for a Route \cr
 #'  \link[=apigatewayv2_get_routes]{get_routes} \tab Gets the Routes for an API \cr
 #'  \link[=apigatewayv2_get_stage]{get_stage} \tab Gets a Stage \cr
 #'  \link[=apigatewayv2_get_stages]{get_stages} \tab Gets the Stages for an API \cr
-#'  \link[=apigatewayv2_get_tags]{get_tags} \tab Gets the Tags for an API \cr
-#'  \link[=apigatewayv2_tag_resource]{tag_resource} \tab Tag an APIGW resource \cr
-#'  \link[=apigatewayv2_untag_resource]{untag_resource} \tab Untag an APIGW resource \cr
+#'  \link[=apigatewayv2_get_tags]{get_tags} \tab Gets a collection of Tag resources \cr
+#'  \link[=apigatewayv2_import_api]{import_api} \tab Imports an API \cr
+#'  \link[=apigatewayv2_reimport_api]{reimport_api} \tab Puts an Api resource \cr
+#'  \link[=apigatewayv2_tag_resource]{tag_resource} \tab Creates a new Tag resource to represent a tag \cr
+#'  \link[=apigatewayv2_untag_resource]{untag_resource} \tab Deletes a Tag \cr
 #'  \link[=apigatewayv2_update_api]{update_api} \tab Updates an Api resource \cr
 #'  \link[=apigatewayv2_update_api_mapping]{update_api_mapping} \tab The API mapping \cr
 #'  \link[=apigatewayv2_update_authorizer]{update_authorizer} \tab Updates an Authorizer \cr
@@ -121,8 +127,7 @@ apigatewayv2 <- function(config = list()) {
   target_prefix = ""
 )
 
-.apigatewayv2$handlers <- new_handlers("restjson", "v4")
-
 .apigatewayv2$service <- function(config = list()) {
-  new_service(.apigatewayv2$metadata, .apigatewayv2$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.apigatewayv2$metadata, handlers, config)
 }

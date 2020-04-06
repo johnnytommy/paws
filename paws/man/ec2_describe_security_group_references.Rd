@@ -18,7 +18,7 @@ Otherwise, it is \code{UnauthorizedOperation}.}
 }
 \description{
 [VPC only] Describes the VPCs on the other side of a VPC peering
-connection that are referencing the security groups you've specified in
+connection that are referencing the security groups you\'ve specified in
 this request.
 }
 \section{Request syntax}{
@@ -32,13 +32,15 @@ this request.
 }
 
 \examples{
+\dontrun{
 # This example describes the security group references for the specified
 # security group.
-\donttest{svc$describe_security_group_references(
+svc$describe_security_group_references(
   GroupId = list(
     "sg-903004f8"
   )
-)}
+)
+}
 
 }
 \keyword{internal}

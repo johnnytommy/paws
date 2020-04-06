@@ -19,7 +19,7 @@ NULL
 #' 
 #' Minimum length=1. Maximum length=127.
 #' 
-#' Pattern \"\\^\[a-z0-9\]((\[a-z0-9\]\\|-(?!-))\*\[a-z0-9\])?\\$\";
+#' Pattern \"\\^\[a-z0-9\]((\[a-z0-9\]\\|-(?!-))*\[a-z0-9\])?\\$\";
 #' @param Description &#91;required&#93; The description of the application.
 #' 
 #' Minimum length=1. Maximum length=256
@@ -29,7 +29,7 @@ NULL
 #' 
 #' Minimum length=1. Maximum length=127. Maximum number of labels: 10
 #' 
-#' Pattern: \"\\^\[a-zA-Z0-9+\\\\-\\_:\\\\/@\]+\\$\";
+#' Pattern: \"\\^\[a-zA-Z0-9+\\\\-\\_:\\\\/@@\]+\\$\";
 #' @param LicenseBody A local text file that contains the license of the app that matches the
 #' spdxLicenseID value of your application. The file has the format
 #' file://\\<path\\>/\\<filename\\>.
@@ -716,7 +716,7 @@ serverlessapplicationrepository_put_application_policy <- function(ApplicationId
 #' 
 #' Minimum length=1. Maximum length=127.
 #' 
-#' Pattern \"\\^\[a-z0-9\]((\[a-z0-9\]\\|-(?!-))\*\[a-z0-9\])?\\$\";
+#' Pattern \"\\^\[a-z0-9\]((\[a-z0-9\]\\|-(?!-))*\[a-z0-9\])?\\$\";
 #' @param Description The description of the application.
 #' 
 #' Minimum length=1. Maximum length=256
@@ -726,7 +726,7 @@ serverlessapplicationrepository_put_application_policy <- function(ApplicationId
 #' 
 #' Minimum length=1. Maximum length=127. Maximum number of labels: 10
 #' 
-#' Pattern: \"\\^\[a-zA-Z0-9+\\\\-\\_:\\\\/@\]+\\$\";
+#' Pattern: \"\\^\[a-zA-Z0-9+\\\\-\\_:\\\\/@@\]+\\$\";
 #' @param ReadmeBody A text readme file in Markdown language that contains a more detailed
 #' description of the application and how it works.
 #' 

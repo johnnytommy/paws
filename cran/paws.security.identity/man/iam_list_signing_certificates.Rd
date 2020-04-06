@@ -12,7 +12,7 @@ iam_list_signing_certificates(UserName, Marker, MaxItems)
 
 This parameter allows (through its \href{http://wikipedia.org/wiki/regex}{regex pattern}) a string of characters
 consisting of upper and lowercase alphanumeric characters with no
-spaces. You can also include any of the following characters: \_+=,.@-}
+spaces. You can also include any of the following characters: \\_+=,.@-}
 
 \item{Marker}{Use this parameter only when paginating results and only after you
 receive a response indicating that the results are truncated. Set it to
@@ -54,11 +54,13 @@ credentials even if the AWS account has no associated users.
 }
 
 \examples{
+\dontrun{
 # The following command lists the signing certificates for the IAM user
 # named Bob.
-\donttest{svc$list_signing_certificates(
+svc$list_signing_certificates(
   UserName = "Bob"
-)}
+)
+}
 
 }
 \keyword{internal}

@@ -13,7 +13,7 @@ ses_create_receipt_rule(RuleSetName, After, Rule)
 this parameter is null, the new rule will be inserted at the beginning
 of the rule list.}
 
-\item{Rule}{[required] A data structure that contains the specified rule's name, actions,
+\item{Rule}{[required] A data structure that contains the specified rule\'s name, actions,
 recipients, domains, enabled status, scan status, and TLS policy.}
 }
 \description{
@@ -80,8 +80,9 @@ You can execute this operation no more than once per second.
 }
 
 \examples{
+\dontrun{
 # The following example creates a new receipt rule:
-\donttest{svc$create_receipt_rule(
+svc$create_receipt_rule(
   After = "",
   Rule = list(
     Actions = list(
@@ -98,7 +99,8 @@ You can execute this operation no more than once per second.
     TlsPolicy = "Optional"
   ),
   RuleSetName = "MyRuleSet"
-)}
+)
+}
 
 }
 \keyword{internal}

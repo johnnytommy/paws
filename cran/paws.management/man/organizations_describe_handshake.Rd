@@ -13,7 +13,7 @@ InviteAccountToOrganization, or from a call to ListHandshakesForAccount
 or ListHandshakesForOrganization.
 
 The \href{http://wikipedia.org/wiki/regex}{regex pattern} for handshake ID
-string requires "h-" followed by from 8 to 32 lower-case letters or
+string requires \"h-\" followed by from 8 to 32 lowercase letters or
 digits.}
 }
 \description{
@@ -23,7 +23,7 @@ InviteAccountToOrganization operation that generated the handshake.
 }
 \details{
 You can access handshakes that are \code{ACCEPTED}, \code{DECLINED}, or \code{CANCELED}
-for only 30 days after they change to that state. They're then deleted
+for only 30 days after they change to that state. They\'re then deleted
 and no longer accessible.
 
 This operation can be called from any account in the organization.
@@ -36,13 +36,15 @@ This operation can be called from any account in the organization.
 }
 
 \examples{
+\dontrun{
 # The following example shows you how to request details about a
 # handshake. The handshake ID comes either from the original call to
 # "InviteAccountToOrganization", or from a call to
 # "ListHandshakesForAccount" or "ListHandshakesForOrganization":
-\donttest{svc$describe_handshake(
+svc$describe_handshake(
   HandshakeId = "h-examplehandshakeid111"
-)}
+)
+}
 
 }
 \keyword{internal}

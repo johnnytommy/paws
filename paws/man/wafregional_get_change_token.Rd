@@ -11,7 +11,7 @@ wafregional_get_change_token()
 \description{
 When you want to create, update, or delete AWS WAF objects, get a change
 token and include the change token in the create, update, or delete
-request. Change tokens ensure that your application doesn't submit
+request. Change tokens ensure that your application doesn\'t submit
 conflicting requests to AWS WAF.
 }
 \details{
@@ -32,9 +32,11 @@ AWS WAF is propagating the change to all AWS WAF servers. Use
 }
 
 \examples{
+\dontrun{
 # The following example returns a change token to use for a create, update
 # or delete operation.
-\donttest{svc$get_change_token()}
+svc$get_change_token()
+}
 
 }
 \keyword{internal}

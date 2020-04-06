@@ -35,7 +35,7 @@ NULL
 #' svc$associate_vpc_with_hosted_zone(
 #'   HostedZoneId = "string",
 #'   VPC = list(
-#'     VPCRegion = "us-east-1"|"us-east-2"|"us-west-1"|"us-west-2"|"eu-west-1"|"eu-west-2"|"eu-west-3"|"eu-central-1"|"ap-east-1"|"ap-southeast-1"|"ap-southeast-2"|"ap-south-1"|"ap-northeast-1"|"ap-northeast-2"|"ap-northeast-3"|"eu-north-1"|"sa-east-1"|"ca-central-1"|"cn-north-1",
+#'     VPCRegion = "us-east-1"|"us-east-2"|"us-west-1"|"us-west-2"|"eu-west-1"|"eu-west-2"|"eu-west-3"|"eu-central-1"|"ap-east-1"|"me-south-1"|"ap-southeast-1"|"ap-southeast-2"|"ap-south-1"|"ap-northeast-1"|"ap-northeast-2"|"ap-northeast-3"|"eu-north-1"|"sa-east-1"|"ca-central-1"|"cn-north-1",
 #'     VPCId = "string"
 #'   ),
 #'   Comment = "string"
@@ -43,16 +43,18 @@ NULL
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example associates the VPC with ID vpc-1a2b3c4d with the
 #' # hosted zone with ID Z3M3LMPEXAMPLE.
-#' \donttest{svc$associate_vpc_with_hosted_zone(
+#' svc$associate_vpc_with_hosted_zone(
 #'   Comment = "",
 #'   HostedZoneId = "Z3M3LMPEXAMPLE",
 #'   VPC = list(
 #'     VPCId = "vpc-1a2b3c4d",
 #'     VPCRegion = "us-east-2"
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -188,7 +190,7 @@ route53_associate_vpc_with_hosted_zone <- function(HostedZoneId, VPC, Comment = 
 #'           Type = "SOA"|"A"|"TXT"|"NS"|"CNAME"|"MX"|"NAPTR"|"PTR"|"SRV"|"SPF"|"AAAA"|"CAA",
 #'           SetIdentifier = "string",
 #'           Weight = 123,
-#'           Region = "us-east-1"|"us-east-2"|"us-west-1"|"us-west-2"|"ca-central-1"|"eu-west-1"|"eu-west-2"|"eu-west-3"|"eu-central-1"|"ap-southeast-1"|"ap-southeast-2"|"ap-northeast-1"|"ap-northeast-2"|"ap-northeast-3"|"eu-north-1"|"sa-east-1"|"cn-north-1"|"cn-northwest-1"|"ap-east-1"|"ap-south-1",
+#'           Region = "us-east-1"|"us-east-2"|"us-west-1"|"us-west-2"|"ca-central-1"|"eu-west-1"|"eu-west-2"|"eu-west-3"|"eu-central-1"|"ap-southeast-1"|"ap-southeast-2"|"ap-northeast-1"|"ap-northeast-2"|"ap-northeast-3"|"eu-north-1"|"sa-east-1"|"cn-north-1"|"cn-northwest-1"|"ap-east-1"|"me-south-1"|"ap-south-1",
 #'           GeoLocation = list(
 #'             ContinentCode = "string",
 #'             CountryCode = "string",
@@ -217,9 +219,10 @@ route53_associate_vpc_with_hosted_zone <- function(HostedZoneId, VPC, Comment = 
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example creates a resource record set that routes Internet
 #' # traffic to a resource with an IP address of 192.0.2.44.
-#' \donttest{svc$change_resource_record_sets(
+#' svc$change_resource_record_sets(
 #'   ChangeBatch = list(
 #'     Changes = list(
 #'       list(
@@ -239,12 +242,12 @@ route53_associate_vpc_with_hosted_zone <- function(HostedZoneId, VPC, Comment = 
 #'     Comment = "Web server for example.com"
 #'   ),
 #'   HostedZoneId = "Z3M3LMPEXAMPLE"
-#' )}
+#' )
 #' 
 #' # The following example creates two weighted resource record sets. The
 #' # resource with a Weight of 100 will get 1/3rd of traffic (100/100+200),
 #' # and the other resource will get the rest of the traffic for example.com.
-#' \donttest{svc$change_resource_record_sets(
+#' svc$change_resource_record_sets(
 #'   ChangeBatch = list(
 #'     Changes = list(
 #'       list(
@@ -283,11 +286,11 @@ route53_associate_vpc_with_hosted_zone <- function(HostedZoneId, VPC, Comment = 
 #'     Comment = "Web servers for example.com"
 #'   ),
 #'   HostedZoneId = "Z3M3LMPEXAMPLE"
-#' )}
+#' )
 #' 
 #' # The following example creates an alias resource record set that routes
 #' # traffic to a CloudFront distribution.
-#' \donttest{svc$change_resource_record_sets(
+#' svc$change_resource_record_sets(
 #'   ChangeBatch = list(
 #'     Changes = list(
 #'       list(
@@ -306,13 +309,13 @@ route53_associate_vpc_with_hosted_zone <- function(HostedZoneId, VPC, Comment = 
 #'     Comment = "CloudFront distribution for example.com"
 #'   ),
 #'   HostedZoneId = "Z3M3LMPEXAMPLE"
-#' )}
+#' )
 #' 
 #' # The following example creates two weighted alias resource record sets
 #' # that route traffic to ELB load balancers. The resource with a Weight of
 #' # 100 will get 1/3rd of traffic (100/100+200), and the other resource will
 #' # get the rest of the traffic for example.com.
-#' \donttest{svc$change_resource_record_sets(
+#' svc$change_resource_record_sets(
 #'   ChangeBatch = list(
 #'     Changes = list(
 #'       list(
@@ -347,13 +350,13 @@ route53_associate_vpc_with_hosted_zone <- function(HostedZoneId, VPC, Comment = 
 #'     Comment = "ELB load balancers for example.com"
 #'   ),
 #'   HostedZoneId = "Z3M3LMPEXAMPLE"
-#' )}
+#' )
 #' 
 #' # The following example creates two latency resource record sets that
 #' # route traffic to EC2 instances. Traffic for example.com is routed either
 #' # to the Ohio region or the Oregon region, depending on the latency
 #' # between the user and those regions.
-#' \donttest{svc$change_resource_record_sets(
+#' svc$change_resource_record_sets(
 #'   ChangeBatch = list(
 #'     Changes = list(
 #'       list(
@@ -392,13 +395,13 @@ route53_associate_vpc_with_hosted_zone <- function(HostedZoneId, VPC, Comment = 
 #'     Comment = "EC2 instances for example.com"
 #'   ),
 #'   HostedZoneId = "Z3M3LMPEXAMPLE"
-#' )}
+#' )
 #' 
 #' # The following example creates two latency alias resource record sets
 #' # that route traffic for example.com to ELB load balancers. Requests are
 #' # routed either to the Ohio region or the Oregon region, depending on the
 #' # latency between the user and those regions.
-#' \donttest{svc$change_resource_record_sets(
+#' svc$change_resource_record_sets(
 #'   ChangeBatch = list(
 #'     Changes = list(
 #'       list(
@@ -433,14 +436,14 @@ route53_associate_vpc_with_hosted_zone <- function(HostedZoneId, VPC, Comment = 
 #'     Comment = "ELB load balancers for example.com"
 #'   ),
 #'   HostedZoneId = "Z3M3LMPEXAMPLE"
-#' )}
+#' )
 #' 
 #' # The following example creates primary and secondary failover resource
 #' # record sets that route traffic to EC2 instances. Traffic is generally
 #' # routed to the primary resource, in the Ohio region. If that resource is
 #' # unavailable, traffic is routed to the secondary resource, in the Oregon
 #' # region.
-#' \donttest{svc$change_resource_record_sets(
+#' svc$change_resource_record_sets(
 #'   ChangeBatch = list(
 #'     Changes = list(
 #'       list(
@@ -479,14 +482,14 @@ route53_associate_vpc_with_hosted_zone <- function(HostedZoneId, VPC, Comment = 
 #'     Comment = "Failover configuration for example.com"
 #'   ),
 #'   HostedZoneId = "Z3M3LMPEXAMPLE"
-#' )}
+#' )
 #' 
 #' # The following example creates primary and secondary failover alias
 #' # resource record sets that route traffic to ELB load balancers. Traffic
 #' # is generally routed to the primary resource, in the Ohio region. If that
 #' # resource is unavailable, traffic is routed to the secondary resource, in
 #' # the Oregon region.
-#' \donttest{svc$change_resource_record_sets(
+#' svc$change_resource_record_sets(
 #'   ChangeBatch = list(
 #'     Changes = list(
 #'       list(
@@ -521,14 +524,14 @@ route53_associate_vpc_with_hosted_zone <- function(HostedZoneId, VPC, Comment = 
 #'     Comment = "Failover alias configuration for example.com"
 #'   ),
 #'   HostedZoneId = "Z3M3LMPEXAMPLE"
-#' )}
+#' )
 #' 
 #' # The following example creates four geolocation resource record sets that
 #' # use IPv4 addresses to route traffic to resources such as web servers
 #' # running on EC2 instances. Traffic is routed to one of four IP addresses,
 #' # for North America (NA), for South America (SA), for Europe (EU), and for
 #' # all other locations (*).
-#' \donttest{svc$change_resource_record_sets(
+#' svc$change_resource_record_sets(
 #'   ChangeBatch = list(
 #'     Changes = list(
 #'       list(
@@ -603,13 +606,13 @@ route53_associate_vpc_with_hosted_zone <- function(HostedZoneId, VPC, Comment = 
 #'     Comment = "Geolocation configuration for example.com"
 #'   ),
 #'   HostedZoneId = "Z3M3LMPEXAMPLE"
-#' )}
+#' )
 #' 
 #' # The following example creates four geolocation alias resource record
 #' # sets that route traffic to ELB load balancers. Traffic is routed to one
 #' # of four IP addresses, for North America (NA), for South America (SA),
 #' # for Europe (EU), and for all other locations (*).
-#' \donttest{svc$change_resource_record_sets(
+#' svc$change_resource_record_sets(
 #'   ChangeBatch = list(
 #'     Changes = list(
 #'       list(
@@ -680,7 +683,8 @@ route53_associate_vpc_with_hosted_zone <- function(HostedZoneId, VPC, Comment = 
 #'     Comment = "Geolocation alias configuration for example.com"
 #'   ),
 #'   HostedZoneId = "Z3M3LMPEXAMPLE"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -749,9 +753,10 @@ route53_change_resource_record_sets <- function(HostedZoneId, ChangeBatch) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example adds two tags and removes one tag from the hosted
 #' # zone with ID Z3M3LMPEXAMPLE.
-#' \donttest{svc$change_tags_for_resource(
+#' svc$change_tags_for_resource(
 #'   AddTags = list(
 #'     list(
 #'       Key = "apex",
@@ -767,7 +772,8 @@ route53_change_resource_record_sets <- function(HostedZoneId, ChangeBatch) {
 #'   ),
 #'   ResourceId = "Z3M3LMPEXAMPLE",
 #'   ResourceType = "hostedzone"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -880,7 +886,7 @@ route53_change_tags_for_resource <- function(ResourceType, ResourceId, AddTags =
 #'       "us-east-1"|"us-west-1"|"us-west-2"|"eu-west-1"|"ap-southeast-1"|"ap-southeast-2"|"ap-northeast-1"|"sa-east-1"
 #'     ),
 #'     AlarmIdentifier = list(
-#'       Region = "us-east-1"|"us-east-2"|"us-west-1"|"us-west-2"|"ca-central-1"|"eu-central-1"|"eu-west-1"|"eu-west-2"|"eu-west-3"|"ap-east-1"|"ap-south-1"|"ap-southeast-1"|"ap-southeast-2"|"ap-northeast-1"|"ap-northeast-2"|"ap-northeast-3"|"eu-north-1"|"sa-east-1"|"cn-northwest-1"|"cn-north-1",
+#'       Region = "us-east-1"|"us-east-2"|"us-west-1"|"us-west-2"|"ca-central-1"|"eu-central-1"|"eu-west-1"|"eu-west-2"|"eu-west-3"|"ap-east-1"|"me-south-1"|"ap-south-1"|"ap-southeast-1"|"ap-southeast-2"|"ap-northeast-1"|"ap-northeast-2"|"ap-northeast-3"|"eu-north-1"|"sa-east-1"|"cn-northwest-1"|"cn-north-1",
 #'       Name = "string"
 #'     ),
 #'     InsufficientDataHealthStatus = "Healthy"|"Unhealthy"|"LastKnownStatus"
@@ -1000,7 +1006,7 @@ route53_create_health_check <- function(CallerReference, HealthCheckConfig) {
 #' svc$create_hosted_zone(
 #'   Name = "string",
 #'   VPC = list(
-#'     VPCRegion = "us-east-1"|"us-east-2"|"us-west-1"|"us-west-2"|"eu-west-1"|"eu-west-2"|"eu-west-3"|"eu-central-1"|"ap-east-1"|"ap-southeast-1"|"ap-southeast-2"|"ap-south-1"|"ap-northeast-1"|"ap-northeast-2"|"ap-northeast-3"|"eu-north-1"|"sa-east-1"|"ca-central-1"|"cn-north-1",
+#'     VPCRegion = "us-east-1"|"us-east-2"|"us-west-1"|"us-west-2"|"eu-west-1"|"eu-west-2"|"eu-west-3"|"eu-central-1"|"ap-east-1"|"me-south-1"|"ap-southeast-1"|"ap-southeast-2"|"ap-south-1"|"ap-northeast-1"|"ap-northeast-2"|"ap-northeast-3"|"eu-north-1"|"sa-east-1"|"ca-central-1"|"cn-north-1",
 #'     VPCId = "string"
 #'   ),
 #'   CallerReference = "string",
@@ -1049,109 +1055,107 @@ route53_create_hosted_zone <- function(Name, VPC = NULL, CallerReference, Hosted
 #' 
 #' -   DNS response code, such as `NoError` or `ServFail`
 #' 
-#' Log Group and Resource Policy
+#' ### Log Group and Resource Policy
 #' 
-#' :   Before you create a query logging configuration, perform the
-#'     following operations.
+#' Before you create a query logging configuration, perform the following
+#' operations.
 #' 
-#'     If you create a query logging configuration using the Route 53
-#'     console, Route 53 performs these operations automatically.
+#' If you create a query logging configuration using the Route 53 console,
+#' Route 53 performs these operations automatically.
 #' 
-#'     1.  Create a CloudWatch Logs log group, and make note of the ARN,
-#'         which you specify when you create a query logging configuration.
-#'         Note the following:
+#' 1.  Create a CloudWatch Logs log group, and make note of the ARN, which
+#'     you specify when you create a query logging configuration. Note the
+#'     following:
 #' 
-#'         -   You must create the log group in the us-east-1 region.
+#'     -   You must create the log group in the us-east-1 region.
 #' 
-#'         -   You must use the same AWS account to create the log group
-#'             and the hosted zone that you want to configure query logging
-#'             for.
+#'     -   You must use the same AWS account to create the log group and
+#'         the hosted zone that you want to configure query logging for.
 #' 
-#'         -   When you create log groups for query logging, we recommend
-#'             that you use a consistent prefix, for example:
+#'     -   When you create log groups for query logging, we recommend that
+#'         you use a consistent prefix, for example:
 #' 
-#'             `/aws/route53/<i>hosted zone name</i> `
+#'         `/aws/route53/<i>hosted zone name</i> `
 #' 
-#'             In the next step, you\'ll create a resource policy, which
-#'             controls access to one or more log groups and the associated
-#'             AWS resources, such as Route 53 hosted zones. There\'s a
-#'             limit on the number of resource policies that you can
-#'             create, so we recommend that you use a consistent prefix so
-#'             you can use the same resource policy for all the log groups
-#'             that you create for query logging.
+#'         In the next step, you\'ll create a resource policy, which
+#'         controls access to one or more log groups and the associated AWS
+#'         resources, such as Route 53 hosted zones. There\'s a limit on
+#'         the number of resource policies that you can create, so we
+#'         recommend that you use a consistent prefix so you can use the
+#'         same resource policy for all the log groups that you create for
+#'         query logging.
 #' 
-#'     2.  Create a CloudWatch Logs resource policy, and give it the
-#'         permissions that Route 53 needs to create log streams and to
-#'         send query logs to log streams. For the value of `Resource`,
-#'         specify the ARN for the log group that you created in the
-#'         previous step. To use the same resource policy for all the
-#'         CloudWatch Logs log groups that you created for query logging
-#'         configurations, replace the hosted zone name with `*`, for
-#'         example:
+#' 2.  Create a CloudWatch Logs resource policy, and give it the
+#'     permissions that Route 53 needs to create log streams and to send
+#'     query logs to log streams. For the value of `Resource`, specify the
+#'     ARN for the log group that you created in the previous step. To use
+#'     the same resource policy for all the CloudWatch Logs log groups that
+#'     you created for query logging configurations, replace the hosted
+#'     zone name with `*`, for example:
 #' 
-#'         `arn:aws:logs:us-east-1:123412341234:log-group:/aws/route53/*`
+#'     `arn:aws:logs:us-east-1:123412341234:log-group:/aws/route53/*`
 #' 
-#'         You can\'t use the CloudWatch console to create or edit a
-#'         resource policy. You must use the CloudWatch API, one of the AWS
-#'         SDKs, or the AWS CLI.
+#'     You can\'t use the CloudWatch console to create or edit a resource
+#'     policy. You must use the CloudWatch API, one of the AWS SDKs, or the
+#'     AWS CLI.
 #' 
-#' Log Streams and Edge Locations
+#' ### Log Streams and Edge Locations
 #' 
-#' :   When Route 53 finishes creating the configuration for DNS query
-#'     logging, it does the following:
+#' When Route 53 finishes creating the configuration for DNS query logging,
+#' it does the following:
 #' 
-#'     -   Creates a log stream for an edge location the first time that
-#'         the edge location responds to DNS queries for the specified
-#'         hosted zone. That log stream is used to log all queries that
-#'         Route 53 responds to for that edge location.
+#' -   Creates a log stream for an edge location the first time that the
+#'     edge location responds to DNS queries for the specified hosted zone.
+#'     That log stream is used to log all queries that Route 53 responds to
+#'     for that edge location.
 #' 
-#'     -   Begins to send query logs to the applicable log stream.
+#' -   Begins to send query logs to the applicable log stream.
 #' 
-#'     The name of each log stream is in the following format:
+#' The name of each log stream is in the following format:
 #' 
-#'     ` <i>hosted zone ID</i>/<i>edge location code</i> `
+#' ` <i>hosted zone ID</i>/<i>edge location code</i> `
 #' 
-#'     The edge location code is a three-letter code and an arbitrarily
-#'     assigned number, for example, DFW3. The three-letter code typically
-#'     corresponds with the International Air Transport Association airport
-#'     code for an airport near the edge location. (These abbreviations
-#'     might change in the future.) For a list of edge locations, see \"The
-#'     Route 53 Global Network\" on the [Route 53 Product
-#'     Details](http://aws.amazon.com/route53/details/) page.
+#' The edge location code is a three-letter code and an arbitrarily
+#' assigned number, for example, DFW3. The three-letter code typically
+#' corresponds with the International Air Transport Association airport
+#' code for an airport near the edge location. (These abbreviations might
+#' change in the future.) For a list of edge locations, see \"The Route 53
+#' Global Network\" on the [Route 53 Product
+#' Details](http://aws.amazon.com/route53/details/) page.
 #' 
-#' Queries That Are Logged
+#' ### Queries That Are Logged
 #' 
-#' :   Query logs contain only the queries that DNS resolvers forward to
-#'     Route 53. If a DNS resolver has already cached the response to a
-#'     query (such as the IP address for a load balancer for example.com),
-#'     the resolver will continue to return the cached response. It
-#'     doesn\'t forward another query to Route 53 until the TTL for the
-#'     corresponding resource record set expires. Depending on how many DNS
-#'     queries are submitted for a resource record set, and depending on
-#'     the TTL for that resource record set, query logs might contain
-#'     information about only one query out of every several thousand
-#'     queries that are submitted to DNS. For more information about how
-#'     DNS works, see [Routing Internet Traffic to Your Website or Web
-#'     Application](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/welcome-dns-service.html)
-#'     in the *Amazon Route 53 Developer Guide*.
+#' Query logs contain only the queries that DNS resolvers forward to Route
+#' 53. If a DNS resolver has already cached the response to a query (such
+#' as the IP address for a load balancer for example.com), the resolver
+#' will continue to return the cached response. It doesn\'t forward another
+#' query to Route 53 until the TTL for the corresponding resource record
+#' set expires. Depending on how many DNS queries are submitted for a
+#' resource record set, and depending on the TTL for that resource record
+#' set, query logs might contain information about only one query out of
+#' every several thousand queries that are submitted to DNS. For more
+#' information about how DNS works, see [Routing Internet Traffic to Your
+#' Website or Web
+#' Application](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/welcome-dns-service.html)
+#' in the *Amazon Route 53 Developer Guide*.
 #' 
-#' Log File Format
+#' ### Log File Format
 #' 
-#' :   For a list of the values in each query log and the format of each
-#'     value, see [Logging DNS
-#'     Queries](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/query-logs.html)
-#'     in the *Amazon Route 53 Developer Guide*.
+#' For a list of the values in each query log and the format of each value,
+#' see [Logging DNS
+#' Queries](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/query-logs.html)
+#' in the *Amazon Route 53 Developer Guide*.
 #' 
-#' Pricing
+#' ### Pricing
 #' 
-#' :   For information about charges for query logs, see [Amazon CloudWatch
-#'     Pricing](http://aws.amazon.com/cloudwatch/pricing/).
+#' For information about charges for query logs, see [Amazon CloudWatch
+#' Pricing](http://aws.amazon.com/cloudwatch/pricing/).
 #' 
-#' How to Stop Logging
+#' ### How to Stop Logging
 #' 
-#' :   If you want Route 53 to stop sending query logs to CloudWatch Logs,
-#'     delete the query logging configuration. For more information, see
-#'     [DeleteQueryLoggingConfig](https://docs.aws.amazon.com/Route53/latest/APIReference/API_DeleteQueryLoggingConfig.html).
+#' If you want Route 53 to stop sending query logs to CloudWatch Logs,
+#' delete the query logging configuration. For more information, see
+#' [DeleteQueryLoggingConfig](https://docs.aws.amazon.com/Route53/latest/APIReference/API_DeleteQueryLoggingConfig.html).
 #'
 #' @usage
 #' route53_create_query_logging_config(HostedZoneId,
@@ -1474,7 +1478,7 @@ route53_create_traffic_policy_version <- function(Id, Document, Comment = NULL) 
 #' svc$create_vpc_association_authorization(
 #'   HostedZoneId = "string",
 #'   VPC = list(
-#'     VPCRegion = "us-east-1"|"us-east-2"|"us-west-1"|"us-west-2"|"eu-west-1"|"eu-west-2"|"eu-west-3"|"eu-central-1"|"ap-east-1"|"ap-southeast-1"|"ap-southeast-2"|"ap-south-1"|"ap-northeast-1"|"ap-northeast-2"|"ap-northeast-3"|"eu-north-1"|"sa-east-1"|"ca-central-1"|"cn-north-1",
+#'     VPCRegion = "us-east-1"|"us-east-2"|"us-west-1"|"us-west-2"|"eu-west-1"|"eu-west-2"|"eu-west-3"|"eu-central-1"|"ap-east-1"|"me-south-1"|"ap-southeast-1"|"ap-southeast-2"|"ap-south-1"|"ap-northeast-1"|"ap-northeast-2"|"ap-northeast-3"|"eu-north-1"|"sa-east-1"|"ca-central-1"|"cn-north-1",
 #'     VPCId = "string"
 #'   )
 #' )
@@ -1833,7 +1837,7 @@ route53_delete_traffic_policy_instance <- function(Id) {
 #' svc$delete_vpc_association_authorization(
 #'   HostedZoneId = "string",
 #'   VPC = list(
-#'     VPCRegion = "us-east-1"|"us-east-2"|"us-west-1"|"us-west-2"|"eu-west-1"|"eu-west-2"|"eu-west-3"|"eu-central-1"|"ap-east-1"|"ap-southeast-1"|"ap-southeast-2"|"ap-south-1"|"ap-northeast-1"|"ap-northeast-2"|"ap-northeast-3"|"eu-north-1"|"sa-east-1"|"ca-central-1"|"cn-north-1",
+#'     VPCRegion = "us-east-1"|"us-east-2"|"us-west-1"|"us-west-2"|"eu-west-1"|"eu-west-2"|"eu-west-3"|"eu-central-1"|"ap-east-1"|"me-south-1"|"ap-southeast-1"|"ap-southeast-2"|"ap-south-1"|"ap-northeast-1"|"ap-northeast-2"|"ap-northeast-3"|"eu-north-1"|"sa-east-1"|"ca-central-1"|"cn-north-1",
 #'     VPCId = "string"
 #'   )
 #' )
@@ -1886,7 +1890,7 @@ route53_delete_vpc_association_authorization <- function(HostedZoneId, VPC) {
 #' svc$disassociate_vpc_from_hosted_zone(
 #'   HostedZoneId = "string",
 #'   VPC = list(
-#'     VPCRegion = "us-east-1"|"us-east-2"|"us-west-1"|"us-west-2"|"eu-west-1"|"eu-west-2"|"eu-west-3"|"eu-central-1"|"ap-east-1"|"ap-southeast-1"|"ap-southeast-2"|"ap-south-1"|"ap-northeast-1"|"ap-northeast-2"|"ap-northeast-3"|"eu-north-1"|"sa-east-1"|"ca-central-1"|"cn-north-1",
+#'     VPCRegion = "us-east-1"|"us-east-2"|"us-west-1"|"us-west-2"|"eu-west-1"|"eu-west-2"|"eu-west-3"|"eu-central-1"|"ap-east-1"|"me-south-1"|"ap-southeast-1"|"ap-southeast-2"|"ap-south-1"|"ap-northeast-1"|"ap-northeast-2"|"ap-northeast-3"|"eu-north-1"|"sa-east-1"|"ca-central-1"|"cn-north-1",
 #'     VPCId = "string"
 #'   ),
 #'   Comment = "string"
@@ -2318,11 +2322,13 @@ route53_get_health_check_status <- function(HealthCheckId) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example gets information about the Z3M3LMPEXAMPLE hosted
 #' # zone.
-#' \donttest{svc$get_hosted_zone(
+#' svc$get_hosted_zone(
 #'   Id = "Z3M3LMPEXAMPLE"
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -3070,7 +3076,7 @@ route53_list_query_logging_configs <- function(HostedZoneId = NULL, NextToken = 
 #' Note the trailing dot, which can change the sort order when the record
 #' name contains characters that appear before `.` (decimal 46) in the
 #' ASCII table. These characters include the following:
-#' `! \" # $ \% &amp; \' ( ) * + , -`
+#' `! \" # $ % &amp; \' ( ) * + , -`
 #' 
 #' When multiple records have the same DNS name, `ListResourceRecordSets`
 #' sorts results by the record type.
@@ -3080,25 +3086,25 @@ route53_list_query_logging_configs <- function(HostedZoneId = NULL, NextToken = 
 #' You can use the name and type elements to specify the resource record
 #' set that the list begins with:
 #' 
-#' If you do not specify Name or Type
+#' ### If you do not specify Name or Type
 #' 
-#' :   The results begin with the first resource record set that the hosted
-#'     zone contains.
+#' The results begin with the first resource record set that the hosted
+#' zone contains.
 #' 
-#' If you specify Name but not Type
+#' ### If you specify Name but not Type
 #' 
-#' :   The results begin with the first resource record set in the list
-#'     whose name is greater than or equal to `Name`.
+#' The results begin with the first resource record set in the list whose
+#' name is greater than or equal to `Name`.
 #' 
-#' If you specify Type but not Name
+#' ### If you specify Type but not Name
 #' 
-#' :   Amazon Route 53 returns the `InvalidInput` error.
+#' Amazon Route 53 returns the `InvalidInput` error.
 #' 
-#' If you specify both Name and Type
+#' ### If you specify both Name and Type
 #' 
-#' :   The results begin with the first resource record set in the list
-#'     whose name is greater than or equal to `Name`, and whose type is
-#'     greater than or equal to `Type`.
+#' The results begin with the first resource record set in the list whose
+#' name is greater than or equal to `Name`, and whose type is greater than
+#' or equal to `Type`.
 #' 
 #' **Resource record sets that are PENDING**
 #' 
@@ -3162,10 +3168,10 @@ route53_list_query_logging_configs <- function(HostedZoneId = NULL, NextToken = 
 #' 
 #' Constraint: Specifying `type` without specifying `name` returns an
 #' `InvalidInput` error.
-#' @param StartRecordIdentifier *Weighted resource record sets only:* If results were truncated for a
-#' given DNS name and type, specify the value of `NextRecordIdentifier`
-#' from the previous response to get the next resource record set that has
-#' the current DNS name and type.
+#' @param StartRecordIdentifier *Resource record sets that have a routing policy other than simple:* If
+#' results were truncated for a given DNS name and type, specify the value
+#' of `NextRecordIdentifier` from the previous response to get the next
+#' resource record set that has the current DNS name and type.
 #' @param MaxItems (Optional) The maximum number of resource records sets to include in the
 #' response body for this request. If the response includes more than
 #' `maxitems` resource record sets, the value of the `IsTruncated` element
@@ -4162,7 +4168,7 @@ route53_test_dns_answer <- function(HostedZoneId, RecordName, RecordType, Resolv
 #'     "us-east-1"|"us-west-1"|"us-west-2"|"eu-west-1"|"ap-southeast-1"|"ap-southeast-2"|"ap-northeast-1"|"sa-east-1"
 #'   ),
 #'   AlarmIdentifier = list(
-#'     Region = "us-east-1"|"us-east-2"|"us-west-1"|"us-west-2"|"ca-central-1"|"eu-central-1"|"eu-west-1"|"eu-west-2"|"eu-west-3"|"ap-east-1"|"ap-south-1"|"ap-southeast-1"|"ap-southeast-2"|"ap-northeast-1"|"ap-northeast-2"|"ap-northeast-3"|"eu-north-1"|"sa-east-1"|"cn-northwest-1"|"cn-north-1",
+#'     Region = "us-east-1"|"us-east-2"|"us-west-1"|"us-west-2"|"ca-central-1"|"eu-central-1"|"eu-west-1"|"eu-west-2"|"eu-west-3"|"ap-east-1"|"me-south-1"|"ap-south-1"|"ap-southeast-1"|"ap-southeast-2"|"ap-northeast-1"|"ap-northeast-2"|"ap-northeast-3"|"eu-north-1"|"sa-east-1"|"cn-northwest-1"|"cn-north-1",
 #'     Name = "string"
 #'   ),
 #'   InsufficientDataHealthStatus = "Healthy"|"Unhealthy"|"LastKnownStatus",

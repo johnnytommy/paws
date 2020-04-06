@@ -7,8 +7,15 @@ NULL
 #' @description
 #' Amazon Elasticsearch Configuration Service
 #' 
-#' Use the Amazon Elasticsearch configuration API to create, configure, and
+#' Use the Amazon Elasticsearch Configuration API to create, configure, and
 #' manage Elasticsearch domains.
+#' 
+#' For sample code that uses the Configuration API, see the [Amazon
+#' Elasticsearch Service Developer
+#' Guide](https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-configuration-samples.html).
+#' The guide also contains [sample code for sending signed HTTP requests to
+#' the Elasticsearch
+#' APIs](https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-request-signing.html).
 #' 
 #' The endpoint for configuration service requests is region-specific:
 #' es.*region*.amazonaws.com. For example, es.us-east-1.amazonaws.com. For
@@ -38,10 +45,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- elasticsearchservice()
+#' \dontrun{
+#' svc <- elasticsearchservice()
 #' svc$add_tags(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -93,8 +102,7 @@ elasticsearchservice <- function(config = list()) {
   target_prefix = ""
 )
 
-.elasticsearchservice$handlers <- new_handlers("restjson", "v4")
-
 .elasticsearchservice$service <- function(config = list()) {
-  new_service(.elasticsearchservice$metadata, .elasticsearchservice$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.elasticsearchservice$metadata, handlers, config)
 }

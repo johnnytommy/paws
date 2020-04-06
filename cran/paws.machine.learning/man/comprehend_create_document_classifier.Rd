@@ -7,7 +7,7 @@ documents}
 \usage{
 comprehend_create_document_classifier(DocumentClassifierName,
   DataAccessRoleArn, Tags, InputDataConfig, OutputDataConfig,
-  ClientRequestToken, LanguageCode, VolumeKmsKeyId, VpcConfig)
+  ClientRequestToken, LanguageCode, VolumeKmsKeyId, VpcConfig, Mode)
 }
 \arguments{
 \item{DocumentClassifierName}{[required] The name of the document classifier.}
@@ -17,7 +17,7 @@ role that grants Amazon Comprehend read access to your input data.}
 
 \item{Tags}{Tags to be associated with the document classifier being created. A tag
 is a key-value pair that adds as a metadata to a resource used by Amazon
-Comprehend. For example, a tag with "Sales" as the key might be added
+Comprehend. For example, a tag with \"Sales\" as the key might be added
 to a resource to indicate its use by the sales department.}
 
 \item{InputDataConfig}{[required] Specifies the format and location of the input data for the job.}
@@ -25,13 +25,13 @@ to a resource to indicate its use by the sales department.}
 \item{OutputDataConfig}{Enables the addition of output results configuration parameters for
 custom classifier jobs.}
 
-\item{ClientRequestToken}{A unique identifier for the request. If you don't set the client
+\item{ClientRequestToken}{A unique identifier for the request. If you don\'t set the client
 request token, Amazon Comprehend generates one.}
 
-\item{LanguageCode}{[required] The language of the input documents. You can specify any of the primary
-languages supported by Amazon Comprehend: German ("de"), English
-("en"), Spanish ("es"), French ("fr"), Italian ("it"), or
-Portuguese ("pt"). All documents must be in the same language.}
+\item{LanguageCode}{[required] The language of the input documents. You can specify any of the
+following languages supported by Amazon Comprehend: German (\"de\"),
+English (\"en\"), Spanish (\"es\"), French (\"fr\"), Italian (\"it\"),
+or Portuguese (\"pt\"). All documents must be in the same language.}
 
 \item{VolumeKmsKeyId}{ID for the AWS Key Management Service (KMS) key that Amazon Comprehend
 uses to encrypt data on the storage volume attached to the ML compute
@@ -46,6 +46,13 @@ either of the following formats:
 \item{VpcConfig}{Configuration parameters for an optional private Virtual Private Cloud
 (VPC) containing the resources you are using for your custom classifier.
 For more information, see \href{https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html}{Amazon VPC}.}
+
+\item{Mode}{Indicates the mode in which the classifier will be trained. The
+classifier can be trained in multi-class mode, which identifies one and
+only one class for each document, or multi-label mode, which identifies
+one or more labels for each document. In multi-label mode, multiple
+labels for an individual document are separated by a delimiter. The
+default delimiter between labels is a pipe (\\|).}
 }
 \description{
 Creates a new document classifier that you can use to categorize
@@ -66,14 +73,15 @@ how-document-classification.
     )
   ),
   InputDataConfig = list(
-    S3Uri = "string"
+    S3Uri = "string",
+    LabelDelimiter = "string"
   ),
   OutputDataConfig = list(
     S3Uri = "string",
     KmsKeyId = "string"
   ),
   ClientRequestToken = "string",
-  LanguageCode = "en"|"es"|"fr"|"de"|"it"|"pt",
+  LanguageCode = "en"|"es"|"fr"|"de"|"it"|"pt"|"ar"|"hi"|"ja"|"ko"|"zh"|"zh-TW",
   VolumeKmsKeyId = "string",
   VpcConfig = list(
     SecurityGroupIds = list(
@@ -82,7 +90,8 @@ how-document-classification.
     Subnets = list(
       "string"
     )
-  )
+  ),
+  Mode = "MULTI_CLASS"|"MULTI_LABEL"
 )
 }
 }

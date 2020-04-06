@@ -17,8 +17,8 @@ Gets the current status and future status of all offerings purchased by
 an AWS account. The response indicates how many offerings are currently
 available and the offerings that will be available in the next period.
 The API returns a \code{NotEligible} error if the user is not permitted to
-invoke the operation. Please contact \href{mailto:aws-devicefarm-support@amazon.com}{aws-devicefarm-support@amazon.com}
-if you believe that you should be able to invoke this operation.
+invoke the operation. If you must be able to invoke this operation,
+contact \href{mailto:aws-devicefarm-support@amazon.com}{aws-devicefarm-support@amazon.com}.
 }
 \section{Request syntax}{
 \preformatted{svc$get_offering_status(
@@ -28,11 +28,13 @@ if you believe that you should be able to invoke this operation.
 }
 
 \examples{
+\dontrun{
 # The following example returns information about Device Farm offerings
 # available to your account.
-\donttest{svc$get_offering_status(
+svc$get_offering_status(
   nextToken = "RW5DdDJkMWYwZjM2MzM2VHVpOHJIUXlDUXlhc2QzRGViYnc9SEXAMPLE="
-)}
+)
+}
 
 }
 \keyword{internal}

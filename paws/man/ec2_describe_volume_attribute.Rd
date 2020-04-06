@@ -34,12 +34,14 @@ in the \emph{Amazon Elastic Compute Cloud User Guide}.
 }
 
 \examples{
-# This example describes the ``autoEnableIo`` attribute of the volume with
-# the ID ``vol-049df61146c4d7901``.
-\donttest{svc$describe_volume_attribute(
+\dontrun{
+# This example describes the `autoEnableIo` attribute of the volume with
+# the ID `vol-049df61146c4d7901`.
+svc$describe_volume_attribute(
   Attribute = "autoEnableIO",
   VolumeId = "vol-049df61146c4d7901"
-)}
+)
+}
 
 }
 \keyword{internal}

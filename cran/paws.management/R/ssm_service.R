@@ -53,10 +53,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- ssm()
+#' \dontrun{
+#' svc <- ssm()
 #' svc$add_tags_to_resource(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -70,7 +72,7 @@ NULL
 #'  \link[=ssm_create_maintenance_window]{create_maintenance_window} \tab Creates a new maintenance window \cr
 #'  \link[=ssm_create_ops_item]{create_ops_item} \tab Creates a new OpsItem \cr
 #'  \link[=ssm_create_patch_baseline]{create_patch_baseline} \tab Creates a patch baseline \cr
-#'  \link[=ssm_create_resource_data_sync]{create_resource_data_sync} \tab Creates a resource data sync configuration to a single bucket in Amazon S3 \cr
+#'  \link[=ssm_create_resource_data_sync]{create_resource_data_sync} \tab A resource data sync helps you view data from multiple sources in a single location \cr
 #'  \link[=ssm_delete_activation]{delete_activation} \tab Deletes an activation \cr
 #'  \link[=ssm_delete_association]{delete_association} \tab Disassociates the specified Systems Manager document from the specified instance \cr
 #'  \link[=ssm_delete_document]{delete_document} \tab Deletes the Systems Manager document and all instance associations to the document \cr
@@ -84,39 +86,40 @@ NULL
 #'  \link[=ssm_deregister_patch_baseline_for_patch_group]{deregister_patch_baseline_for_patch_group} \tab Removes a patch group from a patch baseline \cr
 #'  \link[=ssm_deregister_target_from_maintenance_window]{deregister_target_from_maintenance_window} \tab Removes a target from a maintenance window \cr
 #'  \link[=ssm_deregister_task_from_maintenance_window]{deregister_task_from_maintenance_window} \tab Removes a task from a maintenance window \cr
-#'  \link[=ssm_describe_activations]{describe_activations} \tab Details about the activation, including: the date and time the activation was created, the expiration date, the IAM role assigned to the instances in the activation, and the number of instances activated by this registration\cr
+#'  \link[=ssm_describe_activations]{describe_activations} \tab Describes details about the activation, such as the date and time the activation was created, its expiration date, the IAM role assigned to the instances in the activation, and the number of instances registered by using this activation\cr
 #'  \link[=ssm_describe_association]{describe_association} \tab Describes the association for the specified target or instance \cr
-#'  \link[=ssm_describe_association_execution_targets]{describe_association_execution_targets} \tab Use this API action to view information about a specific execution of a specific association \cr
 #'  \link[=ssm_describe_association_executions]{describe_association_executions} \tab Use this API action to view all executions for a specific association ID \cr
+#'  \link[=ssm_describe_association_execution_targets]{describe_association_execution_targets} \tab Use this API action to view information about a specific execution of a specific association \cr
 #'  \link[=ssm_describe_automation_executions]{describe_automation_executions} \tab Provides details about all active and terminated Automation executions \cr
 #'  \link[=ssm_describe_automation_step_executions]{describe_automation_step_executions} \tab Information about all active and terminated step executions in an Automation workflow \cr
-#'  \link[=ssm_describe_available_patches]{describe_available_patches} \tab Lists all patches that could possibly be included in a patch baseline \cr
+#'  \link[=ssm_describe_available_patches]{describe_available_patches} \tab Lists all patches eligible to be included in a patch baseline \cr
 #'  \link[=ssm_describe_document]{describe_document} \tab Describes the specified Systems Manager document \cr
 #'  \link[=ssm_describe_document_permission]{describe_document_permission} \tab Describes the permissions for a Systems Manager document \cr
 #'  \link[=ssm_describe_effective_instance_associations]{describe_effective_instance_associations} \tab All associations for the instance(s) \cr
 #'  \link[=ssm_describe_effective_patches_for_patch_baseline]{describe_effective_patches_for_patch_baseline} \tab Retrieves the current effective patches (the patch and the approval state) for the specified patch baseline \cr
 #'  \link[=ssm_describe_instance_associations_status]{describe_instance_associations_status} \tab The status of the associations for the instance(s) \cr
 #'  \link[=ssm_describe_instance_information]{describe_instance_information} \tab Describes one or more of your instances \cr
+#'  \link[=ssm_describe_instance_patches]{describe_instance_patches} \tab Retrieves information about the patches on the specified instance and their state relative to the patch baseline being used for the instance \cr
 #'  \link[=ssm_describe_instance_patch_states]{describe_instance_patch_states} \tab Retrieves the high-level patch state of one or more instances \cr
 #'  \link[=ssm_describe_instance_patch_states_for_patch_group]{describe_instance_patch_states_for_patch_group} \tab Retrieves the high-level patch state for the instances in the specified patch group \cr
-#'  \link[=ssm_describe_instance_patches]{describe_instance_patches} \tab Retrieves information about the patches on the specified instance and their state relative to the patch baseline being used for the instance \cr
 #'  \link[=ssm_describe_inventory_deletions]{describe_inventory_deletions} \tab Describes a specific delete inventory operation \cr
+#'  \link[=ssm_describe_maintenance_window_executions]{describe_maintenance_window_executions} \tab Lists the executions of a maintenance window \cr
 #'  \link[=ssm_describe_maintenance_window_execution_task_invocations]{describe_maintenance_window_execution_task_invocations} \tab Retrieves the individual task executions (one per target) for a particular task run as part of a maintenance window execution \cr
 #'  \link[=ssm_describe_maintenance_window_execution_tasks]{describe_maintenance_window_execution_tasks} \tab For a given maintenance window execution, lists the tasks that were run \cr
-#'  \link[=ssm_describe_maintenance_window_executions]{describe_maintenance_window_executions} \tab Lists the executions of a maintenance window \cr
+#'  \link[=ssm_describe_maintenance_windows]{describe_maintenance_windows} \tab Retrieves the maintenance windows in an AWS account \cr
 #'  \link[=ssm_describe_maintenance_window_schedule]{describe_maintenance_window_schedule} \tab Retrieves information about upcoming executions of a maintenance window \cr
+#'  \link[=ssm_describe_maintenance_windows_for_target]{describe_maintenance_windows_for_target} \tab Retrieves information about the maintenance window targets or tasks that an instance is associated with \cr
 #'  \link[=ssm_describe_maintenance_window_targets]{describe_maintenance_window_targets} \tab Lists the targets registered with the maintenance window \cr
 #'  \link[=ssm_describe_maintenance_window_tasks]{describe_maintenance_window_tasks} \tab Lists the tasks in a maintenance window \cr
-#'  \link[=ssm_describe_maintenance_windows]{describe_maintenance_windows} \tab Retrieves the maintenance windows in an AWS account \cr
-#'  \link[=ssm_describe_maintenance_windows_for_target]{describe_maintenance_windows_for_target} \tab Retrieves information about the maintenance window targets or tasks that an instance is associated with \cr
 #'  \link[=ssm_describe_ops_items]{describe_ops_items} \tab Query a set of OpsItems \cr
 #'  \link[=ssm_describe_parameters]{describe_parameters} \tab Get information about a parameter \cr
 #'  \link[=ssm_describe_patch_baselines]{describe_patch_baselines} \tab Lists the patch baselines in your AWS account \cr
-#'  \link[=ssm_describe_patch_group_state]{describe_patch_group_state} \tab Returns high-level aggregated patch compliance state for a patch group \cr
 #'  \link[=ssm_describe_patch_groups]{describe_patch_groups} \tab Lists all patch groups that have been registered with patch baselines \cr
+#'  \link[=ssm_describe_patch_group_state]{describe_patch_group_state} \tab Returns high-level aggregated patch compliance state for a patch group \cr
 #'  \link[=ssm_describe_patch_properties]{describe_patch_properties} \tab Lists the properties of available patches organized by product, product family, classification, severity, and other properties of available patches \cr
 #'  \link[=ssm_describe_sessions]{describe_sessions} \tab Retrieves a list of all active sessions (both connected and disconnected) or terminated sessions from the past 30 days \cr
 #'  \link[=ssm_get_automation_execution]{get_automation_execution} \tab Get detailed information about a particular Automation execution \cr
+#'  \link[=ssm_get_calendar_state]{get_calendar_state} \tab Gets the state of the AWS Systems Manager Change Calendar at an optional, specified time \cr
 #'  \link[=ssm_get_command_invocation]{get_command_invocation} \tab Returns detailed information about command execution for an invocation or plugin \cr
 #'  \link[=ssm_get_connection_status]{get_connection_status} \tab Retrieves the Session Manager connection status for an instance to determine whether it is connected and ready to receive Session Manager connections \cr
 #'  \link[=ssm_get_default_patch_baseline]{get_default_patch_baseline} \tab Retrieves the default patch baseline \cr
@@ -125,28 +128,28 @@ NULL
 #'  \link[=ssm_get_inventory]{get_inventory} \tab Query inventory information \cr
 #'  \link[=ssm_get_inventory_schema]{get_inventory_schema} \tab Return a list of inventory type names for the account, or return a list of attribute names for a specific Inventory item type \cr
 #'  \link[=ssm_get_maintenance_window]{get_maintenance_window} \tab Retrieves a maintenance window \cr
-#'  \link[=ssm_get_maintenance_window_execution]{get_maintenance_window_execution} \tab Retrieves details about a specific task run as part of a maintenance window execution \cr
+#'  \link[=ssm_get_maintenance_window_execution]{get_maintenance_window_execution} \tab Retrieves details about a specific a maintenance window execution \cr
 #'  \link[=ssm_get_maintenance_window_execution_task]{get_maintenance_window_execution_task} \tab Retrieves the details about a specific task run as part of a maintenance window execution \cr
-#'  \link[=ssm_get_maintenance_window_execution_task_invocation]{get_maintenance_window_execution_task_invocation} \tab Retrieves a task invocation \cr
+#'  \link[=ssm_get_maintenance_window_execution_task_invocation]{get_maintenance_window_execution_task_invocation} \tab Retrieves information about a specific task running on a specific target \cr
 #'  \link[=ssm_get_maintenance_window_task]{get_maintenance_window_task} \tab Lists the tasks in a maintenance window \cr
 #'  \link[=ssm_get_ops_item]{get_ops_item} \tab Get information about an OpsItem by using the ID \cr
 #'  \link[=ssm_get_ops_summary]{get_ops_summary} \tab View a summary of OpsItems based on specified filters and aggregators \cr
 #'  \link[=ssm_get_parameter]{get_parameter} \tab Get information about a parameter by using the parameter name \cr
 #'  \link[=ssm_get_parameter_history]{get_parameter_history} \tab Query a list of all parameters used by the AWS account \cr
 #'  \link[=ssm_get_parameters]{get_parameters} \tab Get details of a parameter \cr
-#'  \link[=ssm_get_parameters_by_path]{get_parameters_by_path} \tab Retrieve parameters in a specific hierarchy \cr
+#'  \link[=ssm_get_parameters_by_path]{get_parameters_by_path} \tab Retrieve information about one or more parameters in a specific hierarchy \cr
 #'  \link[=ssm_get_patch_baseline]{get_patch_baseline} \tab Retrieves information about a patch baseline \cr
 #'  \link[=ssm_get_patch_baseline_for_patch_group]{get_patch_baseline_for_patch_group} \tab Retrieves the patch baseline that should be used for the specified patch group \cr
 #'  \link[=ssm_get_service_setting]{get_service_setting} \tab ServiceSetting is an account-level setting for an AWS service \cr
 #'  \link[=ssm_label_parameter_version]{label_parameter_version} \tab A parameter label is a user-defined alias to help you manage different versions of a parameter \cr
-#'  \link[=ssm_list_association_versions]{list_association_versions} \tab Retrieves all versions of an association for a specific association ID \cr
 #'  \link[=ssm_list_associations]{list_associations} \tab Lists the associations for the specified Systems Manager document or instance \cr
+#'  \link[=ssm_list_association_versions]{list_association_versions} \tab Retrieves all versions of an association for a specific association ID \cr
 #'  \link[=ssm_list_command_invocations]{list_command_invocations} \tab An invocation is copy of a command sent to a specific instance \cr
 #'  \link[=ssm_list_commands]{list_commands} \tab Lists the commands requested by users of the AWS account \cr
 #'  \link[=ssm_list_compliance_items]{list_compliance_items} \tab For a specified resource ID, this API action returns a list of compliance statuses for different resource types \cr
 #'  \link[=ssm_list_compliance_summaries]{list_compliance_summaries} \tab Returns a summary count of compliant and non-compliant resources for a compliance type \cr
-#'  \link[=ssm_list_document_versions]{list_document_versions} \tab List all versions for a document \cr
 #'  \link[=ssm_list_documents]{list_documents} \tab Describes one or more of your Systems Manager documents \cr
+#'  \link[=ssm_list_document_versions]{list_document_versions} \tab List all versions for a document \cr
 #'  \link[=ssm_list_inventory_entries]{list_inventory_entries} \tab A list of inventory items returned by the request \cr
 #'  \link[=ssm_list_resource_compliance_summaries]{list_resource_compliance_summaries} \tab Returns a resource-level summary count \cr
 #'  \link[=ssm_list_resource_data_sync]{list_resource_data_sync} \tab Lists your resource data sync configurations \cr
@@ -155,11 +158,11 @@ NULL
 #'  \link[=ssm_put_compliance_items]{put_compliance_items} \tab Registers a compliance type and other compliance details on a designated resource \cr
 #'  \link[=ssm_put_inventory]{put_inventory} \tab Bulk update custom inventory items on one more instance \cr
 #'  \link[=ssm_put_parameter]{put_parameter} \tab Add a parameter to the system \cr
-#'  \link[=ssm_register_default_patch_baseline]{register_default_patch_baseline} \tab Defines the default patch baseline \cr
+#'  \link[=ssm_register_default_patch_baseline]{register_default_patch_baseline} \tab Defines the default patch baseline for the relevant operating system \cr
 #'  \link[=ssm_register_patch_baseline_for_patch_group]{register_patch_baseline_for_patch_group} \tab Registers a patch baseline for a patch group \cr
 #'  \link[=ssm_register_target_with_maintenance_window]{register_target_with_maintenance_window} \tab Registers a target with a maintenance window \cr
 #'  \link[=ssm_register_task_with_maintenance_window]{register_task_with_maintenance_window} \tab Adds a new task to a maintenance window \cr
-#'  \link[=ssm_remove_tags_from_resource]{remove_tags_from_resource} \tab Removes all tags from the specified resource \cr
+#'  \link[=ssm_remove_tags_from_resource]{remove_tags_from_resource} \tab Removes tag keys from the specified resource \cr
 #'  \link[=ssm_reset_service_setting]{reset_service_setting} \tab ServiceSetting is an account-level setting for an AWS service \cr
 #'  \link[=ssm_resume_session]{resume_session} \tab Reconnects a session to an instance after it has been disconnected \cr
 #'  \link[=ssm_send_automation_signal]{send_automation_signal} \tab Sends a signal to an Automation execution to change the current behavior or status of the execution \cr
@@ -171,14 +174,15 @@ NULL
 #'  \link[=ssm_terminate_session]{terminate_session} \tab Permanently ends a session and closes the data connection between the Session Manager client and SSM Agent on the instance \cr
 #'  \link[=ssm_update_association]{update_association} \tab Updates an association \cr
 #'  \link[=ssm_update_association_status]{update_association_status} \tab Updates the status of the Systems Manager document associated with the specified instance \cr
-#'  \link[=ssm_update_document]{update_document} \tab The document you want to update \cr
+#'  \link[=ssm_update_document]{update_document} \tab Updates one or more values for an SSM document \cr
 #'  \link[=ssm_update_document_default_version]{update_document_default_version} \tab Set the default version of a document \cr
 #'  \link[=ssm_update_maintenance_window]{update_maintenance_window} \tab Updates an existing maintenance window \cr
 #'  \link[=ssm_update_maintenance_window_target]{update_maintenance_window_target} \tab Modifies the target of an existing maintenance window \cr
 #'  \link[=ssm_update_maintenance_window_task]{update_maintenance_window_task} \tab Modifies a task assigned to a maintenance window \cr
-#'  \link[=ssm_update_managed_instance_role]{update_managed_instance_role} \tab Assigns or changes an Amazon Identity and Access Management (IAM) role to the managed instance \cr
+#'  \link[=ssm_update_managed_instance_role]{update_managed_instance_role} \tab Assigns or changes an Amazon Identity and Access Management (IAM) role for the managed instance \cr
 #'  \link[=ssm_update_ops_item]{update_ops_item} \tab Edit or change an OpsItem \cr
 #'  \link[=ssm_update_patch_baseline]{update_patch_baseline} \tab Modifies an existing patch baseline \cr
+#'  \link[=ssm_update_resource_data_sync]{update_resource_data_sync} \tab Update a resource data sync \cr
 #'  \link[=ssm_update_service_setting]{update_service_setting} \tab ServiceSetting is an account-level setting for an AWS service 
 #' }
 #'
@@ -205,8 +209,7 @@ ssm <- function(config = list()) {
   target_prefix = "AmazonSSM"
 )
 
-.ssm$handlers <- new_handlers("jsonrpc", "v4")
-
 .ssm$service <- function(config = list()) {
-  new_service(.ssm$metadata, .ssm$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.ssm$metadata, handlers, config)
 }

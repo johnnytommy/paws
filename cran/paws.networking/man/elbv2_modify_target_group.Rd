@@ -15,11 +15,10 @@ elbv2_modify_target_group(TargetGroupArn, HealthCheckProtocol,
 
 \item{HealthCheckProtocol}{The protocol the load balancer uses when performing health checks on
 targets. The TCP protocol is supported for health checks only if the
-protocol of the target group is TCP, TLS, UDP, or TCP\_UDP. The TLS,
-UDP, and TCP\_UDP protocols are not supported for health checks.
+protocol of the target group is TCP, TLS, UDP, or TCP\\_UDP. The TLS,
+UDP, and TCP\\_UDP protocols are not supported for health checks.
 
-If the protocol of the target group is TCP, you can't modify this
-setting.}
+With Network Load Balancers, you can\'t modify this setting.}
 
 \item{HealthCheckPort}{The port the load balancer uses when performing health checks on
 targets.}
@@ -34,14 +33,12 @@ individual target. For Application Load Balancers, the range is 5 to 300
 seconds. For Network Load Balancers, the supported values are 10 or 30
 seconds.
 
-If the protocol of the target group is TCP, you can't modify this
-setting.}
+With Network Load Balancers, you can\'t modify this setting.}
 
 \item{HealthCheckTimeoutSeconds}{[HTTP/HTTPS health checks] The amount of time, in seconds, during
 which no response means a failed health check.
 
-If the protocol of the target group is TCP, you can't modify this
-setting.}
+With Network Load Balancers, you can\'t modify this setting.}
 
 \item{HealthyThresholdCount}{The number of consecutive health checks successes required before
 considering an unhealthy target healthy.}
@@ -53,8 +50,7 @@ must be the same as the healthy threshold count.}
 \item{Matcher}{[HTTP/HTTPS health checks] The HTTP codes to use when checking for a
 successful response from a target.
 
-If the protocol of the target group is TCP, you can't modify this
-setting.}
+With Network Load Balancers, you can\'t modify this setting.}
 }
 \description{
 Modifies the health checks used when evaluating the health state of the
@@ -82,13 +78,15 @@ To monitor the health of the targets, use DescribeTargetHealth.
 }
 
 \examples{
+\dontrun{
 # This example changes the configuration of the health checks used to
 # evaluate the health of the targets for the specified target group.
-\donttest{svc$modify_target_group(
+svc$modify_target_group(
   HealthCheckPort = "443",
   HealthCheckProtocol = "HTTPS",
   TargetGroupArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-https..."
-)}
+)
+}
 
 }
 \keyword{internal}

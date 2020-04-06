@@ -6,7 +6,7 @@
 zone}
 \usage{
 storagegateway_update_gateway_information(GatewayARN, GatewayName,
-  GatewayTimezone)
+  GatewayTimezone, CloudWatchLogGroupARN)
 }
 \arguments{
 \item{GatewayARN}{[required]}
@@ -14,34 +14,42 @@ storagegateway_update_gateway_information(GatewayARN, GatewayName,
 \item{GatewayName}{}
 
 \item{GatewayTimezone}{A value that indicates the time zone of the gateway.}
+
+\item{CloudWatchLogGroupARN}{The Amazon Resource Name (ARN) of the Amazon CloudWatch log group that
+you want to use to monitor and log events in the gateway.
+
+For more information, see \href{https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html}{What Is Amazon CloudWatch Logs?}.}
 }
 \description{
-Updates a gateway's metadata, which includes the gateway's name and
+Updates a gateway\'s metadata, which includes the gateway\'s name and
 time zone. To specify which gateway to update, use the Amazon Resource
 Name (ARN) of the gateway in your request.
 }
 \details{
-For Gateways activated after September 2, 2015, the gateway's ARN
+For Gateways activated after September 2, 2015, the gateway\'s ARN
 contains the gateway ID rather than the gateway name. However, changing
-the name of the gateway has no effect on the gateway's ARN.
+the name of the gateway has no effect on the gateway\'s ARN.
 }
 \section{Request syntax}{
 \preformatted{svc$update_gateway_information(
   GatewayARN = "string",
   GatewayName = "string",
-  GatewayTimezone = "string"
+  GatewayTimezone = "string",
+  CloudWatchLogGroupARN = "string"
 )
 }
 }
 
 \examples{
+\dontrun{
 # Updates a gateway's metadata, which includes the gateway's name and time
 # zone.
-\donttest{svc$update_gateway_information(
+svc$update_gateway_information(
   GatewayARN = "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B",
   GatewayName = "MyGateway2",
   GatewayTimezone = "GMT-12:00"
-)}
+)
+}
 
 }
 \keyword{internal}

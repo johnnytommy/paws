@@ -52,7 +52,7 @@ name in an expression.
 misinterpreted in an expression.
 }
 
-Use the \strong{\#} character in an expression to dereference an attribute
+Use the \strong{\\#} character in an expression to dereference an attribute
 name. For example, consider the following attribute name:
 \itemize{
 \item \code{Percentile}
@@ -64,13 +64,13 @@ words, see \href{https://docs.aws.amazon.com/amazondynamodb/latest/developerguid
 in the \emph{Amazon DynamoDB Developer Guide}). To work around this, you
 could specify the following for \code{ExpressionAttributeNames}:
 \itemize{
-\item \code{\{"#P":"Percentile"\}}
+\item \verb{\\\{"#P":"Percentile"\\\}}
 }
 
 You could then use this substitution in an expression, as in this
 example:
 \itemize{
-\item \code{#P = :val}
+\item \verb{#P = :val}
 }
 
 Tokens that begin with the \strong{:} character are \emph{expression attribute
@@ -131,10 +131,11 @@ eventually consistent read, it always returns the last updated value.
 }
 
 \examples{
+\dontrun{
 # This example retrieves an item from the Music table. The table has a
 # partition key and a sort key (Artist and SongTitle), so you must specify
 # both of these attributes.
-\donttest{svc$get_item(
+svc$get_item(
   Key = list(
     Artist = list(
       S = "Acme Band"
@@ -144,7 +145,8 @@ eventually consistent read, it always returns the last updated value.
     )
   ),
   TableName = "Music"
-)}
+)
+}
 
 }
 \keyword{internal}

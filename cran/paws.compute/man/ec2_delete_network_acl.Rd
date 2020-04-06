@@ -15,8 +15,8 @@ Otherwise, it is \code{UnauthorizedOperation}.}
 \item{NetworkAclId}{[required] The ID of the network ACL.}
 }
 \description{
-Deletes the specified network ACL. You can't delete the ACL if it's
-associated with any subnets. You can't delete the default network ACL.
+Deletes the specified network ACL. You can\'t delete the ACL if it\'s
+associated with any subnets. You can\'t delete the default network ACL.
 }
 \section{Request syntax}{
 \preformatted{svc$delete_network_acl(
@@ -27,10 +27,12 @@ associated with any subnets. You can't delete the default network ACL.
 }
 
 \examples{
+\dontrun{
 # This example deletes the specified network ACL.
-\donttest{svc$delete_network_acl(
+svc$delete_network_acl(
   NetworkAclId = "acl-5fb85d36"
-)}
+)
+}
 
 }
 \keyword{internal}

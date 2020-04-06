@@ -36,14 +36,18 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- apigatewaymanagementapi()
-#' svc$post_to_connection(
+#' \dontrun{
+#' svc <- apigatewaymanagementapi()
+#' svc$delete_connection(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
-#'  \link[=apigatewaymanagementapi_post_to_connection]{post_to_connection} \tab Sends the provided data to the specified connection
+#'  \link[=apigatewaymanagementapi_delete_connection]{delete_connection} \tab Delete the connection with the provided id \cr
+#'  \link[=apigatewaymanagementapi_get_connection]{get_connection} \tab Get information about the connection with the provided id\cr
+#'  \link[=apigatewaymanagementapi_post_to_connection]{post_to_connection} \tab Sends the provided data to the specified connection 
 #' }
 #'
 #' @rdname apigatewaymanagementapi
@@ -69,8 +73,7 @@ apigatewaymanagementapi <- function(config = list()) {
   target_prefix = ""
 )
 
-.apigatewaymanagementapi$handlers <- new_handlers("restjson", "v4")
-
 .apigatewaymanagementapi$service <- function(config = list()) {
-  new_service(.apigatewaymanagementapi$metadata, .apigatewaymanagementapi$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.apigatewaymanagementapi$metadata, handlers, config)
 }

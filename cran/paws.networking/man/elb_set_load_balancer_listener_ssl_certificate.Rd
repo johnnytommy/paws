@@ -16,7 +16,7 @@ elb_set_load_balancer_listener_ssl_certificate(LoadBalancerName,
 \item{SSLCertificateId}{[required] The Amazon Resource Name (ARN) of the SSL certificate.}
 }
 \description{
-Sets the certificate that terminates the specified listener's SSL
+Sets the certificate that terminates the specified listener\'s SSL
 connections. The specified certificate replaces any prior certificate
 that was used on the same load balancer and port.
 }
@@ -34,13 +34,15 @@ in the \emph{Classic Load Balancers Guide}.
 }
 
 \examples{
+\dontrun{
 # This example replaces the existing SSL certificate for the specified
 # HTTPS listener.
-\donttest{svc$set_load_balancer_listener_ssl_certificate(
+svc$set_load_balancer_listener_ssl_certificate(
   LoadBalancerName = "my-load-balancer",
   LoadBalancerPort = 443L,
   SSLCertificateId = "arn:aws:iam::123456789012:server-certificate/new-server-cert"
-)}
+)
+}
 
 }
 \keyword{internal}

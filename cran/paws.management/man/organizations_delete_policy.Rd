@@ -12,7 +12,7 @@ can get the ID from the ListPolicies or ListPoliciesForTarget
 operations.
 
 The \href{http://wikipedia.org/wiki/regex}{regex pattern} for a policy ID
-string requires "p-" followed by from 8 to 128 lower-case letters or
+string requires \"p-\" followed by from 8 to 128 lowercase letters or
 digits.}
 }
 \description{
@@ -21,7 +21,7 @@ this operation, you must first detach the policy from all organizational
 units (OUs), roots, and accounts.
 }
 \details{
-This operation can be called only from the organization's master
+This operation can be called only from the organization\'s master
 account.
 }
 \section{Request syntax}{
@@ -32,14 +32,16 @@ account.
 }
 
 \examples{
+\dontrun{
 # The following example shows how to delete a policy from an organization.
 # The example assumes that you previously detached the policy from all
 # entities:
 # 
 # 
-\donttest{svc$delete_policy(
+svc$delete_policy(
   PolicyId = "p-examplepolicyid111"
-)}
+)
+}
 
 }
 \keyword{internal}

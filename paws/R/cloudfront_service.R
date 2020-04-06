@@ -33,10 +33,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- cloudfront()
+#' \dontrun{
+#' svc <- cloudfront()
 #' svc$create_cloud_front_origin_access_identity(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -110,8 +112,7 @@ cloudfront <- function(config = list()) {
   target_prefix = ""
 )
 
-.cloudfront$handlers <- new_handlers("restxml", "v4")
-
 .cloudfront$service <- function(config = list()) {
-  new_service(.cloudfront$metadata, .cloudfront$handlers, config)
+  handlers <- new_handlers("restxml", "v4")
+  new_service(.cloudfront$metadata, handlers, config)
 }

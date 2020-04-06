@@ -37,10 +37,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- servicediscovery()
+#' \dontrun{
+#' svc <- servicediscovery()
 #' svc$create_http_namespace(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -89,8 +91,7 @@ servicediscovery <- function(config = list()) {
   target_prefix = "Route53AutoNaming_v20170314"
 )
 
-.servicediscovery$handlers <- new_handlers("jsonrpc", "v4")
-
 .servicediscovery$service <- function(config = list()) {
-  new_service(.servicediscovery$metadata, .servicediscovery$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.servicediscovery$metadata, handlers, config)
 }

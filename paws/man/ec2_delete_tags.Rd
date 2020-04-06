@@ -25,7 +25,7 @@ its value is an empty string.
 
 If you omit this parameter, we delete all user-defined tags for the
 specified resources. We do not delete AWS-generated tags (tags that have
-the \code{aws:} prefix).}
+the \verb{aws:} prefix).}
 }
 \description{
 Deletes the specified set of tags from the specified set of resources.
@@ -52,8 +52,9 @@ in the \emph{Amazon Elastic Compute Cloud User Guide}.
 }
 
 \examples{
+\dontrun{
 # This example deletes the tag Stack=test from the specified image.
-\donttest{svc$delete_tags(
+svc$delete_tags(
   Resources = list(
     "ami-78a54011"
   ),
@@ -63,7 +64,8 @@ in the \emph{Amazon Elastic Compute Cloud User Guide}.
       Value = "test"
     )
   )
-)}
+)
+}
 
 }
 \keyword{internal}

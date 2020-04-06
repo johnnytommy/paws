@@ -15,7 +15,7 @@ storagegateway_set_local_console_password(GatewayARN,
 \description{
 Sets the password for your VM local console. When you log in to the
 local console for the first time, you log in to the VM with the default
-credentials. We recommend that you set a new password. You don't need
+credentials. We recommend that you set a new password. You don\'t need
 to know the default password to set a new password.
 }
 \section{Request syntax}{
@@ -27,11 +27,13 @@ to know the default password to set a new password.
 }
 
 \examples{
+\dontrun{
 # Sets the password for your VM local console.
-\donttest{svc$set_local_console_password(
+svc$set_local_console_password(
   GatewayARN = "arn:aws:storagegateway:us-east-1:999999999999:gateway/sgw-12A3456B",
   LocalConsolePassword = "PassWordMustBeAtLeast6Chars."
-)}
+)
+}
 
 }
 \keyword{internal}

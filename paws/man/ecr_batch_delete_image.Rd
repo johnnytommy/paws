@@ -22,12 +22,12 @@ Deletes a list of specified images within a specified repository. Images
 are specified with either \code{imageTag} or \code{imageDigest}.
 }
 \details{
-You can remove a tag from an image by specifying the image's tag in
+You can remove a tag from an image by specifying the image\'s tag in
 your request. When you remove the last tag from an image, the image is
 deleted from your repository.
 
 You can completely delete an image (and all of its tags) by specifying
-the image's digest in your request.
+the image\'s digest in your request.
 }
 \section{Request syntax}{
 \preformatted{svc$batch_delete_image(
@@ -44,16 +44,18 @@ the image's digest in your request.
 }
 
 \examples{
+\dontrun{
 # This example deletes images with the tags precise and trusty in a
 # repository called ubuntu in the default registry for an account.
-\donttest{svc$batch_delete_image(
+svc$batch_delete_image(
   imageIds = list(
     list(
       imageTag = "precise"
     )
   ),
   repositoryName = "ubuntu"
-)}
+)
+}
 
 }
 \keyword{internal}

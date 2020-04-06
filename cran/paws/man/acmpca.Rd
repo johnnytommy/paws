@@ -17,8 +17,8 @@ for your organization.
 
 The documentation for each action shows the Query API request parameters
 and the XML response. Alternatively, you can use one of the AWS SDKs to
-access an API that's tailored to the programming language or platform
-that you're using. For more information, see \href{https://aws.amazon.com/tools/#SDKs}{AWS SDKs}.
+access an API that\'s tailored to the programming language or platform
+that you\'re using. For more information, see \href{https://aws.amazon.com/tools/#SDKs}{AWS SDKs}.
 
 Each ACM Private CA API action has a throttling limit which determines
 the number of times the action can be called per second. For more
@@ -70,9 +70,11 @@ in the ACM Private CA user guide.
 }
 
 \examples{
-\donttest{svc <- acmpca()
+\dontrun{
+svc <- acmpca()
 svc$create_certificate_authority(
   Foo = 123
-)}
+)
+}
 
 }

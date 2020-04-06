@@ -14,11 +14,11 @@ Must be the ARN of an Elastic Beanstalk environment.}
 
 \item{TagsToAdd}{A list of tags to add or update.
 
-If a key of an existing tag is added, the tag's value is updated.}
+If a key of an existing tag is added, the tag\'s value is updated.}
 
 \item{TagsToRemove}{A list of tag keys to remove.
 
-If a tag key doesn't exist, it is silently ignored.}
+If a tag key doesn\'t exist, it is silently ignored.}
 }
 \description{
 Update the list of tags applied to an AWS Elastic Beanstalk resource.
@@ -32,18 +32,19 @@ environments. For details about environment tagging, see \href{https://docs.aws.
 If you create a custom IAM user policy to control permission to this
 operation, specify one of the following two virtual actions (or both)
 instead of the API operation name:
+\subsection{elasticbeanstalk:AddTags}{
 
-elasticbeanstalk:AddTags
+Controls permission to call \code{UpdateTagsForResource} and pass a list of
+tags to add in the \code{TagsToAdd} parameter.
+}
 
-:   Controls permission to call \code{UpdateTagsForResource} and pass a list
-of tags to add in the \code{TagsToAdd} parameter.
+\subsection{elasticbeanstalk:RemoveTags}{
 
-elasticbeanstalk:RemoveTags
-
-:   Controls permission to call \code{UpdateTagsForResource} and pass a list
-of tag keys to remove in the \code{TagsToRemove} parameter.
+Controls permission to call \code{UpdateTagsForResource} and pass a list of
+tag keys to remove in the \code{TagsToRemove} parameter.
 
 For details about creating a custom user policy, see \href{https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/AWSHowTo.iam.managed-policies.html#AWSHowTo.iam.policies}{Creating a Custom User Policy}.
+}
 }
 \section{Request syntax}{
 \preformatted{svc$update_tags_for_resource(

@@ -11,7 +11,7 @@ iam_tag_role(RoleName, Tags)
 
 This parameter accepts (through its \href{http://wikipedia.org/wiki/regex}{regex pattern}) a string of characters that
 consist of upper and lowercase alphanumeric characters with no spaces.
-You can also include any of the following characters: \_+=,.@-}
+You can also include any of the following characters: \\_+=,.@-}
 
 \item{Tags}{[required] The list of tags that you want to attach to the role. Each tag consists
 of a key name and an associated value. You can specify this with a JSON
@@ -68,8 +68,9 @@ in the \emph{IAM User Guide}.
 }
 
 \examples{
+\dontrun{
 # The following example shows how to add tags to an existing role.
-\donttest{svc$tag_role(
+svc$tag_role(
   RoleName = "taggedrole",
   Tags = list(
     list(
@@ -81,7 +82,8 @@ in the \emph{IAM User Guide}.
       Value = "12345"
     )
   )
-)}
+)
+}
 
 }
 \keyword{internal}

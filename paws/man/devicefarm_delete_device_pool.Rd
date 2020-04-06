@@ -8,7 +8,7 @@ devicefarm_delete_device_pool(arn)
 }
 \arguments{
 \item{arn}{[required] Represents the Amazon Resource Name (ARN) of the Device Farm device pool
-you wish to delete.}
+to delete.}
 }
 \description{
 Deletes a device pool given the pool ARN. Does not allow deletion of
@@ -22,10 +22,12 @@ curated pools owned by the system.
 }
 
 \examples{
+\dontrun{
 # The following example deletes a specific device pool.
-\donttest{svc$delete_device_pool(
+svc$delete_device_pool(
   arn = "arn:aws:devicefarm:us-west-2::devicepool:123-456-EXAMPLE-GUID"
-)}
+)
+}
 
 }
 \keyword{internal}

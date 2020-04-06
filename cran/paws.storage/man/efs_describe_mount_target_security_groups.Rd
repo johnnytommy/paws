@@ -19,9 +19,9 @@ been created and the lifecycle state of the mount target is not
 This operation requires permissions for the following actions:
 \itemize{
 \item \code{elasticfilesystem:DescribeMountTargetSecurityGroups} action on the
-mount target's file system.
+mount target\'s file system.
 \item \code{ec2:DescribeNetworkInterfaceAttribute} action on the mount
-target's network interface.
+target\'s network interface.
 }
 }
 \section{Request syntax}{
@@ -32,11 +32,13 @@ target's network interface.
 }
 
 \examples{
+\dontrun{
 # This operation describes all of the security groups for a file system's
 # mount target.
-\donttest{svc$describe_mount_target_security_groups(
+svc$describe_mount_target_security_groups(
   MountTargetId = "fsmt-12340abc"
-)}
+)
+}
 
 }
 \keyword{internal}

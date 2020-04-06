@@ -137,7 +137,7 @@ redshift_authorize_cluster_security_group_ingress <- function(ClusterSecurityGro
 #' @param SnapshotIdentifier &#91;required&#93; The identifier of the snapshot the account is authorized to restore.
 #' @param SnapshotClusterIdentifier The identifier of the cluster the snapshot was created from. This
 #' parameter is required if your IAM user has a policy containing a
-#' snapshot resource element that specifies anything other than \* for the
+#' snapshot resource element that specifies anything other than * for the
 #' cluster name.
 #' @param AccountWithRestoreAccess &#91;required&#93; The identifier of the AWS customer account authorized to restore the
 #' specified snapshot.
@@ -335,7 +335,7 @@ redshift_cancel_resize <- function(ClusterIdentifier) {
 #'     `available`.
 #' @param SourceSnapshotClusterIdentifier The identifier of the cluster the source snapshot was created from. This
 #' parameter is required if your IAM user has a policy containing a
-#' snapshot resource element that specifies anything other than \* for the
+#' snapshot resource element that specifies anything other than * for the
 #' cluster name.
 #' 
 #' Constraints:
@@ -465,9 +465,8 @@ redshift_copy_cluster_snapshot <- function(SourceSnapshotIdentifier, SourceSnaps
 #' Clusters](https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-clusters.html#how-many-nodes)
 #' in the *Amazon Redshift Cluster Management Guide*.
 #' 
-#' Valid Values: `ds2.xlarge` \\| `ds2.8xlarge` \\| `ds2.xlarge` \\|
-#' `ds2.8xlarge` \\| `dc1.large` \\| `dc1.8xlarge` \\| `dc2.large` \\|
-#' `dc2.8xlarge`
+#' Valid Values: `ds2.xlarge` \\| `ds2.8xlarge` \\| `dc1.large` \\|
+#' `dc1.8xlarge` \\| `dc2.large` \\| `dc2.8xlarge` \\| `ra3.16xlarge`
 #' @param MasterUsername &#91;required&#93; The user name associated with the master user account for the cluster
 #' that is being created.
 #' 
@@ -496,7 +495,7 @@ redshift_copy_cluster_snapshot <- function(SourceSnapshotIdentifier, SourceSnaps
 #' -   Must contain one number.
 #' 
 #' -   Can be any printable ASCII character (ASCII code 33 to 126) except
-#'     \' (single quote), \" (double quote), \\, /, @, or space.
+#'     \' (single quote), \" (double quote), \\, /, @@, or space.
 #' @param ClusterSecurityGroups A list of security groups to be associated with this cluster.
 #' 
 #' Default: The default cluster security group for Amazon Redshift.
@@ -1241,6 +1240,83 @@ redshift_create_hsm_configuration <- function(HsmConfigurationIdentifier, Descri
 }
 .redshift$operations$create_hsm_configuration <- redshift_create_hsm_configuration
 
+#' Creates a scheduled action
+#'
+#' Creates a scheduled action. A scheduled action contains a schedule and
+#' an Amazon Redshift API action. For example, you can create a schedule of
+#' when to run the `ResizeCluster` API operation.
+#'
+#' @usage
+#' redshift_create_scheduled_action(ScheduledActionName, TargetAction,
+#'   Schedule, IamRole, ScheduledActionDescription, StartTime, EndTime,
+#'   Enable)
+#'
+#' @param ScheduledActionName &#91;required&#93; The name of the scheduled action. The name must be unique within an
+#' account. For more information about this parameter, see ScheduledAction.
+#' @param TargetAction &#91;required&#93; A JSON format string of the Amazon Redshift API operation with input
+#' parameters. For more information about this parameter, see
+#' ScheduledAction.
+#' @param Schedule &#91;required&#93; The schedule in `at( )` or `cron( )` format. For more information about
+#' this parameter, see ScheduledAction.
+#' @param IamRole &#91;required&#93; The IAM role to assume to run the target action. For more information
+#' about this parameter, see ScheduledAction.
+#' @param ScheduledActionDescription The description of the scheduled action.
+#' @param StartTime The start time in UTC of the scheduled action. Before this time, the
+#' scheduled action does not trigger. For more information about this
+#' parameter, see ScheduledAction.
+#' @param EndTime The end time in UTC of the scheduled action. After this time, the
+#' scheduled action does not trigger. For more information about this
+#' parameter, see ScheduledAction.
+#' @param Enable If true, the schedule is enabled. If false, the scheduled action does
+#' not trigger. For more information about `state` of the scheduled action,
+#' see ScheduledAction.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$create_scheduled_action(
+#'   ScheduledActionName = "string",
+#'   TargetAction = list(
+#'     ResizeCluster = list(
+#'       ClusterIdentifier = "string",
+#'       ClusterType = "string",
+#'       NodeType = "string",
+#'       NumberOfNodes = 123,
+#'       Classic = TRUE|FALSE
+#'     )
+#'   ),
+#'   Schedule = "string",
+#'   IamRole = "string",
+#'   ScheduledActionDescription = "string",
+#'   StartTime = as.POSIXct(
+#'     "2015-01-01"
+#'   ),
+#'   EndTime = as.POSIXct(
+#'     "2015-01-01"
+#'   ),
+#'   Enable = TRUE|FALSE
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname redshift_create_scheduled_action
+redshift_create_scheduled_action <- function(ScheduledActionName, TargetAction, Schedule, IamRole, ScheduledActionDescription = NULL, StartTime = NULL, EndTime = NULL, Enable = NULL) {
+  op <- new_operation(
+    name = "CreateScheduledAction",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .redshift$create_scheduled_action_input(ScheduledActionName = ScheduledActionName, TargetAction = TargetAction, Schedule = Schedule, IamRole = IamRole, ScheduledActionDescription = ScheduledActionDescription, StartTime = StartTime, EndTime = EndTime, Enable = Enable)
+  output <- .redshift$create_scheduled_action_output()
+  config <- get_config()
+  svc <- .redshift$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.redshift$operations$create_scheduled_action <- redshift_create_scheduled_action
+
 #' Creates a snapshot copy grant that permits Amazon Redshift to use a
 #' customer master key (CMK) from AWS Key Management Service (AWS KMS) to
 #' encrypt copied snapshots in a destination region
@@ -1320,7 +1396,7 @@ redshift_create_snapshot_copy_grant <- function(SnapshotCopyGrantName, KmsKeyId 
 #'   ScheduleIdentifier, ScheduleDescription, Tags, DryRun, NextInvocations)
 #'
 #' @param ScheduleDefinitions The definition of the snapshot schedule. The definition is made up of
-#' schedule expressions, for example \"cron(30 12 \*)\" or \"rate(12
+#' schedule expressions, for example \"cron(30 12 *)\" or \"rate(12
 #' hours)\".
 #' @param ScheduleIdentifier A unique identifier for a snapshot schedule. Only alphanumeric
 #' characters are allowed for the identifier.
@@ -1629,7 +1705,7 @@ redshift_delete_cluster_security_group <- function(ClusterSecurityGroupName) {
 #' `available`, `failed`, or `cancelled` state.
 #' @param SnapshotClusterIdentifier The unique identifier of the cluster the snapshot was created from. This
 #' parameter is required if your IAM user has a policy containing a
-#' snapshot resource element that specifies anything other than \* for the
+#' snapshot resource element that specifies anything other than * for the
 #' cluster name.
 #' 
 #' Constraints: Must be the name of valid cluster.
@@ -1806,6 +1882,42 @@ redshift_delete_hsm_configuration <- function(HsmConfigurationIdentifier) {
   return(response)
 }
 .redshift$operations$delete_hsm_configuration <- redshift_delete_hsm_configuration
+
+#' Deletes a scheduled action
+#'
+#' Deletes a scheduled action.
+#'
+#' @usage
+#' redshift_delete_scheduled_action(ScheduledActionName)
+#'
+#' @param ScheduledActionName &#91;required&#93; The name of the scheduled action to delete.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$delete_scheduled_action(
+#'   ScheduledActionName = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname redshift_delete_scheduled_action
+redshift_delete_scheduled_action <- function(ScheduledActionName) {
+  op <- new_operation(
+    name = "DeleteScheduledAction",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .redshift$delete_scheduled_action_input(ScheduledActionName = ScheduledActionName)
+  output <- .redshift$delete_scheduled_action_output()
+  config <- get_config()
+  svc <- .redshift$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.redshift$operations$delete_scheduled_action <- redshift_delete_scheduled_action
 
 #' Deletes the specified snapshot copy grant
 #'
@@ -3017,7 +3129,7 @@ redshift_describe_event_subscriptions <- function(SubscriptionName = NULL, MaxRe
 #' ```
 #' svc$describe_events(
 #'   SourceIdentifier = "string",
-#'   SourceType = "cluster"|"cluster-parameter-group"|"cluster-security-group"|"cluster-snapshot",
+#'   SourceType = "cluster"|"cluster-parameter-group"|"cluster-security-group"|"cluster-snapshot"|"scheduled-action",
 #'   StartTime = as.POSIXct(
 #'     "2015-01-01"
 #'   ),
@@ -3268,6 +3380,87 @@ redshift_describe_logging_status <- function(ClusterIdentifier) {
 }
 .redshift$operations$describe_logging_status <- redshift_describe_logging_status
 
+#' Returns properties of possible node configurations such as node type,
+#' number of nodes, and disk usage for the specified action type
+#'
+#' Returns properties of possible node configurations such as node type,
+#' number of nodes, and disk usage for the specified action type.
+#'
+#' @usage
+#' redshift_describe_node_configuration_options(ActionType,
+#'   ClusterIdentifier, SnapshotIdentifier, OwnerAccount, Filters, Marker,
+#'   MaxRecords)
+#'
+#' @param ActionType &#91;required&#93; The action type to evaluate for possible node configurations. Specify
+#' \"restore-cluster\" to get configuration combinations based on an
+#' existing snapshot. Specify \"recommend-node-config\" to get
+#' configuration recommendations based on an existing cluster or snapshot.
+#' @param ClusterIdentifier The identifier of the cluster to evaluate for possible node
+#' configurations.
+#' @param SnapshotIdentifier The identifier of the snapshot to evaluate for possible node
+#' configurations.
+#' @param OwnerAccount The AWS customer account used to create or copy the snapshot. Required
+#' if you are restoring a snapshot you do not own, optional if you own the
+#' snapshot.
+#' @param Filters A set of name, operator, and value items to filter the results.
+#' @param Marker An optional parameter that specifies the starting point to return a set
+#' of response records. When the results of a
+#' DescribeNodeConfigurationOptions request exceed the value specified in
+#' `MaxRecords`, AWS returns a value in the `Marker` field of the response.
+#' You can retrieve the next set of response records by providing the
+#' returned marker value in the `Marker` parameter and retrying the
+#' request.
+#' @param MaxRecords The maximum number of response records to return in each call. If the
+#' number of remaining response records exceeds the specified `MaxRecords`
+#' value, a value is returned in a `marker` field of the response. You can
+#' retrieve the next set of records by retrying the command with the
+#' returned marker value.
+#' 
+#' Default: `500`
+#' 
+#' Constraints: minimum 100, maximum 500.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$describe_node_configuration_options(
+#'   ActionType = "restore-cluster"|"recommend-node-config",
+#'   ClusterIdentifier = "string",
+#'   SnapshotIdentifier = "string",
+#'   OwnerAccount = "string",
+#'   Filters = list(
+#'     list(
+#'       Name = "NodeType"|"NumberOfNodes"|"EstimatedDiskUtilizationPercent"|"Mode",
+#'       Operator = "eq"|"lt"|"gt"|"le"|"ge"|"in"|"between",
+#'       Values = list(
+#'         "string"
+#'       )
+#'     )
+#'   ),
+#'   Marker = "string",
+#'   MaxRecords = 123
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname redshift_describe_node_configuration_options
+redshift_describe_node_configuration_options <- function(ActionType, ClusterIdentifier = NULL, SnapshotIdentifier = NULL, OwnerAccount = NULL, Filters = NULL, Marker = NULL, MaxRecords = NULL) {
+  op <- new_operation(
+    name = "DescribeNodeConfigurationOptions",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .redshift$describe_node_configuration_options_input(ActionType = ActionType, ClusterIdentifier = ClusterIdentifier, SnapshotIdentifier = SnapshotIdentifier, OwnerAccount = OwnerAccount, Filters = Filters, Marker = Marker, MaxRecords = MaxRecords)
+  output <- .redshift$describe_node_configuration_options_output()
+  config <- get_config()
+  svc <- .redshift$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.redshift$operations$describe_node_configuration_options <- redshift_describe_node_configuration_options
+
 #' Returns a list of orderable cluster options
 #'
 #' Returns a list of orderable cluster options. Before you create a new
@@ -3510,6 +3703,85 @@ redshift_describe_resize <- function(ClusterIdentifier) {
 }
 .redshift$operations$describe_resize <- redshift_describe_resize
 
+#' Describes properties of scheduled actions
+#'
+#' Describes properties of scheduled actions.
+#'
+#' @usage
+#' redshift_describe_scheduled_actions(ScheduledActionName,
+#'   TargetActionType, StartTime, EndTime, Active, Filters, Marker,
+#'   MaxRecords)
+#'
+#' @param ScheduledActionName The name of the scheduled action to retrieve.
+#' @param TargetActionType The type of the scheduled actions to retrieve.
+#' @param StartTime The start time in UTC of the scheduled actions to retrieve. Only active
+#' scheduled actions that have invocations after this time are retrieved.
+#' @param EndTime The end time in UTC of the scheduled action to retrieve. Only active
+#' scheduled actions that have invocations before this time are retrieved.
+#' @param Active If true, retrieve only active scheduled actions. If false, retrieve only
+#' disabled scheduled actions.
+#' @param Filters List of scheduled action filters.
+#' @param Marker An optional parameter that specifies the starting point to return a set
+#' of response records. When the results of a DescribeScheduledActions
+#' request exceed the value specified in `MaxRecords`, AWS returns a value
+#' in the `Marker` field of the response. You can retrieve the next set of
+#' response records by providing the returned marker value in the `Marker`
+#' parameter and retrying the request.
+#' @param MaxRecords The maximum number of response records to return in each call. If the
+#' number of remaining response records exceeds the specified `MaxRecords`
+#' value, a value is returned in a `marker` field of the response. You can
+#' retrieve the next set of records by retrying the command with the
+#' returned marker value.
+#' 
+#' Default: `100`
+#' 
+#' Constraints: minimum 20, maximum 100.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$describe_scheduled_actions(
+#'   ScheduledActionName = "string",
+#'   TargetActionType = "ResizeCluster",
+#'   StartTime = as.POSIXct(
+#'     "2015-01-01"
+#'   ),
+#'   EndTime = as.POSIXct(
+#'     "2015-01-01"
+#'   ),
+#'   Active = TRUE|FALSE,
+#'   Filters = list(
+#'     list(
+#'       Name = "cluster-identifier"|"iam-role",
+#'       Values = list(
+#'         "string"
+#'       )
+#'     )
+#'   ),
+#'   Marker = "string",
+#'   MaxRecords = 123
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname redshift_describe_scheduled_actions
+redshift_describe_scheduled_actions <- function(ScheduledActionName = NULL, TargetActionType = NULL, StartTime = NULL, EndTime = NULL, Active = NULL, Filters = NULL, Marker = NULL, MaxRecords = NULL) {
+  op <- new_operation(
+    name = "DescribeScheduledActions",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .redshift$describe_scheduled_actions_input(ScheduledActionName = ScheduledActionName, TargetActionType = TargetActionType, StartTime = StartTime, EndTime = EndTime, Active = Active, Filters = Filters, Marker = Marker, MaxRecords = MaxRecords)
+  output <- .redshift$describe_scheduled_actions_output()
+  config <- get_config()
+  svc <- .redshift$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.redshift$operations$describe_scheduled_actions <- redshift_describe_scheduled_actions
+
 #' Returns a list of snapshot copy grants owned by the AWS account in the
 #' destination region
 #'
@@ -3653,11 +3925,11 @@ redshift_describe_snapshot_schedules <- function(ClusterIdentifier = NULL, Sched
 }
 .redshift$operations$describe_snapshot_schedules <- redshift_describe_snapshot_schedules
 
-#' Returns the total amount of snapshot usage and provisioned storage for a
-#' user in megabytes
+#' Returns the total amount of snapshot usage and provisioned storage in
+#' megabytes
 #'
-#' Returns the total amount of snapshot usage and provisioned storage for a
-#' user in megabytes.
+#' Returns the total amount of snapshot usage and provisioned storage in
+#' megabytes.
 #'
 #' @usage
 #' redshift_describe_storage()
@@ -4140,7 +4412,7 @@ redshift_enable_snapshot_copy <- function(ClusterIdentifier, DestinationRegion, 
 #'     can\'t be `PUBLIC`.
 #' 
 #' -   Must contain only lowercase letters, numbers, underscore, plus sign,
-#'     period (dot), at symbol (@), or hyphen.
+#'     period (dot), at symbol (@@), or hyphen.
 #' 
 #' -   First character must be a letter.
 #' 
@@ -4158,7 +4430,7 @@ redshift_enable_snapshot_copy <- function(ClusterIdentifier, DestinationRegion, 
 #' -   Must be 1 to 64 alphanumeric characters or hyphens
 #' 
 #' -   Must contain only lowercase letters, numbers, underscore, plus sign,
-#'     period (dot), at symbol (@), or hyphen.
+#'     period (dot), at symbol (@@), or hyphen.
 #' 
 #' -   First character must be a letter.
 #' 
@@ -4187,7 +4459,7 @@ redshift_enable_snapshot_copy <- function(ClusterIdentifier, DestinationRegion, 
 #' -   Must be 1 to 64 alphanumeric characters or hyphens
 #' 
 #' -   Must contain only lowercase letters, numbers, underscore, plus sign,
-#'     period (dot), at symbol (@), or hyphen.
+#'     period (dot), at symbol (@@), or hyphen.
 #' 
 #' -   First character must be a letter.
 #' 
@@ -4330,7 +4602,7 @@ redshift_get_reserved_node_exchange_offerings <- function(ReservedNodeId, MaxRec
 #' You can use DescribeResize to track the progress of the resize request.
 #' 
 #' Valid Values: `ds2.xlarge` \\| `ds2.8xlarge` \\| `dc1.large` \\|
-#' `dc1.8xlarge` \\| `dc2.large` \\| `dc2.8xlarge`
+#' `dc1.8xlarge` \\| `dc2.large` \\| `dc2.8xlarge` \\| `ra3.16xlarge`
 #' @param NumberOfNodes The new number of nodes of the cluster. If you specify a new number of
 #' nodes, you must also specify the node type parameter.
 #' 
@@ -4382,7 +4654,7 @@ redshift_get_reserved_node_exchange_offerings <- function(ReservedNodeId, MaxRec
 #' -   Must contain one number.
 #' 
 #' -   Can be any printable ASCII character (ASCII code 33 to 126) except
-#'     \' (single quote), \" (double quote), \\, /, @, or space.
+#'     \' (single quote), \" (double quote), \\, /, @@, or space.
 #' @param ClusterParameterGroupName The name of the cluster parameter group to apply to this cluster. This
 #' change is applied only after the cluster is rebooted. To reboot a
 #' cluster use RebootCluster.
@@ -4981,6 +5253,76 @@ redshift_modify_event_subscription <- function(SubscriptionName, SnsTopicArn = N
 }
 .redshift$operations$modify_event_subscription <- redshift_modify_event_subscription
 
+#' Modify a scheduled action
+#'
+#' Modify a scheduled action.
+#'
+#' @usage
+#' redshift_modify_scheduled_action(ScheduledActionName, TargetAction,
+#'   Schedule, IamRole, ScheduledActionDescription, StartTime, EndTime,
+#'   Enable)
+#'
+#' @param ScheduledActionName &#91;required&#93; The name of the scheduled action to modify.
+#' @param TargetAction A modified JSON format of the scheduled action. For more information
+#' about this parameter, see ScheduledAction.
+#' @param Schedule A modified schedule in either `at( )` or `cron( )` format. For more
+#' information about this parameter, see ScheduledAction.
+#' @param IamRole A different IAM role to assume to run the target action. For more
+#' information about this parameter, see ScheduledAction.
+#' @param ScheduledActionDescription A modified description of the scheduled action.
+#' @param StartTime A modified start time of the scheduled action. For more information
+#' about this parameter, see ScheduledAction.
+#' @param EndTime A modified end time of the scheduled action. For more information about
+#' this parameter, see ScheduledAction.
+#' @param Enable A modified enable flag of the scheduled action. If true, the scheduled
+#' action is active. If false, the scheduled action is disabled.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$modify_scheduled_action(
+#'   ScheduledActionName = "string",
+#'   TargetAction = list(
+#'     ResizeCluster = list(
+#'       ClusterIdentifier = "string",
+#'       ClusterType = "string",
+#'       NodeType = "string",
+#'       NumberOfNodes = 123,
+#'       Classic = TRUE|FALSE
+#'     )
+#'   ),
+#'   Schedule = "string",
+#'   IamRole = "string",
+#'   ScheduledActionDescription = "string",
+#'   StartTime = as.POSIXct(
+#'     "2015-01-01"
+#'   ),
+#'   EndTime = as.POSIXct(
+#'     "2015-01-01"
+#'   ),
+#'   Enable = TRUE|FALSE
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname redshift_modify_scheduled_action
+redshift_modify_scheduled_action <- function(ScheduledActionName, TargetAction = NULL, Schedule = NULL, IamRole = NULL, ScheduledActionDescription = NULL, StartTime = NULL, EndTime = NULL, Enable = NULL) {
+  op <- new_operation(
+    name = "ModifyScheduledAction",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .redshift$modify_scheduled_action_input(ScheduledActionName = ScheduledActionName, TargetAction = TargetAction, Schedule = Schedule, IamRole = IamRole, ScheduledActionDescription = ScheduledActionDescription, StartTime = StartTime, EndTime = EndTime, Enable = Enable)
+  output <- .redshift$modify_scheduled_action_output()
+  config <- get_config()
+  svc <- .redshift$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.redshift$operations$modify_scheduled_action <- redshift_modify_scheduled_action
+
 #' Modifies the number of days to retain snapshots in the destination AWS
 #' Region after they are copied from the source AWS Region
 #'
@@ -5068,7 +5410,7 @@ redshift_modify_snapshot_copy_retention_period <- function(ClusterIdentifier, Re
 #'
 #' @param ScheduleIdentifier &#91;required&#93; A unique alphanumeric identifier of the schedule to modify.
 #' @param ScheduleDefinitions &#91;required&#93; An updated list of schedule definitions. A schedule definition is made
-#' up of schedule expressions, for example, \"cron(30 12 \*)\" or \"rate(12
+#' up of schedule expressions, for example, \"cron(30 12 *)\" or \"rate(12
 #' hours)\".
 #'
 #' @section Request syntax:
@@ -5282,6 +5624,8 @@ redshift_reset_cluster_parameter_group <- function(ParameterGroupName, ResetAllP
 #' 
 #'     -   ds2.8xlarge
 #' 
+#'     -   ra3.16xlarge
+#' 
 #' -   The type of nodes that you add must match the node type for the
 #'     cluster.
 #'
@@ -5291,7 +5635,8 @@ redshift_reset_cluster_parameter_group <- function(ParameterGroupName, ResetAllP
 #'
 #' @param ClusterIdentifier &#91;required&#93; The unique identifier for the cluster to resize.
 #' @param ClusterType The new cluster type for the specified cluster.
-#' @param NodeType The new node type for the nodes you are adding.
+#' @param NodeType The new node type for the nodes you are adding. If not specified, the
+#' cluster\'s current node type is used.
 #' @param NumberOfNodes &#91;required&#93; The new number of nodes for the cluster.
 #' @param Classic A boolean value indicating whether the resize operation is using the
 #' classic resize process. If you don\'t provide this parameter or set the
@@ -5357,7 +5702,7 @@ redshift_resize_cluster <- function(ClusterIdentifier, ClusterType = NULL, NodeT
 #'   ClusterSecurityGroups, VpcSecurityGroupIds, PreferredMaintenanceWindow,
 #'   AutomatedSnapshotRetentionPeriod, ManualSnapshotRetentionPeriod,
 #'   KmsKeyId, NodeType, EnhancedVpcRouting, AdditionalInfo, IamRoles,
-#'   MaintenanceTrackName, SnapshotScheduleIdentifier)
+#'   MaintenanceTrackName, SnapshotScheduleIdentifier, NumberOfNodes)
 #'
 #' @param ClusterIdentifier &#91;required&#93; The identifier of the cluster that will be created from restoring the
 #' snapshot.
@@ -5379,7 +5724,7 @@ redshift_resize_cluster <- function(ClusterIdentifier, ClusterType = NULL, NodeT
 #' Example: `my-snapshot-id`
 #' @param SnapshotClusterIdentifier The name of the cluster the source snapshot was created from. This
 #' parameter is required if your IAM user has a policy containing a
-#' snapshot resource element that specifies anything other than \* for the
+#' snapshot resource element that specifies anything other than * for the
 #' cluster name.
 #' @param Port The port number on which the cluster accepts connections.
 #' 
@@ -5503,6 +5848,7 @@ redshift_resize_cluster <- function(ClusterIdentifier, ClusterType = NULL, NodeT
 #' cluster to be on the trailing track. In this case, the snapshot and the
 #' source cluster are on different tracks.
 #' @param SnapshotScheduleIdentifier A unique identifier for the snapshot schedule.
+#' @param NumberOfNodes The number of nodes specified when provisioning the restored cluster.
 #'
 #' @section Request syntax:
 #' ```
@@ -5537,21 +5883,22 @@ redshift_resize_cluster <- function(ClusterIdentifier, ClusterType = NULL, NodeT
 #'     "string"
 #'   ),
 #'   MaintenanceTrackName = "string",
-#'   SnapshotScheduleIdentifier = "string"
+#'   SnapshotScheduleIdentifier = "string",
+#'   NumberOfNodes = 123
 #' )
 #' ```
 #'
 #' @keywords internal
 #'
 #' @rdname redshift_restore_from_cluster_snapshot
-redshift_restore_from_cluster_snapshot <- function(ClusterIdentifier, SnapshotIdentifier, SnapshotClusterIdentifier = NULL, Port = NULL, AvailabilityZone = NULL, AllowVersionUpgrade = NULL, ClusterSubnetGroupName = NULL, PubliclyAccessible = NULL, OwnerAccount = NULL, HsmClientCertificateIdentifier = NULL, HsmConfigurationIdentifier = NULL, ElasticIp = NULL, ClusterParameterGroupName = NULL, ClusterSecurityGroups = NULL, VpcSecurityGroupIds = NULL, PreferredMaintenanceWindow = NULL, AutomatedSnapshotRetentionPeriod = NULL, ManualSnapshotRetentionPeriod = NULL, KmsKeyId = NULL, NodeType = NULL, EnhancedVpcRouting = NULL, AdditionalInfo = NULL, IamRoles = NULL, MaintenanceTrackName = NULL, SnapshotScheduleIdentifier = NULL) {
+redshift_restore_from_cluster_snapshot <- function(ClusterIdentifier, SnapshotIdentifier, SnapshotClusterIdentifier = NULL, Port = NULL, AvailabilityZone = NULL, AllowVersionUpgrade = NULL, ClusterSubnetGroupName = NULL, PubliclyAccessible = NULL, OwnerAccount = NULL, HsmClientCertificateIdentifier = NULL, HsmConfigurationIdentifier = NULL, ElasticIp = NULL, ClusterParameterGroupName = NULL, ClusterSecurityGroups = NULL, VpcSecurityGroupIds = NULL, PreferredMaintenanceWindow = NULL, AutomatedSnapshotRetentionPeriod = NULL, ManualSnapshotRetentionPeriod = NULL, KmsKeyId = NULL, NodeType = NULL, EnhancedVpcRouting = NULL, AdditionalInfo = NULL, IamRoles = NULL, MaintenanceTrackName = NULL, SnapshotScheduleIdentifier = NULL, NumberOfNodes = NULL) {
   op <- new_operation(
     name = "RestoreFromClusterSnapshot",
     http_method = "POST",
     http_path = "/",
     paginator = list()
   )
-  input <- .redshift$restore_from_cluster_snapshot_input(ClusterIdentifier = ClusterIdentifier, SnapshotIdentifier = SnapshotIdentifier, SnapshotClusterIdentifier = SnapshotClusterIdentifier, Port = Port, AvailabilityZone = AvailabilityZone, AllowVersionUpgrade = AllowVersionUpgrade, ClusterSubnetGroupName = ClusterSubnetGroupName, PubliclyAccessible = PubliclyAccessible, OwnerAccount = OwnerAccount, HsmClientCertificateIdentifier = HsmClientCertificateIdentifier, HsmConfigurationIdentifier = HsmConfigurationIdentifier, ElasticIp = ElasticIp, ClusterParameterGroupName = ClusterParameterGroupName, ClusterSecurityGroups = ClusterSecurityGroups, VpcSecurityGroupIds = VpcSecurityGroupIds, PreferredMaintenanceWindow = PreferredMaintenanceWindow, AutomatedSnapshotRetentionPeriod = AutomatedSnapshotRetentionPeriod, ManualSnapshotRetentionPeriod = ManualSnapshotRetentionPeriod, KmsKeyId = KmsKeyId, NodeType = NodeType, EnhancedVpcRouting = EnhancedVpcRouting, AdditionalInfo = AdditionalInfo, IamRoles = IamRoles, MaintenanceTrackName = MaintenanceTrackName, SnapshotScheduleIdentifier = SnapshotScheduleIdentifier)
+  input <- .redshift$restore_from_cluster_snapshot_input(ClusterIdentifier = ClusterIdentifier, SnapshotIdentifier = SnapshotIdentifier, SnapshotClusterIdentifier = SnapshotClusterIdentifier, Port = Port, AvailabilityZone = AvailabilityZone, AllowVersionUpgrade = AllowVersionUpgrade, ClusterSubnetGroupName = ClusterSubnetGroupName, PubliclyAccessible = PubliclyAccessible, OwnerAccount = OwnerAccount, HsmClientCertificateIdentifier = HsmClientCertificateIdentifier, HsmConfigurationIdentifier = HsmConfigurationIdentifier, ElasticIp = ElasticIp, ClusterParameterGroupName = ClusterParameterGroupName, ClusterSecurityGroups = ClusterSecurityGroups, VpcSecurityGroupIds = VpcSecurityGroupIds, PreferredMaintenanceWindow = PreferredMaintenanceWindow, AutomatedSnapshotRetentionPeriod = AutomatedSnapshotRetentionPeriod, ManualSnapshotRetentionPeriod = ManualSnapshotRetentionPeriod, KmsKeyId = KmsKeyId, NodeType = NodeType, EnhancedVpcRouting = EnhancedVpcRouting, AdditionalInfo = AdditionalInfo, IamRoles = IamRoles, MaintenanceTrackName = MaintenanceTrackName, SnapshotScheduleIdentifier = SnapshotScheduleIdentifier, NumberOfNodes = NumberOfNodes)
   output <- .redshift$restore_from_cluster_snapshot_output()
   config <- get_config()
   svc <- .redshift$service(config)
@@ -5709,7 +6056,7 @@ redshift_revoke_cluster_security_group_ingress <- function(ClusterSecurityGroupN
 #' @param SnapshotIdentifier &#91;required&#93; The identifier of the snapshot that the account can no longer access.
 #' @param SnapshotClusterIdentifier The identifier of the cluster the snapshot was created from. This
 #' parameter is required if your IAM user has a policy containing a
-#' snapshot resource element that specifies anything other than \* for the
+#' snapshot resource element that specifies anything other than * for the
 #' cluster name.
 #' @param AccountWithRestoreAccess &#91;required&#93; The identifier of the AWS customer account that can no longer restore
 #' the specified snapshot.

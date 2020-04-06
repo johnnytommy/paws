@@ -29,10 +29,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- personalizeruntime()
+#' \dontrun{
+#' svc <- personalizeruntime()
 #' svc$get_personalized_ranking(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -63,8 +65,7 @@ personalizeruntime <- function(config = list()) {
   target_prefix = ""
 )
 
-.personalizeruntime$handlers <- new_handlers("restjson", "v4")
-
 .personalizeruntime$service <- function(config = list()) {
-  new_service(.personalizeruntime$metadata, .personalizeruntime$handlers, config)
+  handlers <- new_handlers("restjson", "v4")
+  new_service(.personalizeruntime$metadata, handlers, config)
 }

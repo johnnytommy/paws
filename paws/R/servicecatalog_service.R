@@ -35,10 +35,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- servicecatalog()
+#' \dontrun{
+#' svc <- servicecatalog()
 #' svc$accept_portfolio_share(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -150,8 +152,7 @@ servicecatalog <- function(config = list()) {
   target_prefix = "AWS242ServiceCatalogService"
 )
 
-.servicecatalog$handlers <- new_handlers("jsonrpc", "v4")
-
 .servicecatalog$service <- function(config = list()) {
-  new_service(.servicecatalog$metadata, .servicecatalog$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.servicecatalog$metadata, handlers, config)
 }

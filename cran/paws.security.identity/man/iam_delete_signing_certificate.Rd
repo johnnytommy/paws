@@ -11,7 +11,7 @@ iam_delete_signing_certificate(UserName, CertificateId)
 
 This parameter allows (through its \href{http://wikipedia.org/wiki/regex}{regex pattern}) a string of characters
 consisting of upper and lowercase alphanumeric characters with no
-spaces. You can also include any of the following characters: \_+=,.@-}
+spaces. You can also include any of the following characters: \\_+=,.@-}
 
 \item{CertificateId}{[required] The ID of the signing certificate to delete.
 
@@ -38,12 +38,14 @@ if the AWS account has no associated IAM users.
 }
 
 \examples{
+\dontrun{
 # The following command deletes the specified signing certificate for the
 # IAM user named Anika.
-\donttest{svc$delete_signing_certificate(
+svc$delete_signing_certificate(
   CertificateId = "TA7SMP42TDN5Z26OBPJE7EXAMPLE",
   UserName = "Anika"
-)}
+)
+}
 
 }
 \keyword{internal}

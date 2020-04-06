@@ -111,6 +111,18 @@ NULL
   return(populate(args, shape))
 }
 
+.migrationhub$list_application_states_input <- function(...) {
+  args <- c(as.list(environment()), list(...))
+  shape <- structure(list(ApplicationIds = structure(list(structure(logical(0), tags = list(type = "string"))), tags = list(type = "list")), NextToken = structure(logical(0), tags = list(type = "string")), MaxResults = structure(logical(0), tags = list(type = "integer", box = TRUE))), tags = list(type = "structure"))
+  return(populate(args, shape))
+}
+
+.migrationhub$list_application_states_output <- function(...) {
+  args <- c(as.list(environment()), list(...))
+  shape <- structure(list(ApplicationStateList = structure(list(structure(list(ApplicationId = structure(logical(0), tags = list(type = "string")), ApplicationStatus = structure(logical(0), tags = list(type = "string")), LastUpdatedTime = structure(logical(0), tags = list(type = "timestamp"))), tags = list(type = "structure"))), tags = list(type = "list")), NextToken = structure(logical(0), tags = list(type = "string"))), tags = list(type = "structure"))
+  return(populate(args, shape))
+}
+
 .migrationhub$list_created_artifacts_input <- function(...) {
   args <- c(as.list(environment()), list(...))
   shape <- structure(list(ProgressUpdateStream = structure(logical(0), tags = list(type = "string")), MigrationTaskName = structure(logical(0), tags = list(type = "string")), NextToken = structure(logical(0), tags = list(type = "string")), MaxResults = structure(logical(0), tags = list(type = "integer", box = TRUE))), tags = list(type = "structure"))
@@ -161,7 +173,7 @@ NULL
 
 .migrationhub$notify_application_state_input <- function(...) {
   args <- c(as.list(environment()), list(...))
-  shape <- structure(list(ApplicationId = structure(logical(0), tags = list(type = "string")), Status = structure(logical(0), tags = list(type = "string")), DryRun = structure(logical(0), tags = list(type = "boolean"))), tags = list(type = "structure"))
+  shape <- structure(list(ApplicationId = structure(logical(0), tags = list(type = "string")), Status = structure(logical(0), tags = list(type = "string")), UpdateDateTime = structure(logical(0), tags = list(type = "timestamp")), DryRun = structure(logical(0), tags = list(type = "boolean"))), tags = list(type = "structure"))
   return(populate(args, shape))
 }
 

@@ -39,10 +39,12 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- directconnect()
+#' \dontrun{
+#' svc <- directconnect()
 #' svc$accept_direct_connect_gateway_association_proposal(
 #'   Foo = 123
-#' )}
+#' )
+#' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
@@ -124,8 +126,7 @@ directconnect <- function(config = list()) {
   target_prefix = "OvertureService"
 )
 
-.directconnect$handlers <- new_handlers("jsonrpc", "v4")
-
 .directconnect$service <- function(config = list()) {
-  new_service(.directconnect$metadata, .directconnect$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.directconnect$metadata, handlers, config)
 }

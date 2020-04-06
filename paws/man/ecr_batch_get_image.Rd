@@ -21,8 +21,8 @@ format of the \code{imageIds} reference is \code{imageTag=tag} or
 
 \item{acceptedMediaTypes}{The accepted media types for the request.
 
-Valid values: \code{application/vnd.docker.distribution.manifest.v1+json} \|
-\code{application/vnd.docker.distribution.manifest.v2+json} \|
+Valid values: \code{application/vnd.docker.distribution.manifest.v1+json} \\|
+\code{application/vnd.docker.distribution.manifest.v2+json} \\|
 \code{application/vnd.oci.image.manifest.v1+json}}
 }
 \description{
@@ -48,16 +48,18 @@ repository. Images are specified with either \code{imageTag} or
 }
 
 \examples{
+\dontrun{
 # This example obtains information for an image with a specified image
 # digest ID from the repository named ubuntu in the current account.
-\donttest{svc$batch_get_image(
+svc$batch_get_image(
   imageIds = list(
     list(
       imageTag = "precise"
     )
   ),
   repositoryName = "ubuntu"
-)}
+)
+}
 
 }
 \keyword{internal}

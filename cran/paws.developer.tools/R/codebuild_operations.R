@@ -41,9 +41,9 @@ codebuild_batch_delete_builds <- function(ids) {
 }
 .codebuild$operations$batch_delete_builds <- codebuild_batch_delete_builds
 
-#' Gets information about builds
+#' Gets information about one or more builds
 #'
-#' Gets information about builds.
+#' Gets information about one or more builds.
 #'
 #' @usage
 #' codebuild_batch_get_builds(ids)
@@ -60,14 +60,16 @@ codebuild_batch_delete_builds <- function(ids) {
 #' ```
 #'
 #' @examples
+#' \dontrun{
 #' # The following example gets information about builds with the specified
 #' # build IDs.
-#' \donttest{svc$batch_get_builds(
+#' svc$batch_get_builds(
 #'   ids = list(
 #'     "codebuild-demo-project:9b0ac37f-d19e-4254-9079-f47e9a389eEX",
 #'     "codebuild-demo-project:b79a46f7-1473-4636-a23f-da9c45c208EX"
 #'   )
-#' )}
+#' )
+#' }
 #'
 #' @keywords internal
 #'
@@ -89,14 +91,16 @@ codebuild_batch_get_builds <- function(ids) {
 }
 .codebuild$operations$batch_get_builds <- codebuild_batch_get_builds
 
-#' Gets information about build projects
+#' Gets information about one or more build projects
 #'
-#' Gets information about build projects.
+#' Gets information about one or more build projects.
 #'
 #' @usage
 #' codebuild_batch_get_projects(names)
 #'
-#' @param names &#91;required&#93; The names of the build projects.
+#' @param names &#91;required&#93; The names or ARNs of the build projects. To get information about a
+#' project shared with your AWS account, its ARN must be specified. You
+#' cannot specify a shared project using its name.
 #'
 #' @section Request syntax:
 #' ```
@@ -127,6 +131,82 @@ codebuild_batch_get_projects <- function(names) {
 }
 .codebuild$operations$batch_get_projects <- codebuild_batch_get_projects
 
+#' Returns an array of report groups
+#'
+#' Returns an array of report groups.
+#'
+#' @usage
+#' codebuild_batch_get_report_groups(reportGroupArns)
+#'
+#' @param reportGroupArns &#91;required&#93; An array of report group ARNs that identify the report groups to return.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$batch_get_report_groups(
+#'   reportGroupArns = list(
+#'     "string"
+#'   )
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname codebuild_batch_get_report_groups
+codebuild_batch_get_report_groups <- function(reportGroupArns) {
+  op <- new_operation(
+    name = "BatchGetReportGroups",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .codebuild$batch_get_report_groups_input(reportGroupArns = reportGroupArns)
+  output <- .codebuild$batch_get_report_groups_output()
+  config <- get_config()
+  svc <- .codebuild$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.codebuild$operations$batch_get_report_groups <- codebuild_batch_get_report_groups
+
+#' Returns an array of reports
+#'
+#' Returns an array of reports.
+#'
+#' @usage
+#' codebuild_batch_get_reports(reportArns)
+#'
+#' @param reportArns &#91;required&#93; An array of ARNs that identify the `Report` objects to return.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$batch_get_reports(
+#'   reportArns = list(
+#'     "string"
+#'   )
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname codebuild_batch_get_reports
+codebuild_batch_get_reports <- function(reportArns) {
+  op <- new_operation(
+    name = "BatchGetReports",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .codebuild$batch_get_reports_input(reportArns = reportArns)
+  output <- .codebuild$batch_get_reports_output()
+  config <- get_config()
+  svc <- .codebuild$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.codebuild$operations$batch_get_reports <- codebuild_batch_get_reports
+
 #' Creates a build project
 #'
 #' Creates a build project.
@@ -145,7 +225,7 @@ codebuild_batch_get_projects <- function(names) {
 #' @param sourceVersion A version of the build input to be built for this project. If not
 #' specified, the latest version is used. If specified, it must be one of:
 #' 
-#' -   For AWS CodeCommit: the commit ID to use.
+#' -   For AWS CodeCommit: the commit ID, branch, or Git tag to use.
 #' 
 #' -   For GitHub: the commit ID, pull request ID, branch name, or tag name
 #'     that corresponds to the version of the source code you want to
@@ -281,14 +361,14 @@ codebuild_batch_get_projects <- function(names) {
 #'     )
 #'   ),
 #'   environment = list(
-#'     type = "WINDOWS_CONTAINER"|"LINUX_CONTAINER",
+#'     type = "WINDOWS_CONTAINER"|"LINUX_CONTAINER"|"LINUX_GPU_CONTAINER"|"ARM_CONTAINER",
 #'     image = "string",
-#'     computeType = "BUILD_GENERAL1_SMALL"|"BUILD_GENERAL1_MEDIUM"|"BUILD_GENERAL1_LARGE",
+#'     computeType = "BUILD_GENERAL1_SMALL"|"BUILD_GENERAL1_MEDIUM"|"BUILD_GENERAL1_LARGE"|"BUILD_GENERAL1_2XLARGE",
 #'     environmentVariables = list(
 #'       list(
 #'         name = "string",
 #'         value = "string",
-#'         type = "PLAINTEXT"|"PARAMETER_STORE"
+#'         type = "PLAINTEXT"|"PARAMETER_STORE"|"SECRETS_MANAGER"
 #'       )
 #'     ),
 #'     privilegedMode = TRUE|FALSE,
@@ -353,6 +433,56 @@ codebuild_create_project <- function(name, description = NULL, source, secondary
   return(response)
 }
 .codebuild$operations$create_project <- codebuild_create_project
+
+#' Creates a report group
+#'
+#' Creates a report group. A report group contains a collection of reports.
+#'
+#' @usage
+#' codebuild_create_report_group(name, type, exportConfig)
+#'
+#' @param name &#91;required&#93; The name of the report group.
+#' @param type &#91;required&#93; The type of report group.
+#' @param exportConfig &#91;required&#93; A `ReportExportConfig` object that contains information about where the
+#' report group test results are exported.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$create_report_group(
+#'   name = "string",
+#'   type = "TEST",
+#'   exportConfig = list(
+#'     exportConfigType = "S3"|"NO_EXPORT",
+#'     s3Destination = list(
+#'       bucket = "string",
+#'       path = "string",
+#'       packaging = "ZIP"|"NONE",
+#'       encryptionKey = "string",
+#'       encryptionDisabled = TRUE|FALSE
+#'     )
+#'   )
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname codebuild_create_report_group
+codebuild_create_report_group <- function(name, type, exportConfig) {
+  op <- new_operation(
+    name = "CreateReportGroup",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .codebuild$create_report_group_input(name = name, type = type, exportConfig = exportConfig)
+  output <- .codebuild$create_report_group_output()
+  config <- get_config()
+  svc <- .codebuild$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.codebuild$operations$create_report_group <- codebuild_create_report_group
 
 #' For an existing AWS CodeBuild build project that has its source code
 #' stored in a GitHub or Bitbucket repository, enables AWS CodeBuild to
@@ -431,7 +561,8 @@ codebuild_create_webhook <- function(projectName, branchFilter = NULL, filterGro
 
 #' Deletes a build project
 #'
-#' Deletes a build project.
+#' Deletes a build project. When you delete a project, its builds are not
+#' deleted.
 #'
 #' @usage
 #' codebuild_delete_project(name)
@@ -464,6 +595,120 @@ codebuild_delete_project <- function(name) {
   return(response)
 }
 .codebuild$operations$delete_project <- codebuild_delete_project
+
+#' Deletes a report
+#'
+#' Deletes a report.
+#'
+#' @usage
+#' codebuild_delete_report(arn)
+#'
+#' @param arn &#91;required&#93; The ARN of the report to delete.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$delete_report(
+#'   arn = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname codebuild_delete_report
+codebuild_delete_report <- function(arn) {
+  op <- new_operation(
+    name = "DeleteReport",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .codebuild$delete_report_input(arn = arn)
+  output <- .codebuild$delete_report_output()
+  config <- get_config()
+  svc <- .codebuild$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.codebuild$operations$delete_report <- codebuild_delete_report
+
+#' DeleteReportGroup: Deletes a report group
+#'
+#' `DeleteReportGroup`: Deletes a report group. Before you delete a report
+#' group, you must delete its reports. Use
+#' [ListReportsForReportGroup](https://docs.aws.amazon.com/codebuild/latest/APIReference/API_ListReportsForReportGroup.html)
+#' to get the reports in a report group. Use
+#' [DeleteReport](https://docs.aws.amazon.com/codebuild/latest/APIReference/API_DeleteReport.html)
+#' to delete the reports. If you call `DeleteReportGroup` for a report
+#' group that contains one or more reports, an exception is thrown.
+#'
+#' @usage
+#' codebuild_delete_report_group(arn)
+#'
+#' @param arn &#91;required&#93; The ARN of the report group to delete.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$delete_report_group(
+#'   arn = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname codebuild_delete_report_group
+codebuild_delete_report_group <- function(arn) {
+  op <- new_operation(
+    name = "DeleteReportGroup",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .codebuild$delete_report_group_input(arn = arn)
+  output <- .codebuild$delete_report_group_output()
+  config <- get_config()
+  svc <- .codebuild$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.codebuild$operations$delete_report_group <- codebuild_delete_report_group
+
+#' Deletes a resource policy that is identified by its resource ARN
+#'
+#' Deletes a resource policy that is identified by its resource ARN.
+#'
+#' @usage
+#' codebuild_delete_resource_policy(resourceArn)
+#'
+#' @param resourceArn &#91;required&#93; The ARN of the resource that is associated with the resource policy.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$delete_resource_policy(
+#'   resourceArn = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname codebuild_delete_resource_policy
+codebuild_delete_resource_policy <- function(resourceArn) {
+  op <- new_operation(
+    name = "DeleteResourcePolicy",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .codebuild$delete_resource_policy_input(resourceArn = resourceArn)
+  output <- .codebuild$delete_resource_policy_output()
+  config <- get_config()
+  svc <- .codebuild$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.codebuild$operations$delete_resource_policy <- codebuild_delete_resource_policy
 
 #' Deletes a set of GitHub, GitHub Enterprise, or Bitbucket source
 #' credentials
@@ -545,6 +790,94 @@ codebuild_delete_webhook <- function(projectName) {
 }
 .codebuild$operations$delete_webhook <- codebuild_delete_webhook
 
+#' Returns a list of details about test cases for a report
+#'
+#' Returns a list of details about test cases for a report.
+#'
+#' @usage
+#' codebuild_describe_test_cases(reportArn, nextToken, maxResults, filter)
+#'
+#' @param reportArn &#91;required&#93; The ARN of the report for which test cases are returned.
+#' @param nextToken During a previous call, the maximum number of items that can be returned
+#' is the value specified in `maxResults`. If there more items in the list,
+#' then a unique string called a *nextToken* is returned. To get the next
+#' batch of items in the list, call this operation again, adding the next
+#' token to the call. To get all of the items in the list, keep calling
+#' this operation with each subsequent next token that is returned, until
+#' no more next tokens are returned.
+#' @param maxResults The maximum number of paginated test cases returned per response. Use
+#' `nextToken` to iterate pages in the list of returned `TestCase` objects.
+#' The default value is 100.
+#' @param filter A `TestCaseFilter` object used to filter the returned reports.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$describe_test_cases(
+#'   reportArn = "string",
+#'   nextToken = "string",
+#'   maxResults = 123,
+#'   filter = list(
+#'     status = "string"
+#'   )
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname codebuild_describe_test_cases
+codebuild_describe_test_cases <- function(reportArn, nextToken = NULL, maxResults = NULL, filter = NULL) {
+  op <- new_operation(
+    name = "DescribeTestCases",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .codebuild$describe_test_cases_input(reportArn = reportArn, nextToken = nextToken, maxResults = maxResults, filter = filter)
+  output <- .codebuild$describe_test_cases_output()
+  config <- get_config()
+  svc <- .codebuild$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.codebuild$operations$describe_test_cases <- codebuild_describe_test_cases
+
+#' Gets a resource policy that is identified by its resource ARN
+#'
+#' Gets a resource policy that is identified by its resource ARN.
+#'
+#' @usage
+#' codebuild_get_resource_policy(resourceArn)
+#'
+#' @param resourceArn &#91;required&#93; The ARN of the resource that is associated with the resource policy.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$get_resource_policy(
+#'   resourceArn = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname codebuild_get_resource_policy
+codebuild_get_resource_policy <- function(resourceArn) {
+  op <- new_operation(
+    name = "GetResourcePolicy",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .codebuild$get_resource_policy_input(resourceArn = resourceArn)
+  output <- .codebuild$get_resource_policy_output()
+  config <- get_config()
+  svc <- .codebuild$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.codebuild$operations$get_resource_policy <- codebuild_get_resource_policy
+
 #' Imports the source repository credentials for an AWS CodeBuild project
 #' that has its source code stored in a GitHub, GitHub Enterprise, or
 #' Bitbucket repository
@@ -555,7 +888,7 @@ codebuild_delete_webhook <- function(projectName) {
 #'
 #' @usage
 #' codebuild_import_source_credentials(username, token, serverType,
-#'   authType)
+#'   authType, shouldOverwrite)
 #'
 #' @param username The Bitbucket username when the `authType` is BASIC\\_AUTH. This
 #' parameter is not valid for other types of source providers or
@@ -567,6 +900,9 @@ codebuild_delete_webhook <- function(projectName) {
 #' Enterprise, or Bitbucket repository. An OAUTH connection is not
 #' supported by the API and must be created using the AWS CodeBuild
 #' console.
+#' @param shouldOverwrite Set to `false` to prevent overwriting the repository source credentials.
+#' Set to `true` to overwrite the repository source credentials. The
+#' default value is `true`.
 #'
 #' @section Request syntax:
 #' ```
@@ -574,21 +910,22 @@ codebuild_delete_webhook <- function(projectName) {
 #'   username = "string",
 #'   token = "string",
 #'   serverType = "GITHUB"|"BITBUCKET"|"GITHUB_ENTERPRISE",
-#'   authType = "OAUTH"|"BASIC_AUTH"|"PERSONAL_ACCESS_TOKEN"
+#'   authType = "OAUTH"|"BASIC_AUTH"|"PERSONAL_ACCESS_TOKEN",
+#'   shouldOverwrite = TRUE|FALSE
 #' )
 #' ```
 #'
 #' @keywords internal
 #'
 #' @rdname codebuild_import_source_credentials
-codebuild_import_source_credentials <- function(username = NULL, token, serverType, authType) {
+codebuild_import_source_credentials <- function(username = NULL, token, serverType, authType, shouldOverwrite = NULL) {
   op <- new_operation(
     name = "ImportSourceCredentials",
     http_method = "POST",
     http_path = "/",
     paginator = list()
   )
-  input <- .codebuild$import_source_credentials_input(username = username, token = token, serverType = serverType, authType = authType)
+  input <- .codebuild$import_source_credentials_input(username = username, token = token, serverType = serverType, authType = authType, shouldOverwrite = shouldOverwrite)
   output <- .codebuild$import_source_credentials_output()
   config <- get_config()
   svc <- .codebuild$service(config)
@@ -649,7 +986,7 @@ codebuild_invalidate_project_cache <- function(projectName) {
 #' -   `DESCENDING`: List the build IDs in descending order by build ID.
 #' @param nextToken During a previous call, if there are more than 100 items in the list,
 #' only the first 100 items are returned, along with a unique string called
-#' a *next token*. To get the next batch of items in the list, call this
+#' a *nextToken*. To get the next batch of items in the list, call this
 #' operation again, adding the next token to the call. To get all of the
 #' items in the list, keep calling this operation with each subsequent next
 #' token that is returned, until no more next tokens are returned.
@@ -699,7 +1036,7 @@ codebuild_list_builds <- function(sortOrder = NULL, nextToken = NULL) {
 #' -   `DESCENDING`: List the build IDs in descending order by build ID.
 #' @param nextToken During a previous call, if there are more than 100 items in the list,
 #' only the first 100 items are returned, along with a unique string called
-#' a *next token*. To get the next batch of items in the list, call this
+#' a *nextToken*. To get the next batch of items in the list, call this
 #' operation again, adding the next token to the call. To get all of the
 #' items in the list, keep calling this operation with each subsequent next
 #' token that is returned, until no more next tokens are returned.
@@ -796,7 +1133,7 @@ codebuild_list_curated_environment_images <- function() {
 #' names.
 #' @param nextToken During a previous call, if there are more than 100 items in the list,
 #' only the first 100 items are returned, along with a unique string called
-#' a *next token*. To get the next batch of items in the list, call this
+#' a *nextToken*. To get the next batch of items in the list, call this
 #' operation again, adding the next token to the call. To get all of the
 #' items in the list, keep calling this operation with each subsequent next
 #' token that is returned, until no more next tokens are returned.
@@ -830,6 +1167,304 @@ codebuild_list_projects <- function(sortBy = NULL, sortOrder = NULL, nextToken =
 }
 .codebuild$operations$list_projects <- codebuild_list_projects
 
+#' Gets a list ARNs for the report groups in the current AWS account
+#'
+#' Gets a list ARNs for the report groups in the current AWS account.
+#'
+#' @usage
+#' codebuild_list_report_groups(sortOrder, sortBy, nextToken, maxResults)
+#'
+#' @param sortOrder Used to specify the order to sort the list of returned report groups.
+#' Valid values are `ASCENDING` and `DESCENDING`.
+#' @param sortBy The criterion to be used to list build report groups. Valid values
+#' include:
+#' 
+#' -   `CREATED_TIME`: List based on when each report group was created.
+#' 
+#' -   `LAST_MODIFIED_TIME`: List based on when each report group was last
+#'     changed.
+#' 
+#' -   `NAME`: List based on each report group\'s name.
+#' @param nextToken During a previous call, the maximum number of items that can be returned
+#' is the value specified in `maxResults`. If there more items in the list,
+#' then a unique string called a *nextToken* is returned. To get the next
+#' batch of items in the list, call this operation again, adding the next
+#' token to the call. To get all of the items in the list, keep calling
+#' this operation with each subsequent next token that is returned, until
+#' no more next tokens are returned.
+#' @param maxResults The maximum number of paginated report groups returned per response. Use
+#' `nextToken` to iterate pages in the list of returned `ReportGroup`
+#' objects. The default value is 100.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$list_report_groups(
+#'   sortOrder = "ASCENDING"|"DESCENDING",
+#'   sortBy = "NAME"|"CREATED_TIME"|"LAST_MODIFIED_TIME",
+#'   nextToken = "string",
+#'   maxResults = 123
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname codebuild_list_report_groups
+codebuild_list_report_groups <- function(sortOrder = NULL, sortBy = NULL, nextToken = NULL, maxResults = NULL) {
+  op <- new_operation(
+    name = "ListReportGroups",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .codebuild$list_report_groups_input(sortOrder = sortOrder, sortBy = sortBy, nextToken = nextToken, maxResults = maxResults)
+  output <- .codebuild$list_report_groups_output()
+  config <- get_config()
+  svc <- .codebuild$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.codebuild$operations$list_report_groups <- codebuild_list_report_groups
+
+#' Returns a list of ARNs for the reports in the current AWS account
+#'
+#' Returns a list of ARNs for the reports in the current AWS account.
+#'
+#' @usage
+#' codebuild_list_reports(sortOrder, nextToken, maxResults, filter)
+#'
+#' @param sortOrder Specifies the sort order for the list of returned reports. Valid values
+#' are:
+#' 
+#' -   `ASCENDING`: return reports in chronological order based on their
+#'     creation date.
+#' 
+#' -   `DESCENDING`: return reports in the reverse chronological order
+#'     based on their creation date.
+#' @param nextToken During a previous call, the maximum number of items that can be returned
+#' is the value specified in `maxResults`. If there more items in the list,
+#' then a unique string called a *nextToken* is returned. To get the next
+#' batch of items in the list, call this operation again, adding the next
+#' token to the call. To get all of the items in the list, keep calling
+#' this operation with each subsequent next token that is returned, until
+#' no more next tokens are returned.
+#' @param maxResults The maximum number of paginated reports returned per response. Use
+#' `nextToken` to iterate pages in the list of returned `Report` objects.
+#' The default value is 100.
+#' @param filter A `ReportFilter` object used to filter the returned reports.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$list_reports(
+#'   sortOrder = "ASCENDING"|"DESCENDING",
+#'   nextToken = "string",
+#'   maxResults = 123,
+#'   filter = list(
+#'     status = "GENERATING"|"SUCCEEDED"|"FAILED"|"INCOMPLETE"|"DELETING"
+#'   )
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname codebuild_list_reports
+codebuild_list_reports <- function(sortOrder = NULL, nextToken = NULL, maxResults = NULL, filter = NULL) {
+  op <- new_operation(
+    name = "ListReports",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .codebuild$list_reports_input(sortOrder = sortOrder, nextToken = nextToken, maxResults = maxResults, filter = filter)
+  output <- .codebuild$list_reports_output()
+  config <- get_config()
+  svc <- .codebuild$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.codebuild$operations$list_reports <- codebuild_list_reports
+
+#' Returns a list of ARNs for the reports that belong to a ReportGroup
+#'
+#' Returns a list of ARNs for the reports that belong to a `ReportGroup`.
+#'
+#' @usage
+#' codebuild_list_reports_for_report_group(reportGroupArn, nextToken,
+#'   sortOrder, maxResults, filter)
+#'
+#' @param reportGroupArn &#91;required&#93; The ARN of the report group for which you want to return report ARNs.
+#' @param nextToken During a previous call, the maximum number of items that can be returned
+#' is the value specified in `maxResults`. If there more items in the list,
+#' then a unique string called a *nextToken* is returned. To get the next
+#' batch of items in the list, call this operation again, adding the next
+#' token to the call. To get all of the items in the list, keep calling
+#' this operation with each subsequent next token that is returned, until
+#' no more next tokens are returned.
+#' @param sortOrder Use to specify whether the results are returned in ascending or
+#' descending order.
+#' @param maxResults The maximum number of paginated reports in this report group returned
+#' per response. Use `nextToken` to iterate pages in the list of returned
+#' `Report` objects. The default value is 100.
+#' @param filter A `ReportFilter` object used to filter the returned reports.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$list_reports_for_report_group(
+#'   reportGroupArn = "string",
+#'   nextToken = "string",
+#'   sortOrder = "ASCENDING"|"DESCENDING",
+#'   maxResults = 123,
+#'   filter = list(
+#'     status = "GENERATING"|"SUCCEEDED"|"FAILED"|"INCOMPLETE"|"DELETING"
+#'   )
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname codebuild_list_reports_for_report_group
+codebuild_list_reports_for_report_group <- function(reportGroupArn, nextToken = NULL, sortOrder = NULL, maxResults = NULL, filter = NULL) {
+  op <- new_operation(
+    name = "ListReportsForReportGroup",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .codebuild$list_reports_for_report_group_input(reportGroupArn = reportGroupArn, nextToken = nextToken, sortOrder = sortOrder, maxResults = maxResults, filter = filter)
+  output <- .codebuild$list_reports_for_report_group_output()
+  config <- get_config()
+  svc <- .codebuild$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.codebuild$operations$list_reports_for_report_group <- codebuild_list_reports_for_report_group
+
+#' Gets a list of projects that are shared with other AWS accounts or users
+#'
+#' Gets a list of projects that are shared with other AWS accounts or
+#' users.
+#'
+#' @usage
+#' codebuild_list_shared_projects(sortBy, sortOrder, maxResults, nextToken)
+#'
+#' @param sortBy The criterion to be used to list build projects shared with the current
+#' AWS account or user. Valid values include:
+#' 
+#' -   `ARN`: List based on the ARN.
+#' 
+#' -   `MODIFIED_TIME`: List based on when information about the shared
+#'     project was last changed.
+#' @param sortOrder The order in which to list shared build projects. Valid values include:
+#' 
+#' -   `ASCENDING`: List in ascending order.
+#' 
+#' -   `DESCENDING`: List in descending order.
+#' @param maxResults The maximum number of paginated shared build projects returned per
+#' response. Use `nextToken` to iterate pages in the list of returned
+#' `Project` objects. The default value is 100.
+#' @param nextToken During a previous call, the maximum number of items that can be returned
+#' is the value specified in `maxResults`. If there more items in the list,
+#' then a unique string called a *nextToken* is returned. To get the next
+#' batch of items in the list, call this operation again, adding the next
+#' token to the call. To get all of the items in the list, keep calling
+#' this operation with each subsequent next token that is returned, until
+#' no more next tokens are returned.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$list_shared_projects(
+#'   sortBy = "ARN"|"MODIFIED_TIME",
+#'   sortOrder = "ASCENDING"|"DESCENDING",
+#'   maxResults = 123,
+#'   nextToken = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname codebuild_list_shared_projects
+codebuild_list_shared_projects <- function(sortBy = NULL, sortOrder = NULL, maxResults = NULL, nextToken = NULL) {
+  op <- new_operation(
+    name = "ListSharedProjects",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .codebuild$list_shared_projects_input(sortBy = sortBy, sortOrder = sortOrder, maxResults = maxResults, nextToken = nextToken)
+  output <- .codebuild$list_shared_projects_output()
+  config <- get_config()
+  svc <- .codebuild$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.codebuild$operations$list_shared_projects <- codebuild_list_shared_projects
+
+#' Gets a list of report groups that are shared with other AWS accounts or
+#' users
+#'
+#' Gets a list of report groups that are shared with other AWS accounts or
+#' users.
+#'
+#' @usage
+#' codebuild_list_shared_report_groups(sortOrder, sortBy, nextToken,
+#'   maxResults)
+#'
+#' @param sortOrder The order in which to list shared report groups. Valid values include:
+#' 
+#' -   `ASCENDING`: List in ascending order.
+#' 
+#' -   `DESCENDING`: List in descending order.
+#' @param sortBy The criterion to be used to list report groups shared with the current
+#' AWS account or user. Valid values include:
+#' 
+#' -   `ARN`: List based on the ARN.
+#' 
+#' -   `MODIFIED_TIME`: List based on when information about the shared
+#'     report group was last changed.
+#' @param nextToken During a previous call, the maximum number of items that can be returned
+#' is the value specified in `maxResults`. If there more items in the list,
+#' then a unique string called a *nextToken* is returned. To get the next
+#' batch of items in the list, call this operation again, adding the next
+#' token to the call. To get all of the items in the list, keep calling
+#' this operation with each subsequent next token that is returned, until
+#' no more next tokens are returned.
+#' @param maxResults The maximum number of paginated shared report groups per response. Use
+#' `nextToken` to iterate pages in the list of returned `ReportGroup`
+#' objects. The default value is 100.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$list_shared_report_groups(
+#'   sortOrder = "ASCENDING"|"DESCENDING",
+#'   sortBy = "ARN"|"MODIFIED_TIME",
+#'   nextToken = "string",
+#'   maxResults = 123
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname codebuild_list_shared_report_groups
+codebuild_list_shared_report_groups <- function(sortOrder = NULL, sortBy = NULL, nextToken = NULL, maxResults = NULL) {
+  op <- new_operation(
+    name = "ListSharedReportGroups",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .codebuild$list_shared_report_groups_input(sortOrder = sortOrder, sortBy = sortBy, nextToken = nextToken, maxResults = maxResults)
+  output <- .codebuild$list_shared_report_groups_output()
+  config <- get_config()
+  svc <- .codebuild$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.codebuild$operations$list_shared_report_groups <- codebuild_list_shared_report_groups
+
 #' Returns a list of SourceCredentialsInfo objects
 #'
 #' Returns a list of `SourceCredentialsInfo` objects.
@@ -862,6 +1497,50 @@ codebuild_list_source_credentials <- function() {
 }
 .codebuild$operations$list_source_credentials <- codebuild_list_source_credentials
 
+#' Stores a resource policy for the ARN of a Project or ReportGroup object
+#'
+#' Stores a resource policy for the ARN of a `Project` or `ReportGroup`
+#' object.
+#'
+#' @usage
+#' codebuild_put_resource_policy(policy, resourceArn)
+#'
+#' @param policy &#91;required&#93; A JSON-formatted resource policy. For more information, see [Sharing a
+#' Project](https://docs.aws.amazon.com/codebuild/latest/userguide/project-sharing.html#project-sharing-share)
+#' and [Sharing a Report
+#' Group](https://docs.aws.amazon.com/codebuild/latest/userguide/report-groups-sharing.html#report-groups-sharing-share)
+#' in the *AWS CodeBuild User Guide*.
+#' @param resourceArn &#91;required&#93; The ARN of the `Project` or `ReportGroup` resource you want to associate
+#' with a resource policy.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$put_resource_policy(
+#'   policy = "string",
+#'   resourceArn = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname codebuild_put_resource_policy
+codebuild_put_resource_policy <- function(policy, resourceArn) {
+  op <- new_operation(
+    name = "PutResourcePolicy",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .codebuild$put_resource_policy_input(policy = policy, resourceArn = resourceArn)
+  output <- .codebuild$put_resource_policy_output()
+  config <- get_config()
+  svc <- .codebuild$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.codebuild$operations$put_resource_policy <- codebuild_put_resource_policy
+
 #' Starts running a build
 #'
 #' Starts running a build.
@@ -875,8 +1554,9 @@ codebuild_list_source_credentials <- function() {
 #'   insecureSslOverride, reportBuildStatusOverride, environmentTypeOverride,
 #'   imageOverride, computeTypeOverride, certificateOverride, cacheOverride,
 #'   serviceRoleOverride, privilegedModeOverride, timeoutInMinutesOverride,
-#'   queuedTimeoutInMinutesOverride, idempotencyToken, logsConfigOverride,
-#'   registryCredentialOverride, imagePullCredentialsTypeOverride)
+#'   queuedTimeoutInMinutesOverride, encryptionKeyOverride, idempotencyToken,
+#'   logsConfigOverride, registryCredentialOverride,
+#'   imagePullCredentialsTypeOverride)
 #'
 #' @param projectName &#91;required&#93; The name of the AWS CodeBuild build project to start running a build.
 #' @param secondarySourcesOverride An array of `ProjectSource` objects.
@@ -886,7 +1566,7 @@ codebuild_list_source_credentials <- function() {
 #' @param sourceVersion A version of the build input to be built, for this build only. If not
 #' specified, the latest version is used. If specified, must be one of:
 #' 
-#' -   For AWS CodeCommit: the commit ID to use.
+#' -   For AWS CodeCommit: the commit ID, branch, or Git tag to use.
 #' 
 #' -   For GitHub: the commit ID, pull request ID, branch name, or tag name
 #'     that corresponds to the version of the source code you want to
@@ -936,6 +1616,9 @@ codebuild_list_source_credentials <- function() {
 #' start and completion. If you use this option with a source provider
 #' other than GitHub, GitHub Enterprise, or Bitbucket, an
 #' invalidInputException is thrown.
+#' 
+#' The status of a build triggered by a webhook is always reported to your
+#' source provider.
 #' @param environmentTypeOverride A container type for this build that overrides the one specified in the
 #' build project.
 #' @param imageOverride The name of an image for this build that overrides the one specified in
@@ -954,6 +1637,16 @@ codebuild_list_source_credentials <- function() {
 #' the build project.
 #' @param queuedTimeoutInMinutesOverride The number of minutes a build is allowed to be queued before it times
 #' out.
+#' @param encryptionKeyOverride The AWS Key Management Service (AWS KMS) customer master key (CMK) that
+#' overrides the one specified in the build project. The CMK key encrypts
+#' the build output artifacts.
+#' 
+#' You can use a cross-account KMS key to encrypt the build output
+#' artifacts if your service role has permission to that key.
+#' 
+#' You can specify either the Amazon Resource Name (ARN) of the CMK or, if
+#' available, the CMK\'s alias (using the format
+#' `alias/<i>alias-name</i> `).
 #' @param idempotencyToken A unique, case sensitive identifier you provide to ensure the
 #' idempotency of the StartBuild request. The token is included in the
 #' StartBuild request and is valid for 12 hours. If you repeat the
@@ -1033,7 +1726,7 @@ codebuild_list_source_credentials <- function() {
 #'     list(
 #'       name = "string",
 #'       value = "string",
-#'       type = "PLAINTEXT"|"PARAMETER_STORE"
+#'       type = "PLAINTEXT"|"PARAMETER_STORE"|"SECRETS_MANAGER"
 #'     )
 #'   ),
 #'   sourceTypeOverride = "CODECOMMIT"|"CODEPIPELINE"|"GITHUB"|"S3"|"BITBUCKET"|"GITHUB_ENTERPRISE"|"NO_SOURCE",
@@ -1049,9 +1742,9 @@ codebuild_list_source_credentials <- function() {
 #'   buildspecOverride = "string",
 #'   insecureSslOverride = TRUE|FALSE,
 #'   reportBuildStatusOverride = TRUE|FALSE,
-#'   environmentTypeOverride = "WINDOWS_CONTAINER"|"LINUX_CONTAINER",
+#'   environmentTypeOverride = "WINDOWS_CONTAINER"|"LINUX_CONTAINER"|"LINUX_GPU_CONTAINER"|"ARM_CONTAINER",
 #'   imageOverride = "string",
-#'   computeTypeOverride = "BUILD_GENERAL1_SMALL"|"BUILD_GENERAL1_MEDIUM"|"BUILD_GENERAL1_LARGE",
+#'   computeTypeOverride = "BUILD_GENERAL1_SMALL"|"BUILD_GENERAL1_MEDIUM"|"BUILD_GENERAL1_LARGE"|"BUILD_GENERAL1_2XLARGE",
 #'   certificateOverride = "string",
 #'   cacheOverride = list(
 #'     type = "NO_CACHE"|"S3"|"LOCAL",
@@ -1064,6 +1757,7 @@ codebuild_list_source_credentials <- function() {
 #'   privilegedModeOverride = TRUE|FALSE,
 #'   timeoutInMinutesOverride = 123,
 #'   queuedTimeoutInMinutesOverride = 123,
+#'   encryptionKeyOverride = "string",
 #'   idempotencyToken = "string",
 #'   logsConfigOverride = list(
 #'     cloudWatchLogs = list(
@@ -1088,14 +1782,14 @@ codebuild_list_source_credentials <- function() {
 #' @keywords internal
 #'
 #' @rdname codebuild_start_build
-codebuild_start_build <- function(projectName, secondarySourcesOverride = NULL, secondarySourcesVersionOverride = NULL, sourceVersion = NULL, artifactsOverride = NULL, secondaryArtifactsOverride = NULL, environmentVariablesOverride = NULL, sourceTypeOverride = NULL, sourceLocationOverride = NULL, sourceAuthOverride = NULL, gitCloneDepthOverride = NULL, gitSubmodulesConfigOverride = NULL, buildspecOverride = NULL, insecureSslOverride = NULL, reportBuildStatusOverride = NULL, environmentTypeOverride = NULL, imageOverride = NULL, computeTypeOverride = NULL, certificateOverride = NULL, cacheOverride = NULL, serviceRoleOverride = NULL, privilegedModeOverride = NULL, timeoutInMinutesOverride = NULL, queuedTimeoutInMinutesOverride = NULL, idempotencyToken = NULL, logsConfigOverride = NULL, registryCredentialOverride = NULL, imagePullCredentialsTypeOverride = NULL) {
+codebuild_start_build <- function(projectName, secondarySourcesOverride = NULL, secondarySourcesVersionOverride = NULL, sourceVersion = NULL, artifactsOverride = NULL, secondaryArtifactsOverride = NULL, environmentVariablesOverride = NULL, sourceTypeOverride = NULL, sourceLocationOverride = NULL, sourceAuthOverride = NULL, gitCloneDepthOverride = NULL, gitSubmodulesConfigOverride = NULL, buildspecOverride = NULL, insecureSslOverride = NULL, reportBuildStatusOverride = NULL, environmentTypeOverride = NULL, imageOverride = NULL, computeTypeOverride = NULL, certificateOverride = NULL, cacheOverride = NULL, serviceRoleOverride = NULL, privilegedModeOverride = NULL, timeoutInMinutesOverride = NULL, queuedTimeoutInMinutesOverride = NULL, encryptionKeyOverride = NULL, idempotencyToken = NULL, logsConfigOverride = NULL, registryCredentialOverride = NULL, imagePullCredentialsTypeOverride = NULL) {
   op <- new_operation(
     name = "StartBuild",
     http_method = "POST",
     http_path = "/",
     paginator = list()
   )
-  input <- .codebuild$start_build_input(projectName = projectName, secondarySourcesOverride = secondarySourcesOverride, secondarySourcesVersionOverride = secondarySourcesVersionOverride, sourceVersion = sourceVersion, artifactsOverride = artifactsOverride, secondaryArtifactsOverride = secondaryArtifactsOverride, environmentVariablesOverride = environmentVariablesOverride, sourceTypeOverride = sourceTypeOverride, sourceLocationOverride = sourceLocationOverride, sourceAuthOverride = sourceAuthOverride, gitCloneDepthOverride = gitCloneDepthOverride, gitSubmodulesConfigOverride = gitSubmodulesConfigOverride, buildspecOverride = buildspecOverride, insecureSslOverride = insecureSslOverride, reportBuildStatusOverride = reportBuildStatusOverride, environmentTypeOverride = environmentTypeOverride, imageOverride = imageOverride, computeTypeOverride = computeTypeOverride, certificateOverride = certificateOverride, cacheOverride = cacheOverride, serviceRoleOverride = serviceRoleOverride, privilegedModeOverride = privilegedModeOverride, timeoutInMinutesOverride = timeoutInMinutesOverride, queuedTimeoutInMinutesOverride = queuedTimeoutInMinutesOverride, idempotencyToken = idempotencyToken, logsConfigOverride = logsConfigOverride, registryCredentialOverride = registryCredentialOverride, imagePullCredentialsTypeOverride = imagePullCredentialsTypeOverride)
+  input <- .codebuild$start_build_input(projectName = projectName, secondarySourcesOverride = secondarySourcesOverride, secondarySourcesVersionOverride = secondarySourcesVersionOverride, sourceVersion = sourceVersion, artifactsOverride = artifactsOverride, secondaryArtifactsOverride = secondaryArtifactsOverride, environmentVariablesOverride = environmentVariablesOverride, sourceTypeOverride = sourceTypeOverride, sourceLocationOverride = sourceLocationOverride, sourceAuthOverride = sourceAuthOverride, gitCloneDepthOverride = gitCloneDepthOverride, gitSubmodulesConfigOverride = gitSubmodulesConfigOverride, buildspecOverride = buildspecOverride, insecureSslOverride = insecureSslOverride, reportBuildStatusOverride = reportBuildStatusOverride, environmentTypeOverride = environmentTypeOverride, imageOverride = imageOverride, computeTypeOverride = computeTypeOverride, certificateOverride = certificateOverride, cacheOverride = cacheOverride, serviceRoleOverride = serviceRoleOverride, privilegedModeOverride = privilegedModeOverride, timeoutInMinutesOverride = timeoutInMinutesOverride, queuedTimeoutInMinutesOverride = queuedTimeoutInMinutesOverride, encryptionKeyOverride = encryptionKeyOverride, idempotencyToken = idempotencyToken, logsConfigOverride = logsConfigOverride, registryCredentialOverride = registryCredentialOverride, imagePullCredentialsTypeOverride = imagePullCredentialsTypeOverride)
   output <- .codebuild$start_build_output()
   config <- get_config()
   svc <- .codebuild$service(config)
@@ -1162,7 +1856,7 @@ codebuild_stop_build <- function(id) {
 #' @param sourceVersion A version of the build input to be built for this project. If not
 #' specified, the latest version is used. If specified, it must be one of:
 #' 
-#' -   For AWS CodeCommit: the commit ID to use.
+#' -   For AWS CodeCommit: the commit ID, branch, or Git tag to use.
 #' 
 #' -   For GitHub: the commit ID, pull request ID, branch name, or tag name
 #'     that corresponds to the version of the source code you want to
@@ -1300,14 +1994,14 @@ codebuild_stop_build <- function(id) {
 #'     )
 #'   ),
 #'   environment = list(
-#'     type = "WINDOWS_CONTAINER"|"LINUX_CONTAINER",
+#'     type = "WINDOWS_CONTAINER"|"LINUX_CONTAINER"|"LINUX_GPU_CONTAINER"|"ARM_CONTAINER",
 #'     image = "string",
-#'     computeType = "BUILD_GENERAL1_SMALL"|"BUILD_GENERAL1_MEDIUM"|"BUILD_GENERAL1_LARGE",
+#'     computeType = "BUILD_GENERAL1_SMALL"|"BUILD_GENERAL1_MEDIUM"|"BUILD_GENERAL1_LARGE"|"BUILD_GENERAL1_2XLARGE",
 #'     environmentVariables = list(
 #'       list(
 #'         name = "string",
 #'         value = "string",
-#'         type = "PLAINTEXT"|"PARAMETER_STORE"
+#'         type = "PLAINTEXT"|"PARAMETER_STORE"|"SECRETS_MANAGER"
 #'       )
 #'     ),
 #'     privilegedMode = TRUE|FALSE,
@@ -1373,6 +2067,57 @@ codebuild_update_project <- function(name, description = NULL, source = NULL, se
 }
 .codebuild$operations$update_project <- codebuild_update_project
 
+#' Updates a report group
+#'
+#' Updates a report group.
+#'
+#' @usage
+#' codebuild_update_report_group(arn, exportConfig)
+#'
+#' @param arn &#91;required&#93; The ARN of the report group to update.
+#' @param exportConfig Used to specify an updated export type. Valid values are:
+#' 
+#' -   `S3`: The report results are exported to an S3 bucket.
+#' 
+#' -   `NO_EXPORT`: The report results are not exported.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$update_report_group(
+#'   arn = "string",
+#'   exportConfig = list(
+#'     exportConfigType = "S3"|"NO_EXPORT",
+#'     s3Destination = list(
+#'       bucket = "string",
+#'       path = "string",
+#'       packaging = "ZIP"|"NONE",
+#'       encryptionKey = "string",
+#'       encryptionDisabled = TRUE|FALSE
+#'     )
+#'   )
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname codebuild_update_report_group
+codebuild_update_report_group <- function(arn, exportConfig = NULL) {
+  op <- new_operation(
+    name = "UpdateReportGroup",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .codebuild$update_report_group_input(arn = arn, exportConfig = exportConfig)
+  output <- .codebuild$update_report_group_output()
+  config <- get_config()
+  svc <- .codebuild$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.codebuild$operations$update_report_group <- codebuild_update_report_group
+
 #' Updates the webhook associated with an AWS CodeBuild build project
 #'
 #' Updates the webhook associated with an AWS CodeBuild build project.
@@ -1394,7 +2139,7 @@ codebuild_update_project <- function(name, description = NULL, source = NULL, se
 #' repository\'s secret token should be updated. If you use Bitbucket for
 #' your repository, `rotateSecret` is ignored.
 #' @param filterGroups An array of arrays of `WebhookFilter` objects used to determine if a
-#' webhook event can trigger a build. A filter group must pcontain at least
+#' webhook event can trigger a build. A filter group must contain at least
 #' one `EVENT` `WebhookFilter`.
 #'
 #' @section Request syntax:

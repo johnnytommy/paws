@@ -18,7 +18,7 @@ Otherwise, it is \code{UnauthorizedOperation}.}
 Constraints: Up to 1000 resource IDs. We recommend breaking up this
 request into smaller batches.}
 
-\item{Tags}{[required] The tags. The \code{value} parameter is required, but if you don't want the
+\item{Tags}{[required] The tags. The \code{value} parameter is required, but if you don\'t want the
 tag to have a value, specify the parameter with no value, and we set the
 value to an empty string.}
 }
@@ -31,7 +31,7 @@ resource.
 \details{
 For more information about tags, see \href{https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html}{Tagging Your Resources}
 in the \emph{Amazon Elastic Compute Cloud User Guide}. For more information
-about creating IAM policies that control users' access to resources
+about creating IAM policies that control users\' access to resources
 based on tags, see \href{https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-supported-iam-actions-resources.html}{Supported Resource-Level Permissions for Amazon EC2 API Actions}
 in the \emph{Amazon Elastic Compute Cloud User Guide}.
 }
@@ -52,9 +52,10 @@ in the \emph{Amazon Elastic Compute Cloud User Guide}.
 }
 
 \examples{
+\dontrun{
 # This example adds the tag Stack=production to the specified image, or
 # overwrites an existing tag for the AMI where the tag key is Stack.
-\donttest{svc$create_tags(
+svc$create_tags(
   Resources = list(
     "ami-78a54011"
   ),
@@ -64,7 +65,8 @@ in the \emph{Amazon Elastic Compute Cloud User Guide}.
       Value = "production"
     )
   )
-)}
+)
+}
 
 }
 \keyword{internal}

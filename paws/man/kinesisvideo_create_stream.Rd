@@ -21,8 +21,11 @@ each account and region.}
 \item{MediaType}{The media type of the stream. Consumers of the stream can use this
 information when processing the stream. For more information about media
 types, see \href{http://www.iana.org/assignments/media-types/media-types.xhtml}{Media Types}.
-If you choose to specify the \code{MediaType}, see \href{https://tools.ietf.org/html/rfc6838#section-4.2}{Naming Requirements} for
+If you choose to specify the \code{MediaType}, see Naming Requirements for
 guidelines.
+
+Example valid values include \"video/h264\" and
+\"video/h264,audio/aac\".
 
 This parameter is optional; the default value is \code{null} (or empty in
 JSON).}
@@ -56,7 +59,7 @@ Creates a new Kinesis video stream.
 }
 \details{
 When you create a new stream, Kinesis Video Streams assigns it a version
-number. When you change the stream's metadata, Kinesis Video Streams
+number. When you change the stream\'s metadata, Kinesis Video Streams
 updates the version.
 
 \code{CreateStream} is an asynchronous operation.

@@ -23,7 +23,8 @@ values are \code{enabled} and \code{disabled}.}
 }
 \description{
 Modifies an account setting for all IAM users on an account for whom no
-individual account setting has been specified.
+individual account setting has been specified. Account settings are set
+on a per-Region basis.
 }
 \section{Request syntax}{
 \preformatted{svc$put_account_setting_default(
@@ -34,14 +35,16 @@ individual account setting has been specified.
 }
 
 \examples{
+\dontrun{
 # This example modifies the default account setting for the specified
 # resource for all IAM users or roles on an account. These changes apply
 # to the entire AWS account, unless an IAM user or role explicitly
 # overrides these settings for themselves.
-\donttest{svc$put_account_setting_default(
+svc$put_account_setting_default(
   name = "serviceLongArnFormat",
   value = "enabled"
-)}
+)
+}
 
 }
 \keyword{internal}

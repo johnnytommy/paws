@@ -2,15 +2,17 @@
 % Please edit documentation in R/codebuild_operations.R
 \name{codebuild_batch_get_projects}
 \alias{codebuild_batch_get_projects}
-\title{Gets information about build projects}
+\title{Gets information about one or more build projects}
 \usage{
 codebuild_batch_get_projects(names)
 }
 \arguments{
-\item{names}{[required] The names of the build projects.}
+\item{names}{[required] The names or ARNs of the build projects. To get information about a
+project shared with your AWS account, its ARN must be specified. You
+cannot specify a shared project using its name.}
 }
 \description{
-Gets information about build projects.
+Gets information about one or more build projects.
 }
 \section{Request syntax}{
 \preformatted{svc$batch_get_projects(

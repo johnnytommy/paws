@@ -29,11 +29,13 @@ in the \emph{Amazon Elastic Compute Cloud User Guide}.
 }
 
 \examples{
+\dontrun{
 # This example deletes the specified placement group.
 # 
-\donttest{svc$delete_placement_group(
+svc$delete_placement_group(
   GroupName = "my-cluster"
-)}
+)
+}
 
 }
 \keyword{internal}

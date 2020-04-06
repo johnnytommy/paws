@@ -27,8 +27,8 @@ To avoid this situation, we recommend that you don't create secret names
 that end with a hyphen followed by six characters.}
 
 \item{VersionId}{Specifies the unique identifier of the version of the secret that you
-want to retrieve. If you specify this parameter then don't specify
-\code{VersionStage}. If you don't specify either a \code{VersionStage} or
+want to retrieve. If you specify this parameter then don\'t specify
+\code{VersionStage}. If you don\'t specify either a \code{VersionStage} or
 \code{VersionId} then the default is to perform the operation on the version
 with the \code{VersionStage} value of \code{AWSCURRENT}.
 
@@ -40,8 +40,8 @@ value with 32 hexadecimal digits.}
 label attached to the version.
 
 Staging labels are used to keep track of different versions during the
-rotation process. If you use this parameter then don't specify
-\code{VersionId}. If you don't specify either a \code{VersionStage} or
+rotation process. If you use this parameter then don\'t specify
+\code{VersionId}. If you don\'t specify either a \code{VersionStage} or
 \code{VersionId}, then the default is to perform the operation on the version
 with the \code{VersionStage} value of \code{AWSCURRENT}.}
 }
@@ -58,7 +58,7 @@ To run this command, you must have the following permissions:
 \item secretsmanager:GetSecretValue
 \item kms:Decrypt - required only if you use a customer-managed AWS KMS
 key to encrypt the secret. You do not need this permission to use
-the account's default AWS managed CMK for Secrets Manager.
+the account\'s default AWS managed CMK for Secrets Manager.
 }
 
 \strong{Related operations}
@@ -79,15 +79,17 @@ DescribeSecret.
 }
 
 \examples{
+\dontrun{
 # The following example shows how to retrieve the secret string value from
 # the version of the secret that has the AWSPREVIOUS staging label
 # attached. If you want to retrieve the AWSCURRENT version of the secret,
 # then you can omit the VersionStage parameter because it defaults to
 # AWSCURRENT.
-\donttest{svc$get_secret_value(
+svc$get_secret_value(
   SecretId = "MyTestDatabaseSecret",
   VersionStage = "AWSPREVIOUS"
-)}
+)
+}
 
 }
 \keyword{internal}
